@@ -1,7 +1,7 @@
 import { Button as ShadcnButton, buttonVariants } from '@/components/ui/button';
 import { LucideIcon, ArrowRight, Plus } from 'lucide-react';
 import Link from 'next/link';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn';
 
 export interface ButtonProps {
 	label?: string | null;

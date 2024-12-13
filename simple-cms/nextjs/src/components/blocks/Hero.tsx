@@ -3,7 +3,7 @@ import Headline from '@/components/ui/Headline';
 import BaseText from '@/components/ui/Text';
 import DirectusImage from '@/components/shared/DirectusImage';
 import ButtonGroup from '@/components/blocks/ButtonGroup';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utils/cn';
 
 interface HeroProps {
 	data: {
