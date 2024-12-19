@@ -22,6 +22,7 @@ export const fetchPageData = async (permalink: string) => {
 							'collection',
 							'item',
 							'sort',
+							'hide_block',
 							{
 								item: {
 									block_richtext: ['tagline', 'headline', 'content', 'alignment'],
@@ -113,7 +114,7 @@ export const fetchPageData = async (permalink: string) => {
 					},
 				],
 				deep: {
-					blocks: { _sort: ['sort'] },
+					blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
 				},
 			}),
 		);

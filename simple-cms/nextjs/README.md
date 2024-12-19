@@ -24,6 +24,31 @@ point for building CMS-powered web applications.
 - **npm** or **pnpm**
 - Access to a **Directus** instance (self-hosted or cloud-hosted)
 
+### Setting Up Environment Variables
+
+To get started, you need to configure environment variables. Follow these steps:
+
+1. **Copy the example environment file:**
+
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Update the following variables in your `.env` file:**
+
+   ```env
+   NEXT_PUBLIC_DIRECTUS_URL=your-directus-instance-url
+   DIRECTUS_PUBLIC_TOKEN=your-directus-public-token
+   DIRECTUS_FORM_TOKEN=your-directus-frontend-bot-token
+   NEXT_PUBLIC_SITE_URL=your-public-site-url
+   ```
+
+   - **`NEXT_PUBLIC_DIRECTUS_URL`**: URL of your Directus instance.
+   - **`DIRECTUS_PUBLIC_TOKEN`**: Public token for accessing public resources in Directus. Use the token from the
+     **Webmaster** account.
+   - **`DIRECTUS_FORM_TOKEN`**: Token from the **Frontend Bot User** account in Directus for handling form submissions.
+   - **`NEXT_PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
+
 ### Generate Directus Types
 
 This repository includes a [utility](https://www.npmjs.com/package/directus-sdk-typegen) to generate TypeScript types
@@ -31,12 +56,8 @@ for your Directus schema.
 
 #### Usage
 
-1. Ensure your `.env` file is configured with:
-   ```env
-   NEXT_PUBLIC_DIRECTUS_URL=your-token-here
-   DIRECTUS_TOKEN=your-token-here
-   ```
-2. Run with the following command
+1. Ensure your `.env` file is configured as described above.
+2. Run the following command:
    ```bash
    npm run generate:types
    ```
@@ -63,7 +84,7 @@ src/
 │   │   └── RichText.tsx
 │   ├── forms/
 │   │   ├── DynamicForm.tsx           # Renders dynamic forms with validation
-│   │   ├── FormBuilder.tsx   		  # Manages form lifecycles and submission
+│   │   ├── FormBuilder.tsx           # Manages form lifecycles and submission
 │   │   ├── FormField.tsx             # Renders individual form fields dynamically
 │   │   └── fields/                   # Form fields components
 │   ├── layout/                       # Layout-related components

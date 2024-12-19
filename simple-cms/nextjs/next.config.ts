@@ -17,6 +17,10 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
+	env: {
+		DIRECTUS_PUBLIC_TOKEN: process.env.DIRECTUS_PUBLIC_TOKEN,
+		DIRECTUS_FORM_TOKEN: process.env.DIRECTUS_FORM_TOKEN,
+	},
 };
 
 export default withBundleAnalyzer(nextConfig);

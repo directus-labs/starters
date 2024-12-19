@@ -1,4 +1,5 @@
 import { useDirectus } from './directus';
+import { config } from 'dotenv';
 
 interface SubmissionValue {
 	field: string;
@@ -6,12 +7,19 @@ interface SubmissionValue {
 	file?: string;
 }
 
+config();
+
 export const submitForm = async (
 	formId: string,
 	fields: { id: string; name: string; type: string }[],
 	data: Record<string, any>,
 ) => {
-	const { directus, uploadFiles, createItem } = useDirectus();
+	const { directus, uploadFiles, createItem, withToken } = useDirectus();
+	const TOKEN = process.env.DIRECTUS_FORM_TOKEN;
+
+	if (!TOKEN) {
+		throw new Error('DIRECTUS_FORM_TOKEN is not defined. Check your .env file.');
+	}
 
 	try {
 		const submissionValues: SubmissionValue[] = [];
@@ -25,7 +33,7 @@ export const submitForm = async (
 				const formData = new FormData();
 				formData.append('file', value);
 
-				const uploadedFile = await directus.request(uploadFiles(formData));
+				const uploadedFile = await directus.request(withToken(TOKEN, uploadFiles(formData)));
 				console.log('uploadedFile', uploadedFile);
 				if (uploadedFile && 'id' in uploadedFile) {
 					submissionValues.push({
@@ -46,7 +54,7 @@ export const submitForm = async (
 			values: submissionValues,
 		};
 
-		await directus.request(createItem('form_submissions', payload));
+		await directus.request(withToken(TOKEN, createItem('form_submissions', payload)));
 	} catch (error) {
 		console.error('Error submitting form:', error);
 		throw new Error('Failed to submit form');
