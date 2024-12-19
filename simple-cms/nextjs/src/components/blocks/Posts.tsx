@@ -1,11 +1,11 @@
-import Title from '@/components/ui/Title';
+import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import DirectusImage from '@/components/shared/DirectusImage';
 import Link from 'next/link';
 
 interface PostsProps {
 	data: {
-		title?: string;
+		tagline?: string;
 		headline?: string;
 		posts: Array<{
 			id: string;
@@ -18,7 +18,7 @@ interface PostsProps {
 }
 
 const Posts = ({ data }: PostsProps) => {
-	const { title, headline, posts } = data;
+	const { tagline, headline, posts } = data;
 
 	if (!posts || posts.length === 0) {
 		return;
@@ -26,7 +26,7 @@ const Posts = ({ data }: PostsProps) => {
 
 	return (
 		<div className="py-12">
-			{title && <Title title={title} />}
+			{tagline && <Tagline tagline={tagline} />}
 			{headline && <Headline headline={headline} />}
 
 			<div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

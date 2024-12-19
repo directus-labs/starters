@@ -2,14 +2,14 @@
 
 import { useState } from 'react';
 import DirectusImage from '@/components/shared/DirectusImage';
-import Title from '@/components/ui/Title';
+import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import { Dialog, DialogContent, DialogDescription, DialogOverlay, DialogTitle } from '@/components/ui/dialog';
 import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-react';
 
 interface GalleryProps {
 	data: {
-		title?: string;
+		tagline?: string;
 		headline?: string;
 		items: Array<{
 			id: string;
@@ -20,7 +20,7 @@ interface GalleryProps {
 }
 
 const Gallery = ({ data }: GalleryProps) => {
-	const { title, headline, items = [] } = data;
+	const { tagline, headline, items = [] } = data;
 	const [isLightboxOpen, setLightboxOpen] = useState(false);
 	const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -43,7 +43,7 @@ const Gallery = ({ data }: GalleryProps) => {
 
 	return (
 		<section className="p-6">
-			{title && <Title title={title} />}
+			{tagline && <Tagline tagline={tagline} />}
 			{headline && <Headline headline={headline} />}
 
 			{sortedItems.length > 0 && (

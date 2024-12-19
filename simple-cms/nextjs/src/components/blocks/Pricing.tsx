@@ -1,14 +1,14 @@
-import Title from '@/components/ui/Title';
+import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import PricingCard from '@/components/blocks/PricingCard';
 
 interface PricingProps {
 	data: {
-		title?: string;
+		tagline?: string;
 		headline?: string;
 		pricing_cards: Array<{
 			id: string;
-			title: string;
+			tagline: string;
 			description?: string;
 			price?: string;
 			badge?: string;
@@ -24,7 +24,7 @@ interface PricingProps {
 }
 
 const Pricing = ({ data }: PricingProps) => {
-	const { title, headline, pricing_cards } = data;
+	const { tagline, headline, pricing_cards } = data;
 
 	if (!pricing_cards || !Array.isArray(pricing_cards)) {
 		return null;
@@ -42,7 +42,7 @@ const Pricing = ({ data }: PricingProps) => {
 
 	return (
 		<section className="space-y-8">
-			{title && <Title title={title} />}
+			{tagline && <Tagline tagline={tagline} />}
 			{headline && <Headline headline={headline} />}
 
 			<div className={`grid gap-6 ${gridClasses} ${containerStyles}`}>

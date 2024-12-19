@@ -1,5 +1,5 @@
 import Button, { ButtonProps } from './Button';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils';
 
 export interface ButtonGroupProps {
 	buttons: Array<ButtonProps>;

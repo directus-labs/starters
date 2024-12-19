@@ -6,7 +6,7 @@ import { CheckCircle2 } from 'lucide-react';
 export interface PricingCardProps {
 	card: {
 		id: string;
-		title: string;
+		tagline: string;
 		description?: string;
 		price?: string;
 		badge?: string;
@@ -27,9 +27,9 @@ const PricingCard = ({ card }: PricingCardProps) => {
 				card.is_highlighted ? 'border-accent' : 'border-gray-300'
 			}`}
 		>
-			{/* Title and Badge */}
+			{/* Tagline and Badge */}
 			<div className="flex justify-between items-center">
-				{card.title && <h3 className="text-[32px] font-normal text-foreground">{card.title}</h3>}
+				{card.tagline && <h3 className="text-[32px] font-normal text-foreground">{card.tagline}</h3>}
 				{card.badge && (
 					<Badge
 						variant={card.is_highlighted ? 'secondary' : 'default'}

@@ -24,10 +24,10 @@ export const fetchPageData = async (permalink: string) => {
 							'sort',
 							{
 								item: {
-									block_richtext: ['title', 'headline', 'content', 'alignment'],
-									block_gallery: ['id', 'title', 'headline', { items: ['id', 'directus_file', 'sort'] }],
+									block_richtext: ['tagline', 'headline', 'content', 'alignment'],
+									block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] }],
 									block_pricing: [
-										'title',
+										'tagline',
 										'headline',
 										{
 											pricing_cards: [
@@ -53,7 +53,7 @@ export const fetchPageData = async (permalink: string) => {
 										},
 									],
 									block_hero: [
-										'title',
+										'tagline',
 										'headline',
 										'description',
 										'alignment',
@@ -75,7 +75,38 @@ export const fetchPageData = async (permalink: string) => {
 											],
 										},
 									],
-									block_posts: ['title', 'headline', 'collection'],
+									block_posts: ['tagline', 'headline', 'collection'],
+									block_form: [
+										'id',
+										'tagline',
+										'headline',
+										{
+											form: [
+												'id',
+												'title',
+												'submit_label',
+												'success_message',
+												'on_success',
+												'success_redirect_url',
+												'is_active',
+												{
+													fields: [
+														'id',
+														'name',
+														'type',
+														'label',
+														'placeholder',
+														'help',
+														'validation',
+														'width',
+														'choices',
+														'required',
+														'sort',
+													],
+												},
+											],
+										},
+									],
 								},
 							},
 						],

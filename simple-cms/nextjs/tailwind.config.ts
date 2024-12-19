@@ -13,7 +13,7 @@ const config: Config = {
 				code: ['Fira Mono', 'monospace'],
 			},
 			fontSize: {
-				title: ['24px', '33.6px'], // Title
+				tagline: ['24px', '33.6px'], // Tagline
 				headline: ['56px', '78.4px'], // Headline
 				h1: ['56px', '78.4px'], // Heading 1
 				h2: ['36px', '50.4px'], // Heading 2

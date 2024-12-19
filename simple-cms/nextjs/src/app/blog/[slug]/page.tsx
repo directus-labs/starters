@@ -41,7 +41,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 						<div className="relative w-full h-[400px] overflow-hidden rounded-lg">
 							<DirectusImage
 								uuid={post.image as string}
-								alt={post.title}
+								alt={post.title || 'post header image'}
 								className="object-cover"
 								fill
 								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
@@ -64,7 +64,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 								{author.avatar && (
 									<DirectusImage
 										uuid={author.avatar as string}
-										alt={authorName}
+										alt={authorName || 'author avatar'}
 										className="rounded-full object-cover size-[48px]"
 										width={48}
 										height={48}
@@ -94,7 +94,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 											<div className="relative shrink-0 w-[150px] h-[100px] overflow-hidden rounded-lg">
 												<DirectusImage
 													uuid={relatedPost.image as string}
-													alt={relatedPost.title}
+													alt={relatedPost.title || 'related posts'}
 													className="object-cover"
 													fill
 													sizes="(max-width: 768px) 100px, (max-width: 1024px) 150px, 150px"

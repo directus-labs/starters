@@ -1,13 +1,13 @@
-import Title from '@/components/ui/Title';
+import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import BaseText from '@/components/ui/Text';
 import DirectusImage from '@/components/shared/DirectusImage';
 import ButtonGroup from '@/components/blocks/ButtonGroup';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils';
 
 interface HeroProps {
 	data: {
-		title: string;
+		tagline: string;
 		headline: string;
 		description: string;
 		alignment: 'left' | 'center' | 'right';
@@ -27,7 +27,7 @@ interface HeroProps {
 }
 
 const Hero = ({ data }: HeroProps) => {
-	const { alignment, title, headline, description, image, button_group } = data;
+	const { alignment, tagline, headline, description, image, button_group } = data;
 
 	return (
 		<section
@@ -46,7 +46,7 @@ const Hero = ({ data }: HeroProps) => {
 					alignment === 'center' ? 'md:w-1/2 items-center' : 'md:w-1/2 items-start',
 				)}
 			>
-				<Title title={title} />
+				<Tagline tagline={tagline} />
 				<Headline headline={headline} />
 				{description && <BaseText content={description} />}
 				{button_group && button_group.buttons.length > 0 && (
@@ -59,7 +59,7 @@ const Hero = ({ data }: HeroProps) => {
 				<div className={cn('relative w-full', alignment === 'center' ? 'h-[400px]' : 'h-[562px]', 'md:w-1/2')}>
 					<DirectusImage
 						uuid={image}
-						alt={title || 'Hero Image'}
+						alt={tagline || headline || 'Hero Image'}
 						fill
 						sizes={alignment === 'center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
 					/>

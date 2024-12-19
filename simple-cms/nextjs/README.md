@@ -61,6 +61,11 @@ src/
 │   │   ├── Posts.tsx
 │   │   ├── PricingCard.tsx
 │   │   └── RichText.tsx
+│   ├── forms/
+│   │   ├── DynamicForm.tsx           # Renders dynamic forms with validation
+│   │   ├── FormBuilder.tsx   		  # Manages form lifecycles and submission
+│   │   ├── FormField.tsx             # Renders individual form fields dynamically
+│   │   └── fields/                   # Form fields components
 │   ├── layout/                       # Layout-related components
 │   │   ├── Footer.tsx
 │   │   ├── NavigationBar.tsx
@@ -82,16 +87,18 @@ src/
 │   │   ├── Headline.tsx
 │   │   ├── ShareDialog.tsx
 │   │   ├── Text.tsx
-│   │   └── Title.tsx
+│   │   └── Tagline.tsx
 ├── lib/                              # Utilities and global logic
 │   ├── directus/                     # Directus-related utilities
 │   │   ├── directus.ts               # Directus client setup
 │   │   ├── fetchers.ts               # Directus data fetching
+│   │   ├── forms.ts                  # Directus form handling
 │   │   └── generateDirectusTypes.ts  # Generates Directus types
 │   ├── styles/                       # Global and shared styles
 │   │   ├── fonts.css
 │   │   └── globals.css
 │   ├── utils.ts
+│   ├── zodSchemaBuilder.ts           # Zod schema utility
 ├── types/                            # TypeScript types
 │   └── directus-schema.ts            # Directus-generated types
 ```
