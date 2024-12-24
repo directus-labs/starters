@@ -1,13 +1,10 @@
 import { useDirectus } from './directus';
-import { config } from 'dotenv';
 
 interface SubmissionValue {
 	field: string;
 	value?: string;
 	file?: string;
 }
-
-config();
 
 export const submitForm = async (
 	formId: string,
@@ -34,7 +31,7 @@ export const submitForm = async (
 				formData.append('file', value);
 
 				const uploadedFile = await directus.request(withToken(TOKEN, uploadFiles(formData)));
-				console.log('uploadedFile', uploadedFile);
+
 				if (uploadedFile && 'id' in uploadedFile) {
 					submissionValues.push({
 						field: field.id,

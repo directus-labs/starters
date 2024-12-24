@@ -1,5 +1,6 @@
-import { BlockPost, PageBlock, Post } from '@/types/directus-schema';
+import { BlockPost, PageBlock, Post, Schema } from '@/types/directus-schema';
 import { useDirectus } from './directus';
+import { QueryFilter } from '@directus/sdk';
 
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
@@ -223,21 +224,33 @@ export const fetchNavigationData = async (key: string) => {
 };
 
 /**
- * Fetches a single blog post by slug.
+ * Fetches a single blog post by slug. Handles live preview mode
  */
-export const fetchPostBySlug = async (slug: string) => {
+export const fetchPostBySlug = async (slug: string, options?: { draft?: boolean }) => {
 	const { directus, readItems } = useDirectus();
 
 	try {
-		const post = await directus.request(
+		const filter: QueryFilter<Schema, Post> = options?.draft
+			? { slug: { _eq: slug } }
+			: { slug: { _eq: slug }, status: { _eq: 'published' } };
+
+		const posts = await directus.request(
 			readItems('posts', {
-				filter: { slug: { _eq: slug } },
+				filter,
 				limit: 1,
-				fields: ['id', 'title', 'content', 'image', 'description', 'author'],
+				fields: ['id', 'title', 'content', 'status', 'image', 'description', 'author'],
 			}),
 		);
 
-		return post[0] || null;
+		const post = posts[0];
+
+		if (!post) {
+			console.error(`No post found with slug: ${slug}`);
+
+			return null;
+		}
+
+		return post;
 	} catch (error) {
 		console.error(`Error fetching post with slug "${slug}":`, error);
 		throw new Error(`Failed to fetch post with slug "${slug}"`);

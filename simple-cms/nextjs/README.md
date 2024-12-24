@@ -41,6 +41,7 @@ To get started, you need to configure environment variables. Follow these steps:
    DIRECTUS_PUBLIC_TOKEN=your-directus-public-token
    DIRECTUS_FORM_TOKEN=your-directus-frontend-bot-token
    NEXT_PUBLIC_SITE_URL=your-public-site-url
+   DRAFT_MODE_SECRET=your-draft-mode-secret
    ```
 
    - **`NEXT_PUBLIC_DIRECTUS_URL`**: URL of your Directus instance.
@@ -48,6 +49,8 @@ To get started, you need to configure environment variables. Follow these steps:
      **Webmaster** account.
    - **`DIRECTUS_FORM_TOKEN`**: Token from the **Frontend Bot User** account in Directus for handling form submissions.
    - **`NEXT_PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
+   - **`DRAFT_MODE_SECRET`**: The secret you generate for live preview. This is used to view draft posts in directus and
+     live edits.
 
 ### Generate Directus Types
 

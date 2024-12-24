@@ -1,4 +1,5 @@
 import { fetchPostBySlug, fetchRelatedPosts, fetchAuthorById } from '@/lib/directus/fetchers';
+import { draftMode } from 'next/headers';
 import DirectusImage from '@/components/shared/DirectusImage';
 import BaseText from '@/components/ui/Text';
 import { Separator } from '@/components/ui/separator';
@@ -7,8 +8,10 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+	const { isEnabled } = await draftMode();
 	const { slug } = await params;
-	const post = await fetchPostBySlug(slug);
+
+	const post = await fetchPostBySlug(slug, { draft: isEnabled });
 
 	if (!post) {
 		return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
@@ -34,7 +37,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 				<meta property="og:url" content={postUrl} />
 				<meta property="og:type" content="article" />
 			</Head>
-
+			{isEnabled && <p>(Draft Mode)</p>}
 			<div className="px-4 sm:px-6 lg:px-12 xl:px-20 py-12 max-w-[1200px] xl:max-w-[1400px] mx-auto">
 				{post.image && (
 					<div className="mb-8">
