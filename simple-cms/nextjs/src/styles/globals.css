@@ -22,6 +22,17 @@
 	}
 }
 
+@layer components {
+	[data-background='dark'] {
+		@apply bg-gray dark:bg-[#0E1A2B];
+	}
+
+	:root:not(.dark) [data-background='dark'] {
+		.inline-flex[class*='bg-gray'] {
+			@apply bg-[#172940] text-white hover:bg-accent;
+		}
+	}
+}
 @layer utilities {
 	a {
 		@apply hover:text-accent transition-colors no-underline;

@@ -14,8 +14,8 @@ const PageBuilder = ({ sections }: PageBuilderProps) => {
 	return (
 		<div>
 			{validBlocks.map((block) => (
-				<div key={block.id} className={`py-8 section-${block.background}`}>
-					<div className="base-container max-w-8xl mx-auto px-4 md:px-8 lg:px-16 bg-background text-foreground">
+				<div key={block.id} data-background={block.background} className="py-8">
+					<div className="base-container max-w-8xl mx-auto px-4 md:px-8 lg:px-16">
 						<BaseBlock block={block} />
 					</div>
 				</div>
@@ -23,5 +23,4 @@ const PageBuilder = ({ sections }: PageBuilderProps) => {
 		</div>
 	);
 };
-
 export default PageBuilder;
