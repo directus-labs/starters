@@ -12,8 +12,9 @@ import {
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Menu } from 'lucide-react';
 import ThemeToggle from '../ui/ThemeToggle';
+import SearchModal from '@/components/ui/SearchModal';
 
 const NavigationBar = async () => {
 	let menu;
@@ -43,7 +44,9 @@ const NavigationBar = async () => {
 						<Image src="/images/logo.svg" alt="Logo" width="150" height="100" className="w-[90px] h-[45px]" priority />
 					)}
 				</Link>
+
 				<nav className="hidden md:flex items-center gap-6">
+					<SearchModal />
 					<NavigationMenu>
 						<NavigationMenuList className="flex gap-6">
 							{navigation?.items?.map((section: any) => (
@@ -82,8 +85,10 @@ const NavigationBar = async () => {
 					</NavigationMenu>
 					<ThemeToggle />
 				</nav>
+
 				{/* Mobile Navigation */}
 				<div className="flex md:hidden items-center gap-2">
+					<SearchModal />
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
 							<Button
@@ -92,12 +97,12 @@ const NavigationBar = async () => {
 								aria-label="Open menu"
 								className="dark:text-white dark:hover:text-accent"
 							>
-								☰
+								<Menu />
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent
 							align="start"
-							className=" top-full w-screen bg-gray p-6 shadow-md max-w-full overflow-hidden"
+							className="top-full w-screen bg-gray p-6 shadow-md max-w-full overflow-hidden"
 						>
 							<div className="flex flex-col gap-4">
 								{navigation?.items?.map((section: any) => (

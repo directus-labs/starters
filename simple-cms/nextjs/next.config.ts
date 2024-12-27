@@ -5,6 +5,18 @@ const withBundleAnalyzer = initializeBundleAnalyzer({
 	enabled: process.env.BUNDLE_ANALYZER_ENABLED === 'true',
 });
 
+const ContentSecurityPolicy = `
+    default-src 'self';
+    script-src 'self' 'unsafe-eval' 'unsafe-inline';
+    child-src 'self';
+    style-src 'self' 'unsafe-inline';
+    img-src * blob: data:;
+    media-src 'none';
+    connect-src *;
+    font-src 'self' data:;
+    frame-ancestors 'self' https://localhost:3000 https://simple-cms-starter.directus.app;
+`;
+
 const nextConfig: NextConfig = {
 	output: 'standalone',
 	images: {
@@ -23,17 +35,13 @@ const nextConfig: NextConfig = {
 		DRAFT_MODE_SECRET: process.env.DRAFT_MODE_SECRET,
 	},
 	async headers() {
-		const isDev = process.env.NODE_ENV === 'development';
-
 		return [
 			{
 				source: '/:path*',
 				headers: [
 					{
 						key: 'Content-Security-Policy',
-						value: isDev
-							? "frame-src 'self' http://localhost:3000;"
-							: "frame-src 'self' https://simple-cms-starter.directus.app;",
+						value: ContentSecurityPolicy.replace(/\n/g, '').trim(),
 					},
 				],
 			},

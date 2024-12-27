@@ -9,6 +9,7 @@ interface BaseBlockProps {
 	block: {
 		collection: string;
 		item: any;
+		id: string;
 	};
 }
 
@@ -28,7 +29,11 @@ const BaseBlock = ({ block }: BaseBlockProps) => {
 		return null;
 	}
 
-	return <Component data={block.item} />;
+	return (
+		<div id={`block-${block.id}`}>
+			<Component data={block.item} />
+		</div>
+	);
 };
 
 export default BaseBlock;
