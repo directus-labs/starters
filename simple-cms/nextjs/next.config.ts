@@ -14,11 +14,15 @@ const ContentSecurityPolicy = `
     media-src 'none';
     connect-src *;
     font-src 'self' data:;
-    frame-ancestors 'self' https://localhost:3000 https://simple-cms-starter.directus.app;
+    frame-ancestors 'self' http://localhost:3000 https://simple-cms-starter.directus.app;
 `;
 
 const nextConfig: NextConfig = {
-	output: 'standalone',
+	webpack: (config) => {
+		config.cache = false;
+
+		return config;
+	},
 	images: {
 		dangerouslyAllowSVG: true,
 		remotePatterns: [
