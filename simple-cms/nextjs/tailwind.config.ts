@@ -122,6 +122,10 @@ const config: Config = {
 						},
 						li: {
 							marginBottom: '0.5rem',
+							'& p': {
+								display: 'inline',
+								margin: '0',
+							},
 						},
 					},
 				},
