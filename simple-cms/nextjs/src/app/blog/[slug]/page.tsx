@@ -80,7 +80,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 						{post.description && <p className="text-gray-600">{post.description}</p>}
 
 						<div className="flex justify-start">
-							<ShareDialog postUrl={postUrl} />
+							<ShareDialog postUrl={postUrl} postTitle={post.title} />
 						</div>
 
 						<div>

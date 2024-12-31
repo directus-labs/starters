@@ -15,7 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-const ShareDialog = ({ postUrl }: { postUrl: string }) => {
+const ShareDialog = ({ postUrl, postTitle }: { postUrl: string; postTitle: string }) => {
 	const [copied, setCopied] = useState(false);
 
 	const handleCopy = () => {
@@ -23,6 +23,24 @@ const ShareDialog = ({ postUrl }: { postUrl: string }) => {
 		setCopied(true);
 		setTimeout(() => setCopied(false), 2000);
 	};
+
+	const socialLinks = [
+		{
+			service: 'reddit',
+			url: `http://www.reddit.com/submit?url=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(postTitle)}`,
+			icon: '/icons/social/reddit.svg',
+		},
+		{
+			service: 'x',
+			url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(postTitle)}`,
+			icon: '/icons/social/twitter.svg',
+		},
+		{
+			service: 'linkedin',
+			url: `https://www.linkedin.com/shareArticle/?mini=true&url=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(postTitle)}`,
+			icon: '/icons/social/linkedin.svg',
+		},
+	];
 
 	return (
 		<Dialog>
@@ -36,6 +54,19 @@ const ShareDialog = ({ postUrl }: { postUrl: string }) => {
 				<DialogHeader>
 					<DialogTitle>Share this blog post</DialogTitle>
 				</DialogHeader>
+				<div className="flex justify-center space-x-4 mb-1">
+					{socialLinks.map((social) => (
+						<a
+							key={social.service}
+							href={social.url}
+							target="_blank"
+							rel="noopener noreferrer"
+							className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-transform transform hover:scale-110"
+						>
+							<img src={social.icon} alt={`${social.service} icon`} width={32} height={32} className="size-8" />
+						</a>
+					))}
+				</div>
 				<div className="flex items-center space-x-2">
 					<div className="grid flex-1 gap-2">
 						<Label htmlFor="link" className="sr-only">
