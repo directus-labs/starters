@@ -96,13 +96,38 @@ const config: Config = {
 						},
 						code: {
 							fontFamily: 'Fira Mono',
-							fontSize: '0.875rem',
-							fontWeight: '500',
-							lineHeight: '1.4',
-							backgroundColor: 'var(--gray-100)',
-							padding: '0.25rem 0.5rem',
+							fontSize: 'clamp(0.875rem, 1rem, 1.125rem)',
+							fontWeight: '400',
+							lineHeight: '1.6',
+							backgroundColor: '#f8f9fa',
+							color: 'black',
 							borderRadius: '4px',
-							textAlign: 'left',
+							padding: '0.15rem 0.35rem',
+							display: 'inline',
+							'&::before': {
+								content: 'none',
+							},
+							'&::after': {
+								content: 'none',
+							},
+						},
+						'p > code': {
+							'&::before': {
+								content: 'none',
+							},
+							'&::after': {
+								content: 'none',
+							},
+						},
+						pre: {
+							fontFamily: 'Fira Mono',
+							fontSize: 'clamp(0.9rem, 1.125rem, 1.25rem)',
+							lineHeight: '1.6',
+							backgroundColor: '#f8f9fa',
+							color: 'black',
+							borderRadius: '8px',
+							padding: '1rem',
+							overflowX: 'auto',
 						},
 						blockquote: {
 							fontStyle: 'italic',

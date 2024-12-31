@@ -8,10 +8,10 @@ const withBundleAnalyzer = initializeBundleAnalyzer({
 const ContentSecurityPolicy = `
     default-src 'self';
     script-src 'self' 'unsafe-eval' 'unsafe-inline';
-    child-src 'self';
+    frame-src *;
     style-src 'self' 'unsafe-inline';
     img-src * blob: data:;
-    media-src 'none';
+    media-src *;
     connect-src *;
     font-src 'self' data:;
     frame-ancestors 'self' http://localhost:3000 https://simple-cms-starter.directus.app;
