@@ -32,7 +32,7 @@ const Hero = ({ data }: HeroProps) => {
 	return (
 		<section
 			className={cn(
-				'relative w-full max-w-screen-lg mx-auto px-4 flex flex-col gap-6 md:gap-12 md:min-h-[60vh]',
+				'relative w-full mx-auto px-4 flex flex-col gap-6 md:gap-12',
 				alignment === 'center'
 					? 'items-center text-center'
 					: alignment === 'right'
@@ -43,7 +43,7 @@ const Hero = ({ data }: HeroProps) => {
 			<div
 				className={cn(
 					'flex flex-col gap-4 w-full',
-					alignment === 'center' ? 'md:w-1/2 items-center' : 'md:w-1/2 items-start',
+					alignment === 'center' ? 'md:w-3/4 xl:w-2/3 items-center' : 'md:w-1/2 items-start',
 				)}
 			>
 				<Tagline tagline={tagline} />
@@ -56,7 +56,12 @@ const Hero = ({ data }: HeroProps) => {
 				)}
 			</div>
 			{image && (
-				<div className={cn('relative w-full', alignment === 'center' ? 'h-[400px]' : 'h-[562px]', 'md:w-1/2')}>
+				<div
+					className={cn(
+						'relative w-full',
+						alignment === 'center' ? 'md:w-3/4 xl:w-2/3 h-[400px]' : 'md:w-1/2 h-[562px]',
+					)}
+				>
 					<DirectusImage
 						uuid={image}
 						alt={tagline || headline || 'Hero Image'}
