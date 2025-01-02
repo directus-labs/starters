@@ -21,7 +21,17 @@ export const buildZodSchema = (fields: FormField[]) => {
 				break;
 
 			case 'file':
-				fieldSchema = z.instanceof(File);
+				if (field.required) {
+					fieldSchema = z.instanceof(File, {
+						message: `${field.label || field.name} is required`,
+					});
+				} else {
+					fieldSchema = z
+						.instanceof(File, {
+							message: `${field.label || field.name} must be a valid file if provided`,
+						})
+						.or(z.undefined());
+				}
 				break;
 
 			default:
@@ -29,10 +39,8 @@ export const buildZodSchema = (fields: FormField[]) => {
 				break;
 		}
 
-		// Apply validation rules
 		if (field.validation) {
 			const rules = field.validation.split('|');
-
 			rules.forEach((rule) => {
 				const [ruleName, ruleValue] = rule.split(':');
 				const normalizedRule = ruleName.toLowerCase();
@@ -74,7 +82,6 @@ export const buildZodSchema = (fields: FormField[]) => {
 			});
 		}
 
-		// Handle required and optional fields
 		if (field.required) {
 			if (fieldSchema instanceof z.ZodString) {
 				fieldSchema = fieldSchema.nonempty(`${field.label || field.name} is required`);
