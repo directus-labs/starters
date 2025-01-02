@@ -1,4 +1,4 @@
-import { BlockPost, PageBlock, Post, Schema } from '@/types/directus-schema';
+import { BlockPost, Globals, PageBlock, Post, Schema } from '@/types/directus-schema';
 import { useDirectus } from './directus';
 import { QueryFilter } from '@directus/sdk';
 
@@ -222,6 +222,23 @@ export const fetchNavigationData = async (key: string) => {
 		throw new Error('Failed to fetch navigation data');
 	}
 };
+
+export async function fetchGlobals(): Promise<Globals | null> {
+	const { directus, readSingleton } = useDirectus();
+	try {
+		const globals = await directus.request<Globals>(
+			readSingleton('globals', {
+				fields: ['title', 'description', 'accent_color', 'favicon', 'social_links', 'url'],
+			}),
+		);
+
+		return globals;
+	} catch (err) {
+		console.error('Failed to fetch globals:', err);
+
+		return null;
+	}
+}
 
 /**
  * Fetches a single blog post by slug. Handles live preview mode
