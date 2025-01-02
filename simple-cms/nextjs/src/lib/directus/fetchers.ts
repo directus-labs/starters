@@ -178,7 +178,7 @@ export const fetchFooterData = async () => {
 					],
 				}),
 			),
-			directus.request(readSingleton('globals', { fields: ['description', 'logo', 'social_links'] })),
+			directus.request(readSingleton('globals', { fields: ['description', 'logo', 'social_links', 'dark_mode_logo'] })),
 		]);
 
 		return { navPrimary, globals };
@@ -213,7 +213,7 @@ export const fetchNavigationData = async (key: string) => {
 					deep: { items: { _sort: ['sort'] } },
 				}),
 			),
-			directus.request(readSingleton('globals', { fields: ['logo'] })),
+			directus.request(readSingleton('globals', { fields: ['logo', 'dark_mode_logo'] })),
 		]);
 
 		return { navigation, globals };

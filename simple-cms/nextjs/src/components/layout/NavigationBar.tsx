@@ -16,7 +16,7 @@ import { ChevronDown, Menu } from 'lucide-react';
 import ThemeToggle from '../ui/ThemeToggle';
 import SearchModal from '@/components/ui/SearchModal';
 
-const NavigationBar = async () => {
+export default async function NavigationBar() {
 	let menu;
 	try {
 		menu = await fetchNavigationData('main');
@@ -25,23 +25,39 @@ const NavigationBar = async () => {
 
 		return null;
 	}
+
 	const { navigation, globals } = menu;
+	const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_URL;
+	const lightLogoUrl = globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg';
+	const darkLogoUrl = globals?.dark_mode_logo ? `${directusURL}/assets/${globals.dark_mode_logo}` : '';
 
 	return (
 		<header className="sticky top-0 z-50 w-full bg-background text-foreground">
 			<div className="flex items-center justify-between p-4 sm:px-6 lg:px-8">
 				<Link href="/">
 					{globals?.logo ? (
-						<Image
-							src={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${globals.logo}`}
-							alt="Logo"
-							width={150}
-							height={100}
-							className="w-[120px] h-auto"
-							priority
-						/>
+						<>
+							<Image
+								src={lightLogoUrl}
+								alt="Logo"
+								width={150}
+								height={100}
+								className={darkLogoUrl ? 'w-[120px] h-auto dark:hidden' : 'w-[120px] h-auto'}
+								priority
+							/>
+							{darkLogoUrl && (
+								<Image
+									src={darkLogoUrl}
+									alt="Logo (Dark Mode)"
+									width={150}
+									height={100}
+									className="w-[120px] h-auto hidden dark:block"
+									priority
+								/>
+							)}
+						</>
 					) : (
-						<Image src="/images/logo.svg" alt="Logo" width="150" height="100" className="w-[90px] h-[45px]" priority />
+						<Image src="/images/logo.svg" alt="Logo" width={150} height={100} className="w-[90px] h-[45px]" priority />
 					)}
 				</Link>
 
@@ -136,6 +152,4 @@ const NavigationBar = async () => {
 			</div>
 		</header>
 	);
-};
-
-export default NavigationBar;
+}

@@ -194,6 +194,8 @@ export interface Globals {
 	openai_api_key?: string | null;
 	directus_url?: string | null;
 	accent_color?: string | null;
+	/** @description Logo to display when site is in dark mode */
+	dark_mode_logo?: DirectusFile | string | null;
 }
 
 export interface Navigation {
