@@ -32,7 +32,7 @@ const Hero = ({ data }: HeroProps) => {
 	return (
 		<section
 			className={cn(
-				'relative w-full mx-auto px-4 flex flex-col gap-6 md:gap-12',
+				'relative w-full mx-auto flex flex-col gap-6 md:gap-12',
 				alignment === 'center'
 					? 'items-center text-center'
 					: alignment === 'right'

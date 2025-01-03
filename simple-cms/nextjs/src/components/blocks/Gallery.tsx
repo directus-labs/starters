@@ -42,7 +42,7 @@ const Gallery = ({ data }: GalleryProps) => {
 	};
 
 	return (
-		<section className="p-6">
+		<section className="">
 			{tagline && <Tagline tagline={tagline} />}
 			{headline && <Headline headline={headline} />}
 
