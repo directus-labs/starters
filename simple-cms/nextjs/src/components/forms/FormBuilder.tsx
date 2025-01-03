@@ -59,7 +59,6 @@ const FormBuilder = ({ form }: FormBuilderProps) => {
 
 	return (
 		<div className="space-y-6 border p-8 rounded-lg">
-			{form.title && <h3 className="font-heading text-h3 text-gray-500">{form.title}</h3>}
 			{error && (
 				<div className="p-4 text-red-500 bg-red-100 rounded-md">
 					<strong>Error:</strong> {error}
