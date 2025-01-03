@@ -32,6 +32,7 @@
 	textarea:focus,
 	select:focus,
 	button:focus,
+	a:focus,
 	[role='button']:focus {
 		@apply outline-none ring-2 ring-[var(--accent-color)] ring-offset-2;
 	}
