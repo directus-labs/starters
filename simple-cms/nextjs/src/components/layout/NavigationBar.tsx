@@ -119,7 +119,7 @@ export default async function NavigationBar() {
 						</DropdownMenuTrigger>
 						<DropdownMenuContent
 							align="start"
-							className="top-full w-screen bg-gray p-6 shadow-md max-w-full overflow-hidden"
+							className="top-full w-screen p-6 shadow-md max-w-full overflow-hidden"
 						>
 							<div className="flex flex-col gap-4">
 								{navigation?.items?.map((section: any) => (
