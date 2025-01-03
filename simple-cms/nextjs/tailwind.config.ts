@@ -14,7 +14,7 @@ const config: Config = {
 			},
 			fontSize: {
 				tagline: ['24px', '33.6px'], // Tagline
-				headline: ['56px', '78.4px'], // Headline
+				headline: ['56px', '64px'], // Headline
 				h1: ['56px', '78.4px'], // Heading 1
 				h2: ['36px', '50.4px'], // Heading 2
 				h3: ['24px', '33.6px'], // Heading 3
@@ -99,8 +99,8 @@ const config: Config = {
 							fontSize: 'clamp(0.875rem, 1rem, 1.125rem)',
 							fontWeight: '400',
 							lineHeight: '1.6',
-							backgroundColor: '#f8f9fa',
-							color: 'black',
+							backgroundColor: 'var(--background-color-muted)',
+							color: 'var(--foreground-color)',
 							borderRadius: '4px',
 							padding: '0.15rem 0.35rem',
 							display: 'inline',
@@ -123,8 +123,8 @@ const config: Config = {
 							fontFamily: 'Fira Mono',
 							fontSize: 'clamp(0.9rem, 1.125rem, 1.25rem)',
 							lineHeight: '1.6',
-							backgroundColor: '#f8f9fa',
-							color: 'black',
+							backgroundColor: 'var(--background-color-muted)',
+							color: 'var(--foreground-color)',
 							borderRadius: '8px',
 							padding: '1rem',
 							overflowX: 'auto',
