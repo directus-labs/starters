@@ -17,6 +17,7 @@ export interface ButtonProps {
 	className?: string;
 	onClick?: () => void;
 	disabled?: boolean;
+	block?: boolean;
 }
 
 const Button = ({
@@ -30,6 +31,7 @@ const Button = ({
 	className,
 	onClick,
 	disabled = false,
+	block = false,
 }: ButtonProps) => {
 	const icons: Record<string, LucideIcon> = {
 		arrow: ArrowRight,
@@ -54,18 +56,18 @@ const Button = ({
 
 	if (url) {
 		return url.startsWith('/') ? (
-			<Link href={url} className={buttonClasses}>
+			<Link href={url} className={cn(buttonClasses, block && 'w-full')}>
 				{content}
 			</Link>
 		) : (
-			<a href={url} className={buttonClasses} onClick={onClick} target="_blank" rel="noopener noreferrer">
+			<a href={url} className={cn(buttonClasses, block && 'w-full')} onClick={onClick} target="_blank" rel="noopener noreferrer">
 				{content}
 			</a>
 		);
 	}
 
 	return (
-		<ShadcnButton variant={variant as any} size={size} className={buttonClasses} onClick={onClick} disabled={disabled}>
+		<ShadcnButton variant={variant as any} size={size} className={buttonClasses} onClick={onClick} disabled={disabled} block={block}>
 			{content}
 		</ShadcnButton>
 	);
