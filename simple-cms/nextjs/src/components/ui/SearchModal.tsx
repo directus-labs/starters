@@ -1,13 +1,19 @@
 'use client';
 
-import { useState } from 'react';
-import { Dialog, DialogTrigger, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
+import { useEffect, useState } from 'react';
+import {
+	CommandDialog,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+} from '@/components/ui/command';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Search } from 'lucide-react';
-import Link from 'next/link';
-import useKeyboardShortcut from '@/hooks/useKeyboardShortcut';
+import { Badge } from '@/components/ui/badge';
+import { debounce } from '@/lib/utils';
+import { DialogDescription, DialogTitle } from './dialog';
 
 type SearchResult = {
 	id: string;
@@ -17,14 +23,31 @@ type SearchResult = {
 	link: string;
 };
 
-const SearchModal = () => {
-	const [isOpen, setIsOpen] = useState(false);
-	const [query, setQuery] = useState('');
+export default function SearchModal() {
+	const [open, setOpen] = useState(false);
 	const [results, setResults] = useState<SearchResult[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [searched, setSearched] = useState(false);
 
-	useKeyboardShortcut(['k'], () => setIsOpen(true));
+	useEffect(() => {
+		const onKeyDown = (e: KeyboardEvent) => {
+			if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+				e.preventDefault();
+				setOpen((prev) => !prev);
+			}
+		};
+		document.addEventListener('keydown', onKeyDown);
+
+		return () => document.removeEventListener('keydown', onKeyDown);
+	}, []);
+
+	useEffect(() => {
+		if (!open) {
+			setResults([]);
+			setSearched(false);
+			setLoading(false);
+		}
+	}, [open]);
 
 	const fetchResults = async (search: string) => {
 		if (search.length < 3) {
@@ -36,10 +59,12 @@ const SearchModal = () => {
 
 		setLoading(true);
 		setSearched(true);
+
 		try {
 			const res = await fetch(`/api/search?search=${encodeURIComponent(search)}`);
+			if (!res.ok) throw new Error('Failed to fetch results');
 			const data: SearchResult[] = await res.json();
-			setResults(data.filter((result) => result.link));
+			setResults(data.filter((r) => r.link));
 		} catch (error) {
 			console.error('Error fetching search results:', error);
 			setResults([]);
@@ -48,51 +73,52 @@ const SearchModal = () => {
 		}
 	};
 
-	const handleResultClick = () => {
-		setIsOpen(false);
-		setQuery('');
-		setResults([]);
-		setSearched(false);
-	};
+	const debouncedFetchResults = debounce(fetchResults, 300);
 
 	return (
-		<Dialog open={isOpen} onOpenChange={setIsOpen}>
-			<DialogTrigger asChild>
-				<Button variant="ghost" size="icon" aria-label="Search">
-					<Search className="size-5" />
-				</Button>
-			</DialogTrigger>
-			<DialogContent className="max-w-lg">
-				<DialogTitle>Search</DialogTitle>
-				<Input
-					placeholder="Search for pages, posts, or sections..."
-					value={query}
-					onChange={(e) => {
-						setQuery(e.target.value);
-						fetchResults(e.target.value);
-					}}
-					className="w-full my-4"
-				/>
-				{loading && <p className="text-gray-500">Loading...</p>}
-				{!loading && searched && results.length === 0 && <p className="text-gray-500">No results found.</p>}
-				<ul className="space-y-2">
-					{!loading &&
-						results.length > 0 &&
-						results.map((result) => (
-							<Link key={result.id} href={result.link!} onClick={handleResultClick}>
-								<li className="flex items-center gap-4 p-2 rounded hover:bg-gray-100 cursor-pointer">
-									<Badge variant="default">{result.type}</Badge>
-									<div>
-										<p className="font-medium">{result.title}</p>
-										<p className="text-sm text-gray-500">{result.description}</p>
-									</div>
-								</li>
-							</Link>
-						))}
-				</ul>
-			</DialogContent>
-		</Dialog>
-	);
-};
+		<div className="sm:max-w-[540px] max-w-full">
+			<Button variant="ghost" size="icon" onClick={() => setOpen(true)} aria-label="Search">
+				<Search className="size-5" />
+			</Button>
 
-export default SearchModal;
+			<CommandDialog open={open} onOpenChange={setOpen}>
+				<DialogTitle className="p-2">Search</DialogTitle>
+				<DialogDescription className="px-2">Search for pages or posts</DialogDescription>
+
+				<CommandInput
+					placeholder="Search for pages or posts"
+					onValueChange={(value) => debouncedFetchResults(value)}
+					className="p-3 m-2 focus:outline-none"
+				/>
+
+				<CommandList className="p-2 text-black max-h-[500px] overflow-auto">
+					{loading && <CommandEmpty className="py-2 text-sm">Loading...</CommandEmpty>}
+					{!loading && searched && results.length === 0 && (
+						<CommandEmpty className="py-2 text-sm">No results found</CommandEmpty>
+					)}
+					{!loading && results.length > 0 && (
+						<CommandGroup heading="Search Results" className="pt-2" forceMount>
+							{results.map((result) => (
+								<CommandItem
+									key={result.id}
+									value={result.link}
+									onSelect={(value) => {
+										window.location.href = value;
+										setOpen(false);
+									}}
+									className="flex items-start gap-4 px-2 py-3 hover:text-black"
+								>
+									<Badge variant="default">{result.type}</Badge>
+									<div className="ml-2">
+										<p className="font-medium">{result.title}</p>
+										{result.description && <p className="text-sm">{result.description}</p>}
+									</div>
+								</CommandItem>
+							))}
+						</CommandGroup>
+					)}
+				</CommandList>
+			</CommandDialog>
+		</div>
+	);
+}
