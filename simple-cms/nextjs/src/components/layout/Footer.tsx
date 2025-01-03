@@ -23,7 +23,7 @@ export default async function Footer() {
 			<Container className="text-foreground dark:text-white">
 				<div className="flex flex-col md:flex-row justify-between items-start gap-8 pt-8">
 					<div className="flex-1">
-						<Link href="/" className="inline-block transition-opacity hover:opacity-80">
+						<Link href="/" className="inline-block transition-opacity hover:opacity-70">
 							<img
 								src={lightLogoUrl}
 								alt="Logo"
@@ -42,7 +42,7 @@ export default async function Footer() {
 										href={social.url}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="size-8 rounded-full bg-transparent inline-flex items-center justify-center transition-colors hover:bg-accent"
+										className="size-8 rounded-lg bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
 									>
 										<img
 											src={`/icons/social/${social.service}.svg`}
