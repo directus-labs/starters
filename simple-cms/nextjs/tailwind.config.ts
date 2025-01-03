@@ -30,7 +30,11 @@ const config: Config = {
 				right: 'text-right',
 			},
 			colors: {
-				background: 'var(--background-color)',
+				background: {
+					DEFAULT: 'var(--background-color)',
+					muted: 'var(--background-color-muted)',
+					variant: 'var(--background-variant-color)',
+				},
 				foreground: 'var(--foreground-color)',
 				primary: 'var(--accent-color-light)',
 				input: 'var(--input-color)',
