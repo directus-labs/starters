@@ -25,7 +25,7 @@ const Posts = ({ data }: PostsProps) => {
 	}
 
 	return (
-		<div className="py-12">
+		<div>
 			{tagline && <Tagline tagline={tagline} />}
 			{headline && <Headline headline={headline} />}
 
