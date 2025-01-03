@@ -15,6 +15,7 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/component
 import { ChevronDown, Menu } from 'lucide-react';
 import ThemeToggle from '../ui/ThemeToggle';
 import SearchModal from '@/components/ui/SearchModal';
+import Container from '@/components/ui/container';
 
 export default async function NavigationBar() {
 	let menu;
@@ -33,7 +34,7 @@ export default async function NavigationBar() {
 
 	return (
 		<header className="sticky top-0 z-50 w-full bg-background text-foreground">
-			<div className="flex items-center justify-between p-4 sm:px-6 lg:px-8">
+			<Container className="flex items-center justify-between p-4">
 				<Link href="/">
 					{globals?.logo ? (
 						<>
@@ -118,7 +119,7 @@ export default async function NavigationBar() {
 						</DropdownMenuTrigger>
 						<DropdownMenuContent
 							align="start"
-							className="top-full w-screen bg-gray p-6 shadow-md max-w-full overflow-hidden"
+							className="top-full w-screen p-6 shadow-md max-w-full overflow-hidden"
 						>
 							<div className="flex flex-col gap-4">
 								{navigation?.items?.map((section: any) => (
@@ -149,7 +150,7 @@ export default async function NavigationBar() {
 					</DropdownMenu>
 					<ThemeToggle />
 				</div>
-			</div>
+			</Container>
 		</header>
 	);
 }

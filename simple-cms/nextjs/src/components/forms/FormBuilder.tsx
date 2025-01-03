@@ -5,8 +5,9 @@ import { CheckCircle } from 'lucide-react';
 import DynamicForm from './DynamicForm';
 import { submitForm } from '@/lib/directus/forms';
 import { FormField } from '@/types/directus-schema';
-
+import { cn } from '@/lib/utils';
 interface FormBuilderProps {
+	className?: string;
 	form: {
 		id: string;
 		on_success?: 'redirect' | 'message' | null;
@@ -20,7 +21,7 @@ interface FormBuilderProps {
 	};
 }
 
-const FormBuilder = ({ form }: FormBuilderProps) => {
+const FormBuilder = ({ form, className }: FormBuilderProps) => {
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
@@ -58,8 +59,7 @@ const FormBuilder = ({ form }: FormBuilderProps) => {
 	}
 
 	return (
-		<div className="space-y-6 border p-8 rounded-lg">
-			{form.title && <h3 className="font-heading text-h3 text-gray-500">{form.title}</h3>}
+		<div className={cn("space-y-6 border border-input p-8 rounded-lg", className)}>
 			{error && (
 				<div className="p-4 text-red-500 bg-red-100 rounded-md">
 					<strong>Error:</strong> {error}

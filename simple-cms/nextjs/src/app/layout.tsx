@@ -32,10 +32,10 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
 	return (
 		<html lang="en" style={{ '--accent-color': accentColor } as React.CSSProperties} suppressHydrationWarning>
-			<body className="antialiased font-sans">
+			<body className="antialiased font-sans flex flex-col min-h-screen">
 				<ThemeProvider>
 					<NavigationBar />
-					<main className="min-h-screen px-2 md:px-8 lg:px-16">{children}</main>
+					<main className="flex-grow">{children}</main>
 					<Footer />
 				</ThemeProvider>
 			</body>

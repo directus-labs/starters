@@ -24,23 +24,20 @@ const PricingCard = ({ card }: PricingCardProps) => {
 	return (
 		<div
 			className={`flex flex-col max-w-[600px] md:min-h-[424px] border rounded-lg p-6 ${
-				card.is_highlighted ? 'border-accent' : 'border-gray-300'
+				card.is_highlighted ? 'border-accent' : 'border-input'
 			}`}
 		>
-			<div className="flex justify-between items-start gap-4 mb-4">
-				<h3 className="text-[32px] font-normal text-foreground">{card.title}</h3>
+			<div className="flex justify-between items-start gap-2 mb-4">
+				<h3 className="text-xl font-heading text-foreground">{card.title}</h3>
 				<div className="flex-shrink-0">
 					{card.badge && (
-						<Badge
-							variant={card.is_highlighted ? 'secondary' : 'default'}
-							className="px-2 py-1 text-sm font-medium uppercase whitespace-nowrap"
-						>
+						<Badge variant={card.is_highlighted ? 'secondary' : 'default'} className="text-xs font-medium uppercase">
 							{card.badge}
 						</Badge>
 					)}
 				</div>
 			</div>
-			{card.price && <p className="text-h2 font-heading mt-2">{card.price}</p>}
+			{card.price && <p className="text-h2  mt-2 font-semibold">{card.price}</p>}
 			{card.description && <p className="text-description mt-2 line-clamp-2">{card.description}</p>}
 
 			<Separator className="my-4" />
@@ -60,7 +57,7 @@ const PricingCard = ({ card }: PricingCardProps) => {
 				)}
 			</div>
 			<div className="mt-auto pt-4">
-				{card.button && <Button label={card.button.label} variant={card.button.variant} url={card.button.url} />}
+				{card.button && <Button label={card.button.label} variant={card.button.variant} url={card.button.url} block={true} />}
 			</div>
 		</div>
 	);

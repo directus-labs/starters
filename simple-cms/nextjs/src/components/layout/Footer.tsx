@@ -1,6 +1,7 @@
 import { fetchFooterData } from '@/lib/directus/fetchers';
 import Link from 'next/link';
-import ThemeToggle from '../ui/ThemeToggle';
+import ThemeToggle from '@/components/ui/ThemeToggle';
+import Container from '@/components/ui/container';
 
 export default async function Footer() {
 	let footerData;
@@ -19,10 +20,10 @@ export default async function Footer() {
 
 	return (
 		<footer className="bg-gray dark:bg-[var(--background-variant-color)] py-16">
-			<div className="px-16 lg:px-32 text-foreground dark:text-white">
+			<Container className="text-foreground dark:text-white">
 				<div className="flex flex-col md:flex-row justify-between items-start gap-8 pt-8">
 					<div className="flex-1">
-						<Link href="/" className="inline-block transition-opacity hover:opacity-80">
+						<Link href="/" className="inline-block transition-opacity hover:opacity-70">
 							<img
 								src={lightLogoUrl}
 								alt="Logo"
@@ -41,7 +42,7 @@ export default async function Footer() {
 										href={social.url}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="size-8 rounded-full bg-transparent inline-flex items-center justify-center transition-colors hover:bg-accent"
+										className="size-8 rounded bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
 									>
 										<img
 											src={`/icons/social/${social.service}.svg`}
@@ -74,7 +75,7 @@ export default async function Footer() {
 						</nav>
 					</div>
 				</div>
-			</div>
+			</Container>
 		</footer>
 	);
 }
