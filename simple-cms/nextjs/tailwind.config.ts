@@ -33,6 +33,7 @@ const config: Config = {
 				background: 'var(--background-color)',
 				foreground: 'var(--foreground-color)',
 				primary: 'var(--accent-color-light)',
+				input: 'var(--input-color)',
 				secondary: 'var(--accent-color-dark)',
 				accent: 'var(--accent-color)',
 				soft: 'var(--accent-color-soft)',
@@ -167,9 +168,7 @@ const config: Config = {
 						blockquote: {
 							borderLeftColor: 'var(--gray-700)',
 						},
-						code: {
-							backgroundColor: '#1f2937',
-						},
+
 					},
 				},
 			},
