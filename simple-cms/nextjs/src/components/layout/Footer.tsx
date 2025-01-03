@@ -42,7 +42,7 @@ export default async function Footer() {
 										href={social.url}
 										target="_blank"
 										rel="noopener noreferrer"
-										className="size-8 rounded-lg bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
+										className="size-8 rounded bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
 									>
 										<img
 											src={`/icons/social/${social.service}.svg`}
