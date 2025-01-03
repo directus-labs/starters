@@ -61,9 +61,9 @@ const ShareDialog = ({ postUrl, postTitle }: { postUrl: string; postTitle: strin
 							href={social.url}
 							target="_blank"
 							rel="noopener noreferrer"
-							className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-transform transform hover:scale-110"
+							className="rounded bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
 						>
-							<img src={social.icon} alt={`${social.service} icon`} width={32} height={32} className="size-8" />
+							<img src={social.icon} alt={`${social.service} icon`} width={32} height={32} className="size-8  dark:invert" />
 						</a>
 					))}
 				</div>
