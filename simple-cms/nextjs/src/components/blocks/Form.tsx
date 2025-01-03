@@ -32,10 +32,10 @@ const FormBlock = ({ data }: FormBlockProps) => {
 	}
 
 	return (
-		<section className="max-w-screen-lg mx-auto">
-			{tagline && <Tagline tagline={tagline} className="mb-2" />}
-			{headline && <Headline headline={headline} className="mb-2" />}
-			<FormBuilder form={form} />
+		<section className="mx-auto">
+			{tagline && <Tagline tagline={tagline} />}
+			{headline && <Headline headline={headline} />}
+			<FormBuilder form={form} className="mt-8" />
 		</section>
 	);
 };
