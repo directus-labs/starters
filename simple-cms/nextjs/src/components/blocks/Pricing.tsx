@@ -8,7 +8,7 @@ interface PricingProps {
 		headline?: string;
 		pricing_cards: Array<{
 			id: string;
-			tagline: string;
+			title: string;
 			description?: string;
 			price?: string;
 			badge?: string;
