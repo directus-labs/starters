@@ -29,11 +29,7 @@ const BaseBlock = ({ block }: BaseBlockProps) => {
 		return null;
 	}
 
-	return (
-		<div id={`block-${block.id}`}>
-			<Component data={block.item} />
-		</div>
-	);
+	return <Component data={block.item} id={`block-${block.id}`} />;
 };
 
 export default BaseBlock;
