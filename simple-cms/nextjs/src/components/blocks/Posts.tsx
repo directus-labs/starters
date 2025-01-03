@@ -45,7 +45,7 @@ const Posts = ({ data }: PostsProps) => {
 						</div>
 
 						<div className="p-4">
-							<h3 className="text-lg font-bold group-hover:text-accent transition-colors duration-300">{post.title}</h3>
+							<h3 className="text-xl group-hover:text-accent font-heading transition-colors duration-300">{post.title}</h3>
 							<p className="text-sm text-foreground mt-2">{post.description}</p>
 						</div>
 					</Link>
