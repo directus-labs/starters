@@ -14,7 +14,7 @@ const PageBuilder = ({ sections }: PageBuilderProps) => {
 	return (
 		<div>
 			{validBlocks.map((block) => (
-				<div key={block.id} data-background={block.background} className="py-8">
+				<div key={block.id} data-background={block.background} className="py-16">
 					<div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-16">
 						<BaseBlock block={block} />
 					</div>
