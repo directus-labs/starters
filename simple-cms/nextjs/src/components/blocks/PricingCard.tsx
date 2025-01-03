@@ -57,7 +57,7 @@ const PricingCard = ({ card }: PricingCardProps) => {
 				)}
 			</div>
 			<div className="mt-auto pt-4">
-				{card.button && <Button label={card.button.label} variant={card.button.variant} url={card.button.url} />}
+				{card.button && <Button label={card.button.label} variant={card.button.variant} url={card.button.url} block={true} />}
 			</div>
 		</div>
 	);
