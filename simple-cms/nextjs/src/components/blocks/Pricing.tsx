@@ -40,11 +40,11 @@ const Pricing = ({ data }: PricingProps) => {
 
 
 	return (
-		<section className="space-y-8">
+		<section>
 			{tagline && <Tagline tagline={tagline} />}
 			{headline && <Headline headline={headline} />}
 
-			<div className={`grid gap-6 ${gridClasses}`}>
+			<div className={`grid gap-6 mt-8 ${gridClasses}`}>
 				{pricing_cards.map((card) => (
 					<PricingCard key={card.id} card={card} />
 				))}
