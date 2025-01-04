@@ -1,5 +1,6 @@
 import { ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { Metadata } from 'next';
 
 /**
  * Combines class names dynamically with Tailwind merge.
@@ -18,5 +19,38 @@ export function debounce<T extends (...args: any[]) => void>(func: T, wait: numb
 	return (...args: Parameters<T>) => {
 		if (timeout) clearTimeout(timeout);
 		timeout = setTimeout(() => func(...args), wait);
+	};
+}
+
+/**
+ * Generates metadata for a page or post.
+ *
+ * @param pageTitle Page-specific or post-specific title
+ * @param pageDescription Page-specific or post-specific description
+ * @param resolvedPermalink Resolved permalink for the current page or post
+ * @param ogImage Optional Open Graph image URL
+ * @returns Metadata object for the page or post
+ */
+export function generatePageMetadata({
+	pageTitle,
+	pageDescription,
+	resolvedPermalink,
+	ogImage,
+}: {
+	pageTitle: string | null;
+	pageDescription?: string | null;
+	resolvedPermalink: string;
+	ogImage?: string | null;
+}): Metadata {
+	return {
+		title: pageTitle || 'Default Title',
+		description: pageDescription || undefined,
+		openGraph: {
+			title: pageTitle || 'Default Title',
+			description: pageDescription || undefined,
+			url: `${process.env.NEXT_PUBLIC_SITE_URL}${resolvedPermalink}`,
+			type: 'website',
+			images: ogImage ? [{ url: ogImage }] : undefined,
+		},
 	};
 }

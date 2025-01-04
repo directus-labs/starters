@@ -4,10 +4,31 @@ import DirectusImage from '@/components/shared/DirectusImage';
 import BaseText from '@/components/ui/Text';
 import { Separator } from '@/components/ui/separator';
 import ShareDialog from '@/components/ui/ShareDialog';
-import Head from 'next/head';
 import Link from 'next/link';
 import Headline from '@/components/ui/Headline';
 import Container from '@/components/ui/container';
+import { generatePageMetadata } from '@/lib/utils';
+import { Metadata } from 'next/types';
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+	const { slug } = params;
+
+	const post = await fetchPostBySlug(slug);
+
+	if (!post) {
+		return generatePageMetadata({
+			pageTitle: '404 - Post Not Found',
+			resolvedPermalink: `/blog/${slug}`,
+		});
+	}
+
+	return generatePageMetadata({
+		pageTitle: post.title || 'Untitled Post',
+		pageDescription: post.description || null,
+		resolvedPermalink: `/blog/${slug}`,
+		ogImage: post.image ? `${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${post.image}` : null,
+	});
+}
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
 	const { isEnabled } = await draftMode();
@@ -27,18 +48,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
 	return (
 		<>
-			{/* SEO Metadata */}
-			<Head>
-				<title>{post.title}</title>
-				{post.description && <meta name="description" content={post.description} />}
-				<meta property="og:title" content={post.title} />
-				{post.description && <meta property="og:description" content={post.description} />}
-				{post.image && (
-					<meta property="og:image" content={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${post.image}`} />
-				)}
-				<meta property="og:url" content={postUrl} />
-				<meta property="og:type" content="article" />
-			</Head>
 			{isEnabled && <p>(Draft Mode)</p>}
 			<Container className="py-12">
 				{post.image && (
