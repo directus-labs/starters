@@ -1,10 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DirectusImage from '@/components/shared/DirectusImage';
 import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
-import { Dialog, DialogContent, DialogDescription, DialogOverlay, DialogTitle } from '@/components/ui/dialog';
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogOverlay,
+	DialogTitle,
+	DialogClose,
+} from '@/components/ui/dialog';
 import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-react';
 
 interface GalleryProps {
@@ -40,6 +47,35 @@ const Gallery = ({ data }: GalleryProps) => {
 	const handleNext = () => {
 		setCurrentIndex((prevIndex) => (prevIndex < sortedItems.length - 1 ? prevIndex + 1 : 0));
 	};
+
+	const handleKeyDown = (e: KeyboardEvent) => {
+		if (isLightboxOpen) {
+			switch (e.key) {
+				case 'ArrowLeft':
+					e.preventDefault();
+					handlePrev();
+					break;
+				case 'ArrowRight':
+					e.preventDefault();
+					handleNext();
+					break;
+				case 'Escape':
+					e.preventDefault();
+					setLightboxOpen(false);
+					break;
+				default:
+					break;
+			}
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+		};
+	}, [isLightboxOpen]);
 
 	return (
 		<section className="">
@@ -77,6 +113,7 @@ const Gallery = ({ data }: GalleryProps) => {
 					<DialogContent
 						className="flex bg-transparent border-none items-center justify-center p-2"
 						style={{ maxHeight: '90vh' }}
+						hideCloseButton
 					>
 						<DialogTitle className="sr-only">Gallery Image</DialogTitle>
 						<DialogDescription className="sr-only">
@@ -107,6 +144,15 @@ const Gallery = ({ data }: GalleryProps) => {
 						>
 							<ArrowRight className="size-8" />
 						</button>
+
+						<DialogClose asChild>
+							<button
+								className="absolute top-4 right-4 text-white bg-black bg-opacity-70 rounded-full p-2 hover:bg-opacity-90"
+								aria-label="Close"
+							>
+								<X className="size-8" />
+							</button>
+						</DialogClose>
 					</DialogContent>
 				</Dialog>
 			)}
