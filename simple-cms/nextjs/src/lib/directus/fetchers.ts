@@ -1,11 +1,11 @@
 import { BlockPost, Globals, PageBlock, Post, Schema } from '@/types/directus-schema';
 import { useDirectus } from './directus';
-import { QueryFilter } from '@directus/sdk';
+import { QueryFilter, createDirectus, rest, readItems, aggregate } from '@directus/sdk';
 
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
  */
-export const fetchPageData = async (permalink: string) => {
+export const fetchPageData = async (permalink: string, postLimit = 6, postPage = 1) => {
 	const { directus, readItems } = useDirectus();
 
 	try {
@@ -138,6 +138,8 @@ export const fetchPageData = async (permalink: string) => {
 							fields: ['id', 'title', 'description', 'slug', 'image', 'status', 'published_at'],
 							filter: { status: { _eq: 'published' } },
 							sort: ['-published_at'],
+							limit: postLimit,
+							page: postPage,
 						}),
 					);
 
@@ -313,5 +315,44 @@ export const fetchAuthorById = async (authorId: string) => {
 	} catch (error) {
 		console.error(`Error fetching author with ID "${authorId}":`, error);
 		throw new Error(`Failed to fetch author with ID "${authorId}"`);
+	}
+};
+
+export const fetchPaginatedPosts = async (limit: number, page: number) => {
+	const { directus } = useDirectus();
+	try {
+		const response = await directus.request(
+			readItems('posts', {
+				limit,
+				page,
+				sort: ['-published_at'],
+				fields: ['id', 'title', 'description', 'slug', 'image'],
+				filter: { status: { _eq: 'published' } },
+			}),
+		);
+
+		return response;
+	} catch (error) {
+		console.error('Error fetching paginated posts:', error);
+		throw new Error('Failed to fetch paginated posts');
+	}
+};
+
+export const fetchTotalPostCount = async (): Promise<number> => {
+	const { directus } = useDirectus();
+
+	try {
+		const response = await directus.request(
+			aggregate('posts', {
+				aggregate: { count: '*' },
+				filter: { status: { _eq: 'published' } },
+			}),
+		);
+
+		return Number(response[0]?.count) || 0;
+	} catch (error) {
+		console.error('Error fetching total post count:', error);
+
+		return 0;
 	}
 };
