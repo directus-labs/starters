@@ -4,16 +4,17 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 export interface ButtonProps {
+	id: string;
 	label?: string | null;
 	variant?: string | null;
 	url?: string | null;
+	type?: 'page' | 'post' | 'url' | null;
+	page?: { permalink: string | null };
+	post?: { slug: string | null };
 	size?: 'default' | 'sm' | 'lg' | 'icon';
 	icon?: 'arrow' | 'plus';
 	customIcon?: LucideIcon;
 	iconPosition?: 'left' | 'right';
-	type?: string;
-	pagePermalink?: string | null;
-	postSlug?: string | null;
 	className?: string;
 	onClick?: () => void;
 	disabled?: boolean;
@@ -24,6 +25,9 @@ const Button = ({
 	label,
 	variant,
 	url,
+	type,
+	page,
+	post,
 	size = 'default',
 	icon,
 	customIcon,
@@ -40,6 +44,20 @@ const Button = ({
 
 	const Icon = customIcon || (icon ? icons[icon] : null);
 
+	const href = (() => {
+		if (type === 'page' && page?.permalink) return page.permalink;
+		if (type === 'post' && post?.slug) return `/blog/${post.slug}`;
+
+		return url || undefined;
+	})();
+
+	const buttonClasses = cn(
+		buttonVariants({ variant: variant as any, size }),
+		className,
+		disabled && 'opacity-50 cursor-not-allowed',
+		block && 'w-full',
+	);
+
 	const content = (
 		<span className="flex items-center space-x-2">
 			{icon && iconPosition === 'left' && Icon && <Icon className="size-4 shrink-0" />}
@@ -48,26 +66,23 @@ const Button = ({
 		</span>
 	);
 
-	const buttonClasses = cn(
-		buttonVariants({ variant: variant as any, size }),
-		className,
-		disabled && 'opacity-50 cursor-not-allowed',
-	);
-
-	if (url) {
-		return url.startsWith('/') ? (
-			<Link href={url} className={cn(buttonClasses, block && 'w-full')}>
-				{content}
-			</Link>
-		) : (
-			<a href={url} className={cn(buttonClasses, block && 'w-full')} onClick={onClick} target="_blank" rel="noopener noreferrer">
-				{content}
-			</a>
+	// Render asChild with href logic
+	if (href) {
+		return (
+			<ShadcnButton asChild variant={variant as any} size={size} className={buttonClasses} disabled={disabled}>
+				{href.startsWith('/') ? (
+					<Link href={href}>{content}</Link>
+				) : (
+					<a href={href} target="_blank" rel="noopener noreferrer">
+						{content}
+					</a>
+				)}
+			</ShadcnButton>
 		);
 	}
 
 	return (
-		<ShadcnButton variant={variant as any} size={size} className={buttonClasses} onClick={onClick} disabled={disabled} block={block}>
+		<ShadcnButton variant={variant as any} size={size} className={buttonClasses} onClick={onClick} disabled={disabled}>
 			{content}
 		</ShadcnButton>
 	);
