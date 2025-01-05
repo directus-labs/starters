@@ -18,12 +18,13 @@
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"autoprefixer": "^10.4.20",
-		"bits-ui": "1.0.0-next.77",
+		"bits-ui": "^1.0.0-next.77",
 		"clsx": "^2.1.1",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
 		"globals": "^15.0.0",
+		"lucide-svelte": "^0.469.0",
 		"prettier": "^3.3.2",
 		"prettier-plugin-svelte": "^3.2.6",
 		"prettier-plugin-tailwindcss": "^0.6.5",
@@ -44,6 +45,5 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"class-variance-authority": "^0.7.1",
 		"p-queue": "^8.0.1"
-	},
-	"packageManager": "pnpm@9.14.4+sha512.c8180b3fbe4e4bca02c94234717896b5529740a6cbadf19fa78254270403ea2f27d4e1d46a08a0f56c89b63dc8ebfd3ee53326da720273794e6200fcf0d184ab"
+	}
 }
