@@ -15,6 +15,12 @@ const nextConfig: NextConfig = {
 				hostname: 'simple-cms-starter.directus.app',
 				pathname: '/assets/**',
 			},
+			{
+				protocol: 'http',
+				hostname: 'localhost',
+				port: '8055',
+				pathname: '/assets/**',
+			},
 		],
 	},
 };
