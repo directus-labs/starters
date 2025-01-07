@@ -4,8 +4,8 @@ import PageBuilder from '@/components/layout/PageBuilder';
 import { Metadata } from 'next';
 import { PageBlock } from '@/types/directus-schema';
 
-export async function generateMetadata({ params }: { params: { permalink?: string[] } }): Promise<Metadata> {
-	const { permalink } = params;
+export async function generateMetadata({ params }: { params: Promise<{ permalink?: string[] }> }): Promise<Metadata> {
+	const { permalink } = await params;
 	const permalinkSegments = permalink || [];
 	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
 

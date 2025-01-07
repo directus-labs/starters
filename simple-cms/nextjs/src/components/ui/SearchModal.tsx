@@ -14,6 +14,7 @@ import { Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { debounce } from '@/lib/utils';
 import { DialogDescription, DialogTitle } from './dialog';
+import Link from 'next/link';
 
 type SearchResult = {
 	id: string;
@@ -88,11 +89,13 @@ export default function SearchModal() {
 				<CommandInput
 					placeholder="Search for pages or posts"
 					onValueChange={(value) => debouncedFetchResults(value)}
-					className=" m-2 focus:outline-none"
+					className="m-2 focus:outline-none p-2"
 				/>
 
 				<CommandList className="p-2 text-foreground max-h-[500px] overflow-auto">
-					{!loading && !searched && <CommandEmpty className="py-2 text-sm text-center">Enter a search term above to see results</CommandEmpty>}
+					{!loading && !searched && (
+						<CommandEmpty className="py-2 text-sm text-center">Enter a search term above to see results</CommandEmpty>
+					)}
 					{loading && <CommandEmpty className="py-2 text-sm text-center">Loading...</CommandEmpty>}
 					{!loading && searched && results.length === 0 && (
 						<CommandEmpty className="py-2 text-sm text-center">No results found</CommandEmpty>
@@ -100,20 +103,14 @@ export default function SearchModal() {
 					{!loading && results.length > 0 && (
 						<CommandGroup heading="Search Results" className="pt-2" forceMount>
 							{results.map((result) => (
-								<CommandItem
-									key={result.id}
-									value={result.link}
-									onSelect={(value) => {
-										window.location.href = value;
-										setOpen(false);
-									}}
-									className="flex items-start gap-4 px-2 py-3"
-								>
+								<CommandItem key={result.id} className="flex items-start gap-4 px-2 py-3">
 									<Badge variant="default">{result.type}</Badge>
-									<div className="ml-2">
-										<p className="font-medium text-base">{result.title}</p>
-										{result.description && <p className="text-sm mt-1 line-clamp-2">{result.description}</p>}
-									</div>
+									<Link href={result.link} className="ml-2 w-full" onClick={() => setOpen(false)}>
+										<div>
+											<p className="font-medium text-base">{result.title}</p>
+											{result.description && <p className="text-sm mt-1 line-clamp-2">{result.description}</p>}
+										</div>
+									</Link>
 								</CommandItem>
 							))}
 						</CommandGroup>

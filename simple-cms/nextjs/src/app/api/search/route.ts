@@ -52,10 +52,9 @@ export async function GET(request: Request) {
 				title: page.title,
 				description: page.description,
 				type: 'Page',
-				link: `/${page.permalink}`.replace(/\/+$/, '/'),
+				link: `/${page.permalink.replace(/^\/+/, '')}`,
 			})),
 
-			// Posts
 			...posts.map((post: any) => ({
 				id: post.id,
 				title: post.title,

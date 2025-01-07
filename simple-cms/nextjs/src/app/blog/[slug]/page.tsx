@@ -10,8 +10,8 @@ import Container from '@/components/ui/container';
 import { generatePageMetadata } from '@/lib/utils';
 import { Metadata } from 'next/types';
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-	const { slug } = params;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+	const { slug } = await params;
 
 	const post = await fetchPostBySlug(slug);
 
