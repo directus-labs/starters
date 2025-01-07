@@ -5,7 +5,7 @@ import { QueryFilter, createDirectus, rest, readItems, aggregate } from '@direct
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
  */
-export const fetchPageData = async (permalink: string, postLimit = 6, postPage = 1) => {
+export const fetchPageData = async (permalink: string, postPage = 1) => {
 	const { directus, readItems } = useDirectus();
 
 	try {
@@ -77,7 +77,7 @@ export const fetchPageData = async (permalink: string, postLimit = 6, postPage =
 											],
 										},
 									],
-									block_posts: ['tagline', 'headline', 'collection'],
+									block_posts: ['tagline', 'headline', 'collection', 'limit'], // Include `limit`
 									block_form: [
 										'id',
 										'tagline',
@@ -133,12 +133,13 @@ export const fetchPageData = async (permalink: string, postLimit = 6, postPage =
 					typeof block.item === 'object' &&
 					(block.item as BlockPost).collection === 'posts'
 				) {
+					const limit = (block.item as BlockPost).limit ?? 6;
 					const posts = await directus.request<Post[]>(
 						readItems('posts', {
 							fields: ['id', 'title', 'description', 'slug', 'image', 'status', 'published_at'],
 							filter: { status: { _eq: 'published' } },
 							sort: ['-published_at'],
-							limit: postLimit,
+							limit,
 							page: postPage,
 						}),
 					);

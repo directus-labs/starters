@@ -69,6 +69,7 @@ export interface BlockPost {
 	/** @required */
 	collection: 'posts';
 	tagline?: string | null;
+	limit?: number | null;
 }
 
 export interface BlockPricing {

@@ -14,7 +14,7 @@ import { Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { debounce } from '@/lib/utils';
 import { DialogDescription, DialogTitle } from './dialog';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 type SearchResult = {
 	id: string;
@@ -29,6 +29,8 @@ export default function SearchModal() {
 	const [results, setResults] = useState<SearchResult[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [searched, setSearched] = useState(false);
+
+	const router = useRouter();
 
 	useEffect(() => {
 		const onKeyDown = (e: KeyboardEvent) => {
@@ -103,14 +105,19 @@ export default function SearchModal() {
 					{!loading && results.length > 0 && (
 						<CommandGroup heading="Search Results" className="pt-2" forceMount>
 							{results.map((result) => (
-								<CommandItem key={result.id} className="flex items-start gap-4 px-2 py-3">
+								<CommandItem
+									key={result.id}
+									className="flex items-start gap-4 px-2 py-3"
+									onSelect={() => {
+										router.push(result.link);
+										setOpen(false);
+									}}
+								>
 									<Badge variant="default">{result.type}</Badge>
-									<Link href={result.link} className="ml-2 w-full" onClick={() => setOpen(false)}>
-										<div>
-											<p className="font-medium text-base">{result.title}</p>
-											{result.description && <p className="text-sm mt-1 line-clamp-2">{result.description}</p>}
-										</div>
-									</Link>
+									<div className="ml-2 w-full">
+										<p className="font-medium text-base">{result.title}</p>
+										{result.description && <p className="text-sm mt-1 line-clamp-2">{result.description}</p>}
+									</div>
 								</CommandItem>
 							))}
 						</CommandGroup>

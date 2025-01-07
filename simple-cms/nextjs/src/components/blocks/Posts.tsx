@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { ChevronFirst, ChevronLast } from 'lucide-react';
 import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import DirectusImage from '@/components/shared/DirectusImage';
@@ -22,15 +24,20 @@ interface PostsProps {
 		tagline?: string;
 		headline?: string;
 		posts: Post[];
+		limit: number;
 	};
 }
 
 const Posts = ({ data }: PostsProps) => {
-	const { tagline, headline, posts } = data;
-	const perPage = 6;
+	const { tagline, headline, posts, limit } = data;
+	const router = useRouter();
+	const searchParams = useSearchParams();
 
-	const [currentPage, setCurrentPage] = useState(1);
-	const [paginatedPosts, setPaginatedPosts] = useState<Post[]>(posts);
+	const initialPage = Number(searchParams.get('page')) || 1;
+	const perPage = limit || 6;
+
+	const [currentPage, setCurrentPage] = useState(initialPage);
+	const [paginatedPosts, setPaginatedPosts] = useState<Post[]>(currentPage === 1 ? posts : []);
 	const [totalPages, setTotalPages] = useState(0);
 
 	useEffect(() => {
@@ -68,8 +75,39 @@ const Posts = ({ data }: PostsProps) => {
 	const handlePageChange = (page: number) => {
 		if (page >= 1 && page <= totalPages) {
 			setCurrentPage(page);
+			router.replace(`?page=${page}`, { scroll: false });
 		}
 	};
+
+	const generatePagination = () => {
+		const visiblePages = 5;
+		const pages: (number | string)[] = [];
+
+		if (totalPages <= visiblePages) {
+			for (let i = 1; i <= totalPages; i++) {
+				pages.push(i);
+			}
+		} else {
+			const rangeStart = Math.max(1, currentPage - 2);
+			const rangeEnd = Math.min(totalPages, currentPage + 2);
+
+			if (rangeStart > 1) {
+				pages.push('ellipsis-start');
+			}
+
+			for (let i = rangeStart; i <= rangeEnd; i++) {
+				pages.push(i);
+			}
+
+			if (rangeEnd < totalPages) {
+				pages.push('ellipsis-end');
+			}
+		}
+
+		return pages;
+	};
+
+	const paginationLinks = generatePagination();
 
 	return (
 		<div>
@@ -91,7 +129,6 @@ const Posts = ({ data }: PostsProps) => {
 									/>
 								)}
 							</div>
-
 							<div className="p-4">
 								<h3 className="text-xl group-hover:text-accent font-heading transition-colors duration-300">
 									{post.title}
@@ -108,7 +145,21 @@ const Posts = ({ data }: PostsProps) => {
 			{totalPages > 1 && (
 				<Pagination>
 					<PaginationContent>
-						{currentPage > 1 && (
+						{totalPages > 5 && currentPage > 1 && (
+							<PaginationItem>
+								<PaginationLink
+									href="#"
+									onClick={(e) => {
+										e.preventDefault();
+										handlePageChange(1);
+									}}
+								>
+									<ChevronFirst className="size-5" />
+								</PaginationLink>
+							</PaginationItem>
+						)}
+
+						{totalPages > 5 && currentPage > 1 && (
 							<PaginationItem>
 								<PaginationPrevious
 									href="#"
@@ -120,28 +171,28 @@ const Posts = ({ data }: PostsProps) => {
 							</PaginationItem>
 						)}
 
-						{Array.from({ length: totalPages }, (_, i) => (
-							<PaginationItem key={i}>
-								<PaginationLink
-									href="#"
-									isActive={currentPage === i + 1}
-									onClick={(e) => {
-										e.preventDefault();
-										handlePageChange(i + 1);
-									}}
-								>
-									{i + 1}
-								</PaginationLink>
-							</PaginationItem>
-						))}
-
-						{totalPages > 5 && (
-							<PaginationItem>
-								<PaginationEllipsis />
-							</PaginationItem>
+						{paginationLinks.map((page, index) =>
+							typeof page === 'number' ? (
+								<PaginationItem key={index}>
+									<PaginationLink
+										href="#"
+										isActive={currentPage === page}
+										onClick={(e) => {
+											e.preventDefault();
+											handlePageChange(page);
+										}}
+									>
+										{page}
+									</PaginationLink>
+								</PaginationItem>
+							) : (
+								<PaginationItem key={index}>
+									<PaginationEllipsis />
+								</PaginationItem>
+							),
 						)}
 
-						{currentPage < totalPages && (
+						{totalPages > 5 && currentPage < totalPages && (
 							<PaginationItem>
 								<PaginationNext
 									href="#"
@@ -150,6 +201,20 @@ const Posts = ({ data }: PostsProps) => {
 										handlePageChange(currentPage + 1);
 									}}
 								/>
+							</PaginationItem>
+						)}
+
+						{totalPages > 5 && currentPage < totalPages && (
+							<PaginationItem>
+								<PaginationLink
+									href="#"
+									onClick={(e) => {
+										e.preventDefault();
+										handlePageChange(totalPages);
+									}}
+								>
+									<ChevronLast className="size-5" />
+								</PaginationLink>
 							</PaginationItem>
 						)}
 					</PaginationContent>
