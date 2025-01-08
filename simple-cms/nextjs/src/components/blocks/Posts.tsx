@@ -192,7 +192,7 @@ const Posts = ({ data }: PostsProps) => {
 							),
 						)}
 
-						{totalPages > 5 && currentPage < totalPages && (
+						{totalPages > visiblePages && currentPage < totalPages && (
 							<PaginationItem>
 								<PaginationNext
 									href="#"
