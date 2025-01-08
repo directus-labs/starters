@@ -1,19 +1,11 @@
-import { fetchFooterData } from '@/lib/directus/fetchers';
+'use client';
+
 import Link from 'next/link';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import Container from '@/components/ui/container';
+import { Key } from 'react';
 
-export default async function Footer() {
-	let footerData;
-	try {
-		footerData = await fetchFooterData();
-	} catch (error) {
-		console.error('Error loading footer data:', error);
-
-		return null;
-	}
-
-	const { navPrimary, globals } = footerData;
+export default function Footer({ navigation, globals }: { navigation: any; globals: any }) {
 	const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_URL;
 	const lightLogoUrl = globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg';
 	const darkLogoUrl = globals?.dark_mode_logo ? `${directusURL}/assets/${globals.dark_mode_logo}` : '';
@@ -36,7 +28,7 @@ export default async function Footer() {
 						{globals?.description && <p className="text-description mt-2">{globals.description}</p>}
 						{globals?.social_links && (
 							<div className="mt-4 flex space-x-4">
-								{globals.social_links.map((social) => (
+								{globals.social_links.map((social: { service: Key | null | undefined; url: string | undefined }) => (
 									<a
 										key={social.service}
 										href={social.url}
@@ -57,7 +49,7 @@ export default async function Footer() {
 					<div className="flex flex-col items-start md:items-end flex-1">
 						<nav className="w-full md:w-auto text-left">
 							<ul className="space-y-4">
-								{navPrimary?.items?.map((group: any) => (
+								{navigation?.items?.map((group: any) => (
 									<li key={group.id}>
 										{group.page?.permalink ? (
 											<Link href={group.page.permalink} className="text-nav font-medium hover:underline">

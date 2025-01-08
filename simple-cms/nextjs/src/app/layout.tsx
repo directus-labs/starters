@@ -6,11 +6,11 @@ import { Metadata } from 'next';
 import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer';
 import { ThemeProvider } from '@/components/ui/ThemeProvider';
-import { fetchGlobals } from '@/lib/directus/fetchers';
+import { fetchSiteData } from '@/lib/directus/fetchers';
 import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
 
 export async function generateMetadata(): Promise<Metadata> {
-	const globals = await fetchGlobals();
+	const { globals } = await fetchSiteData();
 
 	const siteTitle = globals?.title ?? 'Simple CMS';
 	const siteDescription = globals?.description ?? 'A starter CMS template powered by Next.js and Directus.';
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
-	const globals = await fetchGlobals();
+	const { globals, headerNavigation, footerNavigation } = await fetchSiteData();
 
 	const accentColor = globals?.accent_color || '#6644ff';
 
@@ -34,9 +34,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 		<html lang="en" style={{ '--accent-color': accentColor } as React.CSSProperties} suppressHydrationWarning>
 			<body className="antialiased font-sans flex flex-col min-h-screen">
 				<ThemeProvider>
-					<NavigationBar />
+					<NavigationBar navigation={headerNavigation} globals={globals} />
 					<main className="flex-grow">{children}</main>
-					<Footer />
+					<Footer navigation={footerNavigation} globals={globals} />
 				</ThemeProvider>
 			</body>
 		</html>

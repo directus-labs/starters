@@ -1,4 +1,6 @@
-import { fetchNavigationData } from '@/lib/directus/fetchers';
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -17,20 +19,16 @@ import ThemeToggle from '../ui/ThemeToggle';
 import SearchModal from '@/components/ui/SearchModal';
 import Container from '@/components/ui/container';
 
-export default async function NavigationBar() {
-	let menu;
-	try {
-		menu = await fetchNavigationData('main');
-	} catch (error) {
-		console.error('Error loading navigation data:', error);
+export default function NavigationBar({ navigation, globals }: { navigation: any; globals: any }) {
+	const [menuOpen, setMenuOpen] = useState(false);
 
-		return null;
-	}
-
-	const { navigation, globals } = menu;
 	const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_URL;
 	const lightLogoUrl = globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg';
 	const darkLogoUrl = globals?.dark_mode_logo ? `${directusURL}/assets/${globals.dark_mode_logo}` : '';
+
+	const handleLinkClick = () => {
+		setMenuOpen(false);
+	};
 
 	return (
 		<header className="sticky top-0 z-50 w-full bg-background text-foreground">
@@ -96,7 +94,7 @@ export default async function NavigationBar() {
 					</NavigationMenu>
 
 					<div className="flex md:hidden">
-						<DropdownMenu>
+						<DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
 							<DropdownMenuTrigger asChild>
 								<Button
 									variant="link"
@@ -110,27 +108,36 @@ export default async function NavigationBar() {
 							<DropdownMenuContent align="start" className="top-full w-screen p-6 shadow-md max-w-full overflow-hidden">
 								<div className="flex flex-col gap-4">
 									{navigation?.items?.map((section: any) => (
-										<Collapsible key={section.id}>
-											<CollapsibleTrigger className="font-heading text-nav hover:text-accent w-full text-left flex items-center focus:outline-none">
-												<span>{section.title}</span>
-												{section.children && section.children.length > 0 && (
-													<ChevronDown className="size-4 ml-1 hover:rotate-180 active:rotate-180 focus:rotate-180" />
-												)}
-											</CollapsibleTrigger>
-											{section.children && section.children.length > 0 && (
-												<CollapsibleContent className="ml-4 mt-2 flex flex-col gap-2">
-													{section.children.map((child: any) => (
-														<Link
-															key={child.id || `${section.id}-${child.title}`}
-															href={child.page?.permalink || child.url || '#'}
-															className="font-heading text-nav"
-														>
-															{child.title}
-														</Link>
-													))}
-												</CollapsibleContent>
+										<div key={section.id}>
+											{section.children && section.children.length > 0 ? (
+												<Collapsible>
+													<CollapsibleTrigger className="font-heading text-nav hover:text-accent w-full text-left flex items-center focus:outline-none">
+														<span>{section.title}</span>
+														<ChevronDown className="size-4 ml-1 hover:rotate-180 active:rotate-180 focus:rotate-180" />
+													</CollapsibleTrigger>
+													<CollapsibleContent className="ml-4 mt-2 flex flex-col gap-2">
+														{section.children.map((child: any) => (
+															<Link
+																key={child.id}
+																href={child.page?.permalink || child.url || '#'}
+																className="font-heading text-nav"
+																onClick={handleLinkClick}
+															>
+																{child.title}
+															</Link>
+														))}
+													</CollapsibleContent>
+												</Collapsible>
+											) : (
+												<Link
+													href={section.page?.permalink || section.url || '#'}
+													className="font-heading text-nav"
+													onClick={handleLinkClick}
+												>
+													{section.title}
+												</Link>
 											)}
-										</Collapsible>
+										</div>
 									))}
 								</div>
 							</DropdownMenuContent>

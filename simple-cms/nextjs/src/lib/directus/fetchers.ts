@@ -1,6 +1,6 @@
-import { BlockPost, Globals, PageBlock, Post, Schema } from '@/types/directus-schema';
+import { BlockPost, PageBlock, Post, Schema } from '@/types/directus-schema';
 import { useDirectus } from './directus';
-import { QueryFilter, createDirectus, rest, readItems, aggregate } from '@directus/sdk';
+import { QueryFilter, readItems, aggregate, readItem, readSingleton } from '@directus/sdk';
 
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
@@ -77,7 +77,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 											],
 										},
 									],
-									block_posts: ['tagline', 'headline', 'collection', 'limit'], // Include `limit`
+									block_posts: ['tagline', 'headline', 'collection', 'limit'],
 									block_form: [
 										'id',
 										'tagline',
@@ -157,50 +157,20 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 };
 
 /**
- * Fetches footer navigation and global site data.
+ * Fetches global site data, header navigation, and footer navigation.
  */
-export const fetchFooterData = async () => {
-	const { directus, readItem, readSingleton } = useDirectus();
+export const fetchSiteData = async () => {
+	const { directus } = useDirectus();
 
 	try {
-		const [navPrimary, globals] = await Promise.all([
+		const [globals, headerNavigation, footerNavigation] = await Promise.all([
 			directus.request(
-				readItem('navigation', 'footer', {
-					fields: [
-						{
-							items: [
-								'id',
-								'title',
-								'page',
-								{
-									page: ['permalink'],
-									children: ['id', 'title', 'url', { page: ['permalink'] }],
-								},
-							],
-						},
-					],
+				readSingleton('globals', {
+					fields: ['title', 'description', 'logo', 'dark_mode_logo', 'social_links', 'accent_color', 'favicon'],
 				}),
 			),
-			directus.request(readSingleton('globals', { fields: ['description', 'logo', 'social_links', 'dark_mode_logo'] })),
-		]);
-
-		return { navPrimary, globals };
-	} catch (error) {
-		console.error('Error fetching footer data:', error);
-		throw new Error('Failed to fetch footer data');
-	}
-};
-
-/**
- * Fetches header navigation.
- */
-export const fetchNavigationData = async (key: string) => {
-	const { directus, readItem, readSingleton } = useDirectus();
-
-	try {
-		const [navigation, globals] = await Promise.all([
 			directus.request(
-				readItem('navigation', key, {
+				readItem('navigation', 'main', {
 					fields: [
 						{
 							items: [
@@ -216,32 +186,30 @@ export const fetchNavigationData = async (key: string) => {
 					deep: { items: { _sort: ['sort'] } },
 				}),
 			),
-			directus.request(readSingleton('globals', { fields: ['logo', 'dark_mode_logo'] })),
+			directus.request(
+				readItem('navigation', 'footer', {
+					fields: [
+						{
+							items: [
+								'id',
+								'title',
+								{
+									page: ['permalink'],
+									children: ['id', 'title', 'url', { page: ['permalink'] }],
+								},
+							],
+						},
+					],
+				}),
+			),
 		]);
 
-		return { navigation, globals };
+		return { globals, headerNavigation, footerNavigation };
 	} catch (error) {
-		console.error(`Error fetching navigation data for key "${key}":`, error);
-		throw new Error('Failed to fetch navigation data');
+		console.error('Error fetching site data:', error);
+		throw new Error('Failed to fetch site data');
 	}
 };
-
-export async function fetchGlobals(): Promise<Globals | null> {
-	const { directus, readSingleton } = useDirectus();
-	try {
-		const globals = await directus.request<Globals>(
-			readSingleton('globals', {
-				fields: ['title', 'description', 'accent_color', 'favicon', 'social_links', 'url'],
-			}),
-		);
-
-		return globals;
-	} catch (err) {
-		console.error('Failed to fetch globals:', err);
-
-		return null;
-	}
-}
 
 /**
  * Fetches a single blog post by slug. Handles live preview mode
