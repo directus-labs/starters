@@ -91,7 +91,7 @@ export default function SearchModal() {
 				<CommandInput
 					placeholder="Search for pages or posts"
 					onValueChange={(value) => debouncedFetchResults(value)}
-					className="m-2 focus:outline-none p-2"
+					className="m-2 p-4 focus:outline-none text-base leading-normal"
 				/>
 
 				<CommandList className="p-2 text-foreground max-h-[500px] overflow-auto">
