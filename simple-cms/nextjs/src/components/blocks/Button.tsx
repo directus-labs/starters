@@ -8,7 +8,7 @@ export interface ButtonProps {
 	label?: string | null;
 	variant?: string | null;
 	url?: string | null;
-	type?: 'page' | 'post' | 'url' | null;
+	type?: 'page' | 'post' | 'url' | 'submit' | null;
 	page?: { permalink: string | null };
 	post?: { slug: string | null };
 	size?: 'default' | 'sm' | 'lg' | 'icon';
@@ -66,7 +66,6 @@ const Button = ({
 		</span>
 	);
 
-	// Render asChild with href logic
 	if (href) {
 		return (
 			<ShadcnButton asChild variant={variant as any} size={size} className={buttonClasses} disabled={disabled}>

@@ -46,7 +46,13 @@ const DynamicForm = ({ fields, onSubmit, submitLabel }: DynamicFormProps) => {
 					<Field key={field.id} field={field} form={form} />
 				))}
 				<div className="w-full">
-					<Button type="submit" label={submitLabel} icon="arrow" iconPosition="right" />
+					<Button
+						type="submit"
+						label={submitLabel}
+						icon="arrow"
+						iconPosition="right"
+						id={`submit-${submitLabel.replace(/\s+/g, '-').toLowerCase()}`}
+					/>
 				</div>
 			</form>
 		</Form>
