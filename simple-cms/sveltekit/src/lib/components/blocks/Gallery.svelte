@@ -5,11 +5,12 @@
 		DialogContent,
 		DialogDescription,
 		DialogOverlay,
-		DialogTitle,
-		Title
+		DialogTitle
 	} from '../ui/dialog';
-	import Headline from '../ui/Headline.svelte';
+
 	import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-svelte';
+	import Headline from '../ui/Headline.svelte';
+	import Title from '../ui/Title.svelte';
 
 	interface GalleryProps {
 		data: {

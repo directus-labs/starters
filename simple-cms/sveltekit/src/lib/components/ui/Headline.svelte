@@ -10,7 +10,7 @@
 
 {#if headline}
 	<as
-		class="font-heading font-normal text-foreground ${props.class}
-         lg:text-headline text-4xl md:text-5xl"
-	></as>
+		class="font-heading font-normal text-foreground {props.class}
+         lg:text-headline text-4xl md:text-5xl">{headline}</as
+	>
 {/if}

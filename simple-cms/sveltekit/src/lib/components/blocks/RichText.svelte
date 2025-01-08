@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
-	import { Title } from '../ui/dialog';
+	import Title from '../ui/Headline.svelte';
 	import Headline from '../ui/Headline.svelte';
 	import Text from '../ui/Text.svelte';
 

@@ -11,15 +11,17 @@
 		[key: string]: any;
 	}
 
+	let { id, width, height, alt, className, ...props }: Props = $props();
 	let imageId = $derived.by(() => {
 		if (typeof id === 'string') {
 			return id;
 		}
 		return id.id;
 	});
-
-	let { id, width, height, alt, className, ...props }: Props = $props();
-	let src = $derived(`${PUBLIC_DIRECTUS_URL}/assets/${imageId}?width=${width}&height=${height}`);
+	//width=${width}&height=${height}
+	let src = $derived(`${PUBLIC_DIRECTUS_URL}/assets/${imageId}`);
 </script>
 
-<img {src} {alt} {width} {height} class={className} />
+<!-- {width}
+{height} -->
+<img {src} {alt} class={className} />

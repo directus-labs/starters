@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
 	import DirectusImage from '../shared/DirectusImage.svelte';
-	import { Title } from '../ui/dialog';
-	import Headline from '../ui/Headline.svelte';
 	import BaseText from '$lib/components/ui/Text.svelte';
 	import ButtonGroup from './ButtonGroup.svelte';
 	import type { ButtonProps } from '../ui/button';
+	import Headline from '../ui/Headline.svelte';
+	import Title from '../ui/Title.svelte';
 
 	interface Props {
 		data: {
@@ -40,8 +40,12 @@
 			alignment === 'center' ? 'items-center md:w-1/2' : 'items-start md:w-1/2'
 		)}
 	>
-		<Title {title} />
-		<Headline {headline} />
+		{#if title}
+			<Title {title} />
+		{/if}
+		{#if headline}
+			<Headline {headline} />
+		{/if}
 		{#if description}
 			<BaseText content={description} />
 		{/if}
@@ -64,3 +68,5 @@
 		</div>
 	{/if}
 </section>
+
+<!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->

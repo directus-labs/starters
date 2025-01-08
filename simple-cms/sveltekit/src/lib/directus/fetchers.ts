@@ -4,7 +4,6 @@ import type { BlockPost, PageBlock, Post } from '../../../types/directus-schema'
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
  */
 export const fetchPageData = async (permalink: string) => {
-
 	const { directus, readItems } = useDirectus();
 
 	try {
@@ -87,8 +86,9 @@ export const fetchPageData = async (permalink: string) => {
 			}),
 		);
 
+
 		if (!pageData.length) {
-			throw new Error('Page not found');
+			throw new Error('Page not found: ' + permalink);
 		}
 
 		const page = pageData[0];

@@ -1,7 +1,22 @@
 <script lang="ts">
-	export let data;
+	import PageBuilder from '$lib/components/layout/PageBuilder.svelte';
+	import type { PageBlock } from '../../../types/directus-schema.js';
+
+	let { data } = $props();
+
+	const blocks: PageBlock[] = $derived.by(() => {
+		if (!data.blocks) return [];
+		return data.blocks.filter(
+			(block: any): block is PageBlock => typeof block === 'object' && block.collection
+		);
+	});
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
-<pre>{JSON.stringify(data, null, 2)}</pre>
+<svelte:head>
+	<title>{data.title || ''}</title>
+	<meta name="description" content={data.description || ''} />
+</svelte:head>
+
+<PageBuilder sections={blocks} />
+
+<!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
