@@ -14,6 +14,7 @@ interface PricingProps {
 			badge?: string;
 			features?: string[];
 			button?: {
+				id: string;
 				label: string | null;
 				variant: string | null;
 				url: string | null;
@@ -37,7 +38,6 @@ const Pricing = ({ data }: PricingProps) => {
 		// Default to 2 columns for pricing cards
 		return 'grid-cols-1 sm:grid-cols-2';
 	})();
-
 
 	return (
 		<section>

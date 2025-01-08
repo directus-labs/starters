@@ -32,7 +32,7 @@ const Posts = ({ data }: PostsProps) => {
 	const { tagline, headline, posts, limit } = data;
 	const router = useRouter();
 	const searchParams = useSearchParams();
-
+	const visiblePages = 5;
 	const initialPage = Number(searchParams.get('page')) || 1;
 	const perPage = limit || 6;
 
@@ -80,9 +80,7 @@ const Posts = ({ data }: PostsProps) => {
 	};
 
 	const generatePagination = () => {
-		const visiblePages = 5;
 		const pages: (number | string)[] = [];
-
 		if (totalPages <= visiblePages) {
 			for (let i = 1; i <= totalPages; i++) {
 				pages.push(i);
@@ -133,7 +131,7 @@ const Posts = ({ data }: PostsProps) => {
 								<h3 className="text-xl group-hover:text-accent font-heading transition-colors duration-300">
 									{post.title}
 								</h3>
-								<p className="text-sm text-foreground mt-2">{post.description}</p>
+								{post.description && <p className="text-sm text-foreground mt-2">{post.description}</p>}
 							</div>
 						</Link>
 					))
@@ -204,7 +202,7 @@ const Posts = ({ data }: PostsProps) => {
 							</PaginationItem>
 						)}
 
-						{totalPages > 5 && currentPage < totalPages && (
+						{totalPages > visiblePages && currentPage < totalPages && (
 							<PaginationItem>
 								<PaginationLink
 									href="#"
