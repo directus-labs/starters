@@ -145,7 +145,7 @@ const Posts = ({ data }: PostsProps) => {
 			{totalPages > 1 && (
 				<Pagination>
 					<PaginationContent>
-						{totalPages > 5 && currentPage > 1 && (
+						{totalPages > visiblePages && currentPage > 1 && (
 							<PaginationItem>
 								<PaginationLink
 									href="#"
