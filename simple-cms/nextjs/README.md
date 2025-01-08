@@ -15,16 +15,19 @@ point for building CMS-powered web applications.
 - **ESLint & Prettier**: Enforces consistent code quality and formatting.
 - **Dynamic Page Builder**: A page builder interface for creating and customizing CMS-driven pages.
 - **Modular and Scalable Structure**: Designed for extensibility and ease of maintenance.
+- **Preview Mode**: Built-in draft/live preview for editing unpublished content.
 
 ## **Getting Started**
 
 ### Prerequisites
 
+To set up this template, ensure you have the following:
+
 - **Node.js** (16.x or newer)
 - **npm** or **pnpm**
-- Access to a **Directus** instance (self-hosted or cloud-hosted)
+- Access to a **Directus** instance ([cloud or self-hosted](../../README.md))
 
-### Setting Up Environment Variables
+### **Environment Variables**
 
 To get started, you need to configure environment variables. Follow these steps:
 
@@ -36,14 +39,6 @@ To get started, you need to configure environment variables. Follow these steps:
 
 2. **Update the following variables in your `.env` file:**
 
-   ```env
-   NEXT_PUBLIC_DIRECTUS_URL=your-directus-instance-url
-   DIRECTUS_PUBLIC_TOKEN=your-directus-public-token
-   DIRECTUS_FORM_TOKEN=your-directus-frontend-bot-token
-   NEXT_PUBLIC_SITE_URL=your-public-site-url
-   DRAFT_MODE_SECRET=your-draft-mode-secret
-   ```
-
    - **`NEXT_PUBLIC_DIRECTUS_URL`**: URL of your Directus instance.
    - **`DIRECTUS_PUBLIC_TOKEN`**: Public token for accessing public resources in Directus. Use the token from the
      **Webmaster** account.
@@ -52,7 +47,21 @@ To get started, you need to configure environment variables. Follow these steps:
    - **`DRAFT_MODE_SECRET`**: The secret you generate for live preview. This is used to view draft posts in directus and
      live edits.
 
-### Generate Directus Types
+## **Running the Application**
+
+### Local Development
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+3. Visit [http://localhost:3000](http://localhost:3000).
+
+## Generate Directus Types
 
 This repository includes a [utility](https://www.npmjs.com/package/directus-sdk-typegen) to generate TypeScript types
 for your Directus schema.
@@ -65,64 +74,51 @@ for your Directus schema.
    npm run generate:types
    ```
 
-### Folder Structure
+## Folder Structure
 
 ```
 src/
-├── app/                              # Next.js App Router pages and layouts
+├── app/                              # Next.js App Router and APIs
 │   ├── blog/                         # Blog-related routes
 │   │   ├── [slug]/                   # Dynamic blog post route
 │   │   │   └── page.tsx
 │   ├── [permalink]/                  # Dynamic page route
 │   │   └── page.tsx
+│   ├── api/                          # API routes for draft/live preview and search
+│   │   ├── draft/                    # Routes for draft previews
+│   │   │   └── route.ts
+│   │   ├── search/                   # Routes for search functionality
+│   │   │   └── route.ts
 │   ├── layout.tsx                    # Shared layout for all routes
-├── components/
-│   ├── blocks/                       # Reusable page components relating to Directus blocks
-│   │   ├── Button.tsx
-│   │   ├── ButtonGroup.tsx
-│   │   ├── Gallery.tsx
-│   │   ├── Hero.tsx
-│   │   ├── Posts.tsx
-│   │   ├── PricingCard.tsx
-│   │   └── RichText.tsx
-│   ├── forms/
+├── components/                       # Reusable components
+│   ├── blocks/                       # CMS blocks (Hero, Gallery, etc.)
+│   │   └── ...
+│   ├── forms/                        # Form components
 │   │   ├── DynamicForm.tsx           # Renders dynamic forms with validation
 │   │   ├── FormBuilder.tsx           # Manages form lifecycles and submission
 │   │   ├── FormField.tsx             # Renders individual form fields dynamically
 │   │   └── fields/                   # Form fields components
-│   ├── layout/                       # Layout-related components
+│   │   └── ...
+│   ├── layout/                       # Layout components
 │   │   ├── Footer.tsx
 │   │   ├── NavigationBar.tsx
 │   │   └── PageBuilder.tsx           # Assembles blocks into pages
-│   ├── shared/                       # Project-specific reusable utilities
-│   │   ├── DirectusImage.tsx         # Renders images from Directus
-│   ├── ui/                           # UI primitives and reusable ShadCN components
-│   │   ├── badge.tsx                 # shadcn
-│   │   ├── button.tsx                # shadcn
-│   │   ├── collapsible.tsx           # shadcn
-│   │   ├── dialog.tsx                # shadcn
-│   │   ├── dropdown-menu.tsx         # shadcn
-│   │   ├── input.tsx                 # shadcn
-│   │   ├── label.tsx                 # shadcn
-│   │   ├── navigation-menu.tsx       # shadcn
-│   │   ├── separator.tsx             # shadcn
-│   │   ├── ThemeProvider.tsx         # Light/dark mode provider
-│   │   ├── ThemeToggle.tsx           # Toggle light/dark mode
-│   │   ├── Headline.tsx
-│   │   ├── ShareDialog.tsx
-│   │   ├── Text.tsx
-│   │   └── Tagline.tsx
-├── lib/                              # Utilities and global logic
-│   ├── directus/                     # Directus-related utilities
+│   ├── shared/                       # Shared utilities
+│   │   └── DirectusImage.tsx         # Renders images from Directus
+│   ├── ui/                           # Shadcn and other base UI components
+│   │   └── ...
+├── lib/                              # Utility and global logic
+│   ├── directus/                     # Directus utilities
 │   │   ├── directus.ts               # Directus client setup
-│   │   ├── fetchers.ts               # Directus data fetching
+│   │   ├── fetchers.ts               # API fetchers
 │   │   ├── forms.ts                  # Directus form handling
-│   │   └── generateDirectusTypes.ts  # Generates Directus types
-│   ├── styles/                       # Global and shared styles
-│   │   ├── fonts.css
-│   │   └── globals.css
-│   ├── utils.ts
-│   ├── zodSchemaBuilder.ts           # Zod schema utility
+│   │   ├── generateDirectusTypes.ts  # Generates Directus types
+│   │   └── directus-utils.ts         # General Directus helpers
+│   ├── zodSchemaBuilder.ts           # Zod validation schemas
+├── styles/                           # Global styles
+│   └── ...
 ├── types/                            # TypeScript types
 │   └── directus-schema.ts            # Directus-generated types
 ```
+
+---
