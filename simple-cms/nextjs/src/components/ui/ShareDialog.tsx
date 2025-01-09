@@ -63,7 +63,13 @@ const ShareDialog = ({ postUrl, postTitle }: { postUrl: string; postTitle: strin
 							rel="noopener noreferrer"
 							className="rounded bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
 						>
-							<img src={social.icon} alt={`${social.service} icon`} width={32} height={32} className="size-8  dark:invert" />
+							<img
+								src={social.icon}
+								alt={`${social.service} icon`}
+								width={32}
+								height={32}
+								className="size-8  dark:invert"
+							/>
 						</a>
 					))}
 				</div>

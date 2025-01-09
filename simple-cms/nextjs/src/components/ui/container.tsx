@@ -9,19 +9,11 @@ interface ContainerProps extends PropsWithChildren {
 	role?: string;
 }
 
-const Container = ({
-	children = null,
-	className = '',
-	as: Component = 'div',
-	role,
-}: ContainerProps) => {
+const Container = ({ children = null, className = '', as: Component = 'div', role }: ContainerProps) => {
 	if (!children) return null;
 
 	return (
-		<Component
-			className={cn('max-w-7xl mx-auto px-4 sm:px-6 lg:px-16', className)}
-			role={role}
-		>
+		<Component className={cn('max-w-7xl mx-auto px-4 sm:px-6 lg:px-16', className)} role={role}>
 			{children}
 		</Component>
 	);
