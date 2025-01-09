@@ -287,6 +287,9 @@ export const fetchAuthorById = async (authorId: string) => {
 	}
 };
 
+/**
+ * Fetches paginated blog posts.
+ */
 export const fetchPaginatedPosts = async (limit: number, page: number) => {
 	const { directus } = useDirectus();
 	try {
@@ -307,6 +310,9 @@ export const fetchPaginatedPosts = async (limit: number, page: number) => {
 	}
 };
 
+/**
+ * Fetches the total number of published blog posts.
+ */
 export const fetchTotalPostCount = async (): Promise<number> => {
 	const { directus } = useDirectus();
 
