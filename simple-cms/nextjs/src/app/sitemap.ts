@@ -9,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			readItems('pages', {
 				filter: { status: { _eq: 'published' } },
 				fields: ['permalink', 'published_at'],
+				limit: -1,
 			}),
 		);
 
@@ -16,6 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			readItems('posts', {
 				filter: { status: { _eq: 'published' } },
 				fields: ['slug', 'published_at'],
+				limit: -1,
 			}),
 		);
 
