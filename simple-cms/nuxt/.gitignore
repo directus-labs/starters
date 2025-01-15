@@ -1,0 +1,16 @@
+node_modules
+*.log*
+.nuxt
+.nitro
+.cache
+.output
+.env
+dist
+.DS_Store
+.vscode
+.eslintcache
+.netlify
+directus/data
+directus/uploads
+directus/dbs
+directus/extensions/.registry
