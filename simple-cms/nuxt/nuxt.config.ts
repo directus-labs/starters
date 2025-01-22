@@ -1,6 +1,14 @@
 export default defineNuxtConfig({
+	components: ['~/components', '~/components/block'],
+	ssr: true,
 	future: {
 		compatibilityVersion: 4,
+	},
+	alias: {
+		'@': './',
+		'~~': './',
+		'@/shared/types': './shared/types',
+		'@/utils': './shared/utils',
 	},
 
 	modules: [
@@ -12,7 +20,10 @@ export default defineNuxtConfig({
 		'@nuxtjs/tailwindcss',
 		'shadcn-nuxt',
 		'@nuxt/icon',
+		'@nuxtjs/color-mode',
 	],
+
+	css: ['~/assets/css/tailwind.css'],
 
 	runtimeConfig: {
 		public: {
@@ -62,12 +73,17 @@ export default defineNuxtConfig({
 	},
 
 	colorMode: {
-		darkMode: 'class',
+		preference: 'system',
+		fallback: 'light',
+		classSuffix: '',
 	},
 
 	site: {
 		url: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
 	},
+	vue: {
+		propsDestructure: true,
+	},
 
-	compatibilityDate: '2024-11-14',
+	compatibilityDate: '2025-01-16',
 });

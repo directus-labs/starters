@@ -17,6 +17,7 @@ async function generateTypes() {
 		console.error('Error: DIRECTUS_URL or DIRECTUS_SERVER_TOKEN is missing in the .env file.');
 		process.exit(1);
 	}
+
 	try {
 		const outputPath = join(projectRoot, 'nuxt', 'shared', 'types', 'schema.ts');
 

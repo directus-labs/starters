@@ -1,10 +1,11 @@
-import type { Schema } from '#shared/types/schema';
+import type { Schema } from '../../shared/types/directus-schema';
 import {
 	aggregate,
 	createDirectus,
 	readItem,
 	readItems,
 	rest,
+	readSingleton,
 	createItem,
 	updateItem,
 	staticToken,

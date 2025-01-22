@@ -1,92 +1,108 @@
 import type { Config } from 'tailwindcss';
-import colors from 'tailwindcss/colors';
-import defaultTheme from 'tailwindcss/defaultTheme';
+import tailwindcssAnimate from 'tailwindcss-animate';
 import typography from '@tailwindcss/typography';
 
-export default <Partial<Config>>(<unknown>{
-	darkMode: ['class'],
-	safelist: ['dark'],
-	prefix: '',
+const config: Config = {
+	darkMode: 'class',
+	content: [
+		'./components/**/*.{vue,js,ts}',
+		'./layouts/**/*.vue',
+		'./pages/**/*.vue',
+		'./app.vue',
+		'./plugins/**/*.{js,ts}',
+	],
 	theme: {
-		container: {
-			center: true,
-			padding: '2rem',
-			screens: {
-				'2xl': '1400px',
-			},
-		},
 		extend: {
 			fontFamily: {
-				sans: ['var(--font-family-sans)', ...defaultTheme.fontFamily.sans],
-				display: ['var(--font-family-display)', ...defaultTheme.fontFamily.serif],
-				mono: ['var(--font-family-mono)', ...defaultTheme.fontFamily.mono],
+				heading: ['Poppins', 'sans-serif'],
+				sans: ['Inter', 'sans-serif'],
+				code: ['Fira Mono', 'monospace'],
+			},
+			fontSize: {
+				tagline: ['24px', '33.6px'],
+				headline: ['56px', '64px'],
+				h1: ['56px', '78.4px'],
+				h2: ['36px', '50.4px'],
+				h3: ['24px', '33.6px'],
+				description: ['16px', '22.4px'],
+				regular: ['16px', '24px'],
+				bold: ['16px', '22.4px'],
+				nav: ['16px', '22.4px'],
+				code: ['14px', '16.8px'],
 			},
 			colors: {
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
-				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))',
+				background: {
+					DEFAULT: 'var(--background-color)',
+					muted: 'var(--background-color-muted)',
+					variant: 'var(--background-variant-color)',
 				},
-				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))',
+				foreground: 'var(--foreground-color)',
+				primary: 'var(--accent-color-light)',
+				input: 'var(--input-color)',
+				secondary: 'var(--accent-color-dark)',
+				accent: 'var(--accent-color)',
+				soft: 'var(--accent-color-soft)',
+				blue: {
+					DEFAULT: '#172940',
 				},
-				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))',
-				},
-				muted: {
-					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))',
-				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))',
-				},
-				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))',
-				},
-				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))',
+				gray: {
+					DEFAULT: '#F5F8FB',
+					muted: '#A5B0BD',
+					dark: '#42566E',
 				},
 			},
-			borderRadius: {
-				xl: 'calc(var(--radius) + 4px)',
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)',
-			},
-			keyframes: {
-				'accordion-down': {
-					from: { height: 0 },
-					to: { height: 'var(--radix-accordion-content-height)' },
+			typography: {
+				DEFAULT: {
+					css: {
+						color: 'var(--foreground-color)',
+						a: {
+							color: 'var(--accent-color)',
+							textDecoration: 'none',
+							'&:hover': {
+								textDecoration: 'underline',
+							},
+						},
+						h1: {
+							fontFamily: 'Poppins',
+							fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
+							fontWeight: '400',
+							lineHeight: '1.2',
+						},
+						h2: {
+							fontFamily: 'Poppins',
+							fontSize: 'clamp(2rem, 4vw, 2.5rem)',
+							fontWeight: '400',
+							lineHeight: '1.3',
+						},
+						h3: {
+							fontFamily: 'Poppins',
+							fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+							fontWeight: '400',
+							lineHeight: '1.4',
+						},
+						p: {
+							fontFamily: 'Inter',
+							fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+							fontWeight: '400',
+							lineHeight: '1.75',
+						},
+					},
 				},
-				'accordion-up': {
-					from: { height: 'var(--radix-accordion-content-height)' },
-					to: { height: 0 },
+				dark: {
+					css: {
+						color: 'var(--foreground-color)',
+						a: {
+							color: 'var(--accent-color)',
+							'&:hover': {
+								textDecoration: 'underline',
+							},
+						},
+					},
 				},
-				'collapsible-down': {
-					from: { height: 0 },
-					to: { height: 'var(--radix-collapsible-content-height)' },
-				},
-				'collapsible-up': {
-					from: { height: 'var(--radix-collapsible-content-height)' },
-					to: { height: 0 },
-				},
-			},
-			animation: {
-				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out',
-				'collapsible-down': 'collapsible-down 0.2s ease-in-out',
-				'collapsible-up': 'collapsible-up 0.2s ease-in-out',
 			},
 		},
 	},
-	plugins: [typography],
-});
+	plugins: [tailwindcssAnimate, typography],
+};
+
+export default config;
