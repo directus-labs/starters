@@ -1,19 +1,61 @@
 import { fetchPostBySlug, fetchRelatedPosts, fetchAuthorById } from '@/lib/directus/fetchers';
+import { draftMode } from 'next/headers';
 import DirectusImage from '@/components/shared/DirectusImage';
 import BaseText from '@/components/ui/Text';
 import { Separator } from '@/components/ui/separator';
 import ShareDialog from '@/components/ui/ShareDialog';
-import Head from 'next/head';
 import Link from 'next/link';
+import Headline from '@/components/ui/Headline';
+import Container from '@/components/ui/container';
+
+import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+	const { slug } = await params;
+
+	try {
+		const post = await fetchPostBySlug(slug);
+
+		if (!post) {
+			return;
+		}
+
+		const ogImage = post.image ? getDirectusAssetURL(post.image) : null;
+
+		return {
+			title: post.title,
+			description: post.description,
+			openGraph: {
+				title: post.title,
+				description: post.description,
+				url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`,
+				type: 'article',
+				images: ogImage ? [{ url: ogImage }] : undefined,
+			},
+		};
+	} catch (error) {
+		console.error('Error loading post metadata:', error);
+
+		return;
+	}
+}
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+	const { isEnabled } = await draftMode();
 	const { slug } = await params;
-	const post = await fetchPostBySlug(slug);
+
+	let post;
+	try {
+		post = await fetchPostBySlug(slug);
+	} catch (error) {
+		console.error('Error loading post:', error);
+
+		return;
+	}
 
 	if (!post) {
 		return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
 	}
-
 	const relatedPosts = await fetchRelatedPosts(post.id);
 	const author = post.author ? await fetchAuthorById(post.author as string) : null;
 
@@ -22,26 +64,14 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
 	return (
 		<>
-			{/* SEO Metadata */}
-			<Head>
-				<title>{post.title}</title>
-				{post.description && <meta name="description" content={post.description} />}
-				<meta property="og:title" content={post.title} />
-				{post.description && <meta property="og:description" content={post.description} />}
-				{post.image && (
-					<meta property="og:image" content={`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/assets/${post.image}`} />
-				)}
-				<meta property="og:url" content={postUrl} />
-				<meta property="og:type" content="article" />
-			</Head>
-
-			<div className="px-4 sm:px-6 lg:px-12 xl:px-20 py-12 max-w-[1200px] xl:max-w-[1400px] mx-auto">
+			{isEnabled && <p>(Draft Mode)</p>}
+			<Container className="py-12">
 				{post.image && (
 					<div className="mb-8">
 						<div className="relative w-full h-[400px] overflow-hidden rounded-lg">
 							<DirectusImage
 								uuid={post.image as string}
-								alt={post.title}
+								alt={post.title || 'post header image'}
 								className="object-cover"
 								fill
 								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
@@ -50,21 +80,21 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 					</div>
 				)}
 
-				<h2 className="mb-4 text-left text-headline text-accent">{post.title}</h2>
+				<Headline as="h2" headline={post.title} className="!text-accent mb-4" />
 				<Separator className="mb-8" />
 
-				<div className="grid grid-cols-1 md:grid-cols-[minmax(0,_2fr)_496px] gap-12">
-					<div className="text-left">
+				<div className="grid grid-cols-1 lg:grid-cols-[minmax(0,_2fr)_400px] gap-12">
+					<main className="text-left">
 						<BaseText content={post.content || ''} />
-					</div>
+					</main>
 
-					<div className="space-y-6 p-6 bg-gray-100 text-gray-800 rounded-lg max-w-[496px] h-fit">
+					<aside className="space-y-6 p-6 rounded-lg max-w-[496px] h-fit bg-background-muted">
 						{author && (
 							<div className="flex items-center space-x-4">
 								{author.avatar && (
 									<DirectusImage
 										uuid={author.avatar as string}
-										alt={authorName}
+										alt={authorName || 'author avatar'}
 										className="rounded-full object-cover size-[48px]"
 										width={48}
 										height={48}
@@ -74,41 +104,41 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 							</div>
 						)}
 
-						{post.description && <p className="text-gray-600">{post.description}</p>}
+						{post.description && <p className="">{post.description}</p>}
 
 						<div className="flex justify-start">
-							<ShareDialog postUrl={postUrl} />
+							<ShareDialog postUrl={postUrl} postTitle={post.title} />
 						</div>
 
 						<div>
-							<Separator className="my-4 dark:bg-gray-300" />
-							<h3 className="font-bold text-gray-muted mb-4">Related blogs</h3>
+							<Separator className="my-4" />
+							<h3 className="font-bold mb-4">Related Posts</h3>
 							<div className="space-y-4">
 								{relatedPosts.map((relatedPost) => (
 									<Link
 										key={relatedPost.id}
 										href={`/blog/${relatedPost.slug}`}
-										className="flex items-center space-x-4 hover:text-accent"
+										className="flex items-center space-x-4 hover:text-accent group"
 									>
 										{relatedPost.image && (
 											<div className="relative shrink-0 w-[150px] h-[100px] overflow-hidden rounded-lg">
 												<DirectusImage
 													uuid={relatedPost.image as string}
-													alt={relatedPost.title}
-													className="object-cover"
+													alt={relatedPost.title || 'related posts'}
+													className="object-cover transition-transform duration-300 group-hover:scale-110"
 													fill
 													sizes="(max-width: 768px) 100px, (max-width: 1024px) 150px, 150px"
 												/>
 											</div>
 										)}
-										<span>{relatedPost.title}</span>
+										<span className="font-heading">{relatedPost.title}</span>
 									</Link>
 								))}
 							</div>
 						</div>
-					</div>
+					</aside>
 				</div>
-			</div>
+			</Container>
 		</>
 	);
 }

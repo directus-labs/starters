@@ -1,4 +1,4 @@
-import Title from '@/components/ui/Title';
+import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import BaseText from '@/components/ui/Text';
 import DirectusImage from '@/components/shared/DirectusImage';
@@ -7,10 +7,10 @@ import { cn } from '@/lib/utils';
 
 interface HeroProps {
 	data: {
-		title: string;
+		tagline: string;
 		headline: string;
 		description: string;
-		alignment: 'left' | 'center' | 'right';
+		layout: 'left' | 'center' | 'right';
 		image: string;
 		button_group?: {
 			buttons: Array<{
@@ -27,15 +27,15 @@ interface HeroProps {
 }
 
 const Hero = ({ data }: HeroProps) => {
-	const { alignment, title, headline, description, image, button_group } = data;
+	const { layout, tagline, headline, description, image, button_group } = data;
 
 	return (
 		<section
 			className={cn(
-				'relative w-full max-w-screen-lg mx-auto px-4 flex flex-col gap-6 md:gap-12 md:min-h-[60vh]',
-				alignment === 'center'
+				'relative w-full mx-auto flex flex-col gap-6 md:gap-12',
+				layout === 'center'
 					? 'items-center text-center'
-					: alignment === 'right'
+					: layout === 'right'
 						? 'md:flex-row-reverse items-center'
 						: 'md:flex-row items-center',
 			)}
@@ -43,25 +43,28 @@ const Hero = ({ data }: HeroProps) => {
 			<div
 				className={cn(
 					'flex flex-col gap-4 w-full',
-					alignment === 'center' ? 'md:w-1/2 items-center' : 'md:w-1/2 items-start',
+					layout === 'center' ? 'md:w-3/4 xl:w-2/3 items-center' : 'md:w-1/2 items-start',
 				)}
 			>
-				<Title title={title} />
+				<Tagline tagline={tagline} />
 				<Headline headline={headline} />
 				{description && <BaseText content={description} />}
 				{button_group && button_group.buttons.length > 0 && (
-					<div className={cn(alignment === 'center' && 'flex justify-center', 'mt-6')}>
+					<div className={cn(layout === 'center' && 'flex justify-center', 'mt-6')}>
 						<ButtonGroup buttons={button_group.buttons} />
 					</div>
 				)}
 			</div>
 			{image && (
-				<div className={cn('relative w-full', alignment === 'center' ? 'h-[400px]' : 'h-[562px]', 'md:w-1/2')}>
+				<div
+					className={cn('relative w-full', layout === 'center' ? 'md:w-3/4 xl:w-2/3 h-[400px]' : 'md:w-1/2 h-[562px]')}
+				>
 					<DirectusImage
 						uuid={image}
-						alt={title || 'Hero Image'}
+						alt={tagline || headline || 'Hero Image'}
 						fill
-						sizes={alignment === 'center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
+						sizes={layout === 'center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
+						className="object-contain"
 					/>
 				</div>
 			)}
