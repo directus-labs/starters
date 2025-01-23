@@ -1,37 +1,24 @@
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
+import type { ButtonGroupProps } from '../base/ButtonGroup.vue';
+import ButtonGroup from '../base/ButtonGroup.vue';
 
-defineProps({
-	tagline: {
-		type: String,
-		required: false,
-	},
-	headline: {
-		type: String,
-		required: false,
-	},
-	description: {
-		type: String,
-		required: false,
-	},
-	layout: {
-		type: String,
-		default: 'left',
-		validator: (value) => ['left', 'center', 'right'].includes(value),
-	},
-	image: {
-		type: String,
-		required: false,
-	},
-	buttonGroup: {
-		type: Object,
-		required: false,
-	},
+export interface HeroProps {
+	tagline?: string | null;
+	headline?: string | null;
+	description?: string | null;
+	layout?: 'left' | 'center' | 'right';
+	image?: string | null;
+	buttonGroup?: ButtonGroupProps | null;
+}
+
+const props = withDefaults(defineProps<HeroProps>(), {
+	layout: 'left',
 });
 
 const alignmentClass = computed(() => {
-	if (layout === 'center') return 'items-center text-center';
-	if (layout === 'right') return 'flex-row-reverse text-right';
+	if (props.layout === 'center') return 'items-center text-center';
+	if (props.layout === 'right') return 'flex-row-reverse text-right';
 	return 'text-left';
 });
 </script>
@@ -41,9 +28,9 @@ const alignmentClass = computed(() => {
 		<!-- Text Content -->
 		<div :class="['content flex flex-col gap-4', alignmentClass]" :style="{ flex: layout === 'center' ? 1 : 'none' }">
 			<p v-if="tagline" class="tagline">{{ tagline }}</p>
-			<h1 v-if="headline" class="headline">{{ headline }}</h1>
+			<h2 v-if="headline" class="headline">{{ headline }}</h2>
 			<p v-if="description" class="description">{{ description }}</p>
-			<ButtonGroup v-if="buttonGroup?.buttons" :buttons="buttonGroup.buttons" class="mt-6" />
+			<ButtonGroup v-if="buttonGroup" :buttons="buttonGroup.buttons" class="mt-6" />
 		</div>
 
 		<DirectusImage

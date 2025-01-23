@@ -1,32 +1,24 @@
-<script setup>
+<script setup lang="ts">
+import { computed } from 'vue';
 import Hero from '~/components/block/Hero.vue';
 
-defineProps({
-	type: {
-		type: String,
-		required: true,
-	},
-	data: {
-		type: Object,
-		required: true,
-	},
-});
+export interface BaseBlockProps {
+	type: string;
+	data: Record<string, unknown>;
+}
+
+const props = defineProps<BaseBlockProps>();
 
 const components = {
 	block_hero: Hero,
 };
 
-const Component = components[type] || null;
+const Component = computed(() => components[props.type] || null);
 </script>
 
 <template>
 	<div>
 		<component :is="Component" v-if="Component" v-bind="data" class="block" />
-
-		<div v-else class="block">
-			<p>Unknown Block Type: {{ type }}</p>
-			<pre>{{ JSON.stringify(components, null, 2) }}</pre>
-		</div>
 	</div>
 </template>
 

@@ -1,48 +1,160 @@
-<script setup>
-import { Menu } from 'lucide-vue-next';
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+import { useRuntimeConfig } from '#app';
+import { Menu, ChevronDown } from 'lucide-vue-next';
+import {
+	NavigationMenu,
+	NavigationMenuList,
+	NavigationMenuItem,
+	NavigationMenuTrigger,
+	NavigationMenuContent,
+	NavigationMenuLink,
+} from '~/components/ui/navigation-menu';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from '~/components/ui/dropdown-menu';
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '~/components/ui/collapsible';
+import { Button } from '~/components/ui/button';
 
-defineProps({
-	navigation: {
-		type: Object,
-		required: false,
-		default: () => ({
-			items: [],
-		}),
-	},
-	globals: {
-		type: Object,
-		required: false,
-		default: () => ({
-			logo: '',
-			logo_dark_mode: '',
-		}),
-	},
-});
+interface NavigationItem {
+	id: string;
+	title: string;
+	url?: string;
+	page?: { permalink: string };
+	children?: NavigationItem[];
+}
 
-const lightLogoUrl = globals?.logo
-	? `${useRuntimeConfig().public.directusUrl}/assets/${globals.logo}`
-	: '/images/logo.svg';
-const darkLogoUrl = globals?.logo_dark_mode
-	? `${useRuntimeConfig().public.directusUrl}/assets/${globals.logo_dark_mode}`
-	: '';
+interface Navigation {
+	items: NavigationItem[];
+}
+
+interface Globals {
+	logo?: string;
+	logo_dark_mode?: string;
+}
+
+const props = defineProps<{
+	navigation: Navigation;
+	globals: Globals;
+}>();
+
+const menuOpen = ref(false);
+const runtimeConfig = useRuntimeConfig();
+
+const lightLogoUrl = computed(() =>
+	props.globals?.logo ? `${runtimeConfig.public.directusUrl}/assets/${props.globals.logo}` : '/images/logo.svg',
+);
+
+const darkLogoUrl = computed(() =>
+	props.globals?.logo_dark_mode ? `${runtimeConfig.public.directusUrl}/assets/${props.globals.logo_dark_mode}` : '',
+);
+
+const handleLinkClick = () => {
+	menuOpen.value = false;
+};
 </script>
 
 <template>
 	<header class="sticky top-0 z-50 w-full bg-background text-foreground">
-		<div class="flex items-center justify-between p-4 max-w-7xl mx-auto">
+		<Container class="flex items-center justify-between p-4">
 			<NuxtLink to="/" class="flex-shrink-0">
-				<img v-if="lightLogoUrl" :src="lightLogoUrl" alt="Logo" class="w-[120px] h-auto dark:hidden" />
-				<img v-if="darkLogoUrl" :src="darkLogoUrl" alt="Logo (Dark Mode)" class="w-[120px] h-auto hidden dark:block" />
+				<img :src="lightLogoUrl" alt="Logo" class="w-[120px] h-auto dark:hidden" width="150" height="100" />
+				<img
+					v-if="darkLogoUrl"
+					:src="darkLogoUrl"
+					alt="Logo (Dark Mode)"
+					class="w-[120px] h-auto hidden dark:block"
+					width="150"
+					height="100"
+				/>
 			</NuxtLink>
+
 			<nav class="flex items-center gap-4">
-				<ul class="hidden md:flex gap-6">
-					<li v-for="item in navigation.items" :key="item.id">
-						<NuxtLink :to="item.page?.permalink || item.url || '#'">
-							{{ item.title }}
-						</NuxtLink>
-					</li>
-				</ul>
+				<NavigationMenu class="hidden md:flex">
+					<NavigationMenuList class="flex gap-6">
+						<NavigationMenuItem v-for="section in props.navigation.items" :key="section.id">
+							<template v-if="section.children?.length">
+								<NavigationMenuTrigger class="focus:outline-none">
+									<span class="font-heading text-nav">{{ section.title }}</span>
+								</NavigationMenuTrigger>
+								<NavigationMenuContent class="absolute mt-2 min-w-[150px] rounded-md bg-background p-4 shadow-md">
+									<ul class="flex flex-col gap-2 pb-4">
+										<li v-for="child in section.children" :key="child.id">
+											<NavigationMenuLink
+												:href="child.page?.permalink || child.url || '#'"
+												class="font-heading text-nav"
+											>
+												{{ child.title }}
+											</NavigationMenuLink>
+										</li>
+									</ul>
+								</NavigationMenuContent>
+							</template>
+
+							<NavigationMenuLink
+								v-else
+								:href="section.page?.permalink || section.url || '#'"
+								class="font-heading text-nav"
+							>
+								{{ section.title }}
+							</NavigationMenuLink>
+						</NavigationMenuItem>
+					</NavigationMenuList>
+				</NavigationMenu>
+
+				<div class="flex md:hidden">
+					<DropdownMenu v-model:open="menuOpen">
+						<DropdownMenuTrigger as-child>
+							<Button
+								variant="link"
+								size="icon"
+								aria-label="Open menu"
+								class="text-black dark:text-white dark:hover:text-accent"
+							>
+								<Menu />
+							</Button>
+						</DropdownMenuTrigger>
+
+						<DropdownMenuContent
+							align="start"
+							class="top-full w-screen p-6 shadow-md max-w-full overflow-hidden bg-background"
+						>
+							<div class="flex flex-col gap-4">
+								<div v-for="section in props.navigation.items" :key="section.id">
+									<Collapsible v-if="section.children?.length">
+										<CollapsibleTrigger
+											class="font-heading text-nav hover:text-accent w-full text-left flex items-center focus:outline-none"
+										>
+											<span>{{ section.title }}</span>
+											<ChevronDown class="size-4 ml-1 hover:rotate-180 active:rotate-180 focus:rotate-180" />
+										</CollapsibleTrigger>
+										<CollapsibleContent class="ml-4 mt-2 flex flex-col gap-2">
+											<NuxtLink
+												v-for="child in section.children"
+												:key="child.id"
+												:to="child.page?.permalink || child.url || '#'"
+												class="font-heading text-nav"
+												@click="handleLinkClick"
+											>
+												{{ child.title }}
+											</NuxtLink>
+										</CollapsibleContent>
+									</Collapsible>
+
+									<NuxtLink
+										v-else
+										:to="section.page?.permalink || section.url || '#'"
+										class="font-heading text-nav"
+										@click="handleLinkClick"
+									>
+										{{ section.title }}
+									</NuxtLink>
+								</div>
+							</div>
+						</DropdownMenuContent>
+					</DropdownMenu>
+				</div>
+
+				<ThemeToggle />
 			</nav>
-		</div>
+		</Container>
 	</header>
 </template>

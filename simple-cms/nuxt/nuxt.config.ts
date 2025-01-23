@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-	components: ['~/components', '~/components/block'],
+	components: ['~/components', '~/components/block', '~/components/shared', '~/components/base', '~/components/ui/'],
 	ssr: true,
 	future: {
 		compatibilityVersion: 4,
