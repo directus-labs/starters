@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import type { ButtonProps } from './Button.vue';
+import { cn } from '@@/shared/utils';
+import Button, { type ButtonProps } from './Button.vue';
 
 export interface ButtonGroupProps {
-	buttons: ButtonProps[];
+	buttons: Array<ButtonProps>;
 	className?: string;
 }
 
-const props = withDefaults(defineProps<ButtonGroupProps>(), {
-	className: '',
-});
-</script>
+const props = defineProps<ButtonGroupProps>();
 
+const containerClasses = computed(() => cn('flex gap-4', props.className));
+</script>
 <template>
-	<div v-if="buttons?.length" :class="['flex gap-4', className]">
-		<Button v-for="button in buttons" :key="button.id" v-bind="button" />
+	<div v-if="buttons?.length" :class="containerClasses">
+		<Button v-for="(button, index) in buttons" :key="index" v-bind="button" />
 	</div>
 </template>

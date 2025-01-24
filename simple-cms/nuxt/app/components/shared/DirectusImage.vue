@@ -1,25 +1,24 @@
 <script setup lang="ts">
-export interface DirectusImageProps {
-	/**
-	 * Directus File ID
-	 */
+import { getDirectusAssetURL } from '@@/server/utils/directus-utils';
+
+interface DirectusImageProps {
 	uuid: string;
-
-	/**
-	 * Alt text for image
-	 */
 	alt: string;
-
 	width?: number;
 	height?: number;
-	provider?: string;
+	[key: string]: any;
 }
 
-withDefaults(defineProps<DirectusImageProps>(), {
-	provider: 'directus',
+const props = withDefaults(defineProps<DirectusImageProps>(), {
+	width: undefined,
+	height: undefined,
 });
+
+const { uuid, alt, width, height, ...rest } = props;
+
+const src = computed(() => getDirectusAssetURL(uuid));
 </script>
 
 <template>
-	<NuxtImg :src="uuid" :alt="alt" :width="width" :height="height" format="auto" loading="lazy" :provider />
+	<img :src="src" :alt="alt" :width="width" :height="height" v-bind="rest" />
 </template>

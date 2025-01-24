@@ -1,75 +1,72 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { ButtonGroupProps } from '../base/ButtonGroup.vue';
-import ButtonGroup from '../base/ButtonGroup.vue';
 
-export interface HeroProps {
-	tagline?: string | null;
-	headline?: string | null;
-	description?: string | null;
-	layout?: 'left' | 'center' | 'right';
-	image?: string | null;
-	buttonGroup?: ButtonGroupProps | null;
+import DirectusImage from '~/components/shared/DirectusImage.vue';
+
+interface HeroProps {
+	data: {
+		tagline: string;
+		headline: string;
+		description: string;
+		layout: 'left' | 'center' | 'right';
+		image: string;
+		button_group?: {
+			buttons: Array<{
+				id: string;
+				label: string | null;
+				variant: string | null;
+				url: string | null;
+				type: 'url' | 'page' | 'post';
+				pagePermalink?: string | null;
+				postSlug?: string | null;
+			}>;
+		};
+	};
 }
 
-const props = withDefaults(defineProps<HeroProps>(), {
-	layout: 'left',
+const props = defineProps<HeroProps>();
+
+const layoutClasses = computed(() => {
+	if (props.data.layout === 'center') return 'items-center text-center';
+	if (props.data.layout === 'right') return 'md:flex-row-reverse items-center';
+	return 'md:flex-row items-center';
 });
 
-const alignmentClass = computed(() => {
-	if (props.layout === 'center') return 'items-center text-center';
-	if (props.layout === 'right') return 'flex-row-reverse text-right';
-	return 'text-left';
+const contentClasses = computed(() => {
+	const baseClasses = 'flex flex-col gap-4 w-full';
+	if (props.data.layout === 'center') return `${baseClasses} md:w-3/4 xl:w-2/3 items-center`;
+	return `${baseClasses} md:w-1/2 items-start`;
 });
+
+const imageContainerClasses = computed(() => {
+	if (props.data.layout === 'center') return 'relative w-full md:w-3/4 xl:w-2/3 h-[400px]';
+	return 'relative w-full md:w-1/2 h-[562px]';
+});
+
+const imageSizes = computed(() => (props.data.layout === 'center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'));
+
+const { tagline, headline, description, image, layout, button_group } = computed(() => props.data).value;
 </script>
-
 <template>
-	<section class="hero flex flex-col md:flex-row gap-6 md:gap-12 w-full">
-		<!-- Text Content -->
-		<div :class="['content flex flex-col gap-4', alignmentClass]" :style="{ flex: layout === 'center' ? 1 : 'none' }">
-			<p v-if="tagline" class="tagline">{{ tagline }}</p>
-			<h2 v-if="headline" class="headline">{{ headline }}</h2>
-			<p v-if="description" class="description">{{ description }}</p>
-			<ButtonGroup v-if="buttonGroup" :buttons="buttonGroup.buttons" class="mt-6" />
+	<section :class="['relative w-full mx-auto flex flex-col gap-6 md:gap-12', layoutClasses]">
+		<div :class="contentClasses">
+			<Tagline :tagline="tagline" />
+			<Headline :headline="headline" />
+			<Text v-if="description" :content="description" />
+
+			<div v-if="button_group?.buttons?.length" :class="[layout === 'center' && 'flex justify-center', 'mt-6']">
+				<ButtonGroup :buttons="button_group.buttons" />
+			</div>
 		</div>
 
-		<DirectusImage
-			v-if="image"
-			:uuid="image"
-			class="hero-image w-full h-auto object-contain"
-			:alt="headline || tagline || 'Hero Image'"
-		/>
+		<div v-if="image" :class="imageContainerClasses">
+			<DirectusImage
+				:uuid="image"
+				:alt="tagline || headline || 'Hero Image'"
+				:fill="true"
+				:sizes="imageSizes"
+				class="object-contain"
+			/>
+		</div>
 	</section>
 </template>
-
-<style scoped>
-.hero {
-	margin: 0 auto;
-	max-width: 1200px;
-	padding: 2rem;
-}
-
-.content {
-	flex: 1;
-}
-
-.tagline {
-	font-size: 1.25rem;
-	color: var(--color-primary);
-	font-weight: 600;
-}
-
-.headline {
-	font-size: 2rem;
-	font-weight: bold;
-}
-
-.description {
-	font-size: 1rem;
-	color: var(--color-text);
-}
-
-.hero-image {
-	max-height: 400px;
-}
-</style>
