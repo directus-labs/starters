@@ -1,14 +1,13 @@
 <script setup lang="ts">
-export interface BaseHeadlineProps {
+interface HeadlineProps {
 	headline?: string | null;
 	className?: string;
 	as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
 }
 
-const props = withDefaults(defineProps<BaseHeadlineProps>(), {
-	headline: null,
-	className: '',
+const props = withDefaults(defineProps<HeadlineProps>(), {
 	as: 'p',
+	className: '',
 });
 </script>
 
@@ -16,7 +15,8 @@ const props = withDefaults(defineProps<BaseHeadlineProps>(), {
 	<component
 		:is="as"
 		v-if="headline"
-		:class="['font-heading text-foreground font-normal', 'text-4xl md:text-5xl lg:text-headline', className]"
+		:class="`font-heading text-foreground font-normal ${className}
+      text-4xl md:text-5xl lg:text-headline`"
 	>
 		{{ headline }}
 	</component>

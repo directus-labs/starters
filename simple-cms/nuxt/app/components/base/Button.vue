@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { Button, buttonVariants } from '~/components/ui/button';
+import { computed } from 'vue';
+import { buttonVariants } from '~/components/ui/button';
 import { ArrowRight, Plus } from 'lucide-vue-next';
 import { cn } from '@@/shared/utils';
 
