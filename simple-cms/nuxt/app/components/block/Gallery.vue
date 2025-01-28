@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { ZoomIn, ArrowLeft, ArrowRight, X } from 'lucide-vue-next';
+import {
+	Dialog,
+	DialogContent,
+	DialogHeader,
+	DialogClose,
+	DialogTitle,
+	DialogDescription,
+} from '~/components/ui/dialog';
 
 interface GalleryItem {
 	id: string;
@@ -26,47 +34,56 @@ const sortedItems = computed(() => {
 	return [...props.data.items].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0));
 });
 
-const handleOpenLightbox = (index: number) => {
+const currentItem = computed(() => {
+	if (!sortedItems.value.length || currentIndex.value < 0 || currentIndex.value >= sortedItems.value.length) {
+		return null;
+	}
+
+	const item = sortedItems.value[currentIndex.value];
+	return item;
+});
+
+function handleOpenLightbox(index: number) {
 	if (index >= 0 && index < sortedItems.value.length) {
 		currentIndex.value = index;
 		isLightboxOpen.value = true;
 	}
-};
+}
 
-const handlePrev = () => {
-	if (sortedItems.value.length > 0) {
-		currentIndex.value = currentIndex.value > 0 ? currentIndex.value - 1 : sortedItems.value.length - 1;
-	}
-};
+function handlePrev() {
+	if (!sortedItems.value.length) return;
+	currentIndex.value = currentIndex.value > 0 ? currentIndex.value - 1 : sortedItems.value.length - 1;
+}
 
-const handleNext = () => {
-	if (sortedItems.value.length > 0) {
-		currentIndex.value = currentIndex.value < sortedItems.value.length - 1 ? currentIndex.value + 1 : 0;
-	}
-};
+function handleNext() {
+	if (!sortedItems.value.length) return;
+	currentIndex.value = currentIndex.value < sortedItems.value.length - 1 ? currentIndex.value + 1 : 0;
+}
 
-const handleKeydown = (e: KeyboardEvent) => {
-	if (isLightboxOpen.value) {
-		switch (e.key) {
-			case 'ArrowLeft':
-				handlePrev();
-				break;
-			case 'ArrowRight':
-				handleNext();
-				break;
-			case 'Escape':
-				isLightboxOpen.value = false;
-				break;
-		}
+function handleKeyDown(e: KeyboardEvent) {
+	if (!isLightboxOpen.value) return;
+	e.preventDefault();
+	e.stopPropagation();
+
+	switch (e.key) {
+		case 'ArrowLeft':
+			handlePrev();
+			break;
+		case 'ArrowRight':
+			handleNext();
+			break;
+		case 'Escape':
+			isLightboxOpen.value = false;
+			break;
 	}
-};
+}
 
 onMounted(() => {
-	window.addEventListener('keydown', handleKeydown);
+	window.addEventListener('keydown', handleKeyDown);
 });
 
 onUnmounted(() => {
-	window.removeEventListener('keydown', handleKeydown);
+	window.removeEventListener('keydown', handleKeyDown);
 });
 </script>
 
@@ -89,6 +106,7 @@ onUnmounted(() => {
 					sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
 					class="w-full h-full object-cover rounded-lg"
 				/>
+
 				<div
 					class="absolute inset-0 bg-white bg-opacity-60 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity duration-300"
 				>
@@ -97,43 +115,52 @@ onUnmounted(() => {
 			</div>
 		</div>
 
-		<ClientOnly>
-			<teleport to="body">
-				<div
-					v-if="isLightboxOpen && sortedItems[currentIndex]"
-					class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
-				>
-					<div class="relative max-w-[90vw] max-h-[90vh]">
-						<DirectusImage
-							:uuid="sortedItems[currentIndex].directus_file"
-							:alt="`Gallery item ${sortedItems[currentIndex].id}`"
-							class="max-w-full max-h-full object-contain"
-						/>
-						<div class="absolute bottom-4 inset-x-0 flex justify-between px-4">
-							<button
-								class="bg-black bg-opacity-70 text-white rounded-full px-4 py-2 flex items-center gap-2 hover:bg-opacity-90"
-								@click="handlePrev"
-							>
-								<ArrowLeft class="w-8 h-8" />
-								<span>Prev</span>
-							</button>
-							<button
-								class="bg-black bg-opacity-70 text-white rounded-full px-4 py-2 flex items-center gap-2 hover:bg-opacity-90"
-								@click="handleNext"
-							>
-								<span>Next</span>
-								<ArrowRight class="w-8 h-8" />
-							</button>
-						</div>
+		<Dialog v-model:open="isLightboxOpen">
+			<DialogContent
+				class="flex max-w-full max-h-full items-center justify-center p-2 bg-transparent border-none z-50"
+				hideCloseButton
+			>
+				<DialogTitle className="sr-only">Gallery Image</DialogTitle>
+				<DialogDescription className="sr-only">
+					Viewing image {currentIndex + 1} of {sortedItems.length}.
+				</DialogDescription>
+				<DialogHeader>
+					<DialogClose asChild>
 						<button
 							class="absolute top-4 right-4 bg-black bg-opacity-70 text-white rounded-full p-2 hover:bg-opacity-90"
-							@click="isLightboxOpen = false"
+							aria-label="Close Lightbox"
 						>
 							<X class="w-8 h-8" />
 						</button>
-					</div>
+					</DialogClose>
+				</DialogHeader>
+
+				<div class="relative w-[90vw] h-[90vh] flex items-center justify-center">
+					<DirectusImage
+						v-if="currentItem"
+						:uuid="currentItem.directus_file"
+						:alt="`Gallery item ${currentItem.id}`"
+						class="max-w-full max-h-screen object-contain"
+					/>
 				</div>
-			</teleport>
-		</ClientOnly>
+
+				<div v-if="sortedItems.length > 1" class="absolute bottom-4 inset-x-0 flex justify-between px-4">
+					<button
+						class="flex items-center gap-2 text-white bg-black bg-opacity-70 rounded-full px-4 py-2 hover:bg-opacity-90"
+						@click="handlePrev"
+					>
+						<ArrowLeft class="w-8 h-8" />
+						<span>Prev</span>
+					</button>
+					<button
+						class="flex items-center gap-2 text-white bg-black bg-opacity-70 rounded-full px-4 py-2 hover:bg-opacity-90"
+						@click="handleNext"
+					>
+						<span>Next</span>
+						<ArrowRight class="w-8 h-8" />
+					</button>
+				</div>
+			</DialogContent>
+		</Dialog>
 	</section>
 </template>

@@ -68,6 +68,7 @@ const props = defineProps<PricingCardProps>();
 		<div class="mt-auto pt-4">
 			<Button
 				v-if="props.card.button"
+				id="props.card.button.uuid"
 				:label="props.card.button.label"
 				:variant="props.card.button.variant"
 				:url="props.card.button.url"

@@ -72,15 +72,17 @@ const handleLinkClick = () => {
 					<NavigationMenuList class="flex gap-6">
 						<NavigationMenuItem v-for="section in props.navigation.items" :key="section.id">
 							<template v-if="section.children?.length">
-								<NavigationMenuTrigger class="focus:outline-none">
-									<span class="font-heading text-nav">{{ section.title }}</span>
+								<NavigationMenuTrigger
+									class="focus:outline-none font-heading !text-nav hover:bg-background hover:text-accent"
+								>
+									{{ section.title }}
 								</NavigationMenuTrigger>
-								<NavigationMenuContent class="absolute mt-2 min-w-[150px] rounded-md bg-background p-4 shadow-md">
-									<ul class="flex flex-col gap-2 pb-4">
+								<NavigationMenuContent class="min-w-[200px] rounded-md bg-background p-4 shadow-md">
+									<ul class="min-h-[80px] flex flex-col gap-2">
 										<li v-for="child in section.children" :key="child.id">
 											<NavigationMenuLink
 												:href="child.page?.permalink || child.url || '#'"
-												class="font-heading text-nav"
+												class="font-heading text-nav p-4"
 											>
 												{{ child.title }}
 											</NavigationMenuLink>
