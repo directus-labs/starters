@@ -8,7 +8,7 @@ interface HeroProps {
 		tagline: string;
 		headline: string;
 		description: string;
-		layout: 'left' | 'center' | 'right';
+		layout: 'image_image_left' | 'image_center' | 'image_left';
 		image: string;
 		button_group?: {
 			buttons: Array<{
@@ -27,23 +27,23 @@ interface HeroProps {
 const props = defineProps<HeroProps>();
 
 const layoutClasses = computed(() => {
-	if (props.data.layout === 'center') return 'items-center text-center';
-	if (props.data.layout === 'right') return 'md:flex-row-reverse items-center';
+	if (props.data.layout === 'image_center') return 'items-center text-center';
+	if (props.data.layout === 'image_left') return 'md:flex-row-reverse items-center';
 	return 'md:flex-row items-center';
 });
 
 const contentClasses = computed(() => {
 	const baseClasses = 'flex flex-col gap-4 w-full';
-	if (props.data.layout === 'center') return `${baseClasses} md:w-3/4 xl:w-2/3 items-center`;
+	if (props.data.layout === 'image_center') return `${baseClasses} md:w-3/4 xl:w-2/3 items-center`;
 	return `${baseClasses} md:w-1/2 items-start`;
 });
 
 const imageContainerClasses = computed(() => {
-	if (props.data.layout === 'center') return 'relative w-full md:w-3/4 xl:w-2/3 h-[400px]';
+	if (props.data.layout === 'image_center') return 'relative w-full md:w-3/4 xl:w-2/3 h-[400px]';
 	return 'relative w-full md:w-1/2 h-[562px]';
 });
 
-const imageSizes = computed(() => (props.data.layout === 'center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'));
+const imageSizes = computed(() => (props.data.layout === 'image_center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'));
 
 const { tagline, headline, description, image, layout, button_group } = computed(() => props.data).value;
 </script>
@@ -54,7 +54,7 @@ const { tagline, headline, description, image, layout, button_group } = computed
 			<Headline :headline="headline" />
 			<Text v-if="description" :content="description" />
 
-			<div v-if="button_group?.buttons?.length" :class="[layout === 'center' && 'flex justify-center', 'mt-6']">
+			<div v-if="button_group?.buttons?.length" :class="[layout === 'image_center' && 'flex justify-center', 'mt-6']">
 				<ButtonGroup :buttons="button_group.buttons" />
 			</div>
 		</div>

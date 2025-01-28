@@ -26,7 +26,7 @@ const props = defineProps<RichTextProps>();
 </script>
 
 <template>
-	<div :class="['mx-auto max-w-[600px] space-y-6', alignmentClasses, className]">
+	<div :class="['mx-auto max-w-[600px] space-y-6', alignmentClasses, props.data.className]">
 		<Tagline v-if="data.tagline" :tagline="data.tagline" />
 		<Headline v-if="data.headline" :headline="data.headline" />
 		<Text v-if="data.content" :content="data.content" />

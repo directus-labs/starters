@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-// Define the structure of social links and navigation items
 export interface SocialLink {
 	service: string;
 	url: string;
@@ -16,7 +15,6 @@ export interface NavigationItem {
 	};
 }
 
-// Define props interface for the Footer
 export interface FooterProps {
 	navigation: {
 		items: NavigationItem[];
@@ -29,13 +27,9 @@ export interface FooterProps {
 	};
 }
 
-// Use defineProps with defaults to provide default values
 const props = defineProps<FooterProps>();
-
-// Get runtime configuration
 const runtimeConfig = useRuntimeConfig();
 
-// Compute the URLs for the light and dark logos
 const lightLogoUrl = computed(() =>
 	props.globals.logo ? `${runtimeConfig.public.directusUrl}/assets/${props.globals.logo}` : '/images/logo.svg',
 );
@@ -49,7 +43,6 @@ const darkLogoUrl = computed(() =>
 	<footer v-if="globals" class="bg-gray dark:bg-[var(--background-variant-color)] py-16">
 		<Container class="text-foreground dark:text-white">
 			<div class="flex flex-col md:flex-row justify-between items-start gap-8 pt-8">
-				<!-- Logo and Description -->
 				<div class="flex-1">
 					<NuxtLink to="/" class="inline-block transition-opacity hover:opacity-70">
 						<img
@@ -89,7 +82,6 @@ const darkLogoUrl = computed(() =>
 					</div>
 				</div>
 
-				<!-- Navigation Links -->
 				<div class="flex flex-col items-start md:items-end flex-1">
 					<nav v-if="props.navigation.items?.length" class="w-full md:w-auto text-left">
 						<ul class="space-y-4">
