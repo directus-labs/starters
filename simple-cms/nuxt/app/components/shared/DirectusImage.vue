@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getDirectusAssetURL } from '@@/server/utils/directus-utils';
+import { watch, ref } from 'vue';
 
 interface DirectusImageProps {
 	uuid: string;
@@ -14,11 +15,16 @@ const props = withDefaults(defineProps<DirectusImageProps>(), {
 	height: undefined,
 });
 
-const { uuid, alt, width, height, ...rest } = props;
+const src = ref(getDirectusAssetURL(props.uuid));
 
-const src = computed(() => getDirectusAssetURL(uuid));
+watch(
+	() => props.uuid,
+	(newUuid) => {
+		src.value = getDirectusAssetURL(newUuid);
+	},
+);
 </script>
 
 <template>
-	<img :src="src" :alt="alt" :width="width" :height="height" v-bind="rest" />
+	<img :src="src" v-bind="{ ...props, uuid: undefined }" />
 </template>
