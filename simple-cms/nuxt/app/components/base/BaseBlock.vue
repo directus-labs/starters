@@ -25,7 +25,8 @@ const components: Record<string, any> = {
 };
 
 const Component = computed(() => components[props.block.collection] || null);
+const blockData = computed(() => props.block.item);
 </script>
 <template>
-	<component :is="Component" v-if="Component" :id="`block-${block.id}`" :data="block.item" />
+	<component :is="Component" v-if="Component" :id="`block-${block.id}`" :data="blockData" />
 </template>

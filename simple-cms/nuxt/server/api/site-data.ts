@@ -67,7 +67,7 @@ export default defineEventHandler(async () => {
 		]);
 
 		return { globals, headerNavigation, footerNavigation };
-	} catch (error) {
-		throw createError({ statusCode: 500, statusMessage: 'Failed to fetch site data' });
+	} catch {
+		throw createError({ statusCode: 500, statusMessage: 'Internal Server Error' });
 	}
 });

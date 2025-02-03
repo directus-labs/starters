@@ -149,7 +149,7 @@ export default defineEventHandler(async (event) => {
 		}
 
 		return page;
-	} catch (error) {
+	} catch {
 		throw createError({ statusCode: 500, statusMessage: 'Internal Server Error' });
 	}
 });

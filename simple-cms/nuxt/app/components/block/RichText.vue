@@ -12,6 +12,8 @@ interface RichTextProps {
 	};
 }
 
+const props = defineProps<RichTextProps>();
+
 const alignmentClasses = computed(() => {
 	switch (props.data.alignment) {
 		case 'center':
@@ -22,7 +24,6 @@ const alignmentClasses = computed(() => {
 			return 'text-left';
 	}
 });
-const props = defineProps<RichTextProps>();
 </script>
 
 <template>

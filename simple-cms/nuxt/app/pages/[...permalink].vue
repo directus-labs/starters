@@ -9,7 +9,9 @@ const {
 	data: pageData,
 	error: pageError,
 	status,
-} = await useAsyncData('page-data', () => $fetch(`/api/page-data?permalink=${encodeURIComponent(permalink)}`));
+} = await useAsyncData(`page-data-${permalink}`, () =>
+	$fetch(`/api/page-data?permalink=${encodeURIComponent(permalink)}`),
+);
 
 if (!pageData.value && !pageError) {
 	throw createError({ statusCode: 404, statusMessage: 'Page not found' });

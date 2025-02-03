@@ -1,9 +1,9 @@
 <script setup>
 import { useAsyncData } from '#app';
-import { unref } from 'vue';
+import { computed, watch } from 'vue';
 
-const { data: siteData, error: siteError, status } = await useAsyncData('site-data', () => $fetch('/api/site-data'));
-const unwrappedSiteData = unref(siteData);
+const { data: siteData, error: siteError, status } = useAsyncData('site-data', () => $fetch('/api/site-data'));
+
 const fallbackSiteData = {
 	headerNavigation: { items: [] },
 	footerNavigation: { items: [] },
@@ -14,15 +14,16 @@ const fallbackSiteData = {
 		accent_color: '#6644ff',
 	},
 };
-const finalSiteData = unwrappedSiteData || fallbackSiteData;
+
+const finalSiteData = computed(() => siteData.value || fallbackSiteData);
 
 const updateAccentColor = () => {
 	if (import.meta.client) {
-		document.documentElement.style.setProperty('--accent-color', finalSiteData.globals.accent_color || '#6644ff');
+		document.documentElement.style.setProperty('--accent-color', finalSiteData.value.globals.accent_color);
 	}
 };
 
-watch(() => finalSiteData.globals.accent_color, updateAccentColor, { immediate: true });
+watch(() => finalSiteData.value.globals.accent_color, updateAccentColor, { immediate: true });
 </script>
 <template>
 	<div>
