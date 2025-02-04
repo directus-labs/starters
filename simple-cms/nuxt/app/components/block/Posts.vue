@@ -41,9 +41,6 @@ const paginatedPosts = ref<Post[]>(currentPage.value === 1 ? props.data.posts : 
 const totalPages = ref(0);
 const fetchError = ref<string | null>(null);
 
-/**
- * Fetch the total number of posts and calculate total pages.
- */
 const fetchTotalPages = async () => {
 	try {
 		const data = await $fetch<{ total: number }>('/api/posts/count');
@@ -54,9 +51,6 @@ const fetchTotalPages = async () => {
 	}
 };
 
-/**
- * Fetch posts for the current page.
- */
 const fetchPosts = async () => {
 	if (currentPage.value === 1) {
 		paginatedPosts.value = props.data.posts;
@@ -68,7 +62,7 @@ const fetchPosts = async () => {
 			query: { page: currentPage.value, limit: perPage },
 		});
 		paginatedPosts.value = data || [];
-	} catch (e) {
+	} catch {
 		fetchError.value = 'Failed to load posts.';
 	}
 };
@@ -119,7 +113,6 @@ onMounted(async () => {
 	await Promise.all([fetchTotalPages(), fetchPosts()]);
 });
 </script>
-
 <template>
 	<div>
 		<!-- Headline / Tagline sections -->
@@ -137,14 +130,14 @@ onMounted(async () => {
 					:to="`/blog/${post.slug}`"
 					class="group block overflow-hidden rounded-lg"
 				>
-					<div class="relative w-full h-64 rounded-lg overflow-hidden">
+					<!-- Ensuring all images are the same size -->
+					<div class="relative w-full h-[256px] overflow-hidden rounded-lg">
 						<DirectusImage
 							v-if="post.image"
 							:uuid="post.image"
 							:alt="post.title"
-							fill
+							class="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-110"
 							sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-							class="w-full h-auto object-cover rounded-lg transition-transform duration-300 group-hover:scale-110"
 						/>
 					</div>
 					<div class="p-4">

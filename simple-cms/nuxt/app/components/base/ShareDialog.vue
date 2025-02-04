@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Copy, Share } from 'lucide-vue-next';
 import { Button } from '~/components/ui/button';
 import {
@@ -14,12 +14,14 @@ import {
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 
-defineProps<{ postUrl: string; postTitle: string }>();
+const props = defineProps<{ postUrl: string; postTitle: string }>();
 
 const copied = ref(false);
+const url = computed(() => props.postUrl);
 
-const handleCopy = (postUrl: string) => {
-	navigator.clipboard.writeText(postUrl);
+const handleCopy = () => {
+	if (!url.value) return;
+	navigator.clipboard.writeText(url.value);
 	copied.value = true;
 	setTimeout(() => (copied.value = false), 2000);
 };
@@ -27,20 +29,20 @@ const handleCopy = (postUrl: string) => {
 const socialLinks = [
 	{
 		service: 'reddit',
-		getUrl: (postUrl: string, postTitle: string) =>
-			`http://www.reddit.com/submit?url=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(postTitle)}`,
+		getUrl: () =>
+			`http://www.reddit.com/submit?url=${encodeURIComponent(url.value)}&title=${encodeURIComponent(props.postTitle)}`,
 		icon: '/icons/social/reddit.svg',
 	},
 	{
 		service: 'x',
-		getUrl: (postUrl: string, postTitle: string) =>
-			`https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(postTitle)}`,
-		icon: '/icons/social/twitter.svg',
+		getUrl: () =>
+			`https://twitter.com/intent/tweet?url=${encodeURIComponent(url.value)}&text=${encodeURIComponent(props.postTitle)}`,
+		icon: '/icons/social/x.svg',
 	},
 	{
 		service: 'linkedin',
-		getUrl: (postUrl: string, postTitle: string) =>
-			`https://www.linkedin.com/shareArticle/?mini=true&url=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(postTitle)}`,
+		getUrl: () =>
+			`https://www.linkedin.com/shareArticle/?mini=true&url=${encodeURIComponent(url.value)}&title=${encodeURIComponent(props.postTitle)}`,
 		icon: '/icons/social/linkedin.svg',
 	},
 ];
@@ -62,7 +64,7 @@ const socialLinks = [
 				<a
 					v-for="social in socialLinks"
 					:key="social.service"
-					:href="social.getUrl(postUrl, postTitle)"
+					:href="social.getUrl()"
 					target="_blank"
 					rel="noopener noreferrer"
 					class="rounded bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
@@ -73,9 +75,9 @@ const socialLinks = [
 			<div class="flex items-center space-x-2">
 				<div class="grid flex-1 gap-2">
 					<Label for="link" class="sr-only">Link</Label>
-					<Input id="link" :value="postUrl" readonly />
+					<Input id="link" v-model="url" readonly />
 				</div>
-				<Button type="button" size="sm" class="px-3" @click="handleCopy(postUrl)">
+				<Button type="button" size="sm" class="px-3" @click="handleCopy">
 					<span class="sr-only">Copy</span>
 					<Copy />
 				</Button>

@@ -1,24 +1,20 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useRoute, useFetch } from 'nuxt/app';
+import { useRoute, useAsyncData, useRuntimeConfig } from 'nuxt/app';
 import DirectusImage from '~/components/shared/DirectusImage.vue';
+import Separator from '~/components/ui/separator/Separator.vue';
 
 const route = useRoute();
 const slug = route.params.slug as string;
 
-// Fetch post data
-const { data: post } = await useAsyncData<Post>(`post-${slug}`, () => $fetch(`/api/posts/${slug}`));
+const { data: post } = await useAsyncData<Post>(`post-${slug}`, () => $fetch<Post>(`/api/posts/${slug}`));
 
-// Fetch related posts
 const { data: relatedPosts } = await useAsyncData<Post[]>(`related-${slug}`, () =>
-	$fetch(`/api/posts/${slug}/related`),
+	$fetch<Post[]>(`/api/posts/${slug}/related`),
 );
 
-// Fetch author details
-const { data: author } = await useAsyncData<Author | null>(
-	`author-${post.value?.author}`,
-	() => (post.value?.author ? $fetch(`/api/authors/${post.value.author}`) : null),
-	{ watch: [post] },
+const { data: author } = await useAsyncData<DirectusUser | null>(`author-${post.value?.author}`, () =>
+	$fetch<DirectusUser>(`/api/users/${post.value?.author}`),
 );
 
 const postUrl = `${useRuntimeConfig().public.siteUrl}/blog/${slug}`;
@@ -27,25 +23,31 @@ const authorName = computed(() => {
 	if (!author.value) return '';
 	return [author.value.first_name, author.value.last_name].filter(Boolean).join(' ');
 });
-</script>
 
+const authorAvatar = computed(() => {
+	if (!author.value?.avatar) return null;
+	return typeof author.value.avatar === 'string' ? author.value.avatar : author.value.avatar.id;
+});
+</script>
 <template>
 	<div v-if="post">
 		<Container class="py-12">
-			<div v-if="post.image" class="mb-8">
-				<div class="relative w-full h-[400px] overflow-hidden rounded-lg">
+			<div v-if="post.image" class="mb-8 w-full">
+				<div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
 					<DirectusImage
 						:uuid="post.image as string"
 						:alt="post.title || 'post header image'"
-						class="object-cover"
-						fill
+						class="object-cover w-full h-full"
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
+						fill
 					/>
 				</div>
 			</div>
 
 			<Headline :headline="post.title" as="h2" class="!text-accent mb-4" />
-			<Separator class="mb-8" />
+			<div class="w-full">
+				<Separator class="h-[1px] bg-gray-300 my-8" />
+			</div>
 
 			<div class="grid grid-cols-1 lg:grid-cols-[minmax(0,_2fr)_400px] gap-12">
 				<main class="text-left">
@@ -55,8 +57,8 @@ const authorName = computed(() => {
 				<aside class="space-y-6 p-6 rounded-lg max-w-[496px] h-fit bg-background-muted">
 					<div v-if="author" class="flex items-center space-x-4">
 						<DirectusImage
-							v-if="author.avatar"
-							:uuid="author.avatar as string"
+							v-if="authorAvatar"
+							:uuid="authorAvatar"
 							:alt="authorName || 'author avatar'"
 							class="rounded-full object-cover size-[48px]"
 							:width="48"
@@ -74,7 +76,7 @@ const authorName = computed(() => {
 					</div>
 
 					<div>
-						<Separator class="my-4" />
+						<Separator class="h-[1px] bg-gray-300 my-4" />
 						<h3 class="font-bold mb-4">Related Posts</h3>
 						<div class="space-y-4">
 							<NuxtLink

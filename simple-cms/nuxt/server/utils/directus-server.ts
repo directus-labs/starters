@@ -10,6 +10,7 @@ import {
 	updateItem,
 	staticToken,
 	uploadFiles,
+	readUser,
 } from '@directus/sdk';
 
 const {
@@ -31,4 +32,5 @@ export {
 	withToken,
 	aggregate,
 	uploadFiles,
+	readUser,
 };
