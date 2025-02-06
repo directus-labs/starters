@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageBlock } from '../../../../types/directus-schema';
+	import type { PageBlock } from '$lib/types/directus-schema';
 	import BaseBlock from '../blocks/BaseBlock.svelte';
 
 	interface PageBuilderProps {

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
-	import { Button, type ButtonProps } from '../ui/button';
+	import Button, { type ButtonProps } from './Button.svelte';
 
 	interface ButtonGroupProps {
 		buttons: Array<ButtonProps>;

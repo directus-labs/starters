@@ -1,6 +1,6 @@
 <script lang="ts">
 	import PageBuilder from '$lib/components/layout/PageBuilder.svelte';
-	import type { PageBlock } from '../../../types/directus-schema.js';
+	import type { PageBlock } from '$lib/types/directus-schema.js';
 
 	let { data } = $props();
 

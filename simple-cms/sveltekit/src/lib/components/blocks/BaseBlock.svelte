@@ -9,6 +9,7 @@
 		block: {
 			collection: string;
 			item: any;
+			id:string
 		};
 	}
 
@@ -22,7 +23,7 @@
 		block_posts: Posts
 	} as const;
 
-	let Component = $derived(components[block.collection as keyof typeof components]);
+	const Component = $derived(components[block.collection as keyof typeof components]);
 </script>
 
 <!-- <pre>{JSON.stringify(block.item, null, 2)}</pre> -->

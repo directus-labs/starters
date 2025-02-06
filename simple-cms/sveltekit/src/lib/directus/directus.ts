@@ -1,7 +1,7 @@
 import { createDirectus, readItems, readItem, readSingleton, rest, readUser } from '@directus/sdk';
 import type { RestClient } from '@directus/sdk';
 import Queue from 'p-queue';
-import type { Schema } from '../../../types/directus-schema';
+import type { Schema } from '../types/directus-schema';
 import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 
 // Helper for retrying fetch requests

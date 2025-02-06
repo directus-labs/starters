@@ -4,10 +4,13 @@
 
 	type $$Props = HTMLAttributes<HTMLSpanElement>;
 
-	let className: $$Props["class"] = undefined;
+	let className: string | undefined | null = undefined;
 	export { className as class };
 </script>
 
-<span class={cn("ml-auto text-xs tracking-widest opacity-60", className)} {...$$restProps}>
+<span
+	class={cn("text-muted-foreground ml-auto text-xs tracking-widest", className)}
+	{...$$restProps}
+>
 	<slot />
 </span>
