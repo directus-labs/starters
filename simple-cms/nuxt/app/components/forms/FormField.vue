@@ -54,18 +54,26 @@ const getFieldComponent = () => {
 };
 
 const getComponentProps = (field: typeof props.field) => {
-	if (field.type === 'select') {
+	if (['select', 'radio', 'checkbox_group', 'checkbox'].includes(field.type)) {
 		return {
 			name: field.name,
 			options: field.choices || [],
+			label: field.label,
+			placeholder: field.placeholder,
+		};
+	} else if (field.type === 'file') {
+		return {
+			name: field.name,
+			placeholder: field.placeholder,
+			label: field.label,
+		};
+	} else {
+		return {
+			name: field.name,
+			field,
 			placeholder: field.placeholder,
 		};
 	}
-
-	return {
-		field,
-		placeholder: field.placeholder,
-	};
 };
 
 const widthClass = computed(() => {

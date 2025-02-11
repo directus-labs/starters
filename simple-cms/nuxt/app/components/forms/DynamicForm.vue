@@ -7,21 +7,36 @@ import FormField from './FormField.vue';
 
 interface Props {
 	fields: FormFieldType[];
-	onSubmit: (data: Record<string, any>) => void;
+	onSubmit: (data: Record<string, any>) => Promise<void> | void;
 	submitLabel: string;
 }
 
 const props = defineProps<Props>();
 
-const sortedFields = computed(() => [...props.fields].sort((a, b) => (a.sort || 0) - (b.sort || 0)));
+const sortedFields = computed(() => {
+	return [...props.fields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
+});
 
 const validFields = computed(() =>
-	sortedFields.value.filter((field): field is FormFieldType & { name: string } => field.name != null),
+	sortedFields.value.filter(
+		(field): field is FormFieldType & { name: string } => field.name != null && field.name !== '',
+	),
 );
 
-const schema = computed(() => buildZodSchema(validFields.value));
+const hasValidFields = computed(() => validFields.value.length > 0);
+
+const schema = computed(() => {
+	if (!hasValidFields.value) return null;
+	try {
+		return buildZodSchema(validFields.value);
+	} catch {
+		return null;
+	}
+});
 
 const initialValues = computed(() => {
+	if (!hasValidFields.value) return {};
+
 	return validFields.value.reduce(
 		(defaults, field) => {
 			const name = field.name;
@@ -47,12 +62,14 @@ const initialValues = computed(() => {
 	);
 });
 
-const onSubmit = (values: Record<string, any>) => {
-	props.onSubmit(values);
+const onSubmit = async (values: Record<string, any>) => {
+	if (!hasValidFields.value) return;
+	await props.onSubmit(values);
 };
 </script>
+
 <template>
-	<Form :validation-schema="schema" :initial-values="initialValues" @submit="onSubmit">
+	<Form v-if="schema" :validation-schema="schema" :initial-values="initialValues" @submit="onSubmit">
 		<div class="flex flex-wrap gap-4">
 			<FormField v-for="field in validFields" :key="field.id" :field="field" />
 			<div class="w-full">

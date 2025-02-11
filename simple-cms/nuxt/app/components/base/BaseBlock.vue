@@ -5,6 +5,7 @@ import RichText from '~/components/block/RichText.vue';
 import Gallery from '../block/Gallery.vue';
 import Pricing from '../block/Pricing.vue';
 import Posts from '../block/Posts.vue';
+import Form from '../block/Form.vue';
 
 interface BaseBlockProps {
 	block: {
@@ -22,6 +23,7 @@ const components: Record<string, any> = {
 	block_gallery: Gallery,
 	block_pricing: Pricing,
 	block_posts: Posts,
+	block_form: Form,
 };
 
 const Component = computed(() => components[props.block.collection] || null);
