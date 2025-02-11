@@ -2,8 +2,8 @@
 import { computed } from 'vue';
 import { buttonVariants } from '~/components/ui/button';
 import { ArrowRight, Plus } from 'lucide-vue-next';
-import { cn } from '@@/shared/utils';
 
+import { cn } from '@@/shared/utils';
 export interface ButtonProps {
 	id: string;
 	label?: string | null;

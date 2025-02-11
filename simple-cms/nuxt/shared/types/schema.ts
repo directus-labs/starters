@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable prettier/prettier */
+
 export interface BlockButton {
 	/** @required */
 	id: string;
@@ -197,8 +197,7 @@ export interface FormSubmission {
 }
 
 export interface FormSubmissionValue {
-	/** @required */
-	id: string;
+	id?: string;
 	/** @description Parent form submission for this value. */
 	form_submission?: FormSubmission | string | null;
 	field?: FormField | string | null;

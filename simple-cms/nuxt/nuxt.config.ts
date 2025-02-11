@@ -4,13 +4,6 @@ export default defineNuxtConfig({
 	future: {
 		compatibilityVersion: 4,
 	},
-	alias: {
-		'@': './',
-		'~~': './',
-		'@/shared/types': './shared/types',
-		'@/utils': './shared/utils',
-	},
-
 	modules: [
 		'@nuxt/image',
 		'@nuxtjs/seo',

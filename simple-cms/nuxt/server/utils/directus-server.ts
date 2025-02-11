@@ -10,6 +10,7 @@ import {
 	updateItem,
 	staticToken,
 	uploadFiles,
+	withToken,
 	readUser,
 } from '@directus/sdk';
 
