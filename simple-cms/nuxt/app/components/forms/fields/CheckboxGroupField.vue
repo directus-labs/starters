@@ -6,6 +6,11 @@ const props = defineProps<{
 	modelValue: string[];
 	name: string;
 	options: { value: string; text: string }[];
+	id?: string;
+	placeholder?: string | null;
+	'aria-describedby'?: string;
+	'aria-invalid'?: boolean;
+	class?: string;
 }>();
 
 const emits = defineEmits(['update:modelValue']);
@@ -26,16 +31,14 @@ const toggleValue = (value: string, checked: boolean) => {
 </script>
 
 <template>
-	<div>
-		<div v-for="option in props.options" :key="option.value" class="flex items-center gap-x-2">
-			<Checkbox
-				:id="`${props.name}-${option.value}`"
-				:checked="isChecked(option.value)"
-				@update:checked="(checked) => toggleValue(option.value, checked)"
-			/>
-			<Label :for="`${props.name}-${option.value}`" class="text-sm">
-				{{ option.text }}
-			</Label>
-		</div>
+	<div v-for="option in props.options" :key="option.value" class="flex items-center gap-x-2">
+		<Checkbox
+			:id="`${props.name}-${option.value}`"
+			:checked="isChecked(option.value)"
+			@update:checked="(checked) => toggleValue(option.value, checked)"
+		/>
+		<Label :for="`${props.name}-${option.value}`" class="text-sm">
+			{{ option.text }}
+		</Label>
 	</div>
 </template>

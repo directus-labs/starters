@@ -2,97 +2,103 @@ import { z } from 'zod';
 import type { FormField } from '@@/shared/types/schema';
 
 export const buildZodSchema = (fields: FormField[]) => {
-	const shape: Record<string, z.ZodTypeAny> = {};
+	const schema: Record<string, z.ZodTypeAny> = {};
 
 	fields.forEach((field) => {
-		const fieldType = (field.type || 'string').toLowerCase();
-		const description = field.label || field.name || field.id;
-
 		let fieldSchema: z.ZodTypeAny;
 
-		switch (fieldType) {
+		switch (field.type) {
 			case 'checkbox':
-				fieldSchema = z.boolean().default(false).describe(description);
+				fieldSchema = z.boolean().default(false);
 				break;
 
 			case 'checkbox_group':
-				fieldSchema = z.array(z.string()).default([]).describe(description);
+				fieldSchema = z.array(z.string()).default([]);
 				break;
 
 			case 'radio':
-				if (field.choices && field.choices.length > 0) {
-					const enumValues = field.choices.map((choice) => choice.value);
-					fieldSchema = z.enum(enumValues as [string, ...string[]]).describe(description);
-				} else {
-					fieldSchema = z.string().describe(description);
-				}
-
+				fieldSchema = z.string();
 				break;
 
 			case 'file':
 				if (field.required) {
-					fieldSchema = z.instanceof(File, { message: `${description} is required` }).describe(description);
+					fieldSchema = z.instanceof(File, {
+						message: `${field.label || field.name} is required`,
+					});
 				} else {
 					fieldSchema = z
-						.instanceof(File, { message: `${description} must be a valid file if provided` })
-						.or(z.undefined())
-						.describe(description);
-				}
-
-				break;
-
-			case 'textarea':
-				fieldSchema = z.string().describe(description);
-				break;
-
-			case 'hidden':
-				fieldSchema = z.string().describe(description);
-				break;
-
-			case 'number':
-				fieldSchema = z
-					.preprocess((a) => {
-						if (typeof a === 'string' || typeof a === 'number') return Number(a);
-						return a;
-					}, z.number())
-					.describe(description);
-				break;
-
-			case 'date':
-				fieldSchema = z
-					.preprocess((a) => {
-						if (typeof a === 'string' || a instanceof Date) return new Date(a);
-						return a;
-					}, z.date())
-					.describe(description);
-				break;
-
-			case 'select':
-				if (field.choices && field.choices.length > 0) {
-					const enumValues = field.choices.map((choice) => choice.value);
-					fieldSchema = z.enum(enumValues as [string, ...string[]]).describe(description);
-				} else {
-					fieldSchema = z.string().describe(description);
+						.instanceof(File, {
+							message: `${field.label || field.name} must be a valid file if provided`,
+						})
+						.or(z.undefined());
 				}
 
 				break;
 
 			default:
-				fieldSchema = z.string().describe(description);
+				fieldSchema = z.string();
 				break;
 		}
 
-		// For non-file fields, mark as optional if not required.
-		if (fieldType !== 'file') {
-			if (!field.required) {
-				fieldSchema = fieldSchema.optional();
-			} else if (fieldSchema instanceof z.ZodString) {
-				fieldSchema = fieldSchema.nonempty(`${description} is required`);
-			}
+		if (field.validation) {
+			const rules = field.validation.split('|');
+			rules.forEach((rule) => {
+				const [ruleName, ruleValue] = rule.split(':');
+				const normalizedRule = ruleName?.toLowerCase();
+
+				if (fieldSchema instanceof z.ZodString) {
+					switch (normalizedRule) {
+						case 'email':
+							fieldSchema = fieldSchema.email(`${field.label || field.name} must be a valid email`);
+							break;
+
+						case 'url':
+							fieldSchema = fieldSchema.url(`${field.label || field.name} must be a valid URL`);
+							break;
+
+						case 'min': {
+							const min = ruleValue ? parseInt(ruleValue, 10) : 0;
+							fieldSchema = fieldSchema.min(min, `${field.label || field.name} must be at least ${min} characters`);
+							break;
+						}
+
+						case 'max': {
+							const max = ruleValue ? parseInt(ruleValue, 10) : Infinity;
+							fieldSchema = fieldSchema.max(max, `${field.label || field.name} must be at most ${max} characters`);
+							break;
+						}
+
+						case 'length': {
+							const length = ruleValue ? parseInt(ruleValue, 10) : 0;
+							fieldSchema = fieldSchema.length(
+								length,
+								`${field.label || field.name} must be exactly ${length} characters`,
+							);
+							break;
+						}
+
+						default:
+							fieldSchema = fieldSchema.refine(() => false, {
+								message: `Unknown validation rule: ${ruleName}`,
+							});
+					}
+				}
+			});
 		}
 
-		shape[field.name || field.id] = fieldSchema;
+		if (field.required) {
+			if (fieldSchema instanceof z.ZodString) {
+				fieldSchema = fieldSchema.nonempty(`${field.label || field.name} is required`);
+			}
+		} else {
+			// Allow empty strings or undefined for optional fields
+			fieldSchema = fieldSchema.or(z.literal('')).or(z.undefined());
+		}
+
+		if (field.name) {
+			schema[field.name] = fieldSchema;
+		}
 	});
 
-	return z.object(shape);
+	return z.object(schema);
 };
