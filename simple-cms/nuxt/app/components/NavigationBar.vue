@@ -13,6 +13,7 @@ import {
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from '~/components/ui/dropdown-menu';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '~/components/ui/collapsible';
 import { Button } from '~/components/ui/button';
+import SearchModal from '~/components/base/SearchModel.vue';
 
 interface NavigationItem {
 	id: string;
@@ -68,6 +69,7 @@ const handleLinkClick = () => {
 			</NuxtLink>
 
 			<nav class="flex items-center gap-4">
+				<SearchModal />
 				<NavigationMenu class="hidden md:flex">
 					<NavigationMenuList class="flex gap-6">
 						<NavigationMenuItem v-for="section in props.navigation.items" :key="section.id">
