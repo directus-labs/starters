@@ -226,7 +226,7 @@ export const fetchPostBySlug = async (slug: string, options?: { draft?: boolean 
 			readItems('posts', {
 				filter,
 				limit: 1,
-				fields: ['id', 'title', 'content', 'status', 'image', 'description', 'author'],
+				fields: ['id', 'title', 'content', 'status', 'image', 'description', 'author', 'seo'],
 			}),
 		);
 
@@ -255,7 +255,7 @@ export const fetchRelatedPosts = async (excludeId: string) => {
 		const relatedPosts = await directus.request(
 			readItems('posts', {
 				filter: { status: { _eq: 'published' }, id: { _neq: excludeId } },
-				fields: ['id', 'title', 'image', 'slug'],
+				fields: ['id', 'title', 'image', 'slug', 'seo'],
 				limit: 2,
 			}),
 		);
