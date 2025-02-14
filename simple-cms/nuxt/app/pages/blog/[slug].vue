@@ -1,13 +1,23 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRoute, useAsyncData, useRuntimeConfig } from 'nuxt/app';
+import { computed, watchEffect } from 'vue';
+import { useRoute, useAsyncData, useRuntimeConfig, usePreviewMode } from 'nuxt/app';
 import DirectusImage from '~/components/shared/DirectusImage.vue';
 import Separator from '~/components/ui/separator/Separator.vue';
 
 const route = useRoute();
 const slug = route.params.slug as string;
 
-const { data: post } = await useAsyncData<Post>(`post-${slug}`, () => $fetch<Post>(`/api/posts/${slug}`));
+const { enabled } = usePreviewMode();
+
+const { data: post, refresh } = await useAsyncData<Post>(`post-${slug}`, () =>
+	$fetch<Post>(`/api/posts/${slug}`, {
+		query: { preview: enabled.value },
+	}),
+);
+
+watchEffect(() => {
+	if (enabled.value) refresh();
+});
 
 const { data: relatedPosts } = await useAsyncData<Post[]>(`related-${slug}`, () =>
 	$fetch<Post[]>(`/api/posts/${slug}/related`),
@@ -32,6 +42,8 @@ const authorAvatar = computed(() => {
 <template>
 	<div v-if="post">
 		<Container class="py-12">
+			<p v-if="enabled">(Draft Mode)</p>
+
 			<div v-if="post.image" class="mb-8 w-full">
 				<div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
 					<DirectusImage
@@ -69,12 +81,11 @@ const authorAvatar = computed(() => {
 						</div>
 					</div>
 
-					<p v-if="post.description" class="">{{ post.description }}</p>
+					<p v-if="post.description">{{ post.description }}</p>
 
 					<div class="flex justify-start">
 						<ShareDialog :post-url="postUrl" :post-title="post.title" />
 					</div>
-
 					<div>
 						<Separator class="h-[1px] bg-gray-300 my-4" />
 						<h3 class="font-bold mb-4">Related Posts</h3>

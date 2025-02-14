@@ -11,8 +11,8 @@ export default defineEventHandler(async (event) => {
 				limit: 1,
 				fields: [
 					'title',
-					'description',
 					{
+						seo: ['title', 'meta_description', 'og_image'],
 						blocks: [
 							'id',
 							'background',

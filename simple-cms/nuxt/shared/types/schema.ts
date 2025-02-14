@@ -197,7 +197,8 @@ export interface FormSubmission {
 }
 
 export interface FormSubmissionValue {
-	id?: string;
+	/** @required */
+	id: string;
 	/** @description Parent form submission for this value. */
 	form_submission?: FormSubmission | string | null;
 	field?: FormField | string | null;
@@ -213,10 +214,7 @@ export interface Globals {
 	/** @required */
 	id: string;
 	/** @description Social media profile URLs */
-	social_links?: Array<{
-		service: 'facebook' | 'instagram' | 'linkedin' | 'x' | 'vimeo' | 'youtube' | 'github' | 'discord' | 'docker';
-		url: string;
-	}> | null;
+	social_links?: any | null;
 	/** @description Short phrase describing the site. */
 	tagline?: string | null;
 	/** @description Main site title */
@@ -290,36 +288,18 @@ export interface Page {
 	/** @required */
 	id: string;
 	sort?: number | null;
-	/** @description Page title (visible to visitors and used in SEO). @required */
+	/** @description The title of this page. @required */
 	title: string;
 	/** @description Unique URL for this page (start with `/`, can have multiple segments `/about/me`)). @required */
 	permalink: string;
-	/** @description Short summary of what's on the page. Also used for SEO meta description. */
-	description?: string | null;
 	/** @description Is this page published? */
 	status?: 'draft' | 'in_review' | 'published';
 	/** @description Publish now or schedule for later. */
 	published_at?: string | null;
+	seo?: any | null;
+	description?: string | null;
 	/** @description Create and arrange different content blocks (like text, images, or videos) to build your page. */
 	blocks?: PageBlock[] | string[];
-}
-
-export interface PostFlexEditor {
-	/** @required */
-	id: string;
-	title?: string | null;
-	slug?: string | null;
-	content?: any | null;
-	content_editor_nodes?: PostFlexEditorNodesJunction[] | string[];
-}
-
-export interface PostFlexEditorNodesJunction {
-	/** @required */
-	id: string;
-	item?: BlockForm | BlockGallery | BlockButtonGroup | string | null;
-	sort?: number | null;
-	collection?: string | null;
-	content_editor?: PostFlexEditor | string | null;
 }
 
 export interface Post {
@@ -342,6 +322,7 @@ export interface Post {
 	author?: DirectusUser | string | null;
 	/** @description Publish now or schedule for later. */
 	published_at?: string | null;
+	seo?: any | null;
 }
 
 export interface DirectusAccess {
@@ -820,8 +801,6 @@ export interface Schema {
 	navigation_items: NavigationItem[];
 	page_blocks: PageBlock[];
 	pages: Page[];
-	post_flex_editor: PostFlexEditor[];
-	post_flex_editor_nodes_junction: PostFlexEditorNodesJunction[];
 	posts: Post[];
 	directus_access: DirectusAccess[];
 	directus_activity: DirectusActivity[];

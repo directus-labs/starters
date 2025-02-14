@@ -11,6 +11,7 @@ import {
 	staticToken,
 	uploadFiles,
 	withToken,
+	type QueryFilter,
 	readUser,
 } from '@directus/sdk';
 
@@ -35,3 +36,4 @@ export {
 	uploadFiles,
 	readUser,
 };
+export type { QueryFilter };
