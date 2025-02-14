@@ -1,4 +1,4 @@
-
+/* eslint-disable no-useless-escape */
 export interface ExtensionSeoMetadata {
     title?: string;
     meta_description?: string;
