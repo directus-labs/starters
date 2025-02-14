@@ -59,7 +59,7 @@ export interface BlockGallery {
 	/** @description Smaller copy shown above the headline to label a section or add extra context. */
 	tagline?: string | null;
 	/** @description Images to include in the image gallery. */
-	items?: DirectusFile[] | string[] | null;
+	items?: BlockGalleryItem[] | string[] | null;
 }
 
 export interface BlockGalleryItem {
