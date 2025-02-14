@@ -24,10 +24,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 		return {
 			title: post?.seo?.title ?? post.title ?? '',
-			description: post?.seo?.description ?? post.description ?? '',
+			description: post?.seo?.meta_description ?? '',
 			openGraph: {
 				title: post?.seo?.title ?? post.title ?? '',
-				description: post?.seo?.description ?? post.description ?? '',
+				description: post?.seo?.meta_description ?? '',
 				url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`,
 				type: 'article',
 				images: ogImage ? [{ url: ogImage }] : undefined,

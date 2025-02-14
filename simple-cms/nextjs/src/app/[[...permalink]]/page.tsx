@@ -16,10 +16,10 @@ export async function generateMetadata({ params }: { params: Promise<{ permalink
 
 		return {
 			title: page.seo?.title ?? page.title ?? '',
-			description: page.seo?.description ?? '',
+			description: page.seo?.meta_description ?? '',
 			openGraph: {
 				title: page.seo?.title ?? page.title ?? '',
-				description: page.seo?.description ?? '',
+				description: page.seo?.meta_description ?? '',
 				url: `${process.env.NEXT_PUBLIC_SITE_URL}${resolvedPermalink}`,
 				type: 'website',
 			},
