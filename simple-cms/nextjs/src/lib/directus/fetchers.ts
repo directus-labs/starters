@@ -15,7 +15,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 				limit: 1,
 				fields: [
 					'title',
-					'description',
+					'seo',
 					{
 						blocks: [
 							'id',
