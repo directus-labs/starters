@@ -15,11 +15,11 @@ export async function generateMetadata({ params }: { params: Promise<{ permalink
 		}
 
 		return {
-			title: page.title,
-			description: page.description,
+			title: page.seo?.title ?? page.title ?? '',
+			description: page.seo?.meta_description ?? '',
 			openGraph: {
-				title: page.title,
-				description: page.description,
+				title: page.seo?.title ?? page.title ?? '',
+				description: page.seo?.meta_description ?? '',
 				url: `${process.env.NEXT_PUBLIC_SITE_URL}${resolvedPermalink}`,
 				type: 'website',
 			},

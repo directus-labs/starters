@@ -23,11 +23,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 		const ogImage = post.image ? getDirectusAssetURL(post.image) : null;
 
 		return {
-			title: post.title,
-			description: post.description,
+			title: post?.seo?.title ?? post.title ?? '',
+			description: post?.seo?.meta_description ?? '',
 			openGraph: {
-				title: post.title,
-				description: post.description,
+				title: post?.seo?.title ?? post.title ?? '',
+				description: post?.seo?.meta_description ?? '',
 				url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`,
 				type: 'article',
 				images: ogImage ? [{ url: ogImage }] : undefined,
