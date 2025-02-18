@@ -93,4 +93,3 @@
 		</div>
 	</Container>
 </footer>
-<pre>{JSON.stringify(page.data, null, 2)}</pre>

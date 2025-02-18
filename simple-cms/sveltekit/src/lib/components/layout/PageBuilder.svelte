@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageBlock } from '$lib/types/directus-schema';
 	import BaseBlock from '../blocks/BaseBlock.svelte';
+	import Container from '../ui/Container.svelte';
 
 	interface PageBuilderProps {
 		sections: PageBlock[];
@@ -16,14 +17,10 @@
 	);
 </script>
 
-<!-- <pre>{JSON.stringify(validBlocks, null, 2)}</pre> -->
-
 {#each validBlocks as block}
-	<div class={`py-8 section-${block.background}`}>
-		<div
-			class="base-container max-w-8xl mx-auto bg-background px-4 text-foreground md:px-8 lg:px-16"
-		>
+	<div class={`py-16`} data-background={block.background}>
+		<Container>
 			<BaseBlock {block} />
-		</div>
+		</Container>
 	</div>
 {/each}

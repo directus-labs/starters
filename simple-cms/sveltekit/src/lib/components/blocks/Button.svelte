@@ -16,7 +16,7 @@
 		icon?: 'arrow' | 'plus';
 		customIcon?: typeof Icontype;
 		iconPosition?: 'left' | 'right';
-		className?: string;
+		class?: string;
 		onClick?: () => void;
 		disabled?: boolean;
 		block?: boolean;
@@ -33,7 +33,7 @@
 		icon,
 		customIcon,
 		iconPosition = 'left',
-		className, // TODO Should we remove the className and use rest props
+		class: className,
 		onClick,
 		disabled = false,
 		block = false
@@ -80,9 +80,9 @@
 
 {#if href}
 	<!-- TODO CHECK IF ASCHILD WORKS -->
-	<ShadcnButton asChild variant={variant as any} {size} className={buttonClasses} {disabled}>
+	<ShadcnButton variant={variant as any} {size} class={buttonClasses} {disabled} onclick={onClick}>
 		{#if href.startsWith('/')}
-			<a {href}>{content}</a>
+			<a {href}>{@render content()}</a>
 		{:else}
 			<a {href} target="_blank" rel="noopener noreferrer">
 				{@render content()}

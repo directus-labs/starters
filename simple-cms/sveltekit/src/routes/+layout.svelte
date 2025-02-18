@@ -29,5 +29,5 @@
 <ModeWatcher />
 
 <NavigationBar />
-<!-- <main class="min-h-screen px-2 md:px-8 lg:px-16">{@render children()}</main> -->
+<main class="flex-grow">{@render children()}</main>
 <Footer />

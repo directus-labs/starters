@@ -9,7 +9,7 @@
 		block: {
 			collection: string;
 			item: any;
-			id:string
+			id: string;
 		};
 	}
 
@@ -21,11 +21,19 @@
 		block_gallery: Gallery,
 		block_pricing: Pricing,
 		block_posts: Posts
+		// block_form:Form
 	} as const;
 
 	const Component = $derived(components[block.collection as keyof typeof components]);
 </script>
 
-<!-- <pre>{JSON.stringify(block.item, null, 2)}</pre> -->
-<Component data={block.item} />
-<!-- {block.collection} -->
+<!-- <pre>{JSON.stringify(block, null, 2)}</pre> -->
+{#if Component}
+	<div data-block-type={block.collection}>
+		<Component data={block.item} />
+	</div>
+{:else}
+	<div>
+		<h1>Block not found {block.collection}</h1>
+	</div>
+{/if}

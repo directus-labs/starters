@@ -19,4 +19,4 @@
 
 <PageBuilder sections={blocks} />
 
-<!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
+<!-- <pre>{JSON.stringify(blocks, null, 2)}</pre> -->
