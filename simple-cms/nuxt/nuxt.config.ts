@@ -1,5 +1,12 @@
 export default defineNuxtConfig({
-	components: ['~/components', '~/components/block', '~/components/shared', '~/components/base', '~/components/ui/'],
+	components: [
+		{ path: '~/components', pathPrefix: false },
+		{ path: '~/components/block', pathPrefix: false },
+		{ path: '~/components/shared', pathPrefix: false },
+		{ path: '~/components/base', pathPrefix: false },
+		{ path: '~/components/forms', pathPrefix: false },
+	],
+
 	ssr: true,
 	future: {
 		compatibilityVersion: 4,
@@ -30,7 +37,7 @@ export default defineNuxtConfig({
 		/**
 		 * Prefix for all the imported component
 		 */
-		prefix: 'Ui',
+		prefix: '',
 		/**
 		 * Directory that the component lives in.
 		 * @default "./components/ui"

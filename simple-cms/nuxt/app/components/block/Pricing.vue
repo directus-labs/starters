@@ -23,21 +23,23 @@ interface PricingProps {
 
 const props = defineProps<PricingProps>();
 
-const gridClasses = computed(() => {
-	const length = props.data.pricing_cards.length;
-	if (length === 1) return 'grid-cols-1';
-	if (length % 3 === 0) return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
-	return 'grid-cols-1 sm:grid-cols-2';
-});
+const { tagline, headline, pricing_cards } = props.data;
 </script>
 
 <template>
 	<section>
-		<Tagline v-if="data.tagline" :tagline="data.tagline" />
-		<Headline v-if="data.headline" :headline="data.headline" />
+		<Tagline v-if="tagline" :tagline="tagline" />
+		<Headline v-if="headline" :headline="headline" />
 
-		<div :class="`grid gap-6 mt-8 ${gridClasses}`">
-			<PricingCard v-for="card in data.pricing_cards" :key="card.id" :card="card" />
+		<div
+			class="grid gap-6 mt-8"
+			:class="{
+				'grid-cols-1': pricing_cards.length === 1,
+				'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3': pricing_cards.length % 3 === 0,
+				'grid-cols-1 sm:grid-cols-2': pricing_cards.length % 3 !== 0 && pricing_cards.length !== 1,
+			}"
+		>
+			<PricingCard v-for="card in pricing_cards" :key="card.id" :card="card" />
 		</div>
 	</section>
 </template>

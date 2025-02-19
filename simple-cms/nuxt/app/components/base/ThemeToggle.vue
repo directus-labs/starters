@@ -1,10 +1,5 @@
 <script setup lang="ts">
-const props = defineProps({
-	className: {
-		type: String,
-		default: '',
-	},
-});
+const { className = '' } = defineProps<{ className?: string }>();
 
 const colorMode = useColorMode();
 const isDark = computed(
@@ -20,8 +15,8 @@ const toggleTheme = () => {
 	<button
 		aria-label="Toggle Dark Mode"
 		:class="[
-			'p-1 rounded-full border border-gray-300 dark:border-gray-600',
-			'bg-gray-100 dark:bg-gray-800 transition-colors',
+			'transition-colors p-1 rounded-full border',
+			isDark ? 'border-gray-600 bg-gray-800' : 'border-gray-300 bg-gray-100',
 			className,
 		]"
 		@click="toggleTheme"

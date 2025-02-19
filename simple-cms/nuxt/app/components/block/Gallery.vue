@@ -1,14 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { ZoomIn, ArrowLeft, ArrowRight, X } from 'lucide-vue-next';
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogClose,
-	DialogTitle,
-	DialogDescription,
-} from '~/components/ui/dialog';
 
 interface GalleryItem {
 	id: string;

@@ -2,10 +2,10 @@
 import { computed } from 'vue';
 import Hero from '~/components/block/Hero.vue';
 import RichText from '~/components/block/RichText.vue';
-import Gallery from '../block/Gallery.vue';
-import Pricing from '../block/Pricing.vue';
-import Posts from '../block/Posts.vue';
-import Form from '../block/Form.vue';
+import Gallery from '~/components/block/Gallery.vue';
+import Pricing from '~/components/block/Pricing.vue';
+import Posts from '~/components/block/Posts.vue';
+import Form from '~/components/block/FormBlock.vue';
 
 interface BaseBlockProps {
 	block: {

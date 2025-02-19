@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue';
-import { useRoute, useAsyncData, useRuntimeConfig, usePreviewMode } from 'nuxt/app';
+import { useRoute, useFetch, useRuntimeConfig, usePreviewMode } from 'nuxt/app';
 import DirectusImage from '~/components/shared/DirectusImage.vue';
 import Separator from '~/components/ui/separator/Separator.vue';
 
@@ -8,26 +8,25 @@ const route = useRoute();
 const slug = route.params.slug as string;
 
 const { enabled } = usePreviewMode();
+const runtimeConfig = useRuntimeConfig();
 
-const { data: post, refresh } = await useAsyncData<Post>(`post-${slug}`, () =>
-	$fetch<Post>(`/api/posts/${slug}`, {
-		query: { preview: enabled.value },
-	}),
-);
+const { data: post, refresh } = useFetch<Post>(() => `/api/posts/${slug}`, {
+	query: { preview: enabled.value },
+});
+
+const { data: relatedPosts } = useFetch<Post[]>(() => `/api/posts/${slug}/related`);
 
 watchEffect(() => {
 	if (enabled.value) refresh();
 });
 
-const { data: relatedPosts } = await useAsyncData<Post[]>(`related-${slug}`, () =>
-	$fetch<Post[]>(`/api/posts/${slug}/related`),
+const authorId = computed(() => post.value?.author || null);
+const { data: author } = useFetch<DirectusUser | null>(
+	() => (authorId.value ? `/api/users/${authorId.value}` : '/api/dummy-endpoint'),
+	{ watch: [post], server: false, transform: (data) => (authorId.value ? data : null) },
 );
 
-const { data: author } = await useAsyncData<DirectusUser | null>(`author-${post.value?.author}`, () =>
-	$fetch<DirectusUser>(`/api/users/${post.value?.author}`),
-);
-
-const postUrl = `${useRuntimeConfig().public.siteUrl}/blog/${slug}`;
+const postUrl = computed(() => `${runtimeConfig.public.siteUrl}/blog/${slug}`);
 
 const authorName = computed(() => {
 	if (!author.value) return '';
@@ -39,6 +38,7 @@ const authorAvatar = computed(() => {
 	return typeof author.value.avatar === 'string' ? author.value.avatar : author.value.avatar.id;
 });
 </script>
+
 <template>
 	<div v-if="post">
 		<Container class="py-12">

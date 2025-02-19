@@ -2,19 +2,7 @@
 import { ref, onMounted, watch, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDebounceFn } from '@vueuse/core';
-import {
-	Command,
-	CommandDialog,
-	CommandEmpty,
-	CommandGroup,
-	CommandInput,
-	CommandItem,
-	CommandList,
-} from '@/components/ui/command';
-import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-vue-next';
-import { Badge } from '@/components/ui/badge';
-import { DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
 type SearchResult = {
 	id: string;
@@ -22,6 +10,7 @@ type SearchResult = {
 	description: string;
 	type: string;
 	link: string;
+	content: string;
 };
 
 const open = ref(false);

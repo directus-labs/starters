@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 			readItems('posts', {
 				filter,
 				limit: 1,
-				fields: ['id', 'title', 'content', 'status', 'image', 'description', 'author'],
+				fields: ['id', 'title', 'content', 'status', 'image', 'description', 'author', 'seo'],
 			}),
 		);
 

@@ -2,17 +2,6 @@
 import { ref, computed } from 'vue';
 import { useRuntimeConfig } from '#app';
 import { Menu, ChevronDown } from 'lucide-vue-next';
-import {
-	NavigationMenu,
-	NavigationMenuList,
-	NavigationMenuItem,
-	NavigationMenuTrigger,
-	NavigationMenuContent,
-	NavigationMenuLink,
-} from '~/components/ui/navigation-menu';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from '~/components/ui/dropdown-menu';
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '~/components/ui/collapsible';
-import { Button } from '~/components/ui/button';
 import SearchModal from '~/components/base/SearchModel.vue';
 
 interface NavigationItem {
@@ -80,11 +69,11 @@ const handleLinkClick = () => {
 									{{ section.title }}
 								</NavigationMenuTrigger>
 								<NavigationMenuContent class="min-w-[200px] rounded-md bg-background p-4 shadow-md">
-									<ul class="min-h-[80px] flex flex-col gap-2">
+									<ul class="min-h-[100px] flex flex-col gap-2">
 										<li v-for="child in section.children" :key="child.id">
 											<NavigationMenuLink
 												:href="child.page?.permalink || child.url || '#'"
-												class="font-heading text-nav p-4"
+												class="font-heading text-nav p-2"
 											>
 												{{ child.title }}
 											</NavigationMenuLink>

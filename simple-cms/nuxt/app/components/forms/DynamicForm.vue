@@ -4,7 +4,7 @@ import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { buildZodSchema } from '~/lib/zodSchemaBuilder';
 import type { FormField as FormFieldType } from '@@/shared/types/schema';
-import FormField from './FormField.vue';
+import FormField from './BaseFormField.vue';
 
 interface Props {
 	fields: FormFieldType[];

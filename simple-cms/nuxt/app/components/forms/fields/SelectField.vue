@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 const props = defineProps<{
 	modelValue: string;
 	name: string;
-	options: { value: string; text: string }[];
+	options?: { value: string; text: string }[];
 	placeholder?: string;
 }>();
 
@@ -24,7 +23,7 @@ const localValue = computed({
 		</SelectTrigger>
 		<SelectContent>
 			<SelectGroup>
-				<SelectItem v-for="option in props.options" :key="option.value" :value="option.value">
+				<SelectItem v-for="option in props.options ?? []" :key="option.value" :value="option.value">
 					{{ option.text }}
 				</SelectItem>
 			</SelectGroup>

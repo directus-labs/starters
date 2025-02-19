@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { cn } from '@@/shared/utils';
-import Button, { type ButtonProps } from './Button.vue';
+import Button, { type ButtonProps } from './BaseButton.vue';
 
 export interface ButtonGroupProps {
 	buttons: Array<ButtonProps>;

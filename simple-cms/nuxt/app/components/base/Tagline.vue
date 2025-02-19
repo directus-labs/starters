@@ -5,18 +5,14 @@ interface TaglineProps {
 	as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
 }
 
-const props = withDefaults(defineProps<TaglineProps>(), {
-	as: 'h2',
-	className: '',
-});
+const { as = 'h2', className = '', tagline } = defineProps<TaglineProps>();
 </script>
 
 <template>
 	<component
 		:is="as"
 		v-if="tagline"
-		:class="`font-heading text-accent font-normal uppercase ${className}
-      text-lg md:text-xl lg:text-tagline`"
+		:class="`font-heading text-accent font-normal uppercase ${className} text-lg md:text-xl lg:text-tagline`"
 	>
 		{{ tagline }}
 	</component>

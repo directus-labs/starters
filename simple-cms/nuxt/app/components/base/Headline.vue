@@ -4,11 +4,7 @@ interface HeadlineProps {
 	className?: string;
 	as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
 }
-
-const props = withDefaults(defineProps<HeadlineProps>(), {
-	as: 'p',
-	className: '',
-});
+const { as = 'p', className = '' } = defineProps<HeadlineProps>();
 </script>
 
 <template>

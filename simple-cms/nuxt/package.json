@@ -27,7 +27,7 @@
 		"@typescript-eslint/parser": "^8.21.0",
 		"defu": "^6.1.4",
 		"destr": "^2.0.3",
-		"directus-sdk-typegen": "^0.1.9",
+		"directus-sdk-typegen": "^0.1.11",
 		"dotenv": "^16.4.7",
 		"eslint": "9.18.0",
 		"eslint-config-prettier": "10.0.1",

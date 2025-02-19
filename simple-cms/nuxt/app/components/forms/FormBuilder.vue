@@ -4,11 +4,11 @@ import DynamicForm from './DynamicForm.vue';
 import type { FormField } from '@@/shared/types/schema';
 import { CheckCircle } from 'lucide-vue-next';
 
-interface FormData {
+interface CustomFormData {
 	id: string;
 	on_success?: 'redirect' | 'message' | null;
 	sort?: number | null;
-	submit_label?: string;
+	submit_label?: string | null;
 	success_message?: string | null;
 	title?: string | null;
 	success_redirect_url?: string | null;
@@ -17,7 +17,7 @@ interface FormData {
 }
 
 const props = defineProps<{
-	form: FormData;
+	form: CustomFormData;
 	className?: string;
 }>();
 

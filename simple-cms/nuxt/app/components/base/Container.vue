@@ -5,11 +5,7 @@ export interface ContainerProps {
 	role?: string;
 }
 
-const props = withDefaults(defineProps<ContainerProps>(), {
-	as: 'div',
-	className: '',
-	role: undefined,
-});
+const { as = 'div', className = '', role } = defineProps<ContainerProps>();
 </script>
 
 <template>

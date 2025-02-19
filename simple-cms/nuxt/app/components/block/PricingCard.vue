@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { CheckCircle2 } from 'lucide-vue-next';
-import Badge from '../ui/badge/Badge.vue';
-import Button from '../base/Button.vue';
+import Button from '../base/BaseButton.vue';
 
 interface PricingCardProps {
 	card: {

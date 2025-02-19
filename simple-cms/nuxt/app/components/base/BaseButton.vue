@@ -2,8 +2,9 @@
 import { computed } from 'vue';
 import { buttonVariants } from '~/components/ui/button';
 import { ArrowRight, Plus } from 'lucide-vue-next';
-
 import { cn } from '@@/shared/utils';
+import Button from '../ui/button/Button.vue';
+
 export interface ButtonProps {
 	id: string;
 	label?: string | null;
@@ -56,7 +57,7 @@ const linkComponent = computed(() => {
 });
 </script>
 <template>
-	<UiButton
+	<Button
 		:variant="variant as any"
 		:size="size"
 		:class="buttonClasses"
@@ -69,5 +70,5 @@ const linkComponent = computed(() => {
 			<span v-if="label">{{ label }}</span>
 			<component :is="Icon" v-if="Icon && iconPosition === 'right'" class="size-4 shrink-0" />
 		</span>
-	</UiButton>
+	</Button>
 </template>
