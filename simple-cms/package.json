@@ -1,0 +1,27 @@
+{
+  "name": "simple-cms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "directus:template": {
+    "name": "Simple CMS",
+    "description": "A simple CMS template for Directus",
+    "template": "./directus/template",
+    "frontends": {
+        "nextjs": {
+            "name": "Next.js",
+            "path": "./nextjs"
+        },
+        "nuxt": {
+            "name": "Nuxt.js",
+            "path": "./nuxt"
+        }
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
