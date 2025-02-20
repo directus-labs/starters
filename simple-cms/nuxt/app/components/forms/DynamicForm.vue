@@ -5,6 +5,7 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { buildZodSchema } from '~/lib/zodSchemaBuilder';
 import type { FormField as FormFieldType } from '@@/shared/types/schema';
 import FormField from './BaseFormField.vue';
+import BaseButton from '../base/BaseButton.vue';
 
 interface Props {
 	fields: FormFieldType[];
@@ -90,7 +91,7 @@ const onSubmitForm = handleSubmit(async (formValues) => {
 		<div class="flex flex-wrap gap-4">
 			<FormField v-for="field in validFields" :key="field.id" :field="field" :model-value="values[field.name]" />
 			<div class="w-full">
-				<Button
+				<BaseButton
 					:id="`submit-${submitLabel.replace(/\s+/g, '-').toLowerCase()}`"
 					type="submit"
 					:label="submitLabel"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue';
-import { useRoute, useFetch, useRuntimeConfig, usePreviewMode } from 'nuxt/app';
+import { useRoute, useFetch, useRuntimeConfig, usePreviewMode } from '#app';
 import DirectusImage from '~/components/shared/DirectusImage.vue';
 import Separator from '~/components/ui/separator/Separator.vue';
 
@@ -36,6 +36,16 @@ const authorName = computed(() => {
 const authorAvatar = computed(() => {
 	if (!author.value?.avatar) return null;
 	return typeof author.value.avatar === 'string' ? author.value.avatar : author.value.avatar.id;
+});
+
+useHead({
+	title: post.value?.seo?.title || post.value?.title,
+	meta: [
+		{ name: 'description', content: post.value?.seo?.meta_description || post.value?.description },
+		{ property: 'og:title', content: post.value?.seo?.title || post.value?.title },
+		{ property: 'og:description', content: post.value?.seo?.meta_description || post.value?.description },
+		{ property: 'og:url', content: postUrl.value },
+	],
 });
 </script>
 

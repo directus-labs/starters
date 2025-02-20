@@ -15,21 +15,6 @@ if (error.value) {
 		statusMessage: 'Failed to fetch site data',
 	});
 }
-
-useSeoMeta({
-	titleTemplate: '%s / Site Title',
-	description: 'Site Description',
-	ogSiteName: 'Site Title',
-});
-
-useSchemaOrg([
-	defineOrganization({
-		'@id': 'https://site.com/#organization',
-		name: 'Site Title',
-		logo: '/favicon.ico',
-		sameAs: ['https://x.com/site', 'https://www.youtube.com/@site', 'https://www.linkedin.com/company/site'],
-	}),
-]);
 </script>
 
 <template>
