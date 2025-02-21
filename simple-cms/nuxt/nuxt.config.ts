@@ -21,6 +21,7 @@ export default defineNuxtConfig({
 		'shadcn-nuxt',
 		'@nuxt/icon',
 		'@nuxtjs/color-mode',
+		'@nuxtjs/seo',
 	],
 
 	css: ['~/assets/css/tailwind.css'],
@@ -83,6 +84,10 @@ export default defineNuxtConfig({
 	},
 	vue: {
 		propsDestructure: true,
+	},
+
+	sitemap: {
+		sources: ['/api/sitemap'],
 	},
 
 	compatibilityDate: '2025-01-16',

@@ -46,6 +46,7 @@
 		"@nuxt/scripts": "^0.9.5",
 		"@nuxtjs/color-mode": "^3.5.2",
 		"@nuxtjs/seo": "2.1.0",
+		"@nuxtjs/sitemap": "7.2.6",
 		"@nuxtjs/tailwindcss": "6.13.1",
 		"@vee-validate/zod": "^4.15.0",
 		"@vueuse/core": "12.5.0",
