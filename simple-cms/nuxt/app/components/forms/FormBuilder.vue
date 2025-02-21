@@ -33,13 +33,21 @@ const handleSubmit = async (data: Record<string, any>) => {
 			type: field.type || '',
 		}));
 
+		const formData = new FormData();
+		formData.append('formId', props.form.id);
+		formData.append('fields', JSON.stringify(fieldsWithNames));
+
+		for (const key in data) {
+			if (data[key] instanceof File) {
+				formData.append(key, data[key]);
+			} else {
+				formData.append(key, data[key]?.toString() || '');
+			}
+		}
+
 		await $fetch('/api/forms/submit', {
 			method: 'POST',
-			body: {
-				formId: props.form.id,
-				fields: fieldsWithNames,
-				data,
-			},
+			body: formData,
 		});
 
 		if (props.form.on_success === 'redirect' && props.form.success_redirect_url) {

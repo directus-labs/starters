@@ -1,4 +1,4 @@
-import { defineEventHandler, createError, readBody } from 'h3';
+import { defineEventHandler, createError, readMultipartFormData } from 'h3';
 import { uploadFiles, createItem, withToken, directusServer } from '../../utils/directus-server';
 
 interface SubmissionValue {
@@ -8,8 +8,14 @@ interface SubmissionValue {
 }
 
 export default defineEventHandler(async (event) => {
-	const body = await readBody(event);
-	const { formId, fields, data } = body;
+	const formData = await readMultipartFormData(event);
+
+	if (!formData) {
+		throw createError({
+			statusCode: 400,
+			statusMessage: 'Invalid form submission',
+		});
+	}
 
 	const TOKEN = process.env.DIRECTUS_FORM_TOKEN;
 
@@ -22,27 +28,44 @@ export default defineEventHandler(async (event) => {
 
 	try {
 		const submissionValues: SubmissionValue[] = [];
+		let formId = '';
+		let fields = [];
 
-		for (const field of fields) {
-			const value = data[field.name];
-			if (value === undefined || value === null) continue;
+		for (const field of formData) {
+			if (field.name === 'formId') {
+				formId = field.data.toString();
+			} else if (field.name === 'fields') {
+				fields = JSON.parse(field.data.toString());
+			}
+		}
 
-			if (field.type === 'file' && value instanceof File) {
-				const formData = new FormData();
-				formData.append('file', value);
+		for (const field of formData) {
+			if (!field.name || !field.data) continue;
+			if (field.name === 'formId' || field.name === 'fields') continue;
 
-				const uploadedFile = (await directusServer.request(withToken(TOKEN, uploadFiles(formData)))) as { id?: string };
+			const matchingField = fields.find((f: { name: string | undefined }) => f.name === field.name);
+			if (!matchingField) continue;
 
-				if (uploadedFile && typeof uploadedFile === 'object' && 'id' in uploadedFile && uploadedFile.id) {
+			if (field.filename) {
+				const blob = new Blob([field.data], { type: field.type });
+
+				const uploadFormData = new FormData();
+				uploadFormData.append('file', blob, field.filename);
+
+				const uploadedFile = (await directusServer.request(withToken(TOKEN, uploadFiles(uploadFormData)))) as {
+					id?: string;
+				};
+
+				if (uploadedFile?.id) {
 					submissionValues.push({
-						field: field.id,
+						field: matchingField.id,
 						file: uploadedFile.id,
 					});
 				}
 			} else {
 				submissionValues.push({
-					field: field.id,
-					value: value.toString(),
+					field: matchingField.id,
+					value: field.data.toString(),
 				});
 			}
 		}
