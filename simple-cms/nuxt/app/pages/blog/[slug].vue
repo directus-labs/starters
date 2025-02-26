@@ -3,6 +3,7 @@ import { computed, watchEffect } from 'vue';
 import { useRoute, useFetch, useRuntimeConfig, usePreviewMode } from '#app';
 import DirectusImage from '~/components/shared/DirectusImage.vue';
 import Separator from '~/components/ui/separator/Separator.vue';
+import AdminBar from '~/components/shared/AdminBar.vue';
 
 const route = useRoute();
 const slug = route.params.slug as string;
@@ -27,7 +28,6 @@ const { data: author } = useFetch<DirectusUser | null>(
 );
 
 const postUrl = computed(() => `${runtimeConfig.public.siteUrl}/blog/${slug}`);
-
 const authorName = computed(() => {
 	if (!author.value) return '';
 	return [author.value.first_name, author.value.last_name].filter(Boolean).join(' ');
@@ -51,9 +51,9 @@ useHead({
 
 <template>
 	<div v-if="post">
-		<Container class="py-12">
-			<p v-if="enabled">(Draft Mode)</p>
+		<AdminBar v-if="enabled" :content="post" type="post" />
 
+		<Container class="py-12">
 			<div v-if="post.image" class="mb-8 w-full">
 				<div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
 					<DirectusImage

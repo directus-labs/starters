@@ -1,15 +1,14 @@
 <script setup>
-import { useAsyncData, useRoute } from '#app';
+import { useAsyncData, useRoute, usePreviewMode } from '#app';
 import PageBuilder from '~/components/PageBuilder.vue';
+import AdminBar from '~/components/shared/AdminBar.vue';
 
 const route = useRoute();
 const permalink = `/${(route.params.permalink || []).join('/')}`;
 
-const {
-	data: pageData,
-	error: pageError,
-	status,
-} = await useAsyncData(`page-data-${permalink}`, () =>
+const { enabled } = usePreviewMode();
+
+const { data: pageData, error: pageError } = await useAsyncData(`page-data-${permalink}`, () =>
 	$fetch(`/api/page-data?permalink=${encodeURIComponent(permalink)}`),
 );
 
@@ -34,8 +33,9 @@ watchEffect(() => {
 
 <template>
 	<div>
-		<div v-if="status === 'pending'">Loading...</div>
-		<div v-else-if="pageError">404 - Page Not Found</div>
+		<AdminBar v-if="enabled" :content="pageData" type="page" />
+
+		<div v-if="pageError">404 - Page Not Found</div>
 		<div v-else>
 			<PageBuilder :sections="pageData.blocks" />
 		</div>
