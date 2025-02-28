@@ -7,8 +7,8 @@ import ShareDialog from '@/components/ui/ShareDialog';
 import Link from 'next/link';
 import Headline from '@/components/ui/Headline';
 import Container from '@/components/ui/container';
-
 import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
+import AdminBar from '@/components/shared/AdminBar';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
 	const { slug } = await params;
@@ -65,6 +65,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 	return (
 		<>
 			{isEnabled && <p>(Draft Mode)</p>}
+			{!isEnabled && <AdminBar contentId={post.id} type="post" />}
 			<Container className="py-12">
 				{post.image && (
 					<div className="mb-8">
