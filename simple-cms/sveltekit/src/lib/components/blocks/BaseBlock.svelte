@@ -4,7 +4,7 @@
 	import Gallery from '$lib/components/blocks/Gallery.svelte';
 	import Pricing from '$lib/components/blocks/Pricing.svelte';
 	import Posts from '$lib/components/blocks/Posts.svelte';
-
+	import Form from '$lib/components/blocks/Form.svelte';
 	interface BaseBlockProps {
 		block: {
 			collection: string;
@@ -20,8 +20,8 @@
 		block_richtext: RichText,
 		block_gallery: Gallery,
 		block_pricing: Pricing,
-		block_posts: Posts
-		// block_form:Form
+		block_posts: Posts,
+		block_form: Form
 	} as const;
 
 	const Component = $derived(components[block.collection as keyof typeof components]);

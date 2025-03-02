@@ -89,4 +89,8 @@
 			</a>
 		{/if}
 	</ShadcnButton>
+{:else}
+	<ShadcnButton type="submit" variant={variant as any} {size} class={buttonClasses} {disabled}>
+		{@render content()}
+	</ShadcnButton>
 {/if}

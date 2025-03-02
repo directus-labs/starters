@@ -6,6 +6,7 @@
 
 	import { debounce } from '$lib/utils';
 	import Badge from './badge/badge.svelte';
+	import { goto } from '$app/navigation';
 
 	let open = $state(false);
 	let search = $state('');
@@ -23,16 +24,16 @@
 		link: string;
 	};
 
-	function handleKeydown(e: KeyboardEvent) {
+	const handleKeydown = (e: KeyboardEvent) => {
 		if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
 			e.preventDefault();
 			open = !open;
 		}
-	}
+	};
 
 	$effect(() => {
 		if (!open) {
-			results = [];
+			// results = [];
 			searched = false;
 			loading = false;
 		}
@@ -65,6 +66,11 @@
 	$effect(() => {
 		debouncedFetchResults(search);
 	});
+
+	const handleSelect = (result: SearchResult) => {
+		goto(result.link);
+		open = false;
+	};
 </script>
 
 <svelte:document onkeydown={handleKeydown} />
@@ -75,16 +81,30 @@
 	</Button>
 
 	<Command.Dialog bind:open shouldFilter={false}>
-		<Command.Input placeholder="Type a command or search..." bind:value={search} />
+		<Command.Input
+			placeholder="Type a command or search..."
+			bind:value={search}
+			class="m-2 p-4 text-base leading-normal focus:outline-none"
+		/>
 		<Command.List>
-			<Command.Empty>No results found.</Command.Empty>
+			{#if !loading && !searched}
+				<Command.Empty>No results found.</Command.Empty>
+			{/if}
+
+			{#if loading}
+				<Command.Empty class="py-2 text-center text-sm">Loading...</Command.Empty>
+			{/if}
+
+			{#if !loading && searched && results.length === 0}
+				<Command.Empty class="py-2 text-center text-sm">No results found.</Command.Empty>
+			{/if}
 
 			{#if results.length > 0}
 				<Command.Group heading="Search Results">
 					{#each results as result}
-						<Command.Item>
+						<Command.Item class="flex gap-2" onSelect={() => handleSelect(result)}>
 							<Badge variant="default">{result.type}</Badge>
-							{result.title}
+							<span>{result.title}</span>
 						</Command.Item>
 					{/each}
 				</Command.Group>

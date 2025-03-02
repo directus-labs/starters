@@ -1,4 +1,4 @@
-import { createDirectus, readItems, readItem, readSingleton, rest, readUser } from '@directus/sdk';
+import { createDirectus, readItems, readItem, readSingleton, rest, readUser, createItem, uploadFiles, withToken } from '@directus/sdk';
 import type { RestClient } from '@directus/sdk';
 import Queue from 'p-queue';
 import type { Schema } from '../types/directus-schema';
@@ -35,4 +35,7 @@ export const useDirectus = () => ({
 	readItem,
 	readSingleton,
 	readUser,
+	createItem,
+	uploadFiles,
+	withToken,
 });

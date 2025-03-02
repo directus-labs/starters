@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
-	import type { DirectusFile } from '@directus/sdk';
+	import { getDirectusAssetURL } from '$lib/directus/directus-utils';
+	import { type DirectusFile } from '$lib/types/directus-schema';
 
 	interface Props {
 		id: string | DirectusFile;
@@ -12,16 +12,9 @@
 	}
 
 	let { id, width, height, alt, className, ...props }: Props = $props();
-	let imageId = $derived.by(() => {
-		if (typeof id === 'string') {
-			return id;
-		}
-		return id.id;
-	});
-	//width=${width}&height=${height}
-	let src = $derived(`${PUBLIC_DIRECTUS_URL}/assets/${imageId}`);
+	let src = $derived(getDirectusAssetURL(id));
 </script>
 
 <!-- {width}
 {height} -->
-<img {src} {alt} class={className} />
+<img {src} {alt} {width} {height} class={className} />
