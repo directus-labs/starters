@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Input } from '$lib/components/ui/command';
+	import { Input } from '$lib/components/ui/input/index.js';
 
 	interface FileUploadFieldProps {
 		name: string;
@@ -12,7 +12,7 @@
 
 	const onFileChange = (e: Event) => {
 		const file = (e.target as HTMLInputElement).files?.[0];
-		formData[name] = file;
+		$formData[name] = file;
 	};
 </script>
 

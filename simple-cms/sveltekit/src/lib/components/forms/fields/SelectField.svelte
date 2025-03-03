@@ -10,22 +10,19 @@
 
 	const { name, options, placeholder, form }: SelectFieldProps = $props();
 
+	let { form: formData } = form;
+
 	let triggerContent = $state(placeholder || 'Select an option');
-	let value = $state('');
 
-	// TODO: Add onValueChange event
-	// TODO E
-
-	const handleValueChange = (value: string) => {
-		// form.setValue(name, value);
-		console.log('new value', value);
-	};
+	let activeLabel = $derived(
+		options.find((option) => option.value === $formData[name])?.text || triggerContent
+	);
 </script>
 
 <!-- onValueChange={(value) => form.setValue(name, value)} value={form.getValues(name)} -->
-<Select.Root type="single" {name} onValueChange={handleValueChange}>
+<Select.Root type="single" {name} bind:value={$formData[name]}>
 	<Select.Trigger>
-		{triggerContent}
+		{activeLabel}
 	</Select.Trigger>
 	<Select.Content>
 		{#each options as option (option.value)}

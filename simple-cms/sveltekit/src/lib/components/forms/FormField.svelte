@@ -41,17 +41,21 @@
 						bind:value={$formData[field.name!]}
 					/>
 				{:else if field.type === 'textarea'}
-					<Textarea placeholder={field.placeholder || ''} name={field.name || ''} />
-					<!-- {:else if field.type === 'checkbox'}
-					<Checkbox name={field.name} />
+					<Textarea
+						placeholder={field.placeholder || ''}
+						name={field.name || ''}
+						bind:value={$formData[field.name!]}
+					/>
+				{:else if field.type === 'checkbox'}
+					<Checkbox name={field.name} bind:checked={$formData[field.name!]} />
 				{:else if field.type === 'checkbox_group'}
-					<CheckBoxGroup name={field.name || ''} options={field.choices || []} />
+					<CheckBoxGroup name={field.name || ''} options={field.choices || []} {form} />
 				{:else if field.type === 'select'}
-					<SelectField name={field.name || ''} options={field.choices || []} />
+					<SelectField name={field.name || ''} options={field.choices || []} {form} />
 				{:else if field.type === 'radio'}
-					<RadioGroup name={field.name || ''} options={field.choices || []} /> -->
+					<RadioGroup name={field.name || ''} options={field.choices || []} {form} />
 				{:else if field.type === 'file'}
-					<FileUploadField name={field.name || ''} form={$formData} />
+					<FileUploadField name={field.name || ''} {form} />
 				{:else}
 					<!-- <FieldComponent
 			placeholder={field.placeholder || ''}

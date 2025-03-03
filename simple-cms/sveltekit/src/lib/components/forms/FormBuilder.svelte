@@ -4,6 +4,7 @@
 	import { cn } from '$lib/utils';
 	import { CheckCircle } from 'lucide-svelte';
 	import DynamicForm from './DynamicForm.svelte';
+	import { goto } from '$app/navigation';
 
 	interface FormBuilderProps {
 		class?: string;
@@ -35,7 +36,11 @@
 			await submitForm(form.id, fieldsWithNames, data);
 
 			if (form.on_success === 'redirect' && form.success_redirect_url) {
-				window.location.href = form.success_redirect_url;
+				if (form.success_redirect_url.startsWith('/')) {
+					goto(form.success_redirect_url);
+				} else {
+					window.location.href = form.success_redirect_url; // TODO check if internal or external
+				}
 			} else {
 				isSubmitted = true;
 			}

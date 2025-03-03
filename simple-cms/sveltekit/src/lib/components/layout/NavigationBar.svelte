@@ -1,12 +1,7 @@
 <script lang="ts">
-	import DirectusImage from '$lib/components/shared/DirectusImage.svelte';
-	// import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '../ui/dropdown-menu';
-	// import { Button } from '$lib/components/ui/button';
-	// import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 
-	import { getDirectusAssetURL } from '$lib/directus/directus-utils';
 	import { page } from '$app/state';
 	import Container from '$lib/components/ui/Container.svelte';
 	import SearchModal from '../ui/SearchModal.svelte';

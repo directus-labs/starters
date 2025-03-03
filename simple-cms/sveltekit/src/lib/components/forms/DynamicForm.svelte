@@ -41,17 +41,17 @@
 		validators: zodClient(formSchema),
 		SPA: true
 	});
-	const { enhance, submit, form: formData } = form;
-	console.log('defaultValues', defaultValues);
-	console.log('fields', fields);
+	const { enhance, submit, form: formData } = $derived(form);
+
+	$inspect($formData);
 
 	const onsubmit = (e: Event) => {
 		e.preventDefault();
-		submit();
+		onSubmit($formData);
 	};
 </script>
 
-<form class="flex flex-wrap gap-4" {onsubmit} use:enhance>
+<form class="flex flex-wrap gap-4" {onsubmit}>
 	{#each sortedFields as field (field.id)}
 		<Field {field} {form} />
 	{/each}
