@@ -12,10 +12,10 @@
 
 	let { form: formData } = form;
 
-	let triggerContent = $state(placeholder || 'Select an option');
-
 	let activeLabel = $derived(
-		options.find((option) => option.value === $formData[name])?.text || triggerContent
+		options.find((option) => option.value === $formData[name])?.text ||
+			placeholder ||
+			'Select an option'
 	);
 </script>
 
