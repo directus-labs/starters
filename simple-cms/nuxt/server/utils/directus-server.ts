@@ -1,4 +1,4 @@
-import type { Schema } from '../../shared/types/schema';
+import type { Schema } from '#shared/types/schema';
 import {
 	aggregate,
 	createDirectus,
