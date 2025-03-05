@@ -3,7 +3,7 @@ import { computed, watchEffect } from 'vue';
 import { useRoute, useFetch, useRuntimeConfig, usePreviewMode } from '#app';
 import DirectusImage from '~/components/shared/DirectusImage.vue';
 import Separator from '~/components/ui/separator/Separator.vue';
-import AdminBar from '~/components/shared/AdminBar.vue';
+import AdminBar from '~~/layers/admin-bar/app/components/AdminBar.vue';
 
 const route = useRoute();
 const slug = route.params.slug as string;

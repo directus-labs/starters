@@ -14,7 +14,6 @@ export default function useAdminBar() {
 	const config = useRuntimeConfig();
 	const isAdminBarEnabled = config.public.adminBarEnabled;
 
-	// Check if user is authenticated
 	// Check for directus session token
 	const sessionToken = useCookie('directus_session_token');
 
@@ -27,15 +26,9 @@ export default function useAdminBar() {
 		showAdminBarCookie.value = true;
 	}
 
-	// console.log('sessionToken', sessionToken.value);
-	// const { data } = useFetch('/api/auth/check-admin-bar');
-
-	// if (!isAdminBarEnabled || !sessionToken.value) return;
-
 	const showAdminBar = computed(() => isAdminBarEnabled && showAdminBarCookie.value === true);
 
 	function hideAdminBar() {
-		// Remove console.log to fix linter error
 		showAdminBarCookie.value = false;
 	}
 
@@ -88,6 +81,25 @@ export default function useAdminBar() {
 		}
 	}
 
+	async function getUser() {
+		try {
+			const { data: userData } = await useFetch('/api/admin-bar/me', {
+				headers: {
+					Cookie: `directus_session_token=${sessionToken.value}`,
+				},
+			});
+
+			user.value = userData.value;
+		} catch (error) {
+			console.error('Get user error:', error);
+		}
+	}
+
+	function logout() {
+		sessionToken.value = null;
+		user.value = null;
+	}
+
 	return {
 		isAdminBarEnabled,
 		showAdminBar,
@@ -100,5 +112,8 @@ export default function useAdminBar() {
 		login,
 		user,
 		hideAdminBar,
+		sessionToken,
+		getUser,
+		logout,
 	};
 }

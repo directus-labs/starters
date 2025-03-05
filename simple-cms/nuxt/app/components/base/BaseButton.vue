@@ -18,7 +18,7 @@ export interface ButtonProps {
 	customIcon?: any;
 	iconPosition?: 'left' | 'right';
 	className?: string;
-	onClick?: () => void;
+
 	disabled?: boolean;
 	block?: boolean;
 	target?: '_blank' | '_self' | '_parent' | '_top';
@@ -66,6 +66,7 @@ const linkComponent = computed(() => {
 		:as="linkComponent"
 		:href="href"
 		:target="target"
+		v-bind="$attrs"
 	>
 		<span class="flex items-center space-x-2">
 			<component :is="Icon" v-if="Icon && iconPosition === 'left'" class="size-4 shrink-0" />

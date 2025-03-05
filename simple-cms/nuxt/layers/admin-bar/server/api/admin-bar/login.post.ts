@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
 				Cookie: cookies.join('; '),
 			},
 			params: {
-				fields: ['id', 'email', 'first_name', 'last_name', 'avatar', 'verified_at', 'onboarded_at'],
+				fields: ['id', 'email', 'first_name', 'last_name', 'avatar'],
 			},
 		});
 
