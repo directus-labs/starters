@@ -21,6 +21,7 @@ export interface ButtonProps {
 	onClick?: () => void;
 	disabled?: boolean;
 	block?: boolean;
+	target?: '_blank' | '_self' | '_parent' | '_top';
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -64,10 +65,12 @@ const linkComponent = computed(() => {
 		:disabled="disabled"
 		:as="linkComponent"
 		:href="href"
+		:target="target"
 	>
 		<span class="flex items-center space-x-2">
 			<component :is="Icon" v-if="Icon && iconPosition === 'left'" class="size-4 shrink-0" />
 			<span v-if="label">{{ label }}</span>
+			<slot v-if="$slots.default" />
 			<component :is="Icon" v-if="Icon && iconPosition === 'right'" class="size-4 shrink-0" />
 		</span>
 	</Button>

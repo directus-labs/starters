@@ -10,6 +10,7 @@ const slug = route.params.slug as string;
 
 const { enabled } = usePreviewMode();
 const runtimeConfig = useRuntimeConfig();
+const { setAdminBarState } = useAdminBar();
 
 const { data: post, refresh } = useFetch<Post>(() => `/api/posts/${slug}`, {
 	query: { preview: enabled.value },
@@ -38,21 +39,23 @@ const authorAvatar = computed(() => {
 	return typeof author.value.avatar === 'string' ? author.value.avatar : author.value.avatar.id;
 });
 
-useHead({
+setAdminBarState({
+	collection: 'posts',
+	item: post.value,
+	title: post.value?.title || '',
+});
+
+useSeoMeta({
 	title: post.value?.seo?.title || post.value?.title,
-	meta: [
-		{ name: 'description', content: post.value?.seo?.meta_description || post.value?.description },
-		{ property: 'og:title', content: post.value?.seo?.title || post.value?.title },
-		{ property: 'og:description', content: post.value?.seo?.meta_description || post.value?.description },
-		{ property: 'og:url', content: postUrl.value },
-	],
+	description: post.value?.seo?.meta_description || post.value?.description,
+	ogTitle: post.value?.seo?.title || post.value?.title,
+	ogDescription: post.value?.seo?.meta_description || post.value?.description,
+	ogUrl: postUrl.value,
 });
 </script>
 
 <template>
 	<div v-if="post">
-		<AdminBar v-if="enabled" :content="post" type="post" />
-
 		<Container class="py-12">
 			<div v-if="post.image" class="mb-8 w-full">
 				<div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">

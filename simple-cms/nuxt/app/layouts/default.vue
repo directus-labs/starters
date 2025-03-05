@@ -1,12 +1,5 @@
 <script setup>
-import { useAsyncData } from '#app';
-import { computed, watch } from 'vue';
-
-const {
-	data: siteData,
-	error: siteError,
-	status,
-} = await useAsyncData('site-data', () => $fetch('/api/site-data').catch(() => null));
+const { data: siteData, error: siteError, status } = await useFetch('/api/site-data');
 
 const fallbackSiteData = {
 	headerNavigation: { items: [] },
@@ -27,32 +20,22 @@ const headerNavigation = computed(() => finalSiteData.value?.headerNavigation ||
 const footerNavigation = computed(() => finalSiteData.value?.footerNavigation || { items: [] });
 const globals = computed(() => finalSiteData.value?.globals || fallbackSiteData.globals);
 
-const siteTitle = computed(() => globals.value?.title || 'Simple CMS');
-const siteDescription = computed(() => globals.value?.description || '');
-const faviconURL = computed(() => (globals.value?.favicon ? `/assets/${globals.value.favicon}` : '/favicon.ico'));
-
-const updateAccentColor = () => {
-	if (import.meta.client) {
-		document.documentElement.style.setProperty('--accent-color', globals.value.accent_color);
-	}
-};
-
-watch(() => globals.value.accent_color, updateAccentColor, { immediate: true });
-
 useHead({
-	titleTemplate: (pageTitle) => (pageTitle ? `${pageTitle} | ${siteTitle.value}` : siteTitle.value),
-	meta: [
-		{ name: 'description', content: siteDescription },
-		{ property: 'og:title', content: siteTitle },
-		{ property: 'og:description', content: siteDescription },
-		{ property: 'og:type', content: 'website' },
+	style: [
+		{
+			id: 'accent-color',
+			innerHTML: `:root { --accent-color: ${unref(globals).accent_color} !important; }`,
+		},
 	],
-	link: [{ rel: 'icon', type: 'image/x-icon', href: faviconURL }],
 });
+
+const { showAdminBar } = useAdminBar();
 </script>
 
 <template>
 	<div>
+		<LazyAdminBar v-if="showAdminBar" />
+
 		<div v-if="siteError">
 			<p>Failed to load site data. Please try again later.</p>
 		</div>
