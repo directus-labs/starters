@@ -14,17 +14,20 @@ const { data: pageData, error: pageError } = await useFetch(`/api/page-data`, {
 		permalink: permalink,
 	},
 });
+
 const { setAdminBarState, isAdminBarEnabled } = useAdminBar();
 
 if (!pageData.value && !pageError) {
 	throw createError({ statusCode: 404, statusMessage: 'Page not found' });
 }
 
-setAdminBarState({
-	collection: 'pages',
-	item: pageData.value,
-	title: pageData.value?.seo?.title || pageData.value?.title || '',
-});
+if (isAdminBarEnabled) {
+	setAdminBarState({
+		collection: 'pages',
+		item: pageData.value,
+		title: pageData.value?.seo?.title || pageData.value?.title || '',
+	});
+}
 
 useSeoMeta({
 	title: pageData.value?.seo?.title || pageData.value?.title || '',

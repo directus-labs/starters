@@ -34,6 +34,7 @@ const { showAdminBar } = useAdminBar();
 
 <template>
 	<div>
+		<!-- Using Lazy prefix imports this component dynamically which is better for performance if not active -->
 		<LazyAdminBar v-if="showAdminBar" />
 
 		<div v-if="siteError">

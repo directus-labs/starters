@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const { showAdminBar, adminBarState, editUrl, newUrl, collectionLabel, collectionUrl } = useAdminBar();
+const { showAdminBar, adminBarState, editUrl, newUrl, collectionLabel, collectionUrl, hideAdminBar } = useAdminBar();
 </script>
 
 <template>
-	<div v-if="showAdminBar" class="z-50 admin-bar">
+	<div v-if="showAdminBar" class="z-10 admin-bar">
 		<Container class="w-full flex justify-between items-center py-2">
 			<div class="logo-container">
 				<!-- <img :src="directusLogo" alt="Directus Logo" class="logo" /> -->
@@ -18,6 +18,7 @@ const { showAdminBar, adminBarState, editUrl, newUrl, collectionLabel, collectio
 				<BaseButton v-if="newUrl" id="new-button" :url="newUrl" target="_blank" size="sm">
 					New {{ collectionLabel }}
 				</BaseButton>
+				<button id="hide-admin-bar-button" type="button" size="sm" @click="hideAdminBar">Hide Admin Bar</button>
 			</div>
 		</Container>
 	</div>
