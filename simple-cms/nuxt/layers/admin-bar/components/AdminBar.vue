@@ -15,7 +15,6 @@ const form = ref({
 		<Container class="w-full flex justify-between items-center py-2">
 			<template v-if="user">
 				<div class="flex items-center gap-2.5">
-					<!-- <img :src="directusLogo" alt="Directus Logo" class="h-6" /> -->
 					<NuxtLink :to="collectionUrl" class="font-mono" target="_blank">{{ adminBarState.collection }}</NuxtLink>
 					<span class="font-mono">/</span>
 					<span class="text-sm text-[#ddd]">{{ adminBarState.title }}</span>
@@ -49,7 +48,7 @@ const form = ref({
 						<div>
 							<Input v-model="form.email" placeholder="Email" />
 							<Input v-model="form.password" placeholder="Password" />
-							<Button @click="login(form.email, form.password)">Login</Button>
+							<Button @click="login({ email: form.email, password: form.password })">Login</Button>
 						</div>
 					</DropdownMenuContent>
 				</DropdownMenu>
