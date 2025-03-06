@@ -13,18 +13,6 @@ export default defineEventHandler(async (event) => {
 			},
 		});
 
-		// console.log('user from me', user);
-
-		// if (!user) {
-		// 	// Delete the token
-		// 	deleteCookie(event, 'directus_session_token', {});
-
-		// 	throw createError({
-		// 		statusCode: 401,
-		// 		message: 'Invalid credentials',
-		// 	});
-		// }
-
 		return user;
 	} catch (error) {
 		console.error('Login error:', error);
