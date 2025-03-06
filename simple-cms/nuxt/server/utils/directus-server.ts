@@ -1,3 +1,4 @@
+import { $fetch } from 'ofetch';
 import type { Schema } from '#shared/types/schema';
 import {
 	aggregate,
@@ -22,8 +23,11 @@ const {
 } = useRuntimeConfig();
 
 // By default, we use the Public permissions to fetch content (even on the server side). If you want to restrict public access it's recommended to use the staticToken option.
-
-const directusServer = createDirectus<Schema>(directusUrl as string).with(rest());
+const directusServer = createDirectus<Schema>(directusUrl as string, {
+	globals: {
+		fetch: $fetch,
+	},
+}).with(rest());
 // .with(staticToken(directusServerToken as string));
 
 export {
