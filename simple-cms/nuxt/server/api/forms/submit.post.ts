@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 		});
 	}
 
-	const TOKEN = config.public.directusServerToken as string;
+	const TOKEN = config.directusServerToken as string;
 
 	if (!TOKEN) {
 		throw createError({
