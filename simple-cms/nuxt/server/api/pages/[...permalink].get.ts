@@ -1,8 +1,9 @@
-import { directusServer, readItems } from '../utils/directus-server';
+import { withLeadingSlash } from 'ufo';
 
 export default defineEventHandler(async (event) => {
-	const query = getQuery(event);
-	const permalink = query.permalink as string;
+	const params = getRouterParams(event);
+
+	const permalink = withLeadingSlash(params.permalink);
 
 	try {
 		const pageData = await directusServer.request(
@@ -151,6 +152,6 @@ export default defineEventHandler(async (event) => {
 
 		return page;
 	} catch {
-		throw createError({ statusCode: 500, statusMessage: 'Internal Server Error' });
+		throw createError({ statusCode: 500, statusMessage: 'Page not found' });
 	}
 });

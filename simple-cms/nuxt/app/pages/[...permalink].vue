@@ -1,19 +1,14 @@
-<script setup>
-import { useRoute, usePreviewMode } from '#app';
-import PageBuilder from '~/components/PageBuilder.vue';
+<script setup lang="ts">
+import type { Page } from '#shared/types/schema';
 
-const config = useRuntimeConfig();
 const route = useRoute();
+const config = useRuntimeConfig();
 
 const permalink = `/${(route.params.permalink || []).join('/')}`;
 
 const { enabled } = usePreviewMode();
 
-const { data: pageData, error: pageError } = await useFetch(`/api/page-data`, {
-	params: {
-		permalink: permalink,
-	},
-});
+const { data: pageData, error: pageError } = await useFetch(`/api/pages/${permalink}`, {});
 
 const { setAdminBarState, isAdminBarEnabled } = useAdminBar();
 
