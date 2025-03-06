@@ -1,18 +1,10 @@
 <script setup lang="ts">
-import { ref, computed, watchEffect } from 'vue';
-import { useRoute, useRouter, useAsyncData } from 'nuxt/app';
+import type { Post } from '#shared/types/schema';
 import { ChevronsLeft, ChevronsRight, ChevronLeft, ChevronRight } from 'lucide-vue-next';
-
-interface Post {
-	id: string;
-	title: string;
-	slug: string;
-	description?: string;
-	image?: string;
-}
 
 interface PostsProps {
 	data: {
+		id?: string;
 		tagline?: string;
 		headline?: string;
 		posts: Post[];
@@ -27,26 +19,20 @@ const router = useRouter();
 
 const perPage = props.data.limit || 6;
 const currentPage = ref(Number(route.query.page) || 1);
-
-const { data: totalPagesData } = await useAsyncData('posts-total-pages', () =>
-	$fetch<{ total: number }>('/api/posts/count'),
-);
-const totalPages = computed(() => Math.ceil((totalPagesData.value?.total || 0) / perPage));
-
-const { data: paginatedPosts, error: fetchError } = useAsyncData(
-	'paginated-posts',
-	() => $fetch<Post[]>('/api/posts', { query: { page: currentPage.value, limit: perPage } }),
-	{ watch: [currentPage] },
-);
-
-const handlePageChange = (page: number) => {
-	if (page >= 1 && page <= totalPages.value && page !== currentPage.value) {
-		currentPage.value = page;
-		router.push({ query: { page } });
-	}
-};
-
 const visiblePages = 5;
+
+const { data: postsData, error } = await useFetch<{
+	posts: Post[];
+	count: number;
+}>('/api/posts', {
+	key: `block-posts-${props.data?.id}-${currentPage.value}`,
+	query: { page: currentPage, limit: perPage },
+	watch: [currentPage],
+});
+
+const posts = computed(() => postsData.value?.posts || []);
+const totalPages = computed(() => Math.ceil((postsData.value?.count || 0) / perPage));
+
 const paginationLinks = computed(() => {
 	const pages: (number | string)[] = [];
 
@@ -62,19 +48,26 @@ const paginationLinks = computed(() => {
 
 	return pages;
 });
+
+function handlePageChange(page: number) {
+	if (page >= 1 && page <= totalPages.value && page !== currentPage.value) {
+		currentPage.value = page;
+		router.push({ query: { page } });
+	}
+}
 </script>
 
 <template>
 	<div>
-		<Tagline v-if="data.tagline" :tagline="data.tagline" />
-		<Headline v-if="data.headline" :headline="data.headline" />
+		<Tagline v-if="data?.tagline" :tagline="data.tagline" />
+		<Headline v-if="data?.headline" :headline="data.headline" />
 
-		<p v-if="fetchError" class="text-center text-red-500">{{ fetchError }}</p>
+		<p v-if="error" class="text-center text-red-500">{{ error }}</p>
 
 		<div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-			<template v-if="paginatedPosts">
+			<template v-if="posts">
 				<NuxtLink
-					v-for="post in paginatedPosts"
+					v-for="post in posts"
 					:key="post.id"
 					:to="`/blog/${post.slug}`"
 					class="group block overflow-hidden rounded-lg"
@@ -101,7 +94,7 @@ const paginationLinks = computed(() => {
 			<p v-else class="text-center text-gray-500">No posts available.</p>
 		</div>
 		<ClientOnly>
-			<Pagination v-if="totalPages > 1 && paginatedPosts?.length" class="mt-6">
+			<Pagination v-if="totalPages > 1 && posts?.length" class="mt-6">
 				<div v-if="totalPages" class="flex items-center justify-center space-x-2">
 					<div v-if="totalPages > 5 && currentPage > 1" class="flex items-center">
 						<PaginationFirst @click="handlePageChange(1)">
