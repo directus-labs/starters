@@ -3,6 +3,7 @@
 <template>
 	<div>
 		<NuxtLayout name="default">
+			404
 			<Headline content="Oh No! 4-0-Fo!" size="xl" color="secondary" />
 			<Text
 				as="p"

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { NuxtLink } from '#components';
 import { buttonVariants } from '~/components/ui/button';
 import { ArrowRight, Plus } from 'lucide-vue-next';
 import { cn } from '@@/shared/utils';
@@ -18,9 +19,9 @@ export interface ButtonProps {
 	customIcon?: any;
 	iconPosition?: 'left' | 'right';
 	className?: string;
-	onClick?: () => void;
 	disabled?: boolean;
 	block?: boolean;
+	target?: '_blank' | '_self' | '_parent' | '_top';
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -53,7 +54,7 @@ const buttonClasses = computed(() =>
 );
 
 const linkComponent = computed(() => {
-	return href.value ? 'a' : 'button';
+	return href.value ? NuxtLink : 'button';
 });
 </script>
 <template>
@@ -64,10 +65,13 @@ const linkComponent = computed(() => {
 		:disabled="disabled"
 		:as="linkComponent"
 		:href="href"
+		:target="target"
+		v-bind="$attrs"
 	>
 		<span class="flex items-center space-x-2">
 			<component :is="Icon" v-if="Icon && iconPosition === 'left'" class="size-4 shrink-0" />
 			<span v-if="label">{{ label }}</span>
+			<slot v-if="$slots.default" />
 			<component :is="Icon" v-if="Icon && iconPosition === 'right'" class="size-4 shrink-0" />
 		</span>
 	</Button>

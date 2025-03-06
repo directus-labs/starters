@@ -71,23 +71,20 @@ const handleLinkClick = () => {
 								<NavigationMenuContent class="min-w-[200px] rounded-md bg-background p-4 shadow-md">
 									<ul class="min-h-[100px] flex flex-col gap-2">
 										<li v-for="child in section.children" :key="child.id">
-											<NavigationMenuLink
-												:href="child.page?.permalink || child.url || '#'"
-												class="font-heading text-nav p-2"
-											>
-												{{ child.title }}
+											<NavigationMenuLink as-child>
+												<NuxtLink :to="child.page?.permalink || child.url || '#'" class="font-heading text-nav p-2">
+													{{ child.title }}
+												</NuxtLink>
 											</NavigationMenuLink>
 										</li>
 									</ul>
 								</NavigationMenuContent>
 							</template>
 
-							<NavigationMenuLink
-								v-else
-								:href="section.page?.permalink || section.url || '#'"
-								class="font-heading text-nav"
-							>
-								{{ section.title }}
+							<NavigationMenuLink v-else as-child>
+								<NuxtLink :to="section.page?.permalink || section.url || '#'" class="font-heading text-nav p-2">
+									{{ section.title }}
+								</NuxtLink>
 							</NavigationMenuLink>
 						</NavigationMenuItem>
 					</NavigationMenuList>
