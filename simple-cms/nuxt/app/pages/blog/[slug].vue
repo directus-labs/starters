@@ -3,36 +3,45 @@ import type { Post, DirectusUser } from '#shared/types/schema';
 
 const route = useRoute();
 const { enabled, state } = useLivePreview();
-const { setAdminBarState } = useAdminBar();
+const { setAdminBarState, isAdminBarEnabled } = useAdminBar();
 const postUrl = useRequestURL();
 
 const slug = route.params.slug as string;
 
-const { data } = useFetch<{
+const { data, error } = await useFetch<{
 	post: Post;
 	relatedPosts: Post[];
 }>(() => `/api/posts/${slug}`, {
+	key: `posts-${slug}`,
 	query: {
-		preview: enabled ? true : undefined,
-		token: state.token,
+		preview: enabled.value ? true : undefined,
+		token: enabled.value ? state.token : undefined,
 	},
 });
+
+if (!data.value || error.value) {
+	throw createError({ statusCode: 404, statusMessage: 'Post not found', fatal: true });
+}
 
 const post = computed(() => data.value?.post);
 const relatedPosts = computed(() => data.value?.relatedPosts);
 const author = computed(() => post.value?.author as Partial<DirectusUser>);
 
-setAdminBarState({
-	collection: 'posts',
-	item: post.value as Post,
-	title: post.value?.title || '',
-});
+// Update Admin Bar with post details - totally safe to remove this if you don't plan on using the admin bar
+if (isAdminBarEnabled) {
+	setAdminBarState({
+		collection: 'posts',
+		item: post.value as Post,
+		title: post.value?.title || '',
+	});
+}
 
 useSeoMeta({
 	title: post.value?.seo?.title || post.value?.title,
 	description: post.value?.seo?.meta_description || post.value?.description,
 	ogTitle: post.value?.seo?.title || post.value?.title,
 	ogDescription: post.value?.seo?.meta_description || post.value?.description,
+	ogUrl: postUrl.toString(),
 });
 </script>
 

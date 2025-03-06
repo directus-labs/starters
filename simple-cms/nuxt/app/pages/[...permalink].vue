@@ -1,43 +1,46 @@
 <script setup lang="ts">
-import type { Page } from '#shared/types/schema';
+import type { Page, PageBlock } from '#shared/types/schema';
 
 const route = useRoute();
-const config = useRuntimeConfig();
+const { enabled, state } = useLivePreview();
+const pageUrl = useRequestURL();
 
-const permalink = `/${(route.params.permalink || []).join('/')}`;
+const permalink = `/${((route.params.permalink as string[]) || []).join('/')}`;
 
-const { enabled } = usePreviewMode();
-
-const { data: pageData, error: pageError } = await useFetch(`/api/pages/${permalink}`, {});
+const { data: page, error } = await useFetch<Page>(`/api/pages/${permalink}`, {
+	key: `pages-${permalink}`,
+	query: {
+		preview: enabled.value ? true : undefined,
+		token: enabled.value ? state.token : undefined,
+	},
+});
 
 const { setAdminBarState, isAdminBarEnabled } = useAdminBar();
 
-if (!pageData.value && !pageError) {
-	throw createError({ statusCode: 404, statusMessage: 'Page not found' });
+if (!page.value || error.value) {
+	throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });
 }
 
+const pageBlocks = computed(() => (page.value?.blocks as PageBlock[]) || []);
+
+// Update Admin Bar with page details - totally safe to remove this if you don't plan on using the admin bar
 if (isAdminBarEnabled) {
 	setAdminBarState({
 		collection: 'pages',
-		item: pageData.value,
-		title: pageData.value?.seo?.title || pageData.value?.title || '',
+		item: page.value as Page,
+		title: page.value?.seo?.title || page.value?.title || '',
 	});
 }
 
 useSeoMeta({
-	title: pageData.value?.seo?.title || pageData.value?.title || '',
-	description: pageData.value?.seo?.meta_description || '',
-	ogTitle: pageData.value?.seo?.title || pageData.value?.title || '',
-	ogDescription: pageData.value?.seo?.meta_description || '',
-	ogUrl: `${import.meta.env.VITE_SITE_URL}${permalink}`,
+	title: page.value?.seo?.title || page.value?.title || '',
+	description: page.value?.seo?.meta_description || '',
+	ogTitle: page.value?.seo?.title || page.value?.title || '',
+	ogDescription: page.value?.seo?.meta_description || '',
+	ogUrl: pageUrl.toString(),
 });
 </script>
 
 <template>
-	<div>
-		<div v-if="pageError">404 - Page Not Found</div>
-		<div v-else>
-			<PageBuilder :sections="pageData.blocks" />
-		</div>
-	</div>
+	<PageBuilder v-if="pageBlocks" :sections="pageBlocks" />
 </template>

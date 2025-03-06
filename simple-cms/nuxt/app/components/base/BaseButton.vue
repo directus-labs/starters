@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { NuxtLink } from '#components';
 import { buttonVariants } from '~/components/ui/button';
 import { ArrowRight, Plus } from 'lucide-vue-next';
 import { cn } from '@@/shared/utils';
@@ -18,7 +19,6 @@ export interface ButtonProps {
 	customIcon?: any;
 	iconPosition?: 'left' | 'right';
 	className?: string;
-
 	disabled?: boolean;
 	block?: boolean;
 	target?: '_blank' | '_self' | '_parent' | '_top';
@@ -54,7 +54,7 @@ const buttonClasses = computed(() =>
 );
 
 const linkComponent = computed(() => {
-	return href.value ? 'a' : 'button';
+	return href.value ? NuxtLink : 'button';
 });
 </script>
 <template>

@@ -29,6 +29,11 @@ useHead({
 	],
 });
 
+useSeoMeta({
+	titleTemplate: `%s / ${unref(globals).title}`,
+	ogSiteName: unref(globals).title,
+});
+
 const { showAdminBar } = useAdminBar();
 </script>
 
