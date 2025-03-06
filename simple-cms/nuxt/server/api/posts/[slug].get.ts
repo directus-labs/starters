@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
 			),
 		);
 
-		// This is a really naive implementation of related posts. Just a basic check to ensure we don't return the same post.
+		// This is a really naive implementation of related posts. Just a basic check to ensure we don't return the same post. You might want to do something more sophisticated.
 		const relatedPostsPromise = directusServer.request(
 			withToken(
 				token as string,

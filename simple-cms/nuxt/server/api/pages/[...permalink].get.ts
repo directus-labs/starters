@@ -2,120 +2,130 @@ import { withLeadingSlash } from 'ufo';
 
 export default defineEventHandler(async (event) => {
 	const params = getRouterParams(event);
+	const query = getQuery(event);
 
 	const permalink = withLeadingSlash(params.permalink);
 
+	// Handle live preview
+	const { preview, token: rawToken } = query;
+	const token = preview === 'true' && rawToken ? String(rawToken) : null;
+
 	try {
 		const pageData = await directusServer.request(
-			readItems('pages', {
-				filter: { permalink: { _eq: permalink } },
-				limit: 1,
-				fields: [
-					'title',
-					'id',
-					{
-						seo: ['title', 'meta_description', 'og_image'],
-						blocks: [
-							'id',
-							'background',
-							'collection',
-							'item',
-							'sort',
-							'hide_block',
-							{
-								item: {
-									block_richtext: ['tagline', 'headline', 'content', 'alignment'],
-									block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] }],
-									block_pricing: [
-										'tagline',
-										'headline',
-										{
-											pricing_cards: [
-												'id',
-												'title',
-												'description',
-												'price',
-												'badge',
-												'features',
-												'is_highlighted',
-												{
-													button: [
-														'id',
-														'label',
-														'variant',
-														'url',
-														'type',
-														{ page: ['permalink'] },
-														{ post: ['slug'] },
-													],
-												},
-											],
-										},
-									],
-									block_hero: [
-										'tagline',
-										'headline',
-										'description',
-										'layout',
-										'image',
-										{
-											button_group: [
-												'id',
-												{
-													buttons: [
-														'id',
-														'label',
-														'variant',
-														'url',
-														'type',
-														{ page: ['permalink'] },
-														{ post: ['slug'] },
-													],
-												},
-											],
-										},
-									],
-									block_posts: ['tagline', 'headline', 'collection', 'limit'],
-									block_form: [
-										'id',
-										'tagline',
-										'headline',
-										{
-											form: [
-												'id',
-												'title',
-												'submit_label',
-												'success_message',
-												'on_success',
-												'success_redirect_url',
-												'is_active',
-												{
-													fields: [
-														'id',
-														'name',
-														'type',
-														'label',
-														'placeholder',
-														'help',
-														'validation',
-														'width',
-														'choices',
-														'required',
-														'sort',
-													],
-												},
-											],
-										},
-									],
+			withToken(
+				token as string,
+				readItems('pages', {
+					filter: { permalink: { _eq: permalink } },
+					limit: 1,
+					fields: [
+						'title',
+						'id',
+						{
+							seo: ['title', 'meta_description', 'og_image'],
+							blocks: [
+								'id',
+								'background',
+								'collection',
+								'item',
+								'sort',
+								'hide_block',
+								{
+									item: {
+										block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
+										block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] }],
+										block_pricing: [
+											'id',
+											'tagline',
+											'headline',
+											{
+												pricing_cards: [
+													'id',
+													'title',
+													'description',
+													'price',
+													'badge',
+													'features',
+													'is_highlighted',
+													{
+														button: [
+															'id',
+															'label',
+															'variant',
+															'url',
+															'type',
+															{ page: ['permalink'] },
+															{ post: ['slug'] },
+														],
+													},
+												],
+											},
+										],
+										block_hero: [
+											'id',
+											'tagline',
+											'headline',
+											'description',
+											'layout',
+											'image',
+											{
+												button_group: [
+													'id',
+													{
+														buttons: [
+															'id',
+															'label',
+															'variant',
+															'url',
+															'type',
+															{ page: ['permalink'] },
+															{ post: ['slug'] },
+														],
+													},
+												],
+											},
+										],
+										block_posts: ['id', 'tagline', 'headline', 'collection', 'limit'],
+										block_form: [
+											'id',
+											'tagline',
+											'headline',
+											{
+												form: [
+													'id',
+													'title',
+													'submit_label',
+													'success_message',
+													'on_success',
+													'success_redirect_url',
+													'is_active',
+													{
+														fields: [
+															'id',
+															'name',
+															'type',
+															'label',
+															'placeholder',
+															'help',
+															'validation',
+															'width',
+															'choices',
+															'required',
+															'sort',
+														],
+													},
+												],
+											},
+										],
+									},
 								},
-							},
-						],
+							],
+						},
+					],
+					deep: {
+						blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
 					},
-				],
-				deep: {
-					blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
-				},
-			}),
+				}),
+			),
 		);
 
 		if (!pageData.length) {
