@@ -12,6 +12,7 @@
 			title: string;
 			headline: string;
 			tagline: string;
+			layout: 'center' | 'left' | 'right';
 			description: string;
 			alignment: 'left' | 'center' | 'right';
 			image: string;
@@ -30,17 +31,17 @@
 	}
 
 	let { data }: Props = $props();
-	const { alignment, title, headline, description, image, button_group, tagline } = data;
+	const { alignment, title, headline, description, image, button_group, tagline, layout } = data;
 
 	$inspect(data);
 </script>
 
 <section
 	class={cn(
-		'relative mx-auto flex w-full max-w-screen-lg flex-col gap-6 px-4 md:min-h-[60vh] md:gap-12',
-		alignment === 'center'
+		'relative mx-auto flex w-full flex-col gap-6 md:gap-12',
+		layout === 'center'
 			? 'items-center text-center'
-			: alignment === 'right'
+			: layout === 'right'
 				? 'items-center md:flex-row-reverse'
 				: 'items-center md:flex-row'
 	)}
@@ -48,7 +49,7 @@
 	<div
 		class={cn(
 			'flex w-full flex-col gap-4',
-			alignment === 'center' ? 'items-center md:w-1/2' : 'items-start md:w-1/2'
+			layout === 'center' ? 'items-center md:w-3/4 xl:w-2/3' : 'items-start md:w-1/2'
 		)}
 	>
 		<Tagline {tagline} />
@@ -67,13 +68,16 @@
 	</div>
 	{#if image}
 		<div
-			class={cn('relative w-full', alignment === 'center' ? 'h-[400px]' : 'h-[562px]', 'md:w-1/2')}
+			class={cn(
+				'relative w-full',
+				layout === 'center' ? 'h-[400px] md:w-3/4 xl:w-2/3' : 'h-[562px] md:w-1/2'
+			)}
 		>
 			<DirectusImage
-				id={image}
-				alt={title || 'Hero Image'}
-				fill
-				sizes={alignment === 'center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
+				uuid={image}
+				alt={tagline || headline || 'Hero Image'}
+				sizes={layout === 'center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
+				class="object-contain"
 			/>
 		</div>
 	{/if}

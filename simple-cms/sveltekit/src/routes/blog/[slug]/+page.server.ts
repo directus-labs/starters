@@ -12,7 +12,7 @@ export const load = (async (event) => {
             message: 'Post Not found'
         });
     }
-
+    // TODO optimize this to run in parallel
     const ogImage = post.image ? getDirectusAssetURL(post.image) : null;
     const relatedPosts = await fetchRelatedPosts(post.id);
     const author = post.author ? await fetchAuthorById(post.author as string) : null;
