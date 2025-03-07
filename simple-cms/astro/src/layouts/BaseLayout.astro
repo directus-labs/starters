@@ -1,28 +1,53 @@
 ---
-import HeadSEO from "@/components/HeadSEO.astro";
-import Footer from "@/components/Footer.astro";
-import Header from "@/components/Header.astro";
+import { fetchSiteData } from '../lib/directus/fetchers';
+import { getDirectusAssetURL } from '../lib/directus/directus-utils';
+import NavigationBar from '@/components/layout/NavigationBar';
+import Footer from '@/components/layout/Footer';
+import '../styles/global.css';
+import '../styles/fonts.css';
+const { globals, headerNavigation, footerNavigation } = await fetchSiteData();
+const siteTitle = globals?.title || 'Simple CMS';
+const siteDescription = globals?.description || 'A starter CMS template powered by Next.js and Directus.';
+const faviconURL = globals?.favicon ? getDirectusAssetURL(globals.favicon) : '/favicon.ico';
+const accentColor = globals?.accent_color || '#6644ff';
 
-interface Props {
-  title?: string | undefined;
-  description?: string | undefined;
-  ogImage?: URL | undefined;
-}
-
-const { title, description, ogImage } = Astro.props;
+const { metadata } = Astro.props;
 ---
-
-<html lang="en">
+<html lang="en" style="--accent-color: {accentColor};">
   <head>
-    <HeadSEO title={title} description={description} ogImage={ogImage} />
+    <meta charset="UTF-8" />
+    <title>{metadata.title || siteTitle}</title>
+    <meta name="description" content={metadata.description || siteDescription} />
+    <link rel="icon" href={faviconURL} />
+    {metadata.openGraph && (
+      <>
+        <meta property="og:title" content={metadata.openGraph.title} />
+        <meta property="og:description" content={metadata.openGraph.description} />
+        <meta property="og:url" content={metadata.openGraph.url} />
+        <meta property="og:type" content={metadata.openGraph.type} />
+      </>
+    )}
+    <script is:inline>
+      const getThemePreference = () => {
+        if (localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
+      const isDark = getThemePreference() === 'dark';
+      document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+      const observer = new MutationObserver(() => {
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    </script>
   </head>
-  <body class="bg-background min-h-screen font-sans antialiased">
-    <div class="relative flex min-h-screen flex-col">
-      <Header />
-      <main class="flex-auto">
-        <slot />
-      </main>
-      <Footer />
-    </div>
+  <body class="antialiased font-sans flex flex-col min-h-screen">
+    <NavigationBar navigation={headerNavigation} globals={globals} />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <Footer navigation={footerNavigation} globals={globals} />
   </body>
 </html>

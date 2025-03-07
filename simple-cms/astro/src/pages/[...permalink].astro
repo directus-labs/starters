@@ -1,0 +1,49 @@
+---
+export const prerender = false;
+import Layout from '../layouts/BaseLayout.astro';
+import { fetchPageData } from '../lib/directus/fetchers';
+import PageBuilder from '../components/layout/PageBuilder';
+import type { PageBlock } from '../types/directus-schema';
+
+const { permalink } = Astro.params;
+const permalinkSegments = Array.isArray(permalink) ? permalink : [permalink];
+const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+
+let page;
+try {
+  page = await fetchPageData(resolvedPermalink);
+} catch (error) {
+  console.error('Error loading page:', error);
+  page = null;
+}
+
+if (!page || !page.blocks) {
+  page = null;
+}
+
+const blocks: PageBlock[] = page
+  ? page.blocks.filter((block: any): block is PageBlock => typeof block === 'object' && block.collection)
+  : [];
+
+const siteURL = import.meta.env.PUBLIC_SITE_URL || '';
+
+const metadata = page
+  ? {
+      title: page.seo?.title ?? page.title ?? '',
+      description: page.seo?.meta_description ?? '',
+      openGraph: {
+        title: page.seo?.title ?? page.title ?? '',
+        description: page.seo?.meta_description ?? '',
+        url: `${siteURL}${resolvedPermalink}`,
+        type: 'website'
+      }
+    }
+  : { title: '404 - Page Not Found', description: '' };
+---
+<Layout metadata={metadata}>
+  {page ? (
+    <PageBuilder sections={blocks} />
+  ) : (
+    <div class="text-center text-xl mt-20">404 - Page Not Found</div>
+  )}
+</Layout>

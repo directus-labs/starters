@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
   site: process.env.CI
-    ? "https://astro-shadcn-ui-template.vercel.app"
+    ? "starters-simple-cms-nextjs.vercel.app"
     : "http://localhost:4321",
   integrations: [react()],
   vite: {
