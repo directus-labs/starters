@@ -3,25 +3,36 @@
 	import DirectusImage from '../shared/DirectusImage.svelte';
 	import BaseText from '$lib/components/ui/Text.svelte';
 	import ButtonGroup from './ButtonGroup.svelte';
-	import type { ButtonProps } from '../ui/button';
 	import Headline from '../ui/Headline.svelte';
 	import Title from '../ui/Title.svelte';
+	import Tagline from '../ui/Tagline.svelte';
 
 	interface Props {
 		data: {
 			title: string;
 			headline: string;
+			tagline: string;
 			description: string;
 			alignment: 'left' | 'center' | 'right';
 			image: string;
 			button_group?: {
-				buttons: Array<ButtonProps>;
+				buttons: Array<{
+					id: string;
+					label: string | null;
+					variant: string | null;
+					url: string | null;
+					type: 'url' | 'page' | 'post';
+					pagePermalink?: string | null;
+					postSlug?: string | null;
+				}>;
 			};
 		};
 	}
 
 	let { data }: Props = $props();
-	const { alignment, title, headline, description, image, button_group } = data;
+	const { alignment, title, headline, description, image, button_group, tagline } = data;
+
+	$inspect(data);
 </script>
 
 <section
@@ -40,9 +51,8 @@
 			alignment === 'center' ? 'items-center md:w-1/2' : 'items-start md:w-1/2'
 		)}
 	>
-		{#if title}
-			<Title {title} />
-		{/if}
+		<Tagline {tagline} />
+
 		{#if headline}
 			<Headline {headline} />
 		{/if}

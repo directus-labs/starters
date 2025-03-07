@@ -226,7 +226,7 @@ export const fetchPostBySlug = async (slug: string, options?: { draft?: boolean 
 			readItems('posts', {
 				filter,
 				limit: 1,
-				fields: ['id', 'title', 'content', 'status', 'image', 'description', 'author'],
+				fields: ['id', 'title', 'content', 'status', 'image', 'description', 'author', 'seo'],
 			}),
 		);
 

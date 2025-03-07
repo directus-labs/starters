@@ -9,8 +9,9 @@
 </script>
 
 {#if headline}
-	<as
+	<svelte:element
+		this={as}
 		class="font-heading font-normal text-foreground {props.class}
-         lg:text-headline text-4xl md:text-5xl">{headline}</as
+         lg:text-headline text-4xl md:text-5xl">{headline}</svelte:element
 	>
 {/if}

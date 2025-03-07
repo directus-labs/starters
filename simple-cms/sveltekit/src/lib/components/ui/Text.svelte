@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
 
-	interface Props {
+	interface TextProps {
 		content: string;
 		[key: string]: string;
 	}
 
-	let { content, ...props }: Props = $props();
+	let { content, ...props }: TextProps = $props();
 </script>
 
 <div class={cn('prose dark:prose-invert', props.class)}>
