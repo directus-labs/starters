@@ -39,7 +39,7 @@
 			<BaseText content={post.content || ''} />
 		</main>
 
-		<aside class="bg-background-muted h-fit max-w-[496px] space-y-6 rounded-lg p-6">
+		<aside class="h-fit max-w-[496px] space-y-6 rounded-lg bg-background-muted p-6">
 			{#if author}
 				<div class="flex items-center space-x-4">
 					{#if author.avatar}

@@ -18,7 +18,7 @@
 </script>
 
 {#each validBlocks as block}
-	<div class={`py-16`} data-background={block.background}>
+	<div class="py-16" data-background={block.background}>
 		<Container>
 			<BaseBlock {block} />
 		</Container>

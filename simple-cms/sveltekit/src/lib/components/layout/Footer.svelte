@@ -38,7 +38,7 @@
 					{/if}
 				</a>
 				{#if globals?.description}
-					<p class="text-description mt-2">{globals.description}</p>
+					<p class="mt-2 text-description">{globals.description}</p>
 				{/if}
 
 				<!-- {/* Social Links */} -->

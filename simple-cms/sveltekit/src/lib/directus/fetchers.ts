@@ -27,7 +27,12 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 							{
 								item: {
 									block_richtext: ['tagline', 'headline', 'content', 'alignment'],
-									block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] }],
+									block_gallery: [
+										'id',
+										'tagline',
+										'headline',
+										{ items: ['id', 'directus_file', 'sort'] }
+									],
 									block_pricing: [
 										'tagline',
 										'headline',
@@ -48,11 +53,11 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 														'url',
 														'type',
 														{ page: ['permalink'] },
-														{ post: ['slug'] },
-													],
-												},
-											],
-										},
+														{ post: ['slug'] }
+													]
+												}
+											]
+										}
 									],
 									block_hero: [
 										'tagline',
@@ -71,11 +76,11 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 														'url',
 														'type',
 														{ page: ['permalink'] },
-														{ post: ['slug'] },
-													],
-												},
-											],
-										},
+														{ post: ['slug'] }
+													]
+												}
+											]
+										}
 									],
 									block_posts: ['tagline', 'headline', 'collection', 'limit'],
 									block_form: [
@@ -103,21 +108,21 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 														'width',
 														'choices',
 														'required',
-														'sort',
-													],
-												},
-											],
-										},
-									],
-								},
-							},
-						],
-					},
+														'sort'
+													]
+												}
+											]
+										}
+									]
+								}
+							}
+						]
+					}
 				],
 				deep: {
-					blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
-				},
-			}),
+					blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } }
+				}
+			})
 		);
 
 		if (!pageData.length) {
@@ -140,8 +145,8 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 							filter: { status: { _eq: 'published' } },
 							sort: ['-published_at'],
 							limit,
-							page: postPage,
-						}),
+							page: postPage
+						})
 					);
 
 					(block.item as BlockPost & { posts: Post[] }).posts = posts;
@@ -166,8 +171,16 @@ export const fetchSiteData = async () => {
 		const [globals, headerNavigation, footerNavigation] = await Promise.all([
 			directus.request(
 				readSingleton('globals', {
-					fields: ['title', 'description', 'logo', 'logo_dark_mode', 'social_links', 'accent_color', 'favicon'],
-				}),
+					fields: [
+						'title',
+						'description',
+						'logo',
+						'logo_dark_mode',
+						'social_links',
+						'accent_color',
+						'favicon'
+					]
+				})
 			),
 			directus.request(
 				readItem('navigation', 'main', {
@@ -178,13 +191,13 @@ export const fetchSiteData = async () => {
 								'title',
 								{
 									page: ['permalink'],
-									children: ['id', 'title', 'url', { page: ['permalink'] }],
-								},
-							],
-						},
+									children: ['id', 'title', 'url', { page: ['permalink'] }]
+								}
+							]
+						}
 					],
-					deep: { items: { _sort: ['sort'] } },
-				}),
+					deep: { items: { _sort: ['sort'] } }
+				})
 			),
 			directus.request(
 				readItem('navigation', 'footer', {
@@ -195,13 +208,13 @@ export const fetchSiteData = async () => {
 								'title',
 								{
 									page: ['permalink'],
-									children: ['id', 'title', 'url', { page: ['permalink'] }],
-								},
-							],
-						},
-					],
-				}),
-			),
+									children: ['id', 'title', 'url', { page: ['permalink'] }]
+								}
+							]
+						}
+					]
+				})
+			)
 		]);
 
 		return { globals, headerNavigation, footerNavigation };
@@ -226,8 +239,8 @@ export const fetchPostBySlug = async (slug: string, options?: { draft?: boolean 
 			readItems('posts', {
 				filter,
 				limit: 1,
-				fields: ['id', 'title', 'content', 'status', 'image', 'description', 'author', 'seo'],
-			}),
+				fields: ['id', 'title', 'content', 'status', 'image', 'description', 'author', 'seo']
+			})
 		);
 
 		const post = posts[0];
@@ -256,8 +269,8 @@ export const fetchRelatedPosts = async (excludeId: string) => {
 			readItems('posts', {
 				filter: { status: { _eq: 'published' }, id: { _neq: excludeId } },
 				fields: ['id', 'title', 'image', 'slug'],
-				limit: 2,
-			}),
+				limit: 2
+			})
 		);
 
 		return relatedPosts;
@@ -276,8 +289,8 @@ export const fetchAuthorById = async (authorId: string) => {
 	try {
 		const author = await directus.request(
 			readUser(authorId, {
-				fields: ['first_name', 'last_name', 'avatar'],
-			}),
+				fields: ['first_name', 'last_name', 'avatar']
+			})
 		);
 
 		return author;
@@ -299,8 +312,8 @@ export const fetchPaginatedPosts = async (limit: number, page: number) => {
 				page,
 				sort: ['-published_at'],
 				fields: ['id', 'title', 'description', 'slug', 'image'],
-				filter: { status: { _eq: 'published' } },
-			}),
+				filter: { status: { _eq: 'published' } }
+			})
 		);
 
 		return response;
@@ -320,8 +333,8 @@ export const fetchTotalPostCount = async (): Promise<number> => {
 		const response = await directus.request(
 			aggregate('posts', {
 				aggregate: { count: '*' },
-				filter: { status: { _eq: 'published' } },
-			}),
+				filter: { status: { _eq: 'published' } }
+			})
 		);
 
 		return Number(response[0]?.count) || 0;

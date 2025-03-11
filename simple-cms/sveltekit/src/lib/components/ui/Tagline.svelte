@@ -11,7 +11,7 @@
 {#if tagline}
 	<svelte:element
 		this={as}
-		class={`font-heading lg:text-tagline text-lg font-normal uppercase text-accent md:text-xl ${className}`}
+		class={`font-heading text-lg font-normal uppercase text-accent md:text-xl lg:text-tagline ${className}`}
 	>
 		{tagline}
 	</svelte:element>

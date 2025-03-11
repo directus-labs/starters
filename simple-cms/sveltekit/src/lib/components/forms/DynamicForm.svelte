@@ -43,8 +43,6 @@
 	});
 	const { enhance, submit, form: formData } = $derived(form);
 
-	$inspect($formData);
-
 	const onsubmit = (e: Event) => {
 		e.preventDefault();
 		onSubmit($formData);

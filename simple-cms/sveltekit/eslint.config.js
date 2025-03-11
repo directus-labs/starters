@@ -12,6 +12,7 @@ export default ts.config(
 	js.configs.recommended,
 	...ts.configs.recommended,
 	...svelte.configs['flat/recommended'],
+	...svelte.configs.prettier,
 	prettier,
 	...svelte.configs['flat/prettier'],
 	{
@@ -22,7 +23,6 @@ export default ts.config(
 			}
 		}
 	},
-
 	{
 		files: ['**/*.svelte'],
 
@@ -34,18 +34,14 @@ export default ts.config(
 	},
 	{
 		rules: {
-			rules: {
-				// ! TO COMPILE SHADCN EXAMPLES, PLEASE REMOVE AS NEEDED
-				'@typescript-eslint/no-explicit-any': 'off',
-				'@typescript-eslint/no-empty-object-type': 'off',
-				'@typescript-eslint/ban-ts-comment': 'off',
-				'react/no-unescaped-entities': 'off',
-				'react/no-unknown-property': 'off',
-				'tailwindcss/no-unnecessary-arbitrary-value': 'off',
-				'tailwindcss/classnames-order': 'off',
-				'import/named': 'off',
-				'import/no-named-as-default-member': 'off'
-			}
+			// ! TO COMPILE SHADCN EXAMPLES, PLEASE REMOVE AS NEEDED
+			'@typescript-eslint/no-explicit-any': 'off',
+			'@typescript-eslint/no-empty-object-type': 'off',
+			'@typescript-eslint/ban-ts-comment': 'off',
+			'tailwindcss/no-unnecessary-arbitrary-value': 'off',
+			'tailwindcss/classnames-order': 'off',
+			'import/named': 'off',
+			'import/no-named-as-default-member': 'off'
 		}
 	}
 );

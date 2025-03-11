@@ -226,7 +226,16 @@ export interface Globals {
 	id: string;
 	/** @description Social media profile URLs */
 	social_links?: Array<{
-		service: 'facebook' | 'instagram' | 'linkedin' | 'twitter' | 'vimeo' | 'youtube' | 'github' | 'discord' | 'docker';
+		service:
+			| 'facebook'
+			| 'instagram'
+			| 'linkedin'
+			| 'twitter'
+			| 'vimeo'
+			| 'youtube'
+			| 'github'
+			| 'discord'
+			| 'docker';
 		url: string;
 	}> | null;
 	/** @description Short phrase describing the site. */
@@ -289,7 +298,15 @@ export interface PageBlock {
 	/** @description The id of the page that this block belongs to. */
 	page?: Page | string | null;
 	/** @description The data for the block. */
-	item?: BlockHero | BlockRichtext | BlockForm | BlockPost | BlockGallery | BlockPricing | string | null;
+	item?:
+		| BlockHero
+		| BlockRichtext
+		| BlockForm
+		| BlockPost
+		| BlockGallery
+		| BlockPricing
+		| string
+		| null;
 	/** @description The collection (type of block). */
 	collection?: string | null;
 	/** @description Temporarily hide this block on the website without having to remove it from your page. */
@@ -370,7 +387,12 @@ export interface DirectusCollection {
 	display_template?: string | null;
 	hidden?: boolean;
 	singleton?: boolean;
-	translations?: Array<{ language: string; translation: string; singular: string; plural: string }> | null;
+	translations?: Array<{
+		language: string;
+		translation: string;
+		singular: string;
+		plural: string;
+	}> | null;
 	archive_field?: string | null;
 	archive_app_filter?: boolean;
 	archive_value?: string | null;
@@ -573,15 +595,30 @@ export interface DirectusSettings {
 	public_note?: string | null;
 	auth_login_attempts?: number | null;
 	auth_password_policy?:
-	| null
-	| `/^.{8,}$/`
-	| `/(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{\';\'?>.<,])(?!.*\\s).*$/`
-	| null;
+		| null
+		| `/^.{8,}$/`
+		| `/(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{\';\'?>.<,])(?!.*\\s).*$/`
+		| null;
 	storage_asset_transform?: 'all' | 'none' | 'presets' | null;
-	storage_asset_presets?: Array<{ key: string; fit: 'contain' | 'cover' | 'inside' | 'outside'; width: number; height: number; quality: number; withoutEnlargement: boolean; format: 'auto' | 'jpeg' | 'png' | 'webp' | 'tiff' | 'avif'; transforms: any }> | null;
+	storage_asset_presets?: Array<{
+		key: string;
+		fit: 'contain' | 'cover' | 'inside' | 'outside';
+		width: number;
+		height: number;
+		quality: number;
+		withoutEnlargement: boolean;
+		format: 'auto' | 'jpeg' | 'png' | 'webp' | 'tiff' | 'avif';
+		transforms: any;
+	}> | null;
 	custom_css?: string | null;
 	storage_default_folder?: DirectusFolder | string | null;
-	basemaps?: Array<{ name: string; type: 'raster' | 'tile' | 'style'; url: string; tileSize: number; attribution: string }> | null;
+	basemaps?: Array<{
+		name: string;
+		type: 'raster' | 'tile' | 'style';
+		url: string;
+		tileSize: number;
+		attribution: string;
+	}> | null;
 	mapbox_key?: string | null;
 	module_bar?: any | null;
 	project_descriptor?: string | null;

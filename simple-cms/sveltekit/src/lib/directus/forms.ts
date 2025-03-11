@@ -9,10 +9,10 @@ interface SubmissionValue {
 export const submitForm = async (
 	formId: string,
 	fields: { id: string; name: string; type: string }[],
-	data: Record<string, any>,
+	data: Record<string, any>
 ) => {
 	const { directus, uploadFiles, createItem, withToken } = useDirectus();
-	const TOKEN = PUBLIC_DIRECTUS_FORM_TOKEN
+	const TOKEN = PUBLIC_DIRECTUS_FORM_TOKEN;
 
 	if (!TOKEN) {
 		throw new Error('DIRECTUS_FORM_TOKEN is not defined. Check your .env file.');
@@ -35,20 +35,20 @@ export const submitForm = async (
 				if (uploadedFile && 'id' in uploadedFile) {
 					submissionValues.push({
 						field: field.id,
-						file: uploadedFile.id,
+						file: uploadedFile.id
 					});
 				}
 			} else {
 				submissionValues.push({
 					field: field.id,
-					value: value.toString(),
+					value: value.toString()
 				});
 			}
 		}
 
 		const payload = {
 			form: formId,
-			values: submissionValues,
+			values: submissionValues
 		};
 
 		await directus.request(withToken(TOKEN, createItem('form_submissions', payload)));

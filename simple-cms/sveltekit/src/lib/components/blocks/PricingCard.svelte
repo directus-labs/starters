@@ -45,10 +45,10 @@
 	</div>
 
 	{#if card.price}
-		<p class="text-h2 font-heading mt-4">{card.price}</p>
+		<p class="mt-4 font-heading text-h2">{card.price}</p>
 	{/if}
 	{#if card.description}
-		<p class="text-description mt-2">{card.description}</p>
+		<p class="mt-2 text-description">{card.description}</p>
 	{/if}
 
 	<Separator class="my-4" />
@@ -56,7 +56,7 @@
 	{#if card.features && Array.isArray(card.features)}
 		<ul class="space-y-4">
 			{#each card.features as feature, index}
-				<li class="text-regular flex items-center gap-3">
+				<li class="flex items-center gap-3 text-regular">
 					<div class="mt-1">
 						<CheckCircle2 className="size-4 text-gray-muted" />
 					</div>

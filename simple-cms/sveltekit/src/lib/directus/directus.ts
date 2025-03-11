@@ -1,4 +1,14 @@
-import { createDirectus, readItems, readItem, readSingleton, rest, readUser, createItem, uploadFiles, withToken } from '@directus/sdk';
+import {
+	createDirectus,
+	readItems,
+	readItem,
+	readSingleton,
+	rest,
+	readUser,
+	createItem,
+	uploadFiles,
+	withToken
+} from '@directus/sdk';
 import type { RestClient } from '@directus/sdk';
 import Queue from 'p-queue';
 import type { Schema } from '../types/directus-schema';
@@ -21,12 +31,12 @@ const fetchRetry = async (count: number, ...args: Parameters<typeof fetch>) => {
 // Queue for rate-limited requests
 const queue = new Queue({ intervalCap: 10, interval: 500, carryoverConcurrencyCount: true });
 
-const directusUrl = PUBLIC_DIRECTUS_URL
+const directusUrl = PUBLIC_DIRECTUS_URL;
 
 const directus = createDirectus<Schema>(directusUrl, {
 	globals: {
-		fetch: (...args) => queue.add(() => fetchRetry(0, ...args)),
-	},
+		fetch: (...args) => queue.add(() => fetchRetry(0, ...args))
+	}
 }).with(rest());
 
 export const useDirectus = () => ({
@@ -37,5 +47,5 @@ export const useDirectus = () => ({
 	readUser,
 	createItem,
 	uploadFiles,
-	withToken,
+	withToken
 });

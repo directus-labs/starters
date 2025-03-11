@@ -4,7 +4,6 @@
 	import { fetchPaginatedPosts, fetchTotalPostCount } from '$lib/directus/fetchers';
 	import type { Post } from '$lib/types/directus-schema';
 	import DirectusImage from '../shared/DirectusImage.svelte';
-	import { Title } from '../ui/dialog';
 	import Headline from '../ui/Headline.svelte';
 	import Tagline from '../ui/Tagline.svelte';
 
