@@ -9,6 +9,9 @@
 	import * as Form from '$lib/components/ui/form/index.js';
 	import type { SuperForm } from 'sveltekit-superforms';
 	import FileUploadField from './fields/FileUploadField.svelte';
+	import { cn } from '$lib/utils';
+	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
+	import { Info } from 'lucide-svelte';
 
 	interface FieldProps {
 		field: FormFieldType;
@@ -33,7 +36,34 @@
 	<div class={`flex-shrink-0 ${widthClass}`}>
 		<Form.Field {form} name={field.name!}>
 			<Form.Control>
-				<Form.Label>{field.label}</Form.Label>
+				<Form.Label
+					class={cn(
+						'flex items-center justify-between text-sm font-medium',
+						field.type === 'checkbox' || field.type === 'radio' ? 'space-x-2' : ''
+					)}
+				>
+					<div class="flex items-center space-x-1">
+						{#if field.type !== 'checkbox'}
+							{field.label}
+						{/if}
+						{#if field.help}
+							<Tooltip.Provider>
+								<Tooltip.Root>
+									<Tooltip.Trigger>
+										<Info class="ml-1 size-4 cursor-pointer text-gray-500" />
+									</Tooltip.Trigger>
+									<Tooltip.Content class="bg-background">
+										{field.help}
+									</Tooltip.Content>
+								</Tooltip.Root>
+							</Tooltip.Provider>
+						{/if}
+					</div>
+					{#if field.required}
+						<span class="text-sm text-gray-400">*Required</span>
+					{/if}
+				</Form.Label>
+
 				{#if field.type === 'text'}
 					<Input
 						placeholder={field.placeholder || ''}
