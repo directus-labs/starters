@@ -32,21 +32,21 @@
   --background-variant-color: #172940;
   --foreground-color: #ffffff; /* Default dark text */
 }
-/* 
+
 @layer base {
   html {
     @apply bg-[var(--background-color)] text-[var(--foreground-color)];
   }
-} */
+}
 
-/* @layer components {
+@layer components {
   input:focus,
   textarea:focus,
   select:focus,
   button:focus,
   a:focus,
   [role="button"]:focus {
-    @apply outline-none ring-2 ring-[var(--accent-color)] ring-offset-2;
+    @apply outline-none ring-2 ring-[var(--accent-color)] ring-offset-2 ring-offset-background;
   }
 
   [data-background="dark"] {
@@ -64,4 +64,4 @@
   a {
     @apply hover:text-accent transition-colors no-underline;
   }
-} */
+}

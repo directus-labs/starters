@@ -4,7 +4,10 @@ import typography from "@tailwindcss/typography";
 
 const config: Config = {
   darkMode: "class",
-  content: ["./src/**/*.{astro,js,ts,jsx,tsx}"],
+  content: [
+    "./src/**/*.{astro,js,ts,jsx,tsx,css}",
+    "./components/**/*.{astro,js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -13,24 +16,21 @@ const config: Config = {
         code: ["Fira Mono", "monospace"],
       },
       fontSize: {
-        tagline: ["24px", "33.6px"], // Tagline
-        headline: ["56px", "64px"], // Headline
-        h1: ["56px", "78.4px"], // Heading 1
-        h2: ["36px", "50.4px"], // Heading 2
-        h3: ["24px", "33.6px"], // Heading 3
-        description: ["16px", "22.4px"], // Description
-        regular: ["16px", "24px"], // Regular text
-        bold: ["16px", "22.4px"], // Bolded text
-        nav: ["16px", "22.4px"], // Navbar link
-        code: ["14px", "16.8px"], // Code snippet
+        tagline: ["24px", "33.6px"],
+        headline: ["56px", "64px"],
+        h1: ["56px", "78.4px"],
+        h2: ["36px", "50.4px"],
+        h3: ["24px", "33.6px"],
+        description: ["16px", "22.4px"],
+        regular: ["16px", "24px"],
+        bold: ["16px", "22.4px"],
+        nav: ["16px", "22.4px"],
+        code: ["14px", "16.8px"],
       },
       alignments: {
         left: "text-left",
         center: "text-center",
         right: "text-right",
-      },
-      ringOffsetColor: {
-        background: "var(--background-color)",
       },
       colors: {
         background: {
@@ -48,7 +48,7 @@ const config: Config = {
           DEFAULT: "#172940",
         },
         gray: {
-          100: "#F5F8FB",
+          DEFAULT: "#F5F8FB",
           muted: "#A5B0BD",
           dark: "#42566E",
         },
@@ -92,96 +92,12 @@ const config: Config = {
               fontWeight: "400",
               lineHeight: "1.75",
             },
-            img: {
-              borderRadius: "8px",
-              margin: "1rem 0",
-              maxWidth: "100%",
-              height: "auto",
-            },
-            iframe: {
-              borderRadius: "8px",
-              margin: "1rem 0",
-            },
-            code: {
-              fontFamily: "Fira Mono",
-              fontSize: "clamp(0.875rem, 1rem, 1.125rem)",
-              fontWeight: "400",
-              lineHeight: "1.6",
-              backgroundColor: "var(--background-color-muted)",
-              color: "var(--foreground-color)",
-              borderRadius: "4px",
-              padding: "0.15rem 0.35rem",
-              display: "inline",
-              "&::before": {
-                content: "none",
-              },
-              "&::after": {
-                content: "none",
-              },
-            },
-            "p > code": {
-              "&::before": {
-                content: "none",
-              },
-              "&::after": {
-                content: "none",
-              },
-            },
-            pre: {
-              fontFamily: "Fira Mono",
-              fontSize: "clamp(0.9rem, 1.125rem, 1.25rem)",
-              lineHeight: "1.6",
-              backgroundColor: "var(--background-color-muted)",
-              color: "var(--foreground-color)",
-              borderRadius: "8px",
-              padding: "1rem",
-              overflowX: "auto",
-            },
-            blockquote: {
-              fontStyle: "italic",
-              borderLeft: "4px solid var(--accent-color)",
-              paddingLeft: "1rem",
-              textAlign: "left",
-            },
-            ul: {
-              listStyleType: "disc",
-              paddingLeft: "1.25rem",
-              listStylePosition: "inside",
-            },
-            ol: {
-              listStyleType: "decimal",
-              paddingLeft: "1.25rem",
-              listStylePosition: "inside",
-            },
-            li: {
-              marginBottom: "0.5rem",
-              "& p": {
-                display: "inline",
-                margin: "0",
-              },
-            },
-          },
-        },
-        dark: {
-          css: {
-            color: "var(--foreground-color)",
-            a: {
-              color: "var(--accent-color)",
-              textDecoration: "none",
-              "&:hover": {
-                textDecoration: "underline",
-              },
-            },
-            blockquote: {
-              borderLeftColor: "var(--gray-700)",
-            },
           },
         },
       },
     },
   },
   plugins: [tailwindcssAnimate, typography],
-  safelist: ["grid-cols-1", "sm:grid-cols-2", "lg:grid-cols-3"],
 };
 
 export default config;

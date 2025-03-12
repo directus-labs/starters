@@ -283,3 +283,26 @@ export const fetchTotalPostCount = async (): Promise<number> => {
     return 0;
   }
 };
+
+/**
+ * Fetches paginated blog posts.
+ */
+export const fetchPaginatedPosts = async (limit: number, page: number) => {
+  const { directus } = useDirectus();
+  try {
+    const response = await directus.request(
+      readItems("posts", {
+        limit,
+        page,
+        sort: ["-published_at"],
+        fields: ["id", "title", "description", "slug", "image"],
+        filter: { status: { _eq: "published" } },
+      })
+    );
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching paginated posts:", error);
+    throw new Error("Failed to fetch paginated posts");
+  }
+};

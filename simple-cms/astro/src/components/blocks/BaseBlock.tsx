@@ -1,10 +1,10 @@
 import React from "react";
 import Form from "./Form";
 import Gallery from "./Gallery";
-import Hero from "./Hero";
 import Posts from "./Posts";
-import Pricing from "./Pricing";
+import Hero from "./Hero";
 import RichText from "./RichText";
+import Pricing from "./Pricing";
 
 interface BaseBlockProps {
   block: {

@@ -5,6 +5,7 @@ import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer';
 import '../styles/global.css';
 import '../styles/fonts.css';
+
 const { globals, headerNavigation, footerNavigation } = await fetchSiteData();
 const siteTitle = globals?.title || 'Simple CMS';
 const siteDescription = globals?.description || 'A starter CMS template powered by Next.js and Directus.';
@@ -13,7 +14,7 @@ const accentColor = globals?.accent_color || '#6644ff';
 
 const { metadata } = Astro.props;
 ---
-<html lang="en" style="--accent-color: {accentColor};">
+<html lang="en" style={`--accent-color: ${accentColor};`}>
   <head>
     <meta charset="UTF-8" />
     <title>{metadata.title || siteTitle}</title>

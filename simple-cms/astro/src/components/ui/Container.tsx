@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { cn } from "@/lib/utils";
 import React from "react";
 type SemanticElement =

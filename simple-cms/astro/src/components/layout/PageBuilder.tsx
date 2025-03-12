@@ -1,4 +1,4 @@
-import { PageBlock } from "@/types/directus-schema";
+import type { PageBlock } from "@/types/directus-schema";
 
 import BaseBlock from "../blocks/BaseBlock";
 import React from "react";
