@@ -1,5 +1,11 @@
+import type { QueryFilter } from "@directus/sdk";
 import { useDirectus } from "./directus";
-import type { BlockPost, PageBlock, Post } from "@/types/directus-schema";
+import type {
+  BlockPost,
+  PageBlock,
+  Post,
+  Schema,
+} from "@/types/directus-schema";
 
 const { directus, readItems, readItem, readSingleton, aggregate } =
   useDirectus();
@@ -8,6 +14,8 @@ const { directus, readItems, readItem, readSingleton, aggregate } =
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
  */
 export const fetchPageData = async (permalink: string, postPage = 1) => {
+  const { directus, readItems } = useDirectus();
+
   try {
     const pageData = await directus.request(
       readItems("pages", {
@@ -15,7 +23,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
         limit: 1,
         fields: [
           "title",
-          "description",
+          "seo",
           {
             blocks: [
               "id",
@@ -23,6 +31,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
               "collection",
               "item",
               "sort",
+              "hide_block",
               {
                 item: {
                   block_richtext: [
@@ -123,20 +132,24 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
             ],
           },
         ],
-        deep: { blocks: { _sort: ["sort"] } },
+        deep: {
+          blocks: { _sort: ["sort"], _filter: { hide_block: { _neq: true } } },
+        },
       })
     );
 
-    if (!pageData.length) throw new Error("Page not found");
+    if (!pageData.length) {
+      throw new Error("Page not found");
+    }
 
     const page = pageData[0];
 
-    // Fetch posts dynamically if the block contains them
     if (Array.isArray(page.blocks)) {
       for (const block of page.blocks as PageBlock[]) {
         if (
           block.collection === "block_posts" &&
-          typeof block.item === "object"
+          typeof block.item === "object" &&
+          (block.item as BlockPost).collection === "posts"
         ) {
           const limit = (block.item as BlockPost).limit ?? 6;
           const posts = await directus.request<Post[]>(
@@ -156,6 +169,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
               page: postPage,
             })
           );
+
           (block.item as BlockPost & { posts: Post[] }).posts = posts;
         }
       }
@@ -169,7 +183,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 };
 
 /**
- * Fetches global site data, including navigation and footer.
+ * Fetches global site data, header navigation, and footer navigation.
  */
 export const fetchSiteData = async () => {
   try {
@@ -230,14 +244,14 @@ export const fetchSiteData = async () => {
 };
 
 /**
- * Fetches a blog post by slug.
+ * Fetches a single blog post by slug. Handles live preview mode
  */
 export const fetchPostBySlug = async (
   slug: string,
   options?: { draft?: boolean }
 ) => {
   try {
-    const filter = options?.draft
+    const filter: QueryFilter<Schema, Post> = options?.draft
       ? { slug: { _eq: slug } }
       : { slug: { _eq: slug }, status: { _eq: "published" } };
 
@@ -258,7 +272,15 @@ export const fetchPostBySlug = async (
       })
     );
 
-    return posts[0] ?? null;
+    const post = posts[0];
+
+    if (!post) {
+      console.error(`No post found with slug: ${slug}`);
+
+      return null;
+    }
+
+    return post;
   } catch (error) {
     console.error(`Error fetching post with slug "${slug}":`, error);
     throw new Error(`Failed to fetch post with slug "${slug}"`);
@@ -266,21 +288,42 @@ export const fetchPostBySlug = async (
 };
 
 /**
- * Fetches the total count of published blog posts.
+ * Fetches related blog posts excluding the given ID.
  */
-export const fetchTotalPostCount = async (): Promise<number> => {
+export const fetchRelatedPosts = async (excludeId: string) => {
   try {
-    const response = await directus.request(
-      aggregate("posts", {
-        aggregate: { count: "*" },
-        filter: { status: { _eq: "published" } },
+    const relatedPosts = await directus.request(
+      readItems("posts", {
+        filter: { status: { _eq: "published" }, id: { _neq: excludeId } },
+        fields: ["id", "title", "image", "slug", "seo"],
+        limit: 2,
       })
     );
 
-    return Number(response[0]?.count) || 0;
+    return relatedPosts;
   } catch (error) {
-    console.error("Error fetching total post count:", error);
-    return 0;
+    console.error("Error fetching related posts:", error);
+    throw new Error("Failed to fetch related posts");
+  }
+};
+
+/**
+ * Fetches author details by ID.
+ */
+export const fetchAuthorById = async (authorId: string) => {
+  const { readUser } = useDirectus();
+
+  try {
+    const author = await directus.request(
+      readUser(authorId, {
+        fields: ["first_name", "last_name", "avatar"],
+      })
+    );
+
+    return author;
+  } catch (error) {
+    console.error(`Error fetching author with ID "${authorId}":`, error);
+    throw new Error(`Failed to fetch author with ID "${authorId}"`);
   }
 };
 
@@ -304,5 +347,25 @@ export const fetchPaginatedPosts = async (limit: number, page: number) => {
   } catch (error) {
     console.error("Error fetching paginated posts:", error);
     throw new Error("Failed to fetch paginated posts");
+  }
+};
+
+/**
+ * Fetches the total number of published blog posts.
+ */
+export const fetchTotalPostCount = async (): Promise<number> => {
+  try {
+    const response = await directus.request(
+      aggregate("posts", {
+        aggregate: { count: "*" },
+        filter: { status: { _eq: "published" } },
+      })
+    );
+
+    return Number(response[0]?.count) || 0;
+  } catch (error) {
+    console.error("Error fetching total post count:", error);
+
+    return 0;
   }
 };

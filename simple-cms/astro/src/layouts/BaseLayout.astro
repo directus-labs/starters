@@ -45,10 +45,10 @@ const { metadata } = Astro.props;
     </script>
   </head>
   <body class="antialiased font-sans flex flex-col min-h-screen">
-    <NavigationBar navigation={headerNavigation} globals={globals} />
+    <NavigationBar client:load navigation={headerNavigation} globals={globals} />
     <main class="flex-grow">
       <slot />
     </main>
-    <Footer navigation={footerNavigation} globals={globals} />
+    <Footer client:load navigation={footerNavigation} globals={globals} />
   </body>
 </html>

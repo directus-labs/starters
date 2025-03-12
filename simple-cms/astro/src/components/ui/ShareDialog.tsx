@@ -43,7 +43,7 @@ const ShareDialog = ({ postUrl, postTitle }: ShareDialogProps) => {
       url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
         postUrl
       )}&text=${encodeURIComponent(postTitle)}`,
-      icon: "/icons/social/twitter.svg",
+      icon: "/icons/social/x.svg",
     },
     {
       service: "linkedin",

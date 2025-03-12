@@ -21,9 +21,7 @@ if (!page || !page.blocks) {
   page = null;
 }
 
-const blocks: PageBlock[] = page
-  ? page.blocks.filter((block: any): block is PageBlock => typeof block === 'object' && block.collection)
-  : [];
+const blocks: PageBlock[] = page?.blocks?.filter((block: any): block is PageBlock => typeof block === 'object' && block.collection) ?? [];
 
 const siteURL = import.meta.env.PUBLIC_SITE_URL || '';
 
