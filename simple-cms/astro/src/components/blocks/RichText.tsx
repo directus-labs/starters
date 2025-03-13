@@ -28,7 +28,6 @@ const RichText = ({ data, className }: RichTextProps) => {
       if (href && href.startsWith("/")) {
         link.onclick = (event) => {
           event.preventDefault();
-          // Use the browser history API for client navigation
           window.history.pushState({}, "", href);
           window.dispatchEvent(new Event("popstate"));
         };

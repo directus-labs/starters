@@ -1,0 +1,34 @@
+---
+import BaseBlock from '../blocks/BaseBlock';
+import Container from '../ui/Container';
+import type { PageBlock } from '@/types/directus-schema';
+
+const { sections } = Astro.props;
+
+const validBlocks: PageBlock[] = sections.filter(
+  (block: PageBlock): block is PageBlock & { collection: string; item: object } =>
+    typeof block.collection === "string" &&
+    !!block.item &&
+    typeof block.item === "object"
+);
+
+// Define which block types need client hydration.
+const interactiveTypes = new Set([
+  'block_gallery',
+  'block_posts',
+  'block_form'
+]);
+---
+
+<div>
+  {validBlocks.map((block) => (
+    <div data-background={block.background} class="py-16">
+      <Container>
+        {interactiveTypes.has(block.collection ?? '')
+          ? <BaseBlock block={block} client:load />
+          : <BaseBlock block={block} />
+        }
+      </Container>
+    </div>
+  ))}
+</div>

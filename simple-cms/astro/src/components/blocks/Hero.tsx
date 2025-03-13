@@ -73,6 +73,7 @@ const Hero = ({ data }: HeroProps) => {
           <DirectusImage
             uuid={image}
             alt={tagline || headline || "Hero Image"}
+            fill
             sizes={
               layout === "center" ? "100vw" : "(max-width: 768px) 100vw, 50vw"
             }

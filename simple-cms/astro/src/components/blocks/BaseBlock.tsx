@@ -5,15 +5,15 @@ import Posts from "./Posts";
 import Hero from "./Hero";
 import RichText from "./RichText";
 import Pricing from "./Pricing";
+import type { PageBlock } from "@/types/directus-schema";
 
 interface BaseBlockProps {
-  block: {
-    collection: string;
-    item: any;
-    id: string;
-  };
+  block: PageBlock;
 }
+
 export default function BaseBlock({ block }: BaseBlockProps) {
+  if (!block.collection || !block.item) return null;
+
   const components: Record<string, React.ElementType> = {
     block_hero: Hero,
     block_richtext: RichText,
@@ -22,7 +22,10 @@ export default function BaseBlock({ block }: BaseBlockProps) {
     block_posts: Posts,
     block_form: Form,
   };
+
   const Component = components[block.collection];
-  if (!Component) return null;
-  return <Component data={block.item} id={`block-${block.id}`} />;
+
+  return Component ? (
+    <Component data={block.item} id={`block-${block.id}`} />
+  ) : null;
 }

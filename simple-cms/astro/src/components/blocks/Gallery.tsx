@@ -42,13 +42,15 @@ const Gallery = ({ data }: GalleryProps) => {
     setLightboxOpen(true);
   };
 
-  const handlePrev = () => {
+  const handlePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setCurrentIndex((prevIndex) =>
       prevIndex > 0 ? prevIndex - 1 : sortedItems.length - 1
     );
   };
 
-  const handleNext = () => {
+  const handleNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setCurrentIndex((prevIndex) =>
       prevIndex < sortedItems.length - 1 ? prevIndex + 1 : 0
     );
@@ -60,11 +62,15 @@ const Gallery = ({ data }: GalleryProps) => {
       switch (e.key) {
         case "ArrowLeft":
           e.preventDefault();
-          handlePrev();
+          setCurrentIndex((prevIndex) =>
+            prevIndex > 0 ? prevIndex - 1 : sortedItems.length - 1
+          );
           break;
         case "ArrowRight":
           e.preventDefault();
-          handleNext();
+          setCurrentIndex((prevIndex) =>
+            prevIndex < sortedItems.length - 1 ? prevIndex + 1 : 0
+          );
           break;
         case "Escape":
           e.preventDefault();
@@ -95,12 +101,14 @@ const Gallery = ({ data }: GalleryProps) => {
               onClick={() => handleOpenLightbox(index)}
               aria-label={`Gallery item ${item.id}`}
             >
-              <DirectusImage
-                uuid={item.directus_file}
-                alt={`Gallery item ${item.id}`}
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="w-full h-auto object-cover rounded-lg"
-              />
+              <div className="relative w-full h-[300px]">
+                <DirectusImage
+                  uuid={item.directus_file}
+                  alt={`Gallery item ${item.id}`}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="absolute inset-0 w-full h-full object-cover rounded-lg"
+                />
+              </div>
               <div className="absolute inset-0 bg-white bg-opacity-60 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity duration-300">
                 <ZoomIn className="size-10 text-gray-800" />
               </div>
@@ -109,55 +117,52 @@ const Gallery = ({ data }: GalleryProps) => {
         </div>
       )}
 
-      {isLightboxOpen && isValidIndex && (
-        <Dialog open={isLightboxOpen} onOpenChange={setLightboxOpen}>
-          <DialogContent
-            className="flex max-w-full max-h-full items-center justify-center p-2 bg-transparent border-none z-50"
-            hideCloseButton
-          >
-            <DialogTitle className="sr-only">Gallery Image</DialogTitle>
-            <DialogDescription className="sr-only">
-              Viewing image {currentIndex + 1} of {sortedItems.length}.
-            </DialogDescription>
+      <Dialog open={isLightboxOpen} onOpenChange={setLightboxOpen}>
+        <DialogContent className="flex max-w-[95vw] max-h-[95vh] items-center justify-center p-2 bg-black/80 border-none">
+          <DialogTitle className="sr-only">Gallery Image</DialogTitle>
+          <DialogDescription className="sr-only">
+            Viewing image {currentIndex + 1} of {sortedItems.length}
+          </DialogDescription>
 
-            <div className="relative flex justify-center items-center w-[90vw] h-[90vh]">
+          {isValidIndex && (
+            <div className="relative flex justify-center items-center w-full h-full">
               <DirectusImage
                 uuid={sortedItems[currentIndex].directus_file}
                 alt={`Gallery item ${sortedItems[currentIndex].id}`}
-                width={1200}
-                height={800}
-                className="size-full object-contain"
+                className="w-auto h-auto max-w-full max-h-[80vh] object-contain"
               />
+
+              <div className="absolute bottom-4 inset-x-0 flex justify-between items-center px-4">
+                <button
+                  className="flex items-center gap-2 text-white bg-black/70 rounded-full px-4 py-2 hover:bg-black/90 transition-colors"
+                  onClick={handlePrev}
+                  aria-label="Previous image"
+                >
+                  <ArrowLeft className="size-6" />
+                  <span className="hidden sm:inline">Previous</span>
+                </button>
+                <button
+                  className="flex items-center gap-2 text-white bg-black/70 rounded-full px-4 py-2 hover:bg-black/90 transition-colors"
+                  onClick={handleNext}
+                  aria-label="Next image"
+                >
+                  <span className="hidden sm:inline">Next</span>
+                  <ArrowRight className="size-6" />
+                </button>
+              </div>
+
+              <DialogClose className="absolute top-4 right-4 text-white hover:text-gray-200 transition-colors">
+                <button
+                  className="p-2 bg-black/70 rounded-full hover:bg-black/90 transition-colors"
+                  aria-label="Close dialog"
+                >
+                  <X className="size-6" />
+                </button>
+              </DialogClose>
             </div>
-            <div className="absolute bottom-4 inset-x-0 flex justify-between items-center px-4">
-              <button
-                className="flex items-center gap-2 text-white bg-black bg-opacity-70 rounded-full px-4 py-2 hover:bg-opacity-90"
-                onClick={handlePrev}
-                aria-label="Previous"
-              >
-                <ArrowLeft className="size-8" />
-                <span>Prev</span>
-              </button>
-              <button
-                className="flex items-center gap-2 text-white bg-black bg-opacity-70 rounded-full px-4 py-2 hover:bg-opacity-90"
-                onClick={handleNext}
-                aria-label="Next"
-              >
-                <span>Next</span>
-                <ArrowRight className="size-8" />
-              </button>
-            </div>
-            <DialogClose asChild>
-              <button
-                className="absolute top-4 right-4 text-white bg-black bg-opacity-70 rounded-full p-2 hover:bg-opacity-90"
-                aria-label="Close"
-              >
-                <X className="size-8" />
-              </button>
-            </DialogClose>
-          </DialogContent>
-        </Dialog>
-      )}
+          )}
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };

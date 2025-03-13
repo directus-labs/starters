@@ -1,5 +1,4 @@
-"use client";
-
+import React from "react";
 import { useState, useEffect } from "react";
 import { ChevronFirst, ChevronLast } from "lucide-react";
 import Tagline from "../ui/Tagline";
@@ -20,7 +19,6 @@ import {
   fetchPaginatedPosts,
   fetchTotalPostCount,
 } from "@/lib/directus/fetchers";
-import React from "react";
 
 interface PostsProps {
   data: {
@@ -33,7 +31,9 @@ interface PostsProps {
 
 const Posts = ({ data }: PostsProps) => {
   const { tagline, headline, posts, limit } = data;
+
   const visiblePages = 5;
+
   const perPage = limit || 6;
 
   const [currentPage, setCurrentPage] = useState(() => {
@@ -66,8 +66,10 @@ const Posts = ({ data }: PostsProps) => {
       try {
         if (currentPage === 1) {
           setPaginatedPosts(posts);
+
           return;
         }
+
         const response = await fetchPaginatedPosts(perPage, currentPage);
         setPaginatedPosts(response);
       } catch (error) {
@@ -109,6 +111,7 @@ const Posts = ({ data }: PostsProps) => {
         pages.push("ellipsis-end");
       }
     }
+
     return pages;
   };
 
@@ -136,6 +139,7 @@ const Posts = ({ data }: PostsProps) => {
                         : post.image?.id
                     }
                     alt={post.title}
+                    fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="w-full h-auto object-cover rounded-lg transition-transform duration-300 group-hover:scale-110"
                   />
