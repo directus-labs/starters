@@ -30,6 +30,7 @@ export default defineNuxtConfig({
 		public: {
 			siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
 			directusUrl: process.env.DIRECTUS_URL,
+			adminBarEnabled: process.env.ADMIN_BAR_ENABLED || false,
 		},
 		directusServerToken: process.env.DIRECTUS_SERVER_TOKEN,
 	},
@@ -75,8 +76,8 @@ export default defineNuxtConfig({
 
 	colorMode: {
 		preference: 'system',
-		fallback: 'light',
 		classSuffix: '',
+		storage: 'cookie',
 	},
 
 	site: {

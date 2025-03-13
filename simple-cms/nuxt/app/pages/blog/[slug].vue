@@ -1,58 +1,52 @@
 <script setup lang="ts">
-import { computed, watchEffect } from 'vue';
-import { useRoute, useFetch, useRuntimeConfig, usePreviewMode } from '#app';
-import DirectusImage from '~/components/shared/DirectusImage.vue';
-import Separator from '~/components/ui/separator/Separator.vue';
-import AdminBar from '~/components/shared/AdminBar.vue';
+import type { Post, DirectusUser } from '#shared/types/schema';
 
 const route = useRoute();
+const { enabled, state } = useLivePreview();
+const { setAdminBarState, isAdminBarEnabled } = useAdminBar();
+const postUrl = useRequestURL();
+
 const slug = route.params.slug as string;
 
-const { enabled } = usePreviewMode();
-const runtimeConfig = useRuntimeConfig();
-
-const { data: post, refresh } = useFetch<Post>(() => `/api/posts/${slug}`, {
-	query: { preview: enabled.value },
+const { data, error } = await useFetch<{
+	post: Post;
+	relatedPosts: Post[];
+}>(() => `/api/posts/${slug}`, {
+	key: `posts-${slug}`,
+	query: {
+		preview: enabled.value ? true : undefined,
+		token: enabled.value ? state.token : undefined,
+	},
 });
 
-const { data: relatedPosts } = useFetch<Post[]>(() => `/api/posts/${slug}/related`);
+if (!data.value || error.value) {
+	throw createError({ statusCode: 404, statusMessage: 'Post not found', fatal: true });
+}
 
-watchEffect(() => {
-	if (enabled.value) refresh();
-});
+const post = computed(() => data.value?.post);
+const relatedPosts = computed(() => data.value?.relatedPosts);
+const author = computed(() => post.value?.author as Partial<DirectusUser>);
 
-const authorId = computed(() => post.value?.author || null);
-const { data: author } = useFetch<DirectusUser | null>(
-	() => (authorId.value ? `/api/users/${authorId.value}` : '/api/dummy-endpoint'),
-	{ watch: [post], server: false, transform: (data) => (authorId.value ? data : null) },
-);
+// Update Admin Bar with post details - totally safe to remove this if you don't plan on using the admin bar
+if (isAdminBarEnabled) {
+	setAdminBarState({
+		collection: 'posts',
+		item: post.value as Post,
+		title: post.value?.title || '',
+	});
+}
 
-const postUrl = computed(() => `${runtimeConfig.public.siteUrl}/blog/${slug}`);
-const authorName = computed(() => {
-	if (!author.value) return '';
-	return [author.value.first_name, author.value.last_name].filter(Boolean).join(' ');
-});
-
-const authorAvatar = computed(() => {
-	if (!author.value?.avatar) return null;
-	return typeof author.value.avatar === 'string' ? author.value.avatar : author.value.avatar.id;
-});
-
-useHead({
+useSeoMeta({
 	title: post.value?.seo?.title || post.value?.title,
-	meta: [
-		{ name: 'description', content: post.value?.seo?.meta_description || post.value?.description },
-		{ property: 'og:title', content: post.value?.seo?.title || post.value?.title },
-		{ property: 'og:description', content: post.value?.seo?.meta_description || post.value?.description },
-		{ property: 'og:url', content: postUrl.value },
-	],
+	description: post.value?.seo?.meta_description || post.value?.description,
+	ogTitle: post.value?.seo?.title || post.value?.title,
+	ogDescription: post.value?.seo?.meta_description || post.value?.description,
+	ogUrl: postUrl.toString(),
 });
 </script>
 
 <template>
 	<div v-if="post">
-		<AdminBar v-if="enabled" :content="post" type="post" />
-
 		<Container class="py-12">
 			<div v-if="post.image" class="mb-8 w-full">
 				<div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
@@ -79,22 +73,21 @@ useHead({
 				<aside class="space-y-6 p-6 rounded-lg max-w-[496px] h-fit bg-background-muted">
 					<div v-if="author" class="flex items-center space-x-4">
 						<DirectusImage
-							v-if="authorAvatar"
-							:uuid="authorAvatar"
-							:alt="authorName || 'author avatar'"
+							v-if="author?.avatar"
+							:uuid="author?.avatar"
+							:alt="userName(author)"
 							class="rounded-full object-cover size-[48px]"
 							:width="48"
 							:height="48"
 						/>
-						<div>
-							<p v-if="authorName" class="font-bold">{{ authorName }}</p>
-						</div>
+
+						<p v-if="author" class="font-bold">{{ userName(author) }}</p>
 					</div>
 
 					<p v-if="post.description">{{ post.description }}</p>
 
 					<div class="flex justify-start">
-						<ShareDialog :post-url="postUrl" :post-title="post.title" />
+						<ShareDialog :post-url="postUrl.toString()" :post-title="post.title" />
 					</div>
 					<div>
 						<Separator class="h-[1px] bg-gray-300 my-4" />

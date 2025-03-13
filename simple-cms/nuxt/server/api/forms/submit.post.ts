@@ -1,6 +1,3 @@
-import { defineEventHandler, createError, readMultipartFormData } from 'h3';
-import { uploadFiles, createItem, withToken, directusServer } from '../../utils/directus-server';
-
 interface SubmissionValue {
 	field: string;
 	value?: string;
@@ -8,6 +5,7 @@ interface SubmissionValue {
 }
 
 export default defineEventHandler(async (event) => {
+	const config = useRuntimeConfig();
 	const formData = await readMultipartFormData(event);
 
 	if (!formData) {
@@ -17,12 +15,12 @@ export default defineEventHandler(async (event) => {
 		});
 	}
 
-	const TOKEN = process.env.DIRECTUS_FORM_TOKEN;
+	const TOKEN = config.directusServerToken as string;
 
 	if (!TOKEN) {
 		throw createError({
 			statusCode: 500,
-			statusMessage: 'DIRECTUS_FORM_TOKEN is not defined. Check your .env file.',
+			statusMessage: 'DIRECTUS_SERVER_TOKEN is not defined. Check your .env file.',
 		});
 	}
 

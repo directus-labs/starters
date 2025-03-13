@@ -1,43 +1,46 @@
-<script setup>
-import { useAsyncData, useRoute, usePreviewMode } from '#app';
-import PageBuilder from '~/components/PageBuilder.vue';
-import AdminBar from '~/components/shared/AdminBar.vue';
+<script setup lang="ts">
+import type { Page, PageBlock } from '#shared/types/schema';
 
 const route = useRoute();
-const permalink = `/${(route.params.permalink || []).join('/')}`;
+const { enabled, state } = useLivePreview();
+const pageUrl = useRequestURL();
 
-const { enabled } = usePreviewMode();
+const permalink = `/${((route.params.permalink as string[]) || []).join('/')}`;
 
-const { data: pageData, error: pageError } = await useAsyncData(`page-data-${permalink}`, () =>
-	$fetch(`/api/page-data?permalink=${encodeURIComponent(permalink)}`),
-);
+const { data: page, error } = await useFetch<Page>(`/api/pages/${permalink}`, {
+	key: `pages-${permalink}`,
+	query: {
+		preview: enabled.value ? true : undefined,
+		token: enabled.value ? state.token : undefined,
+	},
+});
 
-if (!pageData.value && !pageError) {
-	throw createError({ statusCode: 404, statusMessage: 'Page not found' });
+const { setAdminBarState, isAdminBarEnabled } = useAdminBar();
+
+if (!page.value || error.value) {
+	throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });
 }
 
-watchEffect(() => {
-	if (pageData.value) {
-		useHead({
-			title: pageData.value?.seo?.title || pageData.value?.title || '',
-			meta: [
-				{ name: 'description', content: pageData.value?.seo?.meta_description || '' },
-				{ property: 'og:title', content: pageData.value?.seo?.title || pageData.value?.title || '' },
-				{ property: 'og:description', content: pageData.value?.seo?.meta_description || '' },
-				{ property: 'og:url', content: `${import.meta.env.VITE_SITE_URL}${permalink}` },
-			],
-		});
-	}
+const pageBlocks = computed(() => (page.value?.blocks as PageBlock[]) || []);
+
+// Update Admin Bar with page details - totally safe to remove this if you don't plan on using the admin bar
+if (isAdminBarEnabled) {
+	setAdminBarState({
+		collection: 'pages',
+		item: page.value as Page,
+		title: page.value?.seo?.title || page.value?.title || '',
+	});
+}
+
+useSeoMeta({
+	title: page.value?.seo?.title || page.value?.title || '',
+	description: page.value?.seo?.meta_description || '',
+	ogTitle: page.value?.seo?.title || page.value?.title || '',
+	ogDescription: page.value?.seo?.meta_description || '',
+	ogUrl: pageUrl.toString(),
 });
 </script>
 
 <template>
-	<div>
-		<AdminBar v-if="enabled" :content="pageData" type="page" />
-
-		<div v-if="pageError">404 - Page Not Found</div>
-		<div v-else>
-			<PageBuilder :sections="pageData.blocks" />
-		</div>
-	</div>
+	<PageBuilder v-if="pageBlocks" :sections="pageBlocks" />
 </template>
