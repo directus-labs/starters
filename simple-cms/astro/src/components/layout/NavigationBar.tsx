@@ -82,10 +82,8 @@ export default function NavigationBar({
                 <NavigationMenuItem key={section.id}>
                   {section.children && section.children.length > 0 ? (
                     <>
-                      <NavigationMenuTrigger className="focus:outline-none">
-                        <span className="font-heading text-nav">
-                          {section.title}
-                        </span>
+                      <NavigationMenuTrigger className="font-heading text-nav focus:outline-none">
+                        {section.title}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent className="bg-background">
                         <ul className="flex flex-col gap-2 p-4 w-[200px] bg-popover">
@@ -105,7 +103,7 @@ export default function NavigationBar({
                   ) : (
                     <NavigationMenuLink
                       href={section.page?.permalink || section.url || "#"}
-                      className="font-heading text-nav"
+                      className="font-heading text-nav block p-2 hover:text-accent"
                     >
                       {section.title}
                     </NavigationMenuLink>

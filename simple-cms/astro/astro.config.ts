@@ -8,4 +8,7 @@ export default defineConfig({
     ? "starters-simple-cms-nextjs.vercel.app"
     : "http://localhost:4321",
   integrations: [react()],
+  vite: {
+    envPrefix: ["PUBLIC_", "DIRECTUS_"],
+  },
 });
