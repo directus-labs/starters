@@ -68,16 +68,16 @@
 		<div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
 			{#each sortedItems as item, index}
 				<button
-					class="group relative h-[300px] cursor-pointer overflow-hidden rounded-lg transition-shadow duration-300 hover:shadow-lg"
+					class="group relative h-[300px] overflow-hidden rounded-lg transition-shadow duration-300 hover:shadow-lg"
 					onclick={() => handleOpenLightbox(index)}
 					aria-label={`Gallery item ${item.id}`}
 				>
 					<DirectusImage
-						id={item.directus_file}
+						uuid={item.directus_file}
 						alt={`Gallery item ${item.id}`}
 						fill
 						sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-						className="w-full h-auto object-cover rounded-lg"
+						class="h-auto w-full rounded-lg object-cover"
 					/>
 					<div
 						class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-60 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -91,7 +91,7 @@
 
 	<!-- {/* Lightbox */} -->
 	{#if isLightboxOpen && isValidIndex}
-		<Dialog open={isLightboxOpen} onOpenChange={() => (isLightboxOpen = true)}>
+		<Dialog open={isLightboxOpen} onOpenChange={() => (isLightboxOpen = false)}>
 			<DialogOverlay class="fixed inset-0 z-50 bg-black bg-opacity-30" />
 			<DialogContent
 				class="flex items-center justify-center border-none bg-transparent p-2"
@@ -104,10 +104,10 @@
 
 				<div class="relative w-full max-w-4xl">
 					<DirectusImage
-						id={sortedItems[currentIndex].directus_file}
+						uuid={sortedItems[currentIndex].directus_file}
 						alt={`Gallery item ${sortedItems[currentIndex].id}`}
-						width="1200"
-						height="800"
+						width={1200}
+						height={800}
 						className="w-full h-auto max-h-full object-contain"
 					/>
 				</div>

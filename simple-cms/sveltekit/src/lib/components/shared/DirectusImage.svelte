@@ -15,16 +15,13 @@
 	let src = $derived(getDirectusAssetURL(uuid));
 </script>
 
-<!-- NextJS implementation of images thanks to ai -->
 <img
 	{src}
 	{alt}
 	{width}
 	{height}
 	class={className}
-	{...props.fill
-		? { style: 'object-fit: cover; width: 100%; height: 100%; position: absolute;' }
-		: {}}
+	{...props.fill ? { style: 'object-fit: cover; width: 100%; height: 100%;' } : {}}
 	{...props.sizes ? { sizes: props.sizes } : {}}
 	loading={props.loading || 'lazy'}
 	decoding={props.decoding || 'async'}
