@@ -8,19 +8,22 @@ import '../styles/fonts.css';
 
 const { globals, headerNavigation, footerNavigation } = await fetchSiteData();
 const siteTitle = globals?.title || 'Simple CMS';
-const siteDescription = globals?.description || 'A starter CMS template powered by Next.js and Directus.';
+const siteDescription = globals?.description || 'A starter CMS template powered by Directus and Astro.';
 const faviconURL = globals?.favicon ? getDirectusAssetURL(globals.favicon) : '/favicon.ico';
 const accentColor = globals?.accent_color || '#6644ff';
 
 const { metadata } = Astro.props;
+
+const fullTitle = metadata && metadata.title ? `${metadata.title} | ${siteTitle}` : siteTitle;
 ---
 <html lang="en" style={`--accent-color: ${accentColor};`}>
   <head>
     <meta charset="UTF-8" />
-    <title>{metadata.title || siteTitle}</title>
-    <meta name="description" content={metadata.description || siteDescription} />
+    <title>{fullTitle}</title>
+    <meta name="description" content={metadata?.description || siteDescription} />
     <link rel="icon" href={faviconURL} />
-    {metadata.openGraph && (
+
+    {metadata?.openGraph && (
       <>
         <meta property="og:title" content={metadata.openGraph.title} />
         <meta property="og:description" content={metadata.openGraph.description} />
@@ -28,21 +31,22 @@ const { metadata } = Astro.props;
         <meta property="og:type" content={metadata.openGraph.type} />
       </>
     )}
-    <script is:inline>
-      const getThemePreference = () => {
-        if (localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
-        }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      };
-      const isDark = getThemePreference() === 'dark';
-      document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
-      const observer = new MutationObserver(() => {
-        const isDark = document.documentElement.classList.contains('dark');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      });
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    </script>
+
+<script is:inline>
+  const getThemePreference = () => {
+    if (localStorage.getItem('theme')) {
+      return localStorage.getItem('theme');
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  };
+  const isDark = getThemePreference() === 'dark';
+  document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+  const observer = new MutationObserver(() => {
+    const isDark = document.documentElement.classList.contains('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+</script>
   </head>
   <body class="antialiased font-sans flex flex-col min-h-screen">
     <NavigationBar client:load navigation={headerNavigation} globals={globals} />
