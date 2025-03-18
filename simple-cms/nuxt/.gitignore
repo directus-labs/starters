@@ -1,32 +1,18 @@
-<<<<<<< HEAD
-node_modules
-*.log*
+# Dependencies
+node_modules/
+
+# Build output
 .nuxt
 .nitro
 .cache
 .output
-.env
 dist
-.DS_Store
-.vscode
-.eslintcache
-.netlify
-directus/data
-directus/uploads
-directus/dbs
-directus/extensions/.registry
-=======
-# Node.js
-node_modules/
 
 # Logs
+*.log*
 npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
-*.log
-
-.nuxt
-.output
 
 # Environment variables
 .env
@@ -36,15 +22,25 @@ yarn-debug.log*
 .DS_Store
 Thumbs.db
 
-# IDE/Editor Configs
-.idea/
+# IDE/Editor
 .vscode/
+.idea/
+.eslintcache
 
-# Test Coverage
+# Netlify
+.netlify
+
+# Directus
+directus/data
+directus/uploads
+directus/dbs
+directus/extensions/.registry
+
+# Testing
 coverage/
 
 # Tailwind CSS Cache
 .stylelintcache
 
+# Certificates
 certificates
->>>>>>> main
