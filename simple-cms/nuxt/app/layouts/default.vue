@@ -27,6 +27,9 @@ useHead({
 			innerHTML: `:root { --accent-color: ${unref(globals).accent_color} !important; }`,
 		},
 	],
+	bodyAttrs: {
+		class: 'antialiased font-sans',
+	},
 });
 
 useSeoMeta({

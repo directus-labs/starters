@@ -39,11 +39,11 @@ useSeoMeta({
 	<div v-if="post">
 		<Container class="py-12">
 			<div v-if="post.image" class="mb-8 w-full">
-				<div class="relative w-full h-[400px] md:h-[500px] overflow-hidden">
+				<div class="relative w-full h-[400px] overflow-hidden rounded-lg">
 					<DirectusImage
 						:uuid="post.image as string"
 						:alt="post.title || 'post header image'"
-						class="object-cover w-full h-full"
+						class="object-cover"
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
 						fill
 					/>

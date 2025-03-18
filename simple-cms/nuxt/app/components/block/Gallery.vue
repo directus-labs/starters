@@ -116,23 +116,14 @@ onUnmounted(() => {
 				<DialogDescription className="sr-only">
 					Viewing image {currentIndex + 1} of {sortedItems.length}.
 				</DialogDescription>
-				<DialogHeader>
-					<DialogClose asChild>
-						<button
-							class="absolute top-4 right-4 bg-black bg-opacity-70 text-white rounded-full p-2 hover:bg-opacity-90"
-							aria-label="Close Lightbox"
-						>
-							<X class="w-8 h-8" />
-						</button>
-					</DialogClose>
-				</DialogHeader>
+				<DialogHeader></DialogHeader>
 
 				<div class="relative w-[90vw] h-[90vh] flex items-center justify-center">
 					<DirectusImage
 						v-if="currentItem"
 						:uuid="currentItem.directus_file"
 						:alt="`Gallery item ${currentItem.id}`"
-						class="max-w-full max-h-screen object-contain"
+						class="size-full object-contain"
 					/>
 				</div>
 
@@ -152,6 +143,14 @@ onUnmounted(() => {
 						<ArrowRight class="w-8 h-8" />
 					</button>
 				</div>
+				<DialogClose asChild>
+					<button
+						class="absolute top-4 right-4 bg-black bg-opacity-70 text-white rounded-full p-2 hover:bg-opacity-90"
+						aria-label="Close Lightbox"
+					>
+						<X class="w-8 h-8" />
+					</button>
+				</DialogClose>
 			</DialogContent>
 		</Dialog>
 	</section>

@@ -106,12 +106,9 @@ function handlePageChange(page: number) {
 					</div>
 					<template v-for="(page, index) in paginationLinks" :key="index">
 						<PaginationListItem v-if="typeof page === 'number'" :value="page" @click="handlePageChange(page)">
-							<button
-								class="w-10 h-10 flex items-center justify-center rounded-md"
-								:class="{ 'bg-accent text-white': currentPage === page, 'bg-background': currentPage !== page }"
-							>
+							<Button variant="outline" :class="{ 'border-none': currentPage !== page }">
 								{{ page }}
-							</button>
+							</Button>
 						</PaginationListItem>
 						<PaginationEllipsis v-else class="px-2" />
 					</template>

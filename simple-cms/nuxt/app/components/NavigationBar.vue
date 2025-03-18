@@ -72,7 +72,7 @@ const handleLinkClick = () => {
 									<ul class="min-h-[100px] flex flex-col gap-2">
 										<li v-for="child in section.children" :key="child.id">
 											<NavigationMenuLink as-child>
-												<NuxtLink :to="child.page?.permalink || child.url || '#'" class="font-heading text-nav p-2">
+												<NuxtLink :to="child.page?.permalink || child.url || '#'" class="font-heading text-nav">
 													{{ child.title }}
 												</NuxtLink>
 											</NavigationMenuLink>
