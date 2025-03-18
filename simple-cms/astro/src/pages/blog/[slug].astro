@@ -2,7 +2,6 @@
 export const prerender = false;
 
 import Layout from '../../layouts/BaseLayout.astro';
-
 import { fetchPostBySlug, fetchRelatedPosts, fetchAuthorById } from '../../lib/directus/fetchers';
 import { getDirectusAssetURL } from '../../lib/directus/directus-utils';
 import Container from '@/components/ui/Container';
@@ -14,10 +13,14 @@ import Text from '@/components/ui/Text';
 import type { DirectusFile, ExtensionSeoMetadata } from '@/types/directus-schema';
 
 const { slug } = Astro.params;
+const query = Astro.url.searchParams;
+
+const isPreview = query.get("preview") === "true"; 
+const authToken = query.get("token") || null; 
 
 let post;
 try {
-  post = await fetchPostBySlug(slug as string);
+  post = await fetchPostBySlug(slug as string, isPreview, authToken);
 } catch (error) {
   console.error('Error loading post:', error);
   post = null;
@@ -32,7 +35,7 @@ const author = post.author ? await fetchAuthorById(post.author as string) : null
 const authorName = [author?.first_name, author?.last_name].filter(Boolean).join(' ');
 const siteURL = import.meta.env.PUBLIC_SITE_URL || '';
 const postUrl = `${siteURL}/blog/${slug}`;
-const ogImage = post.image ? getDirectusAssetURL(post.image) : null;
+const ogImage = post.image ? getDirectusAssetURL(post.image as string) : null;
 
 const metadata = {
   title: post?.seo?.title ?? post.title ?? '',
@@ -48,6 +51,7 @@ const metadata = {
 ---
 <Layout metadata={metadata}>
   <Container className="py-12">
+    {isPreview && <p> (Preview Mode)</p>}
     {post.image && (
       <div class="mb-8">
         <div class="relative w-full h-[400px] overflow-hidden rounded-lg">

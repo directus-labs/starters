@@ -38,6 +38,7 @@ export default function SearchModal() {
       }
     };
     document.addEventListener("keydown", onKeyDown);
+
     return () => document.removeEventListener("keydown", onKeyDown);
   }, []);
 
@@ -53,6 +54,7 @@ export default function SearchModal() {
     if (search.length < 3) {
       setResults([]);
       setSearched(false);
+
       return;
     }
 
@@ -96,7 +98,7 @@ export default function SearchModal() {
         <CommandInput
           placeholder="Search for pages or posts"
           onValueChange={(value) => debouncedFetchResults(value)}
-          className="m-2 p-4 focus:outline-none text-base leading-normal"
+          className="m-2 p-4 focus:outline-none focus-within:outline-none text-base leading-normal"
         />
 
         <CommandList className="p-2 text-foreground max-h-[500px] overflow-auto">

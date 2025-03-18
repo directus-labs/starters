@@ -248,10 +248,11 @@ export const fetchSiteData = async () => {
  */
 export const fetchPostBySlug = async (
   slug: string,
-  options?: { draft?: boolean }
+  preview: boolean = false,
+  token: string | null = null
 ) => {
   try {
-    const filter: QueryFilter<Schema, Post> = options?.draft
+    const filter: QueryFilter<Schema, Post> = preview
       ? { slug: { _eq: slug } }
       : { slug: { _eq: slug }, status: { _eq: "published" } };
 
@@ -269,9 +270,9 @@ export const fetchPostBySlug = async (
           "author",
           "seo",
         ],
+        ...(token ? { access_token: token } : {}),
       })
     );
-
     const post = posts[0];
 
     if (!post) {
