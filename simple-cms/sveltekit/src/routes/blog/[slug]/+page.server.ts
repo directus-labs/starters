@@ -3,9 +3,11 @@ import { PUBLIC_SITE_URL } from '$env/static/public';
 import { getDirectusAssetURL } from '$lib/directus/directus-utils';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
+import { DRAFT_MODE_SECRET } from '$env/static/private';
 export const load = (async (event) => {
+	const draft = event.url.searchParams.get('draft') === 'true' && event.url.searchParams.get('token') === DRAFT_MODE_SECRET;
 	const slug = event.params.slug;
-	const post = await fetchPostBySlug(slug);
+	const post = await fetchPostBySlug(slug, { draft }, event.fetch);
 
 	if (!post) {
 		error(404, {
@@ -14,8 +16,8 @@ export const load = (async (event) => {
 	}
 	// TODO optimize this to run in parallel
 	const ogImage = post.image ? getDirectusAssetURL(post.image) : null;
-	const relatedPosts = await fetchRelatedPosts(post.id);
-	const author = post.author ? await fetchAuthorById(post.author as string) : null;
+	const relatedPosts = await fetchRelatedPosts(post.id, event.fetch);
+	const author = post.author ? await fetchAuthorById(post.author as string, event.fetch) : null;
 
 	return {
 		post,

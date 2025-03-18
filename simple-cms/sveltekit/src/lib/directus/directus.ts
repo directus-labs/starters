@@ -16,7 +16,7 @@ import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 
 // Helper for retrying fetch requests
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-const fetchRetry = async (count: number, ...args: Parameters<typeof fetch>) => {
+const fetchRetry = async (fetch: Function, count: number, ...args: any[]) => {
 	const response = await fetch(...args);
 
 	if (count > 2 || response.status !== 429) return response;
@@ -25,7 +25,7 @@ const fetchRetry = async (count: number, ...args: Parameters<typeof fetch>) => {
 
 	await sleep(500);
 
-	return fetchRetry(count + 1, ...args);
+	return fetchRetry(fetch, count + 1, ...args);
 };
 
 // Queue for rate-limited requests
@@ -33,14 +33,20 @@ const queue = new Queue({ intervalCap: 10, interval: 500, carryoverConcurrencyCo
 
 const directusUrl = PUBLIC_DIRECTUS_URL;
 
-const directus = createDirectus<Schema>(directusUrl, {
-	globals: {
-		fetch: (...args) => queue.add(() => fetchRetry(0, ...args))
-	}
-}).with(rest());
+const getDirectus = (fetch: Function) => {
+
+	const directus = createDirectus<Schema>(directusUrl, {
+		globals: {
+			fetch: (...args) => queue.add(() => fetchRetry(fetch, 0, ...args))
+		}
+	}).with(rest());
+
+	return directus;
+};
 
 export const useDirectus = () => ({
-	directus: directus as RestClient<Schema>,
+	// directus: directus as RestClient<Schema>,
+	getDirectus: getDirectus as (fetch: Function) => RestClient<Schema>,
 	readItems,
 	readItem,
 	readSingleton,

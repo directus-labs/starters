@@ -5,8 +5,9 @@ import { type QueryFilter, readItems, aggregate, readItem, readSingleton } from 
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
  */
-export const fetchPageData = async (permalink: string, postPage = 1) => {
-	const { directus, readItems } = useDirectus();
+export const fetchPageData = async (permalink: string, postPage = 1, fetch: Function) => {
+	const { getDirectus, readItems } = useDirectus();
+	const directus = getDirectus(fetch);
 
 	try {
 		const pageData = await directus.request(
@@ -164,8 +165,9 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 /**
  * Fetches global site data, header navigation, and footer navigation.
  */
-export const fetchSiteData = async () => {
-	const { directus } = useDirectus();
+export const fetchSiteData = async (fetch: Function) => {
+	const { getDirectus } = useDirectus();
+	const directus = getDirectus(fetch);
 
 	try {
 		const [globals, headerNavigation, footerNavigation] = await Promise.all([
@@ -227,8 +229,9 @@ export const fetchSiteData = async () => {
 /**
  * Fetches a single blog post by slug. Handles live preview mode
  */
-export const fetchPostBySlug = async (slug: string, options?: { draft?: boolean }) => {
-	const { directus, readItems } = useDirectus();
+export const fetchPostBySlug = async (slug: string, options: { draft?: boolean }, fetch: Function) => {
+	const { getDirectus, readItems } = useDirectus();
+	const directus = getDirectus(fetch);
 
 	try {
 		const filter: QueryFilter<Schema, Post> = options?.draft
@@ -261,8 +264,9 @@ export const fetchPostBySlug = async (slug: string, options?: { draft?: boolean 
 /**
  * Fetches related blog posts excluding the given ID.
  */
-export const fetchRelatedPosts = async (excludeId: string) => {
-	const { directus, readItems } = useDirectus();
+export const fetchRelatedPosts = async (excludeId: string, fetch: Function) => {
+	const { getDirectus, readItems } = useDirectus();
+	const directus = getDirectus(fetch);
 
 	try {
 		const relatedPosts = await directus.request(
@@ -283,8 +287,9 @@ export const fetchRelatedPosts = async (excludeId: string) => {
 /**
  * Fetches author details by ID.
  */
-export const fetchAuthorById = async (authorId: string) => {
-	const { directus, readUser } = useDirectus();
+export const fetchAuthorById = async (authorId: string, fetch: Function) => {
+	const { getDirectus, readUser } = useDirectus();
+	const directus = getDirectus(fetch);
 
 	try {
 		const author = await directus.request(
@@ -303,8 +308,9 @@ export const fetchAuthorById = async (authorId: string) => {
 /**
  * Fetches paginated blog posts.
  */
-export const fetchPaginatedPosts = async (limit: number, page: number) => {
-	const { directus } = useDirectus();
+export const fetchPaginatedPosts = async (limit: number, page: number, fetch: Function) => {
+	const { getDirectus, readItems } = useDirectus();
+	const directus = getDirectus(fetch);
 	try {
 		const response = await directus.request(
 			readItems('posts', {
@@ -326,8 +332,9 @@ export const fetchPaginatedPosts = async (limit: number, page: number) => {
 /**
  * Fetches the total number of published blog posts.
  */
-export const fetchTotalPostCount = async (): Promise<number> => {
-	const { directus } = useDirectus();
+export const fetchTotalPostCount = async (fetch: Function): Promise<number> => {
+	const { getDirectus } = useDirectus();
+	const directus = getDirectus(fetch);
 
 	try {
 		const response = await directus.request(

@@ -14,8 +14,6 @@
 	let loading = $state(false);
 	let results = $state<SearchResult[]>([]);
 
-	$inspect({ open, search, searched, loading, results });
-
 	type SearchResult = {
 		id: string;
 		title: string;

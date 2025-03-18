@@ -32,8 +32,6 @@
 
 	let { data }: Props = $props();
 	const { alignment, title, headline, description, image, button_group, tagline, layout } = data;
-
-	$inspect(data);
 </script>
 
 <section
