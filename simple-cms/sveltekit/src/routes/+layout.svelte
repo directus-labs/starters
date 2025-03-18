@@ -11,14 +11,16 @@
 
 	const siteTitle = $derived(page.data.globals?.title || 'Simple CMS');
 	const siteDescription = $derived(
-		page.data.globals?.description || 'A starter CMS template powered by Next.js and Directus.'
+		page.data.globals?.description || 'A starter CMS template powered by Svelte and Directus.'
 	);
 	const faviconURL = $derived(
 		page.data.globals?.favicon ? getDirectusAssetURL(page.data.globals.favicon) : '/favicon.ico'
 	);
-</script>
 
-<!-- <THEMEPROVIDER></THEMEPROVIDER> -->
+	$effect(() => {
+		document.documentElement.style.setProperty('--accent-color', page.data.accentColor);
+	});
+</script>
 
 <svelte:head>
 	<title>{siteTitle}</title>
