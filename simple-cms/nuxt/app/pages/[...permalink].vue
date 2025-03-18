@@ -15,22 +15,11 @@ const { data: page, error } = await useFetch<Page>(`/api/pages/${permalink}`, {
 	},
 });
 
-const { setAdminBarState, isAdminBarEnabled } = useAdminBar();
-
 if (!page.value || error.value) {
 	throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });
 }
 
 const pageBlocks = computed(() => (page.value?.blocks as PageBlock[]) || []);
-
-// Update Admin Bar with page details - totally safe to remove this if you don't plan on using the admin bar
-if (isAdminBarEnabled) {
-	setAdminBarState({
-		collection: 'pages',
-		item: page.value as Page,
-		title: page.value?.seo?.title || page.value?.title || '',
-	});
-}
 
 useSeoMeta({
 	title: page.value?.seo?.title || page.value?.title || '',

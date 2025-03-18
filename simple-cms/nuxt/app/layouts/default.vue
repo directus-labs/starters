@@ -33,15 +33,10 @@ useSeoMeta({
 	titleTemplate: `%s / ${unref(globals).title}`,
 	ogSiteName: unref(globals).title,
 });
-
-const { showAdminBar } = useAdminBar();
 </script>
 
 <template>
 	<div>
-		<!-- Using Lazy prefix imports this component dynamically which is better for performance if not active -->
-		<AdminBar v-if="showAdminBar" />
-
 		<div v-if="siteError">
 			<p>Failed to load site data. Please try again later.</p>
 		</div>

@@ -3,7 +3,6 @@ import type { Post, DirectusUser } from '#shared/types/schema';
 
 const route = useRoute();
 const { enabled, state } = useLivePreview();
-const { setAdminBarState, isAdminBarEnabled } = useAdminBar();
 const postUrl = useRequestURL();
 
 const slug = route.params.slug as string;
@@ -26,15 +25,6 @@ if (!data.value || error.value) {
 const post = computed(() => data.value?.post);
 const relatedPosts = computed(() => data.value?.relatedPosts);
 const author = computed(() => post.value?.author as Partial<DirectusUser>);
-
-// Update Admin Bar with post details - totally safe to remove this if you don't plan on using the admin bar
-if (isAdminBarEnabled) {
-	setAdminBarState({
-		collection: 'posts',
-		item: post.value as Post,
-		title: post.value?.title || '',
-	});
-}
 
 useSeoMeta({
 	title: post.value?.seo?.title || post.value?.title,
