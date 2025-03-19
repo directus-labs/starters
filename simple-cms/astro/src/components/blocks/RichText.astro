@@ -1,0 +1,14 @@
+---
+import Tagline from "../ui/Tagline.astro";
+import Headline from "@/components/ui/Headline.astro";
+import Text from "@/components/ui/Text.astro";
+
+const { data, className = "" } = Astro.props;
+const { tagline, headline, content, alignment = "left" } = data;
+---
+
+<div class={`mx-auto max-w-[600px] space-y-6 text-${alignment} ${className}`}>
+  {tagline && <Tagline tagline={tagline} />}
+  {headline && <Headline headline={headline} />}
+  <Text content={content} />
+</div>

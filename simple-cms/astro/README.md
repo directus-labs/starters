@@ -116,7 +116,16 @@ This repository includes a [utility](https://www.npmjs.com/package/directus-sdk-
 src/
 ├── components/                       # Reusable components
 │   ├── blocks/                       # CMS blocks (Hero, Gallery, etc.)
-│   │   └── ...
+│   │   ├── BaseBlock.astro            # Handles static Astro blocks
+│   │   ├── BaseBlock.tsx              # Handles interactive React blocks
+│   │   ├── Hero.tsx
+│   │   ├── Gallery.tsx
+│   │   ├── Posts.tsx
+│   │   ├── Form.tsx
+│   │   ├── Pricing.astro
+│   │   ├── PricingCard.tsx
+│   │   ├── RichText.astro
+│   │   └── ButtonGroup.tsx
 │   ├── forms/                        # Form components
 │   │   ├── DynamicForm.tsx           # Renders dynamic forms with validation
 │   │   ├── FormBuilder.tsx           # Manages form lifecycles and submission
@@ -128,18 +137,22 @@ src/
 │   │       ├── RadioGroupField.tsx
 │   │       └── SelectField.tsx
 │   ├── layout/                       # Layout components
-│   │   ├── Footer.tsx
+│   │   ├── Footer.astro
 │   │   ├── NavigationBar.tsx
-│   │   └── PageBuilder.astro         # Assembles blocks into pages
+│   │   └── PageBuilder.astro          # Assembles blocks into pages
 │   ├── shared/                       # Shared utilities
 │   │   └── DirectusImage.tsx         # Renders images from Directus
 │   ├── ui/                           # Shadcn and other base UI components
 │   │   ├── SearchModal.tsx
 │   │   ├── ShareDialog.tsx
-│   │   ├── Tagline.tsx
-│   │   ├── Text.tsx
-│   │   ├── ThemeToggle.tsx
-│   │   └── Container.tsx             # Base UI component
+│   │   ├── Tagline.astro              # Static text block (Astro)
+│   │   ├── Tagline.tsx                # React version for use in React components
+│   │   ├── Headline.astro             # Static text block (Astro)
+│   │   ├── Headline.tsx               # React version for use in React components
+│   │   ├── Text.astro                 # Static text block (Astro)
+│   │   ├── Text.tsx                   # React version for use in React components
+│   │   ├── ThemeToggle.tsx            # Handles dark mode (React)
+│   │   └── Container.tsx              # Base UI component
 ├── layouts/                          # Layout components for Astro pages
 │   └── BaseLayout.astro
 ├── lib/                              # Utility and global logic
@@ -164,4 +177,79 @@ src/
 │   └── fonts.css
 └── types/                            # TypeScript types
     └── directus-schema.ts            # Directus-generated types
+
 ```
+
+## 📖 Component Structure in Astro & React
+
+Our project is built with **Astro** for performance and **React** for interactivity. To optimize **server-side rendering (SSR)** while keeping **interactive components responsive**, we use **both Astro (`.astro`) and React (`.tsx`) components**, depending on their needs.
+
+---
+
+## 🛠️ Why Do We Have Two Versions of Some Components?
+
+Some components exist in **both `.astro` and `.tsx` versions** to ensure they are used in the most efficient way:
+
+- **Astro Components (`.astro`)** are used whenever a component is **static** (e.g., `Text.astro`, `Tagline.astro`).
+- **React Components (`.tsx`)** are used when interactivity is needed (e.g., `Gallery.tsx`, `Form.tsx`, `ThemeToggle.tsx`).
+- **If a component might be used inside both Astro and React**, we provide **both versions** (e.g., `Headline.astro` and `Headline.tsx`).
+
+---
+
+## 📌 Adding or Modifying Components
+
+### ✅ Use Astro (`.astro`) when:
+
+✔ The component is **purely static** (text, images, basic layouts).  
+✔ It does **not require interactivity or client-side state**.  
+✔ It is used inside other Astro components (e.g., `RichText.astro`, `Footer.astro`).
+
+### ✅ Use React (`.tsx`) when:
+
+✔ The component **requires client-side state, interactivity, or event listeners** (e.g., toggles, modals, forms).  
+✔ It **depends on a React-based UI library** (e.g., `ShadCN`, `Lucide Icons`).  
+✔ It needs to be **used inside a React component** (Astro cannot directly import React logic).
+
+### ✅ Provide Both Astro & React Versions when:
+
+✔ The component is mostly static **but might be used inside both Astro and React** (e.g., `Headline`, `Tagline`, `Text`).  
+✔ The component is part of a **BaseBlock**, where some blocks are interactive while others are static.
+
+---
+
+## 🚀 How It Works in Our Project
+
+| Component                   | `.astro` Version? | `.tsx` Version? | Why?                                                                                 |
+| --------------------------- | ----------------- | --------------- | ------------------------------------------------------------------------------------ |
+| **BaseBlock**               | ✅ Yes            | ✅ Yes          | `BaseBlock.astro` handles static blocks, `BaseBlock.tsx` handles interactive blocks. |
+| **PageBuilder**             | ✅ Yes            | ❌ No           | All pages are assembled in Astro, with React hydrated only when needed.              |
+| **Hero**                    | ❌ No             | ✅ Yes          | Uses `DirectusImage.tsx`, must stay in React.                                        |
+| **RichText**                | ✅ Yes            | ❌ No           | Fully static, no interactivity needed.                                               |
+| **Pricing**                 | ✅ Yes            | ❌ No           | Fully static, loads `PricingCard.tsx` inside.                                        |
+| **PricingCard**             | ❌ No             | ✅ Yes          | Kept in React for flexibility inside `Pricing.astro`.                                |
+| **Gallery**                 | ❌ No             | ✅ Yes          | Needs interactivity (lightbox, state, navigation).                                   |
+| **Form**                    | ❌ No             | ✅ Yes          | Uses client-side state & validation.                                                 |
+| **NavigationBar**           | ❌ No             | ✅ Yes          | Requires theme toggle & dropdowns (interactivity).                                   |
+| **Footer**                  | ✅ Yes            | ❌ No           | Fully static, works best as an Astro component.                                      |
+| **Tagline, Headline, Text** | ✅ Yes            | ✅ Yes          | Needed in both Astro (`.astro` blocks) and React (`.tsx` blocks).                    |
+
+---
+
+## ✨ Key Takeaways
+
+🔹 **Astro-first approach** → We prefer Astro whenever possible for **better performance**.  
+🔹 **React is only used when necessary** → Avoids unnecessary client-side hydration.  
+🔹 **Follow the structure** → If modifying or adding components:
+
+- **Use Astro unless interactivity is required.**
+- **If a component needs to be used inside both React and Astro, create both versions.**
+
+🚀 **This setup ensures fast, scalable, and maintainable code while leveraging the best of Astro & React!**
+
+---
+
+## 📌 When Adding a New Component:
+
+- **Is it static?** → **Use `.astro`.**
+- **Does it need interactivity?** → **Use `.tsx`.**
+- **Will it be used inside both React & Astro?** → **Create both versions.**

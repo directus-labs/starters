@@ -2,7 +2,7 @@
 import { fetchSiteData } from '../lib/directus/fetchers';
 import { getDirectusAssetURL } from '../lib/directus/directus-utils';
 import NavigationBar from '@/components/layout/NavigationBar';
-import Footer from '@/components/layout/Footer';
+import Footer from '@/components/layout/Footer.astro';
 import '../styles/global.css';
 import '../styles/fonts.css';
 
@@ -53,6 +53,6 @@ const fullTitle = metadata && metadata.title ? `${metadata.title} | ${siteTitle}
     <main class="flex-grow">
       <slot />
     </main>
-    <Footer client:load navigation={footerNavigation} globals={globals} />
+    <Footer navigation={footerNavigation} globals={globals} />
   </body>
 </html>

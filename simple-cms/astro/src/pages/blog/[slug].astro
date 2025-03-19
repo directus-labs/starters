@@ -6,10 +6,10 @@ import { fetchPostBySlug, fetchRelatedPosts, fetchAuthorById } from '../../lib/d
 import { getDirectusAssetURL } from '../../lib/directus/directus-utils';
 import Container from '@/components/ui/Container';
 import DirectusImage from '@/components/shared/DirectusImage';
-import Headline from '@/components/ui/Headline';
+import Headline from '@/components/ui/Headline.astro';
 import ShareDialog from '@/components/ui/ShareDialog';
 import { Separator } from '@/components/ui/separator';
-import Text from '@/components/ui/Text';
+import Text from '@/components/ui/Text.astro';
 import type { DirectusFile, ExtensionSeoMetadata } from '@/types/directus-schema';
 
 const { slug } = Astro.params;
