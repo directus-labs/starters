@@ -1,0 +1,18 @@
+---
+interface HeadlineProps {
+  headline?: string;
+  className?: string;
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | "div";
+}
+
+const { headline, className = "", as = "p" } = Astro.props;
+---
+
+{headline && (
+  <component is={as} class:list={[
+    "font-heading text-foreground font-normal text-4xl md:text-5xl lg:text-headline",
+    className
+  ]}>
+    {headline}
+  </component>
+)}

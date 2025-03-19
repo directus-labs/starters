@@ -1,0 +1,43 @@
+---
+import Tagline from "../ui/Tagline.astro";
+import Headline from "@/components/ui/Headline.astro";
+import PricingCard from "./PricingCard.tsx"; 
+
+interface PricingCardProps {
+  id: string;
+  title: string;
+  description?: string;
+  price?: string;
+  badge?: string;
+  features?: string[];
+  button?: {
+    id: string;
+    label: string | null;
+    variant: string | null;
+    url: string | null;
+  };
+  is_highlighted?: boolean;
+}
+
+const { data } = Astro.props;
+const { tagline, headline, pricing_cards } = data;
+
+const gridClasses = pricing_cards.length === 1 
+  ? "grid-cols-1"
+  : pricing_cards.length % 3 === 0
+  ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+  : "grid-cols-1 sm:grid-cols-2";
+---
+
+<section>
+  <div class="flex flex-col gap-4">
+    {tagline && <Tagline tagline={tagline} />}
+    {headline && <Headline headline={headline} />}
+  </div>
+  
+  <div class={`grid gap-6 mt-8 ${gridClasses}`}>
+    {pricing_cards.map((card: PricingCardProps) => (
+      <PricingCard card={card} />
+    ))}
+  </div>
+</section>
