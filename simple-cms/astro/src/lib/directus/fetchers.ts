@@ -370,3 +370,63 @@ export const fetchTotalPostCount = async (): Promise<number> => {
     return 0;
   }
 };
+
+/**
+ * Search pages and posts for a given search term
+ */
+export const searchContent = async (search: string) => {
+  try {
+    const [pages, posts] = await Promise.all([
+      directus.request(
+        readItems("pages", {
+          filter: {
+            _or: [
+              { title: { _contains: search } },
+              { description: { _contains: search } },
+              { permalink: { _contains: search } },
+            ],
+          },
+          fields: ["id", "title", "description", "permalink"],
+        })
+      ),
+      directus.request(
+        readItems("posts", {
+          filter: {
+            _and: [
+              { status: { _eq: "published" } },
+              {
+                _or: [
+                  { title: { _contains: search } },
+                  { description: { _contains: search } },
+                  { slug: { _contains: search } },
+                  { content: { _contains: search } },
+                ],
+              },
+            ],
+          },
+          fields: ["id", "title", "description", "slug", "content", "status"],
+        })
+      ),
+    ]);
+
+    return [
+      ...pages.map((page) => ({
+        id: page.id,
+        title: page.title,
+        description: page.description,
+        type: "Page",
+        link: `/${page.permalink.replace(/^\/+/, "")}`,
+      })),
+      ...posts.map((post) => ({
+        id: post.id,
+        title: post.title,
+        description: post.description,
+        type: "Post",
+        link: `/blog/${post.slug}`,
+      })),
+    ];
+  } catch (error) {
+    console.error("Error searching content:", error);
+    throw new Error("Failed to search content");
+  }
+};

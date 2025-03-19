@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import {
   CommandDialog,
   CommandEmpty,
@@ -14,12 +14,13 @@ import { Search } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { debounce } from "@/lib/utils";
 import { DialogDescription, DialogTitle } from "./dialog";
+import { searchContent } from "@/lib/directus/fetchers";
 import React from "react";
 
 type SearchResult = {
   id: string;
   title: string;
-  description: string;
+  description: string | null | undefined;
   type: string;
   link: string;
 };
@@ -38,7 +39,6 @@ export default function SearchModal() {
       }
     };
     document.addEventListener("keydown", onKeyDown);
-
     return () => document.removeEventListener("keydown", onKeyDown);
   }, []);
 
@@ -54,7 +54,6 @@ export default function SearchModal() {
     if (search.length < 3) {
       setResults([]);
       setSearched(false);
-
       return;
     }
 
@@ -62,11 +61,7 @@ export default function SearchModal() {
     setSearched(true);
 
     try {
-      const res = await fetch(
-        `/api/search?search=${encodeURIComponent(search)}`
-      );
-      if (!res.ok) throw new Error("Failed to fetch results");
-      const data: SearchResult[] = await res.json();
+      const data = await searchContent(search);
       setResults(data.filter((r) => r.link));
     } catch (error) {
       console.error("Error fetching search results:", error);
@@ -94,7 +89,6 @@ export default function SearchModal() {
         <DialogDescription className="px-2 sr-only">
           Search for pages or posts
         </DialogDescription>
-
         <CommandInput
           placeholder="Search for pages or posts"
           onValueChange={(value) => debouncedFetchResults(value)}
@@ -123,10 +117,7 @@ export default function SearchModal() {
                 <CommandItem
                   key={result.id}
                   className="flex items-start gap-4 px-2 py-3"
-                  onSelect={() => {
-                    window.location.assign(result.link);
-                    setOpen(false);
-                  }}
+                  onSelect={() => (window.location.href = result.link)}
                 >
                   <Badge variant="default">{result.type}</Badge>
                   <div className="ml-2 w-full">
