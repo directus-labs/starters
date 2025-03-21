@@ -1,9 +1,9 @@
 # Next.js Simple CMS Template with Directus Integration
 
 This is a **Next.js-based Simple CMS Template** that is fully integrated with [Directus](https://directus.io/), offering
-a headless CMS solution for managing and delivering content seamlessly. The template leverages modern technologies like
-the **Next.js App Router**, **Tailwind CSS**, and **Shadcn components**, providing a complete and scalable starting
-point for building CMS-powered web applications.
+a CMS solution for managing and delivering content seamlessly. The template leverages modern technologies like the
+**Next.js App Router**, **Tailwind CSS**, and **Shadcn components**, providing a complete and scalable starting point
+for building CMS-powered web applications.
 
 ## **Features**
 

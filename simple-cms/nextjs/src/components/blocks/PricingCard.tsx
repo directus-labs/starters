@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import Button from '@/components/blocks/Button';
 import { CheckCircle2 } from 'lucide-react';
+import { setAttr } from '@/lib/directus/visual-editing-utils';
 
 export interface PricingCardProps {
 	card: {
@@ -27,6 +28,16 @@ const PricingCard = ({ card }: PricingCardProps) => {
 			className={`flex flex-col max-w-[600px] md:min-h-[424px] border rounded-lg p-6 ${
 				card.is_highlighted ? 'border-accent' : 'border-input'
 			}`}
+			data-directus={
+				card.id
+					? setAttr({
+							collection: 'block_pricing_cards',
+							item: card.id,
+							fields: ['title', 'description', 'price', 'badge', 'is_highlighted', 'features', 'button'],
+							mode: 'drawer',
+						})
+					: undefined
+			}
 		>
 			<div className="flex justify-between items-start gap-2 mb-4">
 				<h3 className="text-xl font-heading text-foreground">{card.title}</h3>

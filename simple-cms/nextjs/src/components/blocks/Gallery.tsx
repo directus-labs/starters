@@ -6,6 +6,7 @@ import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogClose } from '@/components/ui/dialog';
 import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-react';
+import { setAttr } from '@/lib/directus/visual-editing-utils';
 
 interface GalleryProps {
 	data: {
@@ -17,9 +18,10 @@ interface GalleryProps {
 			sort?: number;
 		}>;
 	};
+	itemId?: string;
 }
 
-const Gallery = ({ data }: GalleryProps) => {
+const Gallery = ({ data, itemId }: GalleryProps) => {
 	const { tagline, headline, items = [] } = data;
 	const [isLightboxOpen, setLightboxOpen] = useState(false);
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -71,11 +73,51 @@ const Gallery = ({ data }: GalleryProps) => {
 
 	return (
 		<section className="relative">
-			{tagline && <Tagline tagline={tagline} />}
-			{headline && <Headline headline={headline} />}
+			{tagline && (
+				<Tagline
+					tagline={tagline}
+					data-directus={
+						itemId
+							? setAttr({
+									collection: 'block_gallery',
+									item: itemId,
+									fields: 'tagline',
+									mode: 'popover',
+								})
+							: undefined
+					}
+				/>
+			)}
+			{headline && (
+				<Headline
+					headline={headline}
+					data-directus={
+						itemId
+							? setAttr({
+									collection: 'block_gallery',
+									item: itemId,
+									fields: 'headline',
+									mode: 'popover',
+								})
+							: undefined
+					}
+				/>
+			)}
 
 			{sortedItems.length > 0 && (
-				<div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+				<div
+					className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+					data-directus={
+						itemId
+							? setAttr({
+									collection: 'block_gallery',
+									item: itemId,
+									fields: ['items'],
+									mode: 'modal',
+								})
+							: undefined
+					}
+				>
 					{sortedItems.map((item, index) => (
 						<div
 							key={item.id}
@@ -101,7 +143,7 @@ const Gallery = ({ data }: GalleryProps) => {
 			{isLightboxOpen && isValidIndex && (
 				<Dialog open={isLightboxOpen} onOpenChange={setLightboxOpen}>
 					<DialogContent
-						className="flex max-w-full max-h-full items-center justify-center  p-2 bg-transparent border-none z-50"
+						className="flex max-w-full max-h-full items-center justify-center p-2 bg-transparent border-none z-50"
 						hideCloseButton
 					>
 						<DialogTitle className="sr-only">Gallery Image</DialogTitle>

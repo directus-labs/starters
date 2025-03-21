@@ -2,6 +2,7 @@ import { Button as ShadcnButton, buttonVariants } from '@/components/ui/button';
 import { LucideIcon, ArrowRight, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { setAttr } from '@/lib/directus/visual-editing-utils';
 
 export interface ButtonProps {
 	id: string;
@@ -22,6 +23,7 @@ export interface ButtonProps {
 }
 
 const Button = ({
+	id,
 	label,
 	variant,
 	url,
@@ -59,7 +61,19 @@ const Button = ({
 	);
 
 	const content = (
-		<span className="flex items-center space-x-2">
+		<span
+			className="flex items-center space-x-2"
+			data-directus={
+				id
+					? setAttr({
+							collection: 'block_button',
+							item: id,
+							fields: ['label', 'url', 'variant', 'type'],
+							mode: 'popover',
+						})
+					: undefined
+			}
+		>
 			{icon && iconPosition === 'left' && Icon && <Icon className="size-4 shrink-0" />}
 			{label && <span>{label}</span>}
 			{icon && iconPosition === 'right' && Icon && <Icon className="size-4 shrink-0" />}
