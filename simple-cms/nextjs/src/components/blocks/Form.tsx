@@ -1,9 +1,10 @@
 'use client';
 
 import { FormField } from '@/types/directus-schema';
-import Tagline from '../ui/Tagline';
+import Tagline from '@/components/ui/Tagline';
 import FormBuilder from '../forms/FormBuilder';
-import Headline from '../ui/Headline';
+import Headline from '@/components/ui/Headline';
+import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
 
 interface FormBlockProps {
 	data: {
@@ -22,20 +23,78 @@ interface FormBlockProps {
 			fields: FormField[];
 		};
 	};
+	itemId?: string;
+	blockId?: string;
 }
 
-const FormBlock = ({ data }: FormBlockProps) => {
-	const { tagline, headline, form } = data;
+const FormBlock = ({ data, itemId, blockId }: FormBlockProps) => {
+	const formData = useDirectusVisualEditing(data, itemId, 'block_form');
+	const { tagline, headline, form } = formData;
 
 	if (!form) {
 		return null;
 	}
 
 	return (
-		<section className="mx-auto">
-			{tagline && <Tagline tagline={tagline} />}
-			{headline && <Headline headline={headline} />}
-			<FormBuilder form={form} className="mt-8" />
+		<section
+			className="mx-auto"
+			data-directus={
+				itemId
+					? setAttr({
+							collection: 'block_form',
+							item: itemId,
+							fields: ['tagline', 'headline', 'form'],
+							mode: 'drawer',
+						})
+					: undefined
+			}
+		>
+			{tagline && (
+				<Tagline
+					tagline={tagline}
+					data-directus={
+						itemId
+							? setAttr({
+									collection: 'block_form',
+									item: itemId,
+									fields: 'tagline',
+									mode: 'popover',
+								})
+							: undefined
+					}
+				/>
+			)}
+
+			{headline && (
+				<Headline
+					headline={headline}
+					data-directus={
+						itemId
+							? setAttr({
+									collection: 'block_form',
+									item: itemId,
+									fields: 'headline',
+									mode: 'popover',
+								})
+							: undefined
+					}
+				/>
+			)}
+
+			<div
+				data-directus={
+					itemId && form.id
+						? setAttr({
+								collection: 'forms',
+								item: form.id,
+								fields: ['title', 'submit_label', 'success_message', 'success_redirect_url', 'on_success'],
+								mode: 'drawer',
+							})
+						: undefined
+				}
+			>
+				<FormBuilder form={form} className="mt-8" itemId={itemId} />
+			</div>
 		</section>
 	);
 };

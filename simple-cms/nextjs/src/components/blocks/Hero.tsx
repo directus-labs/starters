@@ -1,9 +1,12 @@
+'use client';
+
 import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import BaseText from '@/components/ui/Text';
 import DirectusImage from '@/components/shared/DirectusImage';
 import ButtonGroup from '@/components/blocks/ButtonGroup';
 import { cn } from '@/lib/utils';
+import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
 
 interface HeroProps {
 	data: {
@@ -24,10 +27,12 @@ interface HeroProps {
 			}>;
 		};
 	};
+	itemId?: string;
 }
 
-const Hero = ({ data }: HeroProps) => {
-	const { layout, tagline, headline, description, image, button_group } = data;
+export default function Hero({ data, itemId }: HeroProps) {
+	const heroData = useDirectusVisualEditing(data, itemId, 'block_hero');
+	const { layout, tagline, headline, description, image, button_group } = heroData;
 
 	return (
 		<section
@@ -39,6 +44,16 @@ const Hero = ({ data }: HeroProps) => {
 						? 'md:flex-row-reverse items-center'
 						: 'md:flex-row items-center',
 			)}
+			data-directus={
+				itemId
+					? setAttr({
+							collection: 'block_hero',
+							item: itemId,
+							fields: ['tagline', 'headline', 'description', 'layout', 'image', 'button_group'],
+							mode: 'drawer',
+						})
+					: undefined
+			}
 		>
 			<div
 				className={cn(
@@ -46,11 +61,61 @@ const Hero = ({ data }: HeroProps) => {
 					layout === 'center' ? 'md:w-3/4 xl:w-2/3 items-center' : 'md:w-1/2 items-start',
 				)}
 			>
-				<Tagline tagline={tagline} />
-				<Headline headline={headline} />
-				{description && <BaseText content={description} />}
+				<Tagline
+					tagline={tagline}
+					data-directus={
+						itemId
+							? setAttr({
+									collection: 'block_hero',
+									item: itemId,
+									fields: 'tagline',
+									mode: 'popover',
+								})
+							: undefined
+					}
+				/>
+				<Headline
+					headline={headline}
+					data-directus={
+						itemId
+							? setAttr({
+									collection: 'block_hero',
+									item: itemId,
+									fields: 'headline',
+									mode: 'popover',
+								})
+							: undefined
+					}
+				/>
+				{description && (
+					<BaseText
+						content={description}
+						data-directus={
+							itemId
+								? setAttr({
+										collection: 'block_hero',
+										item: itemId,
+										fields: 'description',
+										mode: 'popover',
+									})
+								: undefined
+						}
+					/>
+				)}
 				{button_group && button_group.buttons.length > 0 && (
-					<div className={cn(layout === 'center' && 'flex justify-center', 'mt-6')}>
+					<div
+						className={cn(layout === 'center' && 'flex justify-center', 'mt-6')}
+						data-directus={
+							itemId && button_group.buttons.length > 0
+								? setAttr({
+										collection: 'block_hero',
+										item: itemId,
+										fields: ['button_group'],
+										mode: 'modal',
+									})
+								: undefined
+						}
+					>
 						<ButtonGroup buttons={button_group.buttons} />
 					</div>
 				)}
@@ -58,6 +123,16 @@ const Hero = ({ data }: HeroProps) => {
 			{image && (
 				<div
 					className={cn('relative w-full', layout === 'center' ? 'md:w-3/4 xl:w-2/3 h-[400px]' : 'md:w-1/2 h-[562px]')}
+					data-directus={
+						itemId
+							? setAttr({
+									collection: 'block_hero',
+									item: itemId,
+									fields: ['image'],
+									mode: 'modal',
+								})
+							: undefined
+					}
 				>
 					<DirectusImage
 						uuid={image}
@@ -70,6 +145,4 @@ const Hero = ({ data }: HeroProps) => {
 			)}
 		</section>
 	);
-};
-
-export default Hero;
+}

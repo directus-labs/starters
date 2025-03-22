@@ -18,6 +18,7 @@ import {
 } from '../ui/pagination';
 import { Post } from '@/types/directus-schema';
 import { fetchPaginatedPosts, fetchTotalPostCount } from '@/lib/directus/fetchers';
+import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
 
 interface PostsProps {
 	data: {
@@ -26,10 +27,13 @@ interface PostsProps {
 		posts: Post[];
 		limit: number;
 	};
+	itemId?: string;
 }
 
-const Posts = ({ data }: PostsProps) => {
-	const { tagline, headline, posts, limit } = data;
+const Posts = ({ data, itemId }: PostsProps) => {
+	const postsData = useDirectusVisualEditing(data, itemId, 'block_posts');
+	const { tagline, headline, posts, limit } = postsData;
+
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const visiblePages = 5;
@@ -70,7 +74,7 @@ const Posts = ({ data }: PostsProps) => {
 		};
 
 		fetchPosts();
-	}, [currentPage, perPage]);
+	}, [currentPage, perPage, posts]);
 
 	const handlePageChange = (page: number) => {
 		if (page >= 1 && page <= totalPages) {
@@ -109,10 +113,50 @@ const Posts = ({ data }: PostsProps) => {
 
 	return (
 		<div>
-			{tagline && <Tagline tagline={tagline} />}
-			{headline && <Headline headline={headline} />}
+			{tagline && (
+				<Tagline
+					tagline={tagline}
+					data-directus={
+						itemId
+							? setAttr({
+									collection: 'block_posts',
+									item: itemId,
+									fields: 'tagline',
+									mode: 'popover',
+								})
+							: undefined
+					}
+				/>
+			)}
+			{headline && (
+				<Headline
+					headline={headline}
+					data-directus={
+						itemId
+							? setAttr({
+									collection: 'block_posts',
+									item: itemId,
+									fields: 'headline',
+									mode: 'popover',
+								})
+							: undefined
+					}
+				/>
+			)}
 
-			<div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+			<div
+				className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+				data-directus={
+					itemId
+						? setAttr({
+								collection: 'block_posts',
+								item: itemId,
+								fields: ['posts'],
+								mode: 'modal',
+							})
+						: undefined
+				}
+			>
 				{paginatedPosts.length > 0 ? (
 					paginatedPosts.map((post) => (
 						<Link key={post.id} href={`/blog/${post.slug}`} className="group block overflow-hidden rounded-lg">
