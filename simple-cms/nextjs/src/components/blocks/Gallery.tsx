@@ -6,7 +6,7 @@ import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogClose } from '@/components/ui/dialog';
 import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-react';
-import { setAttr } from '@/lib/directus/visual-editing-utils';
+import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
 
 interface GalleryProps {
 	data: {
@@ -22,7 +22,9 @@ interface GalleryProps {
 }
 
 const Gallery = ({ data, itemId }: GalleryProps) => {
-	const { tagline, headline, items = [] } = data;
+	const galleryData = useDirectusVisualEditing(data, itemId, 'block_gallery');
+	const { tagline, headline, items = [] } = galleryData;
+
 	const [isLightboxOpen, setLightboxOpen] = useState(false);
 	const [currentIndex, setCurrentIndex] = useState(0);
 

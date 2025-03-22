@@ -18,7 +18,7 @@ import {
 } from '../ui/pagination';
 import { Post } from '@/types/directus-schema';
 import { fetchPaginatedPosts, fetchTotalPostCount } from '@/lib/directus/fetchers';
-import { setAttr } from '@/lib/directus/visual-editing-utils';
+import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
 
 interface PostsProps {
 	data: {
@@ -31,7 +31,9 @@ interface PostsProps {
 }
 
 const Posts = ({ data, itemId }: PostsProps) => {
-	const { tagline, headline, posts, limit } = data;
+	const postsData = useDirectusVisualEditing(data, itemId, 'block_posts');
+	const { tagline, headline, posts, limit } = postsData;
+
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const visiblePages = 5;
@@ -72,7 +74,7 @@ const Posts = ({ data, itemId }: PostsProps) => {
 		};
 
 		fetchPosts();
-	}, [currentPage, perPage]);
+	}, [currentPage, perPage, posts]);
 
 	const handlePageChange = (page: number) => {
 		if (page >= 1 && page <= totalPages) {

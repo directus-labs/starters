@@ -1,7 +1,9 @@
+'use client';
+
 import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import PricingCard from '@/components/blocks/PricingCard';
-import { setAttr } from '@/lib/directus/visual-editing-utils';
+import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
 
 interface PricingProps {
 	data: {
@@ -27,7 +29,8 @@ interface PricingProps {
 }
 
 const Pricing = ({ data, itemId }: PricingProps) => {
-	const { tagline, headline, pricing_cards } = data;
+	const pricingData = useDirectusVisualEditing(data, itemId, 'block_pricing');
+	const { tagline, headline, pricing_cards } = pricingData;
 
 	if (!pricing_cards || !Array.isArray(pricing_cards)) {
 		return null;

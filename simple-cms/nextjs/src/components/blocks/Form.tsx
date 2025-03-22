@@ -4,7 +4,7 @@ import { FormField } from '@/types/directus-schema';
 import Tagline from '@/components/ui/Tagline';
 import FormBuilder from '../forms/FormBuilder';
 import Headline from '@/components/ui/Headline';
-import { setAttr } from '@/lib/directus/visual-editing-utils';
+import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
 
 interface FormBlockProps {
 	data: {
@@ -28,14 +28,27 @@ interface FormBlockProps {
 }
 
 const FormBlock = ({ data, itemId, blockId }: FormBlockProps) => {
-	const { tagline, headline, form } = data;
+	const formData = useDirectusVisualEditing(data, itemId, 'block_form');
+	const { tagline, headline, form } = formData;
 
 	if (!form) {
 		return null;
 	}
 
 	return (
-		<section className="mx-auto">
+		<section
+			className="mx-auto"
+			data-directus={
+				itemId
+					? setAttr({
+							collection: 'block_form',
+							item: itemId,
+							fields: ['tagline', 'headline', 'form'],
+							mode: 'drawer',
+						})
+					: undefined
+			}
+		>
 			{tagline && (
 				<Tagline
 					tagline={tagline}
@@ -68,7 +81,20 @@ const FormBlock = ({ data, itemId, blockId }: FormBlockProps) => {
 				/>
 			)}
 
-			<FormBuilder form={form} className="mt-8" />
+			<div
+				data-directus={
+					itemId && form.id
+						? setAttr({
+								collection: 'forms',
+								item: form.id,
+								fields: ['title', 'submit_label', 'success_message', 'success_redirect_url', 'on_success'],
+								mode: 'drawer',
+							})
+						: undefined
+				}
+			>
+				<FormBuilder form={form} className="mt-8" itemId={itemId} />
+			</div>
 		</section>
 	);
 };

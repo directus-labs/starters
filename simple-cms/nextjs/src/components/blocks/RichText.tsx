@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import Text from '@/components/ui/Text';
-import { setAttr } from '@/lib/directus/visual-editing-utils';
+import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
 
 interface RichTextProps {
 	data: {
@@ -20,7 +20,9 @@ interface RichTextProps {
 }
 
 const RichText = ({ data, className, itemId }: RichTextProps) => {
-	const { tagline, headline, content, alignment = 'left' } = data;
+	const richTextData = useDirectusVisualEditing(data, itemId, 'block_richtext');
+	const { tagline, headline, content, alignment = 'left' } = richTextData;
+
 	const router = useRouter();
 
 	useEffect(() => {

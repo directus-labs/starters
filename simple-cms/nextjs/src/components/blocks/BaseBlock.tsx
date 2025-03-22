@@ -1,11 +1,13 @@
+'use client';
+
 import RichText from '@/components/blocks/RichText';
 import Hero from '@/components/blocks/Hero';
 import Gallery from '@/components/blocks/Gallery';
 import Pricing from '@/components/blocks/Pricing';
 import Posts from '@/components/blocks/Posts';
 import Form from '@/components/blocks/Form';
-import { setAttr } from '@/lib/directus/visual-editing-utils';
-import DirectusVisualEditing from '../shared/DirectusVisualEditing';
+import { setAttr } from '@/lib/directus/visual-editing-helper';
+import DirectusVisualEditing from '@/components/shared/DirectusVisualEditing';
 
 interface BaseBlockProps {
 	block: {

@@ -1,10 +1,12 @@
+'use client';
+
 import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import BaseText from '@/components/ui/Text';
 import DirectusImage from '@/components/shared/DirectusImage';
 import ButtonGroup from '@/components/blocks/ButtonGroup';
 import { cn } from '@/lib/utils';
-import { setAttr } from '@/lib/directus/visual-editing-utils';
+import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
 
 interface HeroProps {
 	data: {
@@ -28,8 +30,9 @@ interface HeroProps {
 	itemId?: string;
 }
 
-const Hero = ({ data, itemId }: HeroProps) => {
-	const { layout, tagline, headline, description, image, button_group } = data;
+export default function Hero({ data, itemId }: HeroProps) {
+	const heroData = useDirectusVisualEditing(data, itemId, 'block_hero');
+	const { layout, tagline, headline, description, image, button_group } = heroData;
 
 	return (
 		<section
@@ -142,6 +145,4 @@ const Hero = ({ data, itemId }: HeroProps) => {
 			)}
 		</section>
 	);
-};
-
-export default Hero;
+}

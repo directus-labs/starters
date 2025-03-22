@@ -1,23 +1,14 @@
 import { fetchPostBySlug, fetchRelatedPosts, fetchAuthorById } from '@/lib/directus/fetchers';
 import { draftMode } from 'next/headers';
-import { setAttr } from '@/lib/directus/visual-editing-utils';
-import DirectusVisualEditing from '@/components/shared/DirectusVisualEditing';
-import DirectusImage from '@/components/shared/DirectusImage';
-import BaseText from '@/components/ui/Text';
-import { Separator } from '@/components/ui/separator';
-import ShareDialog from '@/components/ui/ShareDialog';
-import Link from 'next/link';
-import Headline from '@/components/ui/Headline';
-import Container from '@/components/ui/container';
 import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
 import { Post } from '@/types/directus-schema';
+import BlogPostClient from './BlogPostClient';
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
 	const { slug } = params;
 	try {
 		const post = await fetchPostBySlug(slug);
 		if (!post) return;
-
 		const ogImage = post.image ? getDirectusAssetURL(post.image) : null;
 
 		return {
@@ -50,7 +41,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
 		return;
 	}
-
 	if (!post) {
 		return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
 	}
@@ -61,98 +51,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 	const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`;
 
 	return (
-		<>
-			{isEnabled && <p>(Draft Mode)</p>}
-			<DirectusVisualEditing />
-			<Container className="py-12">
-				{post.image && (
-					<div className="mb-8">
-						<div
-							className="relative w-full h-[400px] overflow-hidden rounded-lg"
-							data-directus={setAttr({ collection: 'posts', item: post.id, fields: ['image'], mode: 'modal' })}
-						>
-							<DirectusImage
-								uuid={post.image as string}
-								alt={post.title || 'post header image'}
-								className="object-cover"
-								fill
-							/>
-						</div>
-					</div>
-				)}
-
-				<Headline
-					as="h2"
-					headline={post.title}
-					className="!text-accent mb-4"
-					data-directus={setAttr({ collection: 'posts', item: post.id, fields: 'title', mode: 'popover' })}
-				/>
-				<Separator className="mb-8" />
-
-				<div className="grid grid-cols-1 lg:grid-cols-[minmax(0,_2fr)_400px] gap-12">
-					<main className="text-left">
-						<BaseText
-							content={post.content || ''}
-							data-directus={setAttr({ collection: 'posts', item: post.id, fields: 'content', mode: 'popover' })}
-						/>
-					</main>
-
-					<aside className="space-y-6 p-6 rounded-lg max-w-[496px] h-fit bg-background-muted">
-						{author && (
-							<div className="flex items-center space-x-4">
-								{author.avatar && (
-									<DirectusImage
-										uuid={author.avatar as string}
-										alt={authorName || 'author avatar'}
-										className="rounded-full object-cover size-[48px]"
-										width={48}
-										height={48}
-									/>
-								)}
-								<div>{authorName && <p className="font-bold">{authorName}</p>}</div>
-							</div>
-						)}
-
-						{post.description && (
-							<p
-								data-directus={setAttr({ collection: 'posts', item: post.id, fields: 'description', mode: 'popover' })}
-							>
-								{post.description}
-							</p>
-						)}
-						<div className="flex justify-start">
-							<ShareDialog postUrl={postUrl} postTitle={post.title} />
-						</div>
-
-						<div>
-							<Separator className="my-4" />
-							<h3 className="font-bold mb-4">Related Posts</h3>
-							<div className="space-y-4">
-								{relatedPosts.map((relatedPost) => (
-									<Link
-										key={relatedPost.id}
-										href={`/blog/${relatedPost.slug}`}
-										className="flex items-center space-x-4 hover:text-accent group"
-									>
-										{relatedPost.image && (
-											<div className="relative shrink-0 w-[150px] h-[100px] overflow-hidden rounded-lg">
-												<DirectusImage
-													uuid={relatedPost.image as string}
-													alt={relatedPost.title || 'related posts'}
-													className="object-cover transition-transform duration-300 group-hover:scale-110"
-													fill
-													sizes="(max-width: 768px) 100px, (max-width: 1024px) 150px, 150px"
-												/>
-											</div>
-										)}
-										<span className="font-heading">{relatedPost.title}</span>
-									</Link>
-								))}
-							</div>
-						</div>
-					</aside>
-				</div>
-			</Container>
-		</>
+		<BlogPostClient
+			post={post}
+			relatedPosts={relatedPosts}
+			author={author}
+			authorName={authorName}
+			postUrl={postUrl}
+			isDraft={isEnabled}
+		/>
 	);
 }
