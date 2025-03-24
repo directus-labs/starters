@@ -1,0 +1,10 @@
+---
+interface TextProps {
+  content: string;
+  className?: string;
+}
+
+const { content, className = "" } = Astro.props;
+---
+
+<div class={`prose dark:prose-invert ${className}`} set:html={content} />
