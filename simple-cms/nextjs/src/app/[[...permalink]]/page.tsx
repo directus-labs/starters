@@ -2,34 +2,34 @@ import { fetchPageData } from '@/lib/directus/fetchers';
 import PageBuilder from '@/components/layout/PageBuilder';
 import { PageBlock } from '@/types/directus-schema';
 
-// export async function generateMetadata({ params }: { params: Promise<{ permalink?: string[] }> }) {
-// 	const { permalink } = await params;
-// 	const permalinkSegments = permalink || [];
-// 	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+export async function generateMetadata({ params }: { params: Promise<{ permalink?: string[] }> }) {
+	const { permalink } = await params;
+	const permalinkSegments = permalink || [];
+	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
 
-// 	try {
-// 		const page = await fetchPageData(resolvedPermalink);
+	try {
+		const page = await fetchPageData(resolvedPermalink);
 
-// 		if (!page) {
-// 			return;
-// 		}
+		if (!page) {
+			return;
+		}
 
-// 		return {
-// 			title: page.seo?.title ?? page.title ?? '',
-// 			description: page.seo?.meta_description ?? '',
-// 			openGraph: {
-// 				title: page.seo?.title ?? page.title ?? '',
-// 				description: page.seo?.meta_description ?? '',
-// 				url: `${process.env.NEXT_PUBLIC_SITE_URL}${resolvedPermalink}`,
-// 				type: 'website',
-// 			},
-// 		};
-// 	} catch (error) {
-// 		console.error('Error loading page metadata:', error);
+		return {
+			title: page.seo?.title ?? page.title ?? '',
+			description: page.seo?.meta_description ?? '',
+			openGraph: {
+				title: page.seo?.title ?? page.title ?? '',
+				description: page.seo?.meta_description ?? '',
+				url: `${process.env.NEXT_PUBLIC_SITE_URL}${resolvedPermalink}`,
+				type: 'website',
+			},
+		};
+	} catch (error) {
+		console.error('Error loading page metadata:', error);
 
-// 		return;
-// 	}
-// }
+		return;
+	}
+}
 
 export default async function Page({ params }: { params: Promise<{ permalink?: string[] }> }) {
 	const { permalink } = await params;
