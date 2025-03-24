@@ -43,7 +43,7 @@
 		<nav class="flex items-center gap-4">
 			<SearchModal />
 			<!-- <NavigationMenuItems /> -->
-			<div class="hidden md:flex">
+			<div class="hidden gap-2 md:flex">
 				{#each navigation?.items as item (item.id)}
 					{#if item.children.length === 0}
 						<Button href={item.page.permalink} variant="ghost">{item.title}</Button>
@@ -53,7 +53,7 @@
 								>{item.title}</DropdownMenu.Trigger
 							>
 							<DropdownMenu.Content
-								class="top-full z-50 w-56 max-w-full overflow-hidden  rounded bg-background p-6 shadow-md   data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant"
+								class="top-full z-50 w-56 max-w-full overflow-hidden  rounded-xl bg-background  shadow-md   data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant"
 							>
 								{#each item.children as child}
 									<DropdownMenu.Item

@@ -4,11 +4,10 @@
 	import BaseText from '$lib/components/ui/Text.svelte';
 	import ButtonGroup from './ButtonGroup.svelte';
 	import Headline from '../ui/Headline.svelte';
-	import Title from '../ui/Title.svelte';
 	import Tagline from '../ui/Tagline.svelte';
-
 	interface Props {
 		data: {
+			id: string;
 			title: string;
 			headline: string;
 			tagline: string;
@@ -31,7 +30,8 @@
 	}
 
 	let { data }: Props = $props();
-	const { alignment, title, headline, description, image, button_group, tagline, layout } = data;
+	const { alignment, title, headline, description, image, button_group, tagline, layout, id } =
+		data;
 </script>
 
 <section

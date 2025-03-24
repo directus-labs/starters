@@ -1,6 +1,7 @@
+import { error } from '@sveltejs/kit';
 import { type BlockPost, type PageBlock, type Post, type Schema } from '../types/directus-schema';
 import { useDirectus } from './directus';
-import { type QueryFilter, readItems, aggregate, readItem, readSingleton } from '@directus/sdk';
+import { type QueryFilter, aggregate, readItem, readSingleton } from '@directus/sdk';
 
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
@@ -9,157 +10,159 @@ export const fetchPageData = async (permalink: string, postPage = 1, fetch: Func
 	const { getDirectus, readItems } = useDirectus();
 	const directus = getDirectus(fetch);
 
-	try {
-		const pageData = await directus.request(
-			readItems('pages', {
-				filter: { permalink: { _eq: permalink } },
-				limit: 1,
-				fields: [
-					'title',
-					'description',
-					{
-						blocks: [
-							'id',
-							'background',
-							'collection',
-							'item',
-							'sort',
-							'hide_block',
-							{
-								item: {
-									block_richtext: ['tagline', 'headline', 'content', 'alignment'],
-									block_gallery: [
-										'id',
-										'tagline',
-										'headline',
-										{ items: ['id', 'directus_file', 'sort'] }
-									],
-									block_pricing: [
-										'tagline',
-										'headline',
-										{
-											pricing_cards: [
-												'id',
-												'title',
-												'description',
-												'price',
-												'badge',
-												'features',
-												'is_highlighted',
-												{
-													button: [
-														'id',
-														'label',
-														'variant',
-														'url',
-														'type',
-														{ page: ['permalink'] },
-														{ post: ['slug'] }
-													]
-												}
-											]
-										}
-									],
-									block_hero: [
-										'tagline',
-										'headline',
-										'description',
-										'layout',
-										'image',
-										{
-											button_group: [
-												'id',
-												{
-													buttons: [
-														'id',
-														'label',
-														'variant',
-														'url',
-														'type',
-														{ page: ['permalink'] },
-														{ post: ['slug'] }
-													]
-												}
-											]
-										}
-									],
-									block_posts: ['tagline', 'headline', 'collection', 'limit'],
-									block_form: [
-										'id',
-										'tagline',
-										'headline',
-										{
-											form: [
-												'id',
-												'title',
-												'submit_label',
-												'success_message',
-												'on_success',
-												'success_redirect_url',
-												'is_active',
-												{
-													fields: [
-														'id',
-														'name',
-														'type',
-														'label',
-														'placeholder',
-														'help',
-														'validation',
-														'width',
-														'choices',
-														'required',
-														'sort'
-													]
-												}
-											]
-										}
-									]
-								}
+
+	const pageData = await directus.request(
+		readItems('pages', {
+			filter: { permalink: { _eq: permalink } },
+			limit: 1,
+			fields: [
+				'title',
+				'description',
+				{
+					blocks: [
+						'id',
+						'background',
+						'collection',
+						'item',
+						'sort',
+						'hide_block',
+						{
+							item: {
+								block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
+								block_gallery: [
+									'id',
+									'tagline',
+									'headline',
+									{ items: ['id', 'directus_file', 'sort'] }
+								],
+								block_pricing: [
+									'id',
+									'tagline',
+									'headline',
+									{
+										pricing_cards: [
+											'id',
+											'title',
+											'description',
+											'price',
+											'badge',
+											'features',
+											'is_highlighted',
+											{
+												button: [
+													'id',
+													'label',
+													'variant',
+													'url',
+													'type',
+													{ page: ['permalink'] },
+													{ post: ['slug'] }
+												]
+											}
+										]
+									}
+								],
+								block_hero: [
+									"id",
+									'tagline',
+									'headline',
+									'description',
+									'layout',
+									'image',
+									{
+										button_group: [
+											'id',
+											{
+												buttons: [
+													'id',
+													'label',
+													'variant',
+													'url',
+													'type',
+													{ page: ['permalink'] },
+													{ post: ['slug'] }
+												]
+											}
+										]
+									}
+								],
+								block_posts: ['id', 'tagline', 'headline', 'collection', 'limit'],
+								block_form: [
+									'id',
+									'tagline',
+									'headline',
+									{
+										form: [
+											'id',
+											'title',
+											'submit_label',
+											'success_message',
+											'on_success',
+											'success_redirect_url',
+											'is_active',
+											{
+												fields: [
+													'id',
+													'name',
+													'type',
+													'label',
+													'placeholder',
+													'help',
+													'validation',
+													'width',
+													'choices',
+													'required',
+													'sort'
+												]
+											}
+										]
+									}
+								]
 							}
-						]
-					}
-				],
-				deep: {
-					blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } }
+						}
+					]
 				}
-			})
-		);
+			],
+			deep: {
+				blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } }
+			}
+		})
+	);
 
-		if (!pageData.length) {
-			throw new Error('Page not found');
-		}
 
-		const page = pageData[0];
+	if (pageData.length === 0) {
+		error(404, {
+			message: 'Not found'
+		});
+	}
 
-		if (Array.isArray(page.blocks)) {
-			for (const block of page.blocks as PageBlock[]) {
-				if (
-					block.collection === 'block_posts' &&
-					typeof block.item === 'object' &&
-					(block.item as BlockPost).collection === 'posts'
-				) {
-					const limit = (block.item as BlockPost).limit ?? 6;
-					const posts = await directus.request<Post[]>(
-						readItems('posts', {
-							fields: ['id', 'title', 'description', 'slug', 'image', 'status', 'published_at'],
-							filter: { status: { _eq: 'published' } },
-							sort: ['-published_at'],
-							limit,
-							page: postPage
-						})
-					);
+	const page = pageData[0];
 
-					(block.item as BlockPost & { posts: Post[] }).posts = posts;
-				}
+	if (Array.isArray(page.blocks)) {
+		for (const block of page.blocks as PageBlock[]) {
+			if (
+				block.collection === 'block_posts' &&
+				typeof block.item === 'object' &&
+				(block.item as BlockPost).collection === 'posts'
+			) {
+				const limit = (block.item as BlockPost).limit ?? 6;
+				const posts = await directus.request<Post[]>(
+					readItems('posts', {
+						fields: ['id', 'title', 'description', 'slug', 'image', 'status', 'published_at'],
+						filter: { status: { _eq: 'published' } },
+						sort: ['-published_at'],
+						limit,
+						page: postPage
+					})
+				);
+
+				(block.item as BlockPost & { posts: Post[] }).posts = posts;
 			}
 		}
-
-		return page;
-	} catch (error) {
-		console.error('Error fetching page data:', error);
-		throw new Error('Failed to fetch page data');
 	}
+
+	return page;
+
 };
 
 /**

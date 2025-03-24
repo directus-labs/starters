@@ -6,19 +6,22 @@
 	import { ModeWatcher } from 'mode-watcher';
 	import { getDirectusAssetURL } from '$lib/directus/directus-utils';
 	import { page } from '$app/state';
+	import { onMount } from 'svelte';
 
-	let { children } = $props();
+	let { children, data } = $props();
 
-	const siteTitle = $derived(page.data.globals?.title || 'Simple CMS');
+	const siteTitle = $derived(data.globals?.title || 'Simple CMS');
 	const siteDescription = $derived(
 		page.data.globals?.description || 'A starter CMS template powered by Svelte and Directus.'
 	);
 	const faviconURL = $derived(
-		page.data.globals?.favicon ? getDirectusAssetURL(page.data.globals.favicon) : '/favicon.ico'
+		data.globals?.favicon ? getDirectusAssetURL(data.globals.favicon) : '/favicon.ico'
 	);
 
+	const accentColor = $derived(data.globals?.accent_color || '#6644ff');
+
 	$effect(() => {
-		document.documentElement.style.setProperty('--accent-color', page.data.accentColor);
+		document.documentElement.style.setProperty('--accent-color', accentColor);
 	});
 </script>
 
