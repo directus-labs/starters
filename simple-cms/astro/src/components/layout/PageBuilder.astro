@@ -1,22 +1,10 @@
 ---
-import BaseBlock from '../blocks/BaseBlock.astro'; 
-import BaseBlockReact from '../blocks/BaseBlock.tsx'; 
-import Container from '../ui/Container.tsx'; 
+import BaseBlock from '../blocks/BaseBlock.tsx';
+import Container from '../ui/Container.tsx';
 import type { PageBlock } from '@/types/directus-schema';
 
 const { sections } = Astro.props;
 
-const staticBlockTypes = new Set([
-  'block_richtext',
-  'block_pricing',
-]);
-
-const interactiveBlockTypes = new Set([
-  'block_gallery',
-  'block_posts',
-  'block_form',
-  'block_hero',
-]);
 
 const validBlocks: PageBlock[] = sections.filter(
   (block: PageBlock): block is PageBlock & { collection: string; item: object } =>
@@ -30,11 +18,7 @@ const validBlocks: PageBlock[] = sections.filter(
   {validBlocks.map((block) => (
     <div data-background={block.background} class="py-16">
       <Container>
-        {staticBlockTypes.has(block.collection ?? '') ? (
-          <BaseBlock block={block} />
-        ) : interactiveBlockTypes.has(block.collection ?? '') ? (
-          <BaseBlockReact block={block} client:load />
-        ) : null}
+        <BaseBlock block={block} client:load />
       </Container>
     </div>
   ))}

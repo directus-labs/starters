@@ -3,6 +3,8 @@ import Form from './Form';
 import Gallery from './Gallery';
 import Posts from './Posts';
 import Hero from './Hero';
+import RichText from './RichText';
+import Pricing from './Pricing';
 import type { PageBlock } from '@/types/directus-schema';
 import { setAttr } from '@/lib/directus/visual-editing-helper';
 import DirectusVisualEditing from '@/components/shared/DirectusVisualEditing';
@@ -11,7 +13,7 @@ interface BaseBlockProps {
   block: PageBlock;
 }
 
-export default function BaseBlockReact({ block }: BaseBlockProps) {
+export default function BaseBlock({ block }: BaseBlockProps) {
   if (!block.collection || !block.item) return null;
 
   const components: Record<string, React.ElementType> = {
@@ -19,11 +21,14 @@ export default function BaseBlockReact({ block }: BaseBlockProps) {
     block_gallery: Gallery,
     block_posts: Posts,
     block_form: Form,
+    block_richtext: RichText,
+    block_pricing: Pricing,
   };
 
   const Component = components[block.collection];
 
-  const itemId = block.item?.id;
+  const itemId =
+    typeof block.item === 'object' && block.item !== null && 'id' in block.item ? (block.item.id as string) : undefined;
 
   return Component ? (
     <div
