@@ -1,9 +1,11 @@
-import React from "react";
-import Form from "./Form";
-import Gallery from "./Gallery";
-import Posts from "./Posts";
-import Hero from "./Hero";
-import type { PageBlock } from "@/types/directus-schema";
+import React from 'react';
+import Form from './Form';
+import Gallery from './Gallery';
+import Posts from './Posts';
+import Hero from './Hero';
+import type { PageBlock } from '@/types/directus-schema';
+import { setAttr } from '@/lib/directus/visual-editing-helper';
+import DirectusVisualEditing from '@/components/shared/DirectusVisualEditing';
 
 interface BaseBlockProps {
   block: PageBlock;
@@ -21,7 +23,20 @@ export default function BaseBlockReact({ block }: BaseBlockProps) {
 
   const Component = components[block.collection];
 
+  const itemId = block.item?.id;
+
   return Component ? (
-    <Component data={block.item} id={`block-${block.id}`} />
+    <div
+      className="relative"
+      data-directus={setAttr({
+        collection: 'page_blocks',
+        item: block.id,
+        fields: ['item', 'collection', 'background', 'hide_block'],
+        mode: 'modal',
+      })}
+    >
+      <DirectusVisualEditing />
+      <Component data={block.item} blockId={block.id} itemId={itemId} />
+    </div>
   ) : null;
 }

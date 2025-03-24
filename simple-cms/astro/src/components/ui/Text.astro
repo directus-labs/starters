@@ -2,9 +2,14 @@
 interface TextProps {
   content: string;
   className?: string;
+  'data-directus'?: string;
 }
 
-const { content, className = "" } = Astro.props;
+const { content, className = "", "data-directus": dataDirectus } = Astro.props;
 ---
 
-<div class={`prose dark:prose-invert ${className}`} set:html={content} />
+<div
+  class={`prose dark:prose-invert ${className}`}
+  set:html={content}
+  data-directus={dataDirectus}
+/>

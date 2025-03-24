@@ -1,18 +1,11 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import DirectusImage from "@/components/shared/DirectusImage";
-import Tagline from "../ui/Tagline";
-import Headline from "@/components/ui/Headline";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogClose,
-} from "@/components/ui/dialog";
-import { ArrowLeft, ArrowRight, ZoomIn, X } from "lucide-react";
-import React from "react";
+import { useEffect, useState } from 'react';
+import DirectusImage from '@/components/shared/DirectusImage';
+import Tagline from '../ui/Tagline';
+import Headline from '@/components/ui/Headline';
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogClose } from '@/components/ui/dialog';
+import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-react';
+import React from 'react';
+import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
 
 interface GalleryProps {
   data: {
@@ -24,19 +17,19 @@ interface GalleryProps {
       sort?: number;
     }>;
   };
+  itemId?: string;
 }
 
-const Gallery = ({ data }: GalleryProps) => {
-  const { tagline, headline, items = [] } = data;
+const Gallery = ({ data, itemId }: GalleryProps) => {
+  const galleryData = useDirectusVisualEditing(data, itemId, 'block_gallery');
+  const { tagline, headline, items = [] } = galleryData;
+
   const [isLightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const sortedItems = [...items].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0));
 
-  const isValidIndex =
-    sortedItems.length > 0 &&
-    currentIndex >= 0 &&
-    currentIndex < sortedItems.length;
+  const isValidIndex = sortedItems.length > 0 && currentIndex >= 0 && currentIndex < sortedItems.length;
 
   const handleOpenLightbox = (index: number) => {
     setCurrentIndex(index);
@@ -44,30 +37,27 @@ const Gallery = ({ data }: GalleryProps) => {
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex > 0 ? prevIndex - 1 : sortedItems.length - 1
-    );
+    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : sortedItems.length - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex < sortedItems.length - 1 ? prevIndex + 1 : 0
-    );
+    setCurrentIndex((prevIndex) => (prevIndex < sortedItems.length - 1 ? prevIndex + 1 : 0));
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
     if (isLightboxOpen) {
       e.stopPropagation();
+
       switch (e.key) {
-        case "ArrowLeft":
+        case 'ArrowLeft':
           e.preventDefault();
           handlePrev();
           break;
-        case "ArrowRight":
+        case 'ArrowRight':
           e.preventDefault();
           handleNext();
           break;
-        case "Escape":
+        case 'Escape':
           e.preventDefault();
           setLightboxOpen(false);
           break;
@@ -78,17 +68,58 @@ const Gallery = ({ data }: GalleryProps) => {
   };
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isLightboxOpen]);
 
   return (
     <section className="relative">
-      {tagline && <Tagline tagline={tagline} />}
-      {headline && <Headline headline={headline} />}
+      {tagline && (
+        <Tagline
+          tagline={tagline}
+          data-directus={
+            itemId
+              ? setAttr({
+                  collection: 'block_gallery',
+                  item: itemId,
+                  fields: 'tagline',
+                  mode: 'popover',
+                })
+              : undefined
+          }
+        />
+      )}
+      {headline && (
+        <Headline
+          headline={headline}
+          data-directus={
+            itemId
+              ? setAttr({
+                  collection: 'block_gallery',
+                  item: itemId,
+                  fields: 'headline',
+                  mode: 'popover',
+                })
+              : undefined
+          }
+        />
+      )}
 
       {sortedItems.length > 0 && (
-        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div
+          className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+          data-directus={
+            itemId
+              ? setAttr({
+                  collection: 'block_gallery',
+                  item: itemId,
+                  fields: ['items'],
+                  mode: 'modal',
+                })
+              : undefined
+          }
+        >
           {sortedItems.map((item, index) => (
             <div
               key={item.id}
