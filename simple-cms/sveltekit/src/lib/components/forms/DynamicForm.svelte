@@ -48,16 +48,15 @@
 		SPA: true
 	});
 
-	const { enhance, submit, form: formData, allErrors } = $derived(form);
+	const { enhance, submit, form: formData, errors, validateForm } = $derived(form);
 
 	const onsubmit = async (e: Event) => {
 		e.preventDefault();
 		// const f = await superValidate($formData, zod(formSchema));
-		const f = await form.validateForm();
+		const f = await validateForm();
 		console.log('form validated', f);
-		form.errors.set(f.errors);
+		$errors = f.errors;
 		console.log('superform', form);
-		console.log('errors', $allErrors);
 		if (f.valid) {
 			onSubmit($formData);
 		}
