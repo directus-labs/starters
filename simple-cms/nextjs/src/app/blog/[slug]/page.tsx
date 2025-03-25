@@ -4,8 +4,8 @@ import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
 import { Post } from '@/types/directus-schema';
 import BlogPostClient from './BlogPostClient';
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-	const { slug } = params;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+	const { slug } = await params;
 	try {
 		const post = await fetchPostBySlug(slug);
 		if (!post) return;
