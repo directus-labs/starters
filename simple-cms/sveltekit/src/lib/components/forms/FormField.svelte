@@ -20,6 +20,10 @@
 
 	const { field, form }: FieldProps = $props();
 
+	const { errors } = $derived(form);
+
+	const fieldName = field.name as string;
+
 	const { form: formData } = form;
 	const widthClass = field.width
 		? {
@@ -69,15 +73,21 @@
 						placeholder={field.placeholder || ''}
 						name={field.name || ''}
 						bind:value={$formData[field.name!]}
+						type={field.validation?.includes('email') ? 'email' : 'text'}
 					/>
 				{:else if field.type === 'textarea'}
 					<Textarea
 						placeholder={field.placeholder || ''}
 						name={field.name || ''}
 						bind:value={$formData[field.name!]}
+						required={field.required}
 					/>
 				{:else if field.type === 'checkbox'}
-					<Checkbox name={field.name} bind:checked={$formData[field.name!]} />
+					<Checkbox
+						name={field.name}
+						bind:checked={$formData[field.name!]}
+						required={!!field.required}
+					/>
 				{:else if field.type === 'checkbox_group'}
 					<CheckBoxGroup name={field.name || ''} options={field.choices || []} {form} />
 				{:else if field.type === 'select'}
@@ -87,14 +97,17 @@
 				{:else if field.type === 'file'}
 					<FileUploadField name={field.name || ''} {form} />
 				{:else}
-					<!-- <FieldComponent
-			placeholder={field.placeholder || ''}
-			name={field.name}
-			{...field.type === 'select' ? { options: field.options || [] } : {}}
-	/> -->
 					<p>Unknown field type: {field.type}</p>
 				{/if}
 			</Form.Control>
+			<Form.Description>{field.help}</Form.Description>
+			{#if $errors[fieldName]}
+				<Form.FieldErrors>
+					{#each $errors[fieldName] as string[] as error}
+						<p class="text-red-500">{error}</p>
+					{/each}
+				</Form.FieldErrors>
+			{/if}
 		</Form.Field>
 	</div>
 {/if}

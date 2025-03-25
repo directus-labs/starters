@@ -24,7 +24,7 @@
 	<Select.Trigger>
 		{activeLabel}
 	</Select.Trigger>
-	<Select.Content>
+	<Select.Content class="bg-background">
 		{#each options as option (option.value)}
 			<Select.Item value={option.value}>
 				{option.text}
