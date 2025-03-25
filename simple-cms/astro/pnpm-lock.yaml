@@ -14,6 +14,9 @@ importers:
       '@directus/sdk':
         specifier: ^19.0.1
         version: 19.0.1
+      '@directus/visual-editing':
+        specifier: ^1.0.0
+        version: 1.0.0
       '@hookform/resolvers':
         specifier: ^4.1.3
         version: 4.1.3(react-hook-form@7.54.2(react@19.0.0))
@@ -556,6 +559,10 @@ packages:
 
   '@directus/sdk@19.0.1':
     resolution: {integrity: sha512-6KwWedA/vxrMN2aRm5L52TEgB+42vkz0Ae8kwOitHuBPT4VWtUNOXenzaHnZyXyNrEgh/VBLJ36f3UEe3b/Wfw==}
+    engines: {node: '>=22'}
+
+  '@directus/visual-editing@1.0.0':
+    resolution: {integrity: sha512-zZUvsktuf8IcJkRGtVFbV6Oi2d2FQrtPlRQVX1pNNuI9Ev73dz8X4mFy83z6yS1R0xerSmiqfNlu59dOdaaz/w==}
     engines: {node: '>=22'}
 
   '@emnapi/runtime@1.2.0':
@@ -1442,6 +1449,9 @@ packages:
 
   '@radix-ui/rect@1.1.0':
     resolution: {integrity: sha512-A9+lCBZoaMJlVKcRBz2YByCG+Cp2t6nAnMnNba+XiWxnj6r4JUFqfsgwocMBZU9LPtdxC6wB56ySYpc7LQIoJg==}
+
+  '@reach/observe-rect@1.2.0':
+    resolution: {integrity: sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ==}
 
   '@rollup/pluginutils@5.1.4':
     resolution: {integrity: sha512-USm05zrsFxYLPdWWq+K3STlWiT/3ELn3RcV5hJMghpeAIhxfsUIg6mt12CBJBInWMV4VneoV7SfGv8xIwo2qNQ==}
@@ -3863,6 +3873,10 @@ snapshots:
 
   '@directus/sdk@19.0.1': {}
 
+  '@directus/visual-editing@1.0.0':
+    dependencies:
+      '@reach/observe-rect': 1.2.0
+
   '@emnapi/runtime@1.2.0':
     dependencies:
       tslib: 2.6.2
@@ -4647,6 +4661,8 @@ snapshots:
       '@types/react-dom': 19.0.4(@types/react@19.0.10)
 
   '@radix-ui/rect@1.1.0': {}
+
+  '@reach/observe-rect@1.2.0': {}
 
   '@rollup/pluginutils@5.1.4(rollup@4.34.8)':
     dependencies:

@@ -12,6 +12,7 @@
   "dependencies": {
     "@astrojs/react": "^4.2.1",
     "@directus/sdk": "^19.0.1",
+    "@directus/visual-editing": "^1.0.0",
     "@hookform/resolvers": "^4.1.3",
     "@radix-ui/react-checkbox": "^1.1.4",
     "@radix-ui/react-collapsible": "^1.1.3",

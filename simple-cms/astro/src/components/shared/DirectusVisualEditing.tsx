@@ -5,12 +5,11 @@ export default function DirectusVisualEditing() {
   useEffect(() => {
     const loadVisualEditing = async () => {
       try {
-        const { apply } = await import('../../../node_modules/@directus/visual-editing/dist/index.js');
+        const { apply } = await import('@directus/visual-editing');
 
         // Initialize Directus visual editing globally
         await apply({
           directusUrl: import.meta.env.PUBLIC_DIRECTUS_URL!,
-          // Add an onSaved handler to dispatch events for our components
           onSaved: (updateData) => {
             // Create a custom event to notify components about the update
             const updateEvent = new CustomEvent('directus:update', {

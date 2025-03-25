@@ -6,7 +6,6 @@ let globalListenerInitialized = false;
 const componentCallbacks = new Map<string, (updateData: any) => void>();
 
 // Check if visual editing is enabled via environment variable
-// Default to true if not specified
 const isVisualEditingEnabled = import.meta.env.PUBLIC_ENABLE_VISUAL_EDITING !== 'false';
 
 /**
