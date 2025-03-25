@@ -30,6 +30,7 @@ export default defineNuxtConfig({
 		public: {
 			siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
 			directusUrl: process.env.DIRECTUS_URL,
+			enableVisualEditing: process.env.NUXT_PUBLIC_ENABLE_VISUAL_EDITING !== 'false',
 		},
 		directusServerToken: process.env.DIRECTUS_SERVER_TOKEN,
 	},
@@ -52,6 +53,7 @@ export default defineNuxtConfig({
 				'img-src': ["'self'", 'data:', '*'],
 				'script-src': ["'self'", "'unsafe-inline'", '*'],
 				'connect-src': ["'self'", process.env.DIRECTUS_URL!],
+				'frame-ancestors': ["'self'", process.env.DIRECTUS_URL!],
 			},
 		},
 	},

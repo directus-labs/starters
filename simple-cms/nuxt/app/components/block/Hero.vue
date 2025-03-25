@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import Text from '~/components/base/Text.vue';
 import DirectusImage from '~/components/shared/DirectusImage.vue';
+import { setAttr } from '@directus/visual-editing';
 
 interface HeroProps {
 	data: {
+		id: string;
 		tagline: string;
 		headline: string;
 		description: string;
@@ -24,8 +26,7 @@ interface HeroProps {
 }
 
 const props = defineProps<HeroProps>();
-
-const { tagline, headline, description, image, layout, button_group } = props.data;
+const { id, tagline, headline, description, layout, image, button_group } = props.data;
 </script>
 
 <template>
@@ -36,6 +37,13 @@ const { tagline, headline, description, image, layout, button_group } = props.da
 			'md:flex-row-reverse items-center': layout === 'image_left',
 			'md:flex-row items-center': layout !== 'image_center' && layout !== 'image_left',
 		}"
+		:data-directus="
+			setAttr({
+				collection: 'block_hero',
+				item: id,
+				fields: ['layout', 'image', 'tagline', 'headline', 'description', 'button_group'],
+			})
+		"
 	>
 		<div
 			class="flex flex-col gap-4 w-full"
@@ -44,14 +52,25 @@ const { tagline, headline, description, image, layout, button_group } = props.da
 				'md:w-1/2 items-start': layout !== 'image_center',
 			}"
 		>
-			<Tagline :tagline="tagline" />
-			<Headline :headline="headline" />
-			<Text v-if="description" :content="description" />
+			<Tagline
+				:tagline="tagline"
+				:data-directus="setAttr({ collection: 'block_hero', item: id, fields: 'tagline', mode: 'popover' })"
+			/>
+			<Headline
+				:headline="headline"
+				:data-directus="setAttr({ collection: 'block_hero', item: id, fields: 'headline', mode: 'popover' })"
+			/>
+			<Text
+				v-if="description"
+				:content="description"
+				:data-directus="setAttr({ collection: 'block_hero', item: id, fields: 'description', mode: 'popover' })"
+			/>
 
 			<div
 				v-if="button_group?.buttons?.length"
 				class="mt-6"
 				:class="{ 'flex justify-center': layout === 'image_center' }"
+				:data-directus="setAttr({ collection: 'block_hero', item: id, fields: 'button_group', mode: 'modal' })"
 			>
 				<ButtonGroup :buttons="button_group.buttons" />
 			</div>
@@ -64,6 +83,7 @@ const { tagline, headline, description, image, layout, button_group } = props.da
 				'md:w-3/4 xl:w-2/3 h-[400px]': layout === 'image_center',
 				'md:w-1/2 h-[562px]': layout !== 'image_center',
 			}"
+			:data-directus="setAttr({ collection: 'block_hero', item: id, fields: 'image', mode: 'modal' })"
 		>
 			<DirectusImage
 				:uuid="image"

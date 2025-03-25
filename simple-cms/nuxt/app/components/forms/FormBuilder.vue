@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import DynamicForm from './DynamicForm.vue';
 import type { FormField } from '@@/shared/types/schema';
 import { CheckCircle } from 'lucide-vue-next';
+import { setAttr } from '@directus/visual-editing';
 
 interface CustomFormData {
 	id: string;
@@ -67,12 +68,32 @@ const handleSubmit = async (data: Record<string, any>) => {
 			<strong>Error:</strong>
 			{{ error }}
 		</div>
-		<div v-if="isSubmitted" class="flex flex-col items-center justify-center space-y-4 p-6 text-center">
+		<div
+			v-if="isSubmitted"
+			class="flex flex-col items-center justify-center space-y-4 p-6 text-center"
+			v-bind="
+				form?.id
+					? {
+							'data-directus': setAttr({
+								collection: 'forms',
+								item: form.id,
+								fields: 'success_message',
+								mode: 'popover',
+							}),
+						}
+					: {}
+			"
+		>
 			<CheckCircle className="size-12 text-green-500" />
 			<p class="text-gray-600">
 				{{ form.success_message || 'Your form has been submitted successfully.' }}
 			</p>
 		</div>
-		<DynamicForm v-else :fields="form.fields" :onSubmit="handleSubmit" :submitLabel="form.submit_label || 'Submit'" />
+		<DynamicForm
+			:fields="form.fields"
+			:onSubmit="handleSubmit"
+			:submitLabel="form.submit_label || 'Submit'"
+			:formId="form.id"
+		/>
 	</div>
 </template>

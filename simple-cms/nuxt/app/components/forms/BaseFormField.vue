@@ -9,6 +9,7 @@ import SelectField from './fields/SelectField.vue';
 import FileUploadField from './fields/FileUploadField.vue';
 import { Info } from 'lucide-vue-next';
 import type { FormField } from '../../../shared/types/schema';
+import { setAttr } from '@directus/visual-editing';
 
 const props = defineProps<{ field: FormField }>();
 const { value, errorMessage } = useField(props.field.name ?? '');
@@ -46,7 +47,22 @@ const getComponentProps = (field: FormField) => {
 </script>
 
 <template>
-	<div v-if="props.field.type !== 'hidden'" :class="`field-width-${field.width ?? '100'}`">
+	<div
+		v-if="props.field.type !== 'hidden'"
+		:class="`field-width-${field.width ?? '100'}`"
+		v-bind="
+			field?.id
+				? {
+						'data-directus': setAttr({
+							collection: 'form_fields',
+							item: field.id,
+							fields: ['label', 'type', 'required', 'placeholder', 'help', 'choices'],
+							mode: 'drawer',
+						}),
+					}
+				: {}
+		"
+	>
 		<FormItem class="pt-2">
 			<FormLabel :for="field.name ?? ''" class="flex items-center justify-between">
 				<div class="flex items-center space-x-1 h-[20px]">

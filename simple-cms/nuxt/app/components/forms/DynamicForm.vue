@@ -6,24 +6,21 @@ import { buildZodSchema } from '~/lib/zodSchemaBuilder';
 import type { FormField as FormFieldType } from '@@/shared/types/schema';
 import FormField from './BaseFormField.vue';
 import BaseButton from '../base/BaseButton.vue';
+import { setAttr } from '@directus/visual-editing';
 
-interface Props {
-	fields: FormFieldType[];
+const props = defineProps<{
+	fields: FormField[];
 	onSubmit: (data: Record<string, any>) => Promise<void> | void;
 	submitLabel: string;
-}
+	formId?: string;
+}>();
 
-const props = defineProps<Props>();
 const isSubmitting = ref(false);
 
-const sortedFields = computed(() => {
-	return [...props.fields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
-});
+const sortedFields = computed(() => [...props.fields].sort((a, b) => (a.sort || 0) - (b.sort || 0)));
 
 const validFields = computed(() =>
-	sortedFields.value.filter(
-		(field): field is FormFieldType & { name: string } => field.name != null && field.name !== '',
-	),
+	sortedFields.value.filter((field): field is FormField & { name: string } => field.name != null && field.name !== ''),
 );
 
 const schema = computed(() => {
@@ -38,7 +35,6 @@ const schema = computed(() => {
 
 const initialValues = computed(() => {
 	if (!validFields.value.length) return {};
-
 	return validFields.value.reduce(
 		(defaults, field) => {
 			const name = field.name;
@@ -76,7 +72,6 @@ const { handleSubmit, values } = useForm({
 
 const onSubmitForm = handleSubmit(async (formValues) => {
 	if (isSubmitting.value) return;
-
 	try {
 		isSubmitting.value = true;
 		await props.onSubmit(formValues);
@@ -87,18 +82,69 @@ const onSubmitForm = handleSubmit(async (formValues) => {
 </script>
 
 <template>
-	<form v-if="schema" :validation-schema="schema" :initial-values="initialValues" @submit.prevent="onSubmitForm">
+	<form
+		v-if="schema"
+		:validation-schema="schema"
+		:initial-values="initialValues"
+		v-bind="
+			props.formId
+				? {
+						'data-directus': setAttr({
+							collection: 'forms',
+							item: props.formId,
+							fields: 'fields',
+							mode: 'drawer',
+						}),
+					}
+				: {}
+		"
+		@submit.prevent="onSubmitForm"
+	>
 		<div class="flex flex-wrap gap-4">
-			<FormField v-for="field in validFields" :key="field.id" :field="field" :model-value="values[field.name]" />
+			<div
+				v-for="field in validFields"
+				:key="field.id"
+				class="w-full"
+				v-bind="
+					field?.id
+						? {
+								'data-directus': setAttr({
+									collection: 'form_fields',
+									item: field.id,
+									fields: ['label', 'type', 'required', 'placeholder', 'help', 'choices'],
+									mode: 'drawer',
+								}),
+							}
+						: {}
+				"
+			>
+				<FormField :field="field" :model-value="values[field.name]" />
+			</div>
+
 			<div class="w-full">
-				<BaseButton
-					:id="`submit-${submitLabel.replace(/\s+/g, '-').toLowerCase()}`"
-					type="submit"
-					:label="submitLabel"
-					:disabled="isSubmitting"
-					icon="arrow"
-					icon-position="right"
-				/>
+				<div
+					v-bind="
+						props.formId
+							? {
+									'data-directus': setAttr({
+										collection: 'forms',
+										item: props.formId,
+										fields: 'submit_label',
+										mode: 'popover',
+									}),
+								}
+							: {}
+					"
+				>
+					<BaseButton
+						:id="`submit-${submitLabel.replace(/\s+/g, '-').toLowerCase()}`"
+						type="submit"
+						:label="submitLabel"
+						:disabled="isSubmitting"
+						icon="arrow"
+						icon-position="right"
+					/>
+				</div>
 			</div>
 		</div>
 	</form>

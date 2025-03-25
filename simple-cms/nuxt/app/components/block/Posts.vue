@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Post } from '#shared/types/schema';
+import { setAttr } from '@directus/visual-editing';
 import { ChevronsLeft, ChevronsRight, ChevronLeft, ChevronRight } from 'lucide-vue-next';
 
 interface PostsProps {
@@ -13,6 +14,7 @@ interface PostsProps {
 }
 
 const props = defineProps<PostsProps>();
+const { id, tagline, headline } = props.data;
 
 const route = useRoute();
 const router = useRouter();
@@ -24,7 +26,7 @@ const visiblePages = 5;
 const { data: postsData, error } = await useFetch<{
 	posts: Post[];
 	count: number;
-}>('/api/posts', {
+}>(`/api/posts`, {
 	key: `block-posts-${props.data?.id}-${currentPage.value}`,
 	query: { page: currentPage, limit: perPage },
 	watch: [currentPage],
@@ -59,13 +61,36 @@ function handlePageChange(page: number) {
 
 <template>
 	<div>
-		<Tagline v-if="data?.tagline" :tagline="data.tagline" />
-		<Headline v-if="data?.headline" :headline="data.headline" />
+		<Tagline
+			v-if="tagline"
+			:tagline="tagline"
+			v-bind="
+				id
+					? { 'data-directus': setAttr({ collection: 'block_posts', item: id, fields: 'tagline', mode: 'popover' }) }
+					: {}
+			"
+		/>
+		<Headline
+			v-if="headline"
+			:headline="headline"
+			v-bind="
+				id
+					? { 'data-directus': setAttr({ collection: 'block_posts', item: id, fields: 'headline', mode: 'popover' }) }
+					: {}
+			"
+		/>
 
 		<p v-if="error" class="text-center text-red-500">{{ error }}</p>
 
-		<div class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-			<template v-if="posts">
+		<div
+			class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+			v-bind="
+				id
+					? { 'data-directus': setAttr({ collection: 'block_posts', item: id, fields: ['posts'], mode: 'modal' }) }
+					: {}
+			"
+		>
+			<template v-if="posts?.length">
 				<NuxtLink
 					v-for="post in posts"
 					:key="post.id"
@@ -75,7 +100,7 @@ function handlePageChange(page: number) {
 					<div class="relative w-full h-[256px] overflow-hidden rounded-lg">
 						<DirectusImage
 							v-if="post.image"
-							:uuid="post.image"
+							:uuid="typeof post.image === 'string' ? post.image : post.image?.id"
 							:alt="post.title"
 							class="w-full h-full object-cover rounded-lg transition-transform duration-300 group-hover:scale-110"
 							sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"

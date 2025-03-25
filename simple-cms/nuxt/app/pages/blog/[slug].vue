@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { onMounted, nextTick, ref, computed } from 'vue';
+import { useRuntimeConfig } from '#app';
+import { apply, setAttr } from '@directus/visual-editing';
 import type { Post, DirectusUser } from '#shared/types/schema';
 
 const route = useRoute();
@@ -6,6 +9,12 @@ const { enabled, state } = useLivePreview();
 const postUrl = useRequestURL();
 
 const slug = route.params.slug as string;
+
+const wrapperRef = ref<HTMLElement | null>(null);
+
+const {
+	public: { enableVisualEditing, directusUrl },
+} = useRuntimeConfig();
 
 const { data, error } = await useFetch<{
 	post: Post;
@@ -26,6 +35,17 @@ const post = computed(() => data.value?.post);
 const relatedPosts = computed(() => data.value?.relatedPosts);
 const author = computed(() => post.value?.author as Partial<DirectusUser>);
 
+onMounted(async () => {
+	if (!enableVisualEditing) return;
+	await nextTick();
+	if (wrapperRef.value) {
+		await apply({
+			directusUrl,
+			elements: wrapperRef.value,
+		});
+	}
+});
+
 useSeoMeta({
 	title: post.value?.seo?.title || post.value?.title,
 	description: post.value?.seo?.meta_description || post.value?.description,
@@ -34,12 +54,14 @@ useSeoMeta({
 	ogUrl: postUrl.toString(),
 });
 </script>
-
 <template>
-	<div v-if="post">
+	<div v-if="post" ref="wrapperRef">
 		<Container class="py-12">
 			<div v-if="post.image" class="mb-8 w-full">
-				<div class="relative w-full h-[400px] overflow-hidden rounded-lg">
+				<div
+					class="relative w-full h-[400px] overflow-hidden rounded-lg"
+					:data-directus="setAttr({ collection: 'posts', item: post.id, fields: ['image'], mode: 'modal' })"
+				>
 					<DirectusImage
 						:uuid="post.image as string"
 						:alt="post.title || 'post header image'"
@@ -50,14 +72,21 @@ useSeoMeta({
 				</div>
 			</div>
 
-			<Headline :headline="post.title" as="h2" class="!text-accent mb-4" />
-			<div class="w-full">
-				<Separator class="h-[1px] bg-gray-300 my-8" />
-			</div>
+			<Headline
+				:headline="post.title"
+				as="h2"
+				class="!text-accent mb-4"
+				:data-directus="setAttr({ collection: 'posts', item: post.id, fields: 'title', mode: 'popover' })"
+			/>
+
+			<Separator class="h-[1px] bg-gray-300 my-8" />
 
 			<div class="grid grid-cols-1 lg:grid-cols-[minmax(0,_2fr)_400px] gap-12">
 				<main class="text-left">
-					<Text :content="post.content || ''" />
+					<Text
+						:content="post.content || ''"
+						:data-directus="setAttr({ collection: 'posts', item: post.id, fields: 'content', mode: 'popover' })"
+					/>
 				</main>
 
 				<aside class="space-y-6 p-6 rounded-lg max-w-[496px] h-fit bg-background-muted">
@@ -74,7 +103,12 @@ useSeoMeta({
 						<p v-if="author" class="font-bold">{{ userName(author) }}</p>
 					</div>
 
-					<p v-if="post.description">{{ post.description }}</p>
+					<p
+						v-if="post.description"
+						:data-directus="setAttr({ collection: 'posts', item: post.id, fields: 'description', mode: 'popover' })"
+					>
+						{{ post.description }}
+					</p>
 
 					<div class="flex justify-start">
 						<ShareDialog :post-url="postUrl.toString()" :post-title="post.title" />
@@ -92,7 +126,7 @@ useSeoMeta({
 								<div v-if="relatedPost.image" class="relative shrink-0 w-[150px] h-[100px] overflow-hidden rounded-lg">
 									<DirectusImage
 										:uuid="relatedPost.image as string"
-										:alt="relatedPost.title || 'related posts'"
+										:alt="relatedPost.title || 'related post image'"
 										class="object-cover transition-transform duration-300 group-hover:scale-110"
 										fill
 										sizes="(max-width: 768px) 100px, (max-width: 1024px) 150px, 150px"
