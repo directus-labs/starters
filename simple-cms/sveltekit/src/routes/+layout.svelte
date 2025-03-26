@@ -19,10 +19,6 @@
 	);
 
 	const accentColor = $derived(data.globals?.accent_color || '#6644ff');
-
-	$effect(() => {
-		document.documentElement.style.setProperty('--accent-color', accentColor);
-	});
 </script>
 
 <svelte:head>
@@ -31,8 +27,10 @@
 	<link rel="icon" href={faviconURL} />
 </svelte:head>
 
-<ModeWatcher />
+<div style="--accent-color: {accentColor}">
+	<ModeWatcher />
 
-<NavigationBar />
-<main class="flex-grow">{@render children()}</main>
-<Footer />
+	<NavigationBar />
+	<main class="flex-grow">{@render children()}</main>
+	<Footer />
+</div>
