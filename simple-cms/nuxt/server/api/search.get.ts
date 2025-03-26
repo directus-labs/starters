@@ -12,13 +12,9 @@ export default defineCachedEventHandler(
 				directusServer.request(
 					readItems('pages', {
 						filter: {
-							_or: [
-								{ title: { _contains: search } },
-								{ description: { _contains: search } },
-								{ permalink: { _contains: search } },
-							],
+							_or: [{ title: { _contains: search } }, { permalink: { _contains: search } }],
 						},
-						fields: ['id', 'title', 'description', 'permalink'],
+						fields: ['id', 'title', 'permalink'],
 					}),
 				),
 
