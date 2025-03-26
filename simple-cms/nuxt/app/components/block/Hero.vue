@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Text from '~/components/base/Text.vue';
 import DirectusImage from '~/components/shared/DirectusImage.vue';
-import { setAttr } from '@directus/visual-editing';
+import { setAttr } from '../../utils/setDirectusAttr';
 
 interface HeroProps {
 	data: {

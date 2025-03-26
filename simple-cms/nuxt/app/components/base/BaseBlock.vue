@@ -9,6 +9,7 @@ import Gallery from '~/components/block/Gallery.vue';
 import Pricing from '~/components/block/Pricing.vue';
 import Posts from '~/components/block/Posts.vue';
 import Form from '~/components/block/FormBlock.vue';
+import DirectusVisualEditing from '../shared/DirectusVisualEditing.vue';
 
 interface BaseBlockProps {
 	block: {
@@ -22,9 +23,9 @@ const props = defineProps<BaseBlockProps>();
 const blockRef = ref<HTMLElement | null>(null);
 const componentData = ref(props.block.item);
 
-const {
-	public: { enableVisualEditing, directusUrl },
-} = useRuntimeConfig();
+// const {
+// 	public: { enableVisualEditing, directusUrl },
+// } = useRuntimeConfig();
 
 const components: Record<string, any> = {
 	block_hero: Hero,
@@ -37,20 +38,20 @@ const components: Record<string, any> = {
 
 const Component = computed(() => components[props.block.collection] || null);
 
-onMounted(async () => {
-	if (!enableVisualEditing) return;
-	await nextTick();
-	if (!blockRef.value) return;
+// onMounted(async () => {
+// 	if (!enableVisualEditing) return;
+// 	await nextTick();
+// 	if (!blockRef.value) return;
 
-	await apply({
-		directusUrl,
-		elements: blockRef.value,
-	});
-});
+// 	await apply({
+// 		directusUrl,
+// 		elements: blockRef.value,
+// 	});
+// });
 </script>
 
 <template>
-	<div ref="blockRef" class="relative">
+	<DirectusVisualEditing ref="blockRef" class="relative">
 		<component :is="Component" v-if="Component" :id="`block-${block.id}`" :data="componentData" />
-	</div>
+	</DirectusVisualEditing>
 </template>

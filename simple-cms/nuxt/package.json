@@ -38,7 +38,7 @@
 		"vue-tsc": "2.2.0"
 	},
 	"dependencies": {
-		"@directus/sdk": "19.0.0",
+		"@directus/sdk": "19.1.0",
 		"@directus/visual-editing": "^1.0.0",
 		"@formkit/auto-animate": "0.8.2",
 		"@hookform/resolvers": "^3.10.0",

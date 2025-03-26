@@ -6,7 +6,7 @@ import { buildZodSchema } from '~/lib/zodSchemaBuilder';
 import type { FormField as FormFieldType } from '@@/shared/types/schema';
 import FormField from './BaseFormField.vue';
 import BaseButton from '../base/BaseButton.vue';
-import { setAttr } from '@directus/visual-editing';
+import { setAttr } from '../../utils/setDirectusAttr';
 
 const props = defineProps<{
 	fields: FormField[];

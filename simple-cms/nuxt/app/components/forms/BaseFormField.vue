@@ -9,7 +9,7 @@ import SelectField from './fields/SelectField.vue';
 import FileUploadField from './fields/FileUploadField.vue';
 import { Info } from 'lucide-vue-next';
 import type { FormField } from '../../../shared/types/schema';
-import { setAttr } from '@directus/visual-editing';
+import { setAttr } from '../../utils/setDirectusAttr';
 
 const props = defineProps<{ field: FormField }>();
 const { value, errorMessage } = useField(props.field.name ?? '');
