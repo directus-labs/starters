@@ -1,11 +1,13 @@
 import { fetchPageData } from '@/lib/directus/fetchers';
 import PageBuilder from '@/components/layout/PageBuilder';
 import { PageBlock } from '@/types/directus-schema';
+import AdminBar from '@/components/shared/AdminBar';
 
 export async function generateMetadata({ params }: { params: Promise<{ permalink?: string[] }> }) {
 	const { permalink } = await params;
 	const permalinkSegments = permalink || [];
-	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+	let resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+	resolvedPermalink = resolvedPermalink.split('?')[0];
 
 	try {
 		const page = await fetchPageData(resolvedPermalink);
@@ -33,9 +35,9 @@ export async function generateMetadata({ params }: { params: Promise<{ permalink
 
 export default async function Page({ params }: { params: Promise<{ permalink?: string[] }> }) {
 	const { permalink } = await params;
-
 	const permalinkSegments = permalink || [];
-	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+	let resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+	resolvedPermalink = resolvedPermalink.split('?')[0];
 
 	let page;
 	try {
@@ -52,5 +54,10 @@ export default async function Page({ params }: { params: Promise<{ permalink?: s
 		(block: any): block is PageBlock => typeof block === 'object' && block.collection,
 	);
 
-	return <PageBuilder sections={blocks} />;
+	return (
+		<>
+			<AdminBar contentId={page.id} type="page" />
+			<PageBuilder sections={blocks} />
+		</>
+	);
 }

@@ -1,6 +1,6 @@
 import { BlockPost, PageBlock, Post, Schema } from '@/types/directus-schema';
 import { useDirectus } from './directus';
-import { QueryFilter, readItems, aggregate, readItem, readSingleton } from '@directus/sdk';
+import { QueryFilter, readItems, aggregate, readItem, readSingleton, readUser, withToken } from '@directus/sdk';
 
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
@@ -16,6 +16,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 				fields: [
 					'title',
 					'seo',
+					'id',
 					{
 						blocks: [
 							'id',
@@ -329,5 +330,27 @@ export const fetchTotalPostCount = async (): Promise<number> => {
 		console.error('Error fetching total post count:', error);
 
 		return 0;
+	}
+};
+
+/**
+ * Fetches authenticated user details.
+ */
+export const fetchAuthenticatedUser = async () => {
+	const { directus } = useDirectus();
+	const publicToken = process.env.DIRECTUS_PUBLIC_TOKEN as string;
+
+	if (!publicToken) {
+		throw new Error('DIRECTUS_PUBLIC_TOKEN is not defined. Check your .env file.');
+	}
+
+	try {
+		const user = await directus.request(withToken(publicToken, readUser('me', { fields: ['id', 'role'] })));
+
+		return user;
+	} catch (error) {
+		console.error('Error fetching authenticated user:', error);
+
+		return null;
 	}
 };
