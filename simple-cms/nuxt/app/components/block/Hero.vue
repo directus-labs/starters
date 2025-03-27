@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Text from '~/components/base/Text.vue';
 import DirectusImage from '~/components/shared/DirectusImage.vue';
-import { setAttr } from '../../utils/setDirectusAttr';
+import { setAttr } from '@directus/visual-editing';
 
 interface HeroProps {
 	data: {
@@ -70,7 +70,9 @@ const { id, tagline, headline, description, layout, image, button_group } = prop
 				v-if="button_group?.buttons?.length"
 				class="mt-6"
 				:class="{ 'flex justify-center': layout === 'image_center' }"
-				:data-directus="setAttr({ collection: 'block_hero', item: id, fields: 'button_group', mode: 'modal' })"
+				:data-directus="
+					setAttr({ collection: 'block_button_group', item: button_group.id, fields: 'buttons', mode: 'modal' })
+				"
 			>
 				<ButtonGroup :buttons="button_group.buttons" />
 			</div>

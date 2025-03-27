@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Post } from '#shared/types/schema';
-import { setAttr } from '../../utils/setDirectusAttr';
+import { setAttr } from '@directus/visual-editing';
 import { ChevronsLeft, ChevronsRight, ChevronLeft, ChevronRight } from 'lucide-vue-next';
 
 interface PostsProps {

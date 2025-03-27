@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useRuntimeConfig, navigateTo } from '#app';
-import { setAttr } from '../../utils/setDirectusAttr';
+import { setAttr } from '@directus/visual-editing';
 
 interface ProseProps {
 	content: string;

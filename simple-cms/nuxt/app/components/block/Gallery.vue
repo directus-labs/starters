@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { setAttr } from '../../utils/setDirectusAttr';
+import { setAttr } from '@directus/visual-editing';
 import { ZoomIn, ArrowLeft, ArrowRight, X } from 'lucide-vue-next';
 
 interface GalleryItem {

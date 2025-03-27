@@ -3,10 +3,9 @@ import { computed, ref } from 'vue';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { buildZodSchema } from '~/lib/zodSchemaBuilder';
-import type { FormField as FormFieldType } from '@@/shared/types/schema';
 import FormField from './BaseFormField.vue';
 import BaseButton from '../base/BaseButton.vue';
-import { setAttr } from '../../utils/setDirectusAttr';
+import { setAttr } from '@directus/visual-editing';
 
 const props = defineProps<{
 	fields: FormField[];

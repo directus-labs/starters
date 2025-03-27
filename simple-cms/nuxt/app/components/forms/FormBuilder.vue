@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import DynamicForm from './DynamicForm.vue';
 import type { FormField } from '@@/shared/types/schema';
 import { CheckCircle } from 'lucide-vue-next';
-import { setAttr } from '../../utils/setDirectusAttr';
+import { setAttr } from '@directus/visual-editing';
 
 interface CustomFormData {
 	id: string;

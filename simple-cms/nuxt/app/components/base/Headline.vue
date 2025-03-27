@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { setAttr } from '../../utils/setDirectusAttr';
+import { setAttr } from '@directus/visual-editing';
 import { computed } from 'vue';
 
 interface HeadlineProps {

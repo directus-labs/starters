@@ -12,8 +12,8 @@ importers:
         specifier: 19.1.0
         version: 19.1.0
       '@directus/visual-editing':
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.0.1
+        version: 1.0.1
       '@formkit/auto-animate':
         specifier: 0.8.2
         version: 0.8.2
@@ -341,8 +341,8 @@ packages:
       vue:
         optional: true
 
-  '@directus/visual-editing@1.0.0':
-    resolution: {integrity: sha512-zZUvsktuf8IcJkRGtVFbV6Oi2d2FQrtPlRQVX1pNNuI9Ev73dz8X4mFy83z6yS1R0xerSmiqfNlu59dOdaaz/w==}
+  '@directus/visual-editing@1.0.1':
+    resolution: {integrity: sha512-9g2owz3+OtJWhEGIPjHr9lFE53GBzcsVcADUA5tJv5KfMP1mw1efp1rpV10k/WjZMvS5/BowO4KwZs8VRi04hA==}
     engines: {node: '>=22'}
 
   '@emnapi/runtime@1.3.1':
@@ -6511,7 +6511,7 @@ snapshots:
       - supports-color
       - tedious
 
-  '@directus/visual-editing@1.0.0':
+  '@directus/visual-editing@1.0.1':
     dependencies:
       '@reach/observe-rect': 1.2.0
 
