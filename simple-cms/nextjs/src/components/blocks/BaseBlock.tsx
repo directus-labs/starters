@@ -6,8 +6,7 @@ import Gallery from '@/components/blocks/Gallery';
 import Pricing from '@/components/blocks/Pricing';
 import Posts from '@/components/blocks/Posts';
 import Form from '@/components/blocks/Form';
-import { setAttr } from '@/lib/directus/visual-editing-helper';
-import DirectusVisualEditing from '@/components/shared/DirectusVisualEditing';
+import { setAttr } from '@directus/visual-editing';
 
 interface BaseBlockProps {
 	block: {
@@ -32,7 +31,6 @@ const BaseBlock = ({ block }: BaseBlockProps) => {
 	if (!Component) {
 		return null;
 	}
-
 	const itemId = block.item?.id;
 
 	return (
@@ -45,7 +43,6 @@ const BaseBlock = ({ block }: BaseBlockProps) => {
 				mode: 'modal',
 			})}
 		>
-			<DirectusVisualEditing />
 			<Component data={block.item} blockId={block.id} itemId={itemId} />
 		</div>
 	);

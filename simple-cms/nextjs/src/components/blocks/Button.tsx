@@ -2,7 +2,7 @@ import { Button as ShadcnButton, buttonVariants } from '@/components/ui/button';
 import { LucideIcon, ArrowRight, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { setAttr } from '@/lib/directus/visual-editing-helper';
+import { setAttr } from '@directus/visual-editing';
 
 export interface ButtonProps {
 	id: string;

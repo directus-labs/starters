@@ -6,7 +6,7 @@ import DynamicForm from './DynamicForm';
 import { submitForm } from '@/lib/directus/forms';
 import { FormField } from '@/types/directus-schema';
 import { cn } from '@/lib/utils';
-import { setAttr } from '@/lib/directus/visual-editing-helper';
+import { setAttr } from '@directus/visual-editing';
 
 interface FormBuilderProps {
 	className?: string;

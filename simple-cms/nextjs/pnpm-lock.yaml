@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@directus/sdk':
-        specifier: ^18.0.3
-        version: 18.0.3
+        specifier: ^19.1.0
+        version: 19.1.0
       '@directus/visual-editing':
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.0.1
+        version: 1.0.1
       '@hookform/resolvers':
         specifier: ^3.10.0
         version: 3.10.0(react-hook-form@7.54.2(react@19.0.0))
@@ -290,12 +290,12 @@ packages:
     resolution: {integrity: sha512-L6mZmwFDK6Cjh1nRCLXpa6no13ZIioJDz7mdkzHv399pThrTa/k0nUlNaenOeh2kWu/iaOQYElEpKPUswUa9Vg==}
     engines: {node: '>=6.9.0'}
 
-  '@directus/sdk@18.0.3':
-    resolution: {integrity: sha512-PnEDRDqr2x/DG3HZ3qxU7nFp2nW6zqJqswjii57NhriXgTz4TBUI8NmSdzQvnyHuTL9J0nedYfQGfW4v8odS1A==}
-    engines: {node: '>=18.0.0'}
+  '@directus/sdk@19.1.0':
+    resolution: {integrity: sha512-Nqem9BsvvGyVtAa69mGPtoMoMVkZxdIREdsWvvTzNF4/1XqaFfEiFL7PhtUNfc46/Nufus2+QUKYQbNiAWe3ZA==}
+    engines: {node: '>=22'}
 
-  '@directus/visual-editing@1.0.0':
-    resolution: {integrity: sha512-zZUvsktuf8IcJkRGtVFbV6Oi2d2FQrtPlRQVX1pNNuI9Ev73dz8X4mFy83z6yS1R0xerSmiqfNlu59dOdaaz/w==}
+  '@directus/visual-editing@1.0.1':
+    resolution: {integrity: sha512-9g2owz3+OtJWhEGIPjHr9lFE53GBzcsVcADUA5tJv5KfMP1mw1efp1rpV10k/WjZMvS5/BowO4KwZs8VRi04hA==}
     engines: {node: '>=22'}
 
   '@discoveryjs/json-ext@0.5.7':
@@ -3324,9 +3324,9 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@directus/sdk@18.0.3': {}
+  '@directus/sdk@19.1.0': {}
 
-  '@directus/visual-editing@1.0.0':
+  '@directus/visual-editing@1.0.1':
     dependencies:
       '@reach/observe-rect': 1.2.0
 

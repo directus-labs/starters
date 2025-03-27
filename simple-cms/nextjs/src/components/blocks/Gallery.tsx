@@ -6,7 +6,8 @@ import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogClose } from '@/components/ui/dialog';
 import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-react';
-import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
+import { setAttr } from '@directus/visual-editing';
+import { useDirectusVisualEditing } from '@/lib/directus/useDirectusVisualEditing';
 
 interface GalleryProps {
 	data: {

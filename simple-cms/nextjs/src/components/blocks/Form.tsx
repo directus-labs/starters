@@ -4,7 +4,8 @@ import { FormField } from '@/types/directus-schema';
 import Tagline from '@/components/ui/Tagline';
 import FormBuilder from '../forms/FormBuilder';
 import Headline from '@/components/ui/Headline';
-import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
+import { setAttr } from '@directus/visual-editing';
+import { useDirectusVisualEditing } from '@/lib/directus/useDirectusVisualEditing';
 
 interface FormBlockProps {
 	data: {

@@ -6,7 +6,8 @@ import BaseText from '@/components/ui/Text';
 import DirectusImage from '@/components/shared/DirectusImage';
 import ButtonGroup from '@/components/blocks/ButtonGroup';
 import { cn } from '@/lib/utils';
-import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
+import { setAttr } from '@directus/visual-editing';
+import { useDirectusVisualEditing } from '@/lib/directus/useDirectusVisualEditing';
 
 interface HeroProps {
 	data: {
@@ -16,6 +17,7 @@ interface HeroProps {
 		layout: 'left' | 'center' | 'right';
 		image: string;
 		button_group?: {
+			id: string;
 			buttons: Array<{
 				id: string;
 				label: string | null;
@@ -108,9 +110,9 @@ export default function Hero({ data, itemId }: HeroProps) {
 						data-directus={
 							itemId && button_group.buttons.length > 0
 								? setAttr({
-										collection: 'block_hero',
-										item: itemId,
-										fields: ['button_group'],
+										collection: 'block_button_group',
+										item: button_group.id,
+										fields: ['buttons'],
 										mode: 'modal',
 									})
 								: undefined

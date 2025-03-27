@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import Button from '@/components/blocks/Button';
 import { CheckCircle2 } from 'lucide-react';
-import { setAttr } from '@/lib/directus/visual-editing-helper';
+import { setAttr } from '@directus/visual-editing';
 
 export interface PricingCardProps {
 	card: {

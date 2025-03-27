@@ -18,7 +18,8 @@ import {
 } from '../ui/pagination';
 import { Post } from '@/types/directus-schema';
 import { fetchPaginatedPosts, fetchTotalPostCount } from '@/lib/directus/fetchers';
-import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
+import { setAttr } from '@directus/visual-editing';
+import { useDirectusVisualEditing } from '@/lib/directus/useDirectusVisualEditing';
 
 interface PostsProps {
 	data: {

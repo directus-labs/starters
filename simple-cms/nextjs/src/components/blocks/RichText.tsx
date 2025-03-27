@@ -6,7 +6,8 @@ import { cn } from '@/lib/utils';
 import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import Text from '@/components/ui/Text';
-import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
+import { setAttr } from '@directus/visual-editing';
+import { useDirectusVisualEditing } from '@/lib/directus/useDirectusVisualEditing';
 
 interface RichTextProps {
 	data: {

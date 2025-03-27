@@ -5,7 +5,7 @@ import { Form } from '@/components/ui/form';
 import Field from './FormField';
 import { buildZodSchema } from '@/lib/zodSchemaBuilder';
 import type { FormField as FormFieldType } from '@/types/directus-schema';
-import { setAttr } from '@/lib/directus/visual-editing-helper';
+import { setAttr } from '@directus/visual-editing';
 
 interface DynamicFormProps {
 	fields: FormFieldType[];
