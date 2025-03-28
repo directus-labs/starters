@@ -4,7 +4,7 @@ import type { Page, PageBlock } from '#shared/types/schema';
 const route = useRoute();
 const { enabled, state } = useLivePreview();
 const pageUrl = useRequestURL();
-const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
+const { isVisualEditingEnabled, apply } = useVisualEditing();
 
 const permalink = `/${((route.params.permalink as string[]) || []).join('/')}`;
 

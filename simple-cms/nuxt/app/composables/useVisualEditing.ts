@@ -1,5 +1,4 @@
 import { apply as applyVisualEditing, setAttr } from '@directus/visual-editing';
-import { useState, useRoute, useRuntimeConfig } from '#app';
 
 interface ApplyOptions {
 	directusUrl: string;
