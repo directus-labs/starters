@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { setAttr } from '@directus/visual-editing';
-
 interface PricingProps {
 	data: {
 		id?: string;
@@ -23,53 +21,54 @@ interface PricingProps {
 		}>;
 	};
 }
-
-const props = defineProps<PricingProps>();
-const { id, tagline, headline, pricing_cards } = props.data;
+const { setAttr } = useVisualEditing();
+defineProps<PricingProps>();
 </script>
 
 <template>
 	<section>
 		<Tagline
-			v-if="tagline"
-			:tagline="tagline"
-			v-bind="
-				id
-					? { 'data-directus': setAttr({ collection: 'block_pricing', item: id, fields: 'tagline', mode: 'popover' }) }
-					: {}
+			v-if="data.tagline"
+			:tagline="data.tagline"
+			:data-directus="
+				setAttr({
+					collection: 'block_pricing',
+					item: data.id,
+					fields: 'tagline',
+					mode: 'popover',
+				})
 			"
 		/>
 		<Headline
-			v-if="headline"
-			:headline="headline"
-			v-bind="
-				id
-					? { 'data-directus': setAttr({ collection: 'block_pricing', item: id, fields: 'headline', mode: 'popover' }) }
-					: {}
+			v-if="data.headline"
+			:headline="data.headline"
+			:data-directus="
+				setAttr({
+					collection: 'block_pricing',
+					item: data.id,
+					fields: 'headline',
+					mode: 'popover',
+				})
 			"
 		/>
 
 		<div
 			class="grid gap-6 mt-8"
 			:class="{
-				'grid-cols-1': pricing_cards.length === 1,
-				'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3': pricing_cards.length % 3 === 0,
-				'grid-cols-1 sm:grid-cols-2': pricing_cards.length % 3 !== 0 && pricing_cards.length !== 1,
+				'grid-cols-1': data.pricing_cards.length === 1,
+				'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3': data.pricing_cards.length % 3 === 0,
+				'grid-cols-1 sm:grid-cols-2': data.pricing_cards.length % 3 !== 0 && data.pricing_cards.length !== 1,
 			}"
-			v-bind="
-				id
-					? {
-							'data-directus': setAttr({
-								collection: 'block_pricing',
-								item: id,
-								fields: ['pricing_cards'],
-								mode: 'modal',
-							}),
-						}
-					: {}
+			:data-directus="
+				setAttr({
+					collection: 'block_pricing',
+					item: data.id,
+					fields: ['pricing_cards'],
+					mode: 'modal',
+				})
 			"
 		>
-			<PricingCard v-for="card in pricing_cards" :key="card.id" :card="card" />
+			<PricingCard v-for="card in data.pricing_cards" :key="card.id" :card="card" />
 		</div>
 	</section>
 </template>

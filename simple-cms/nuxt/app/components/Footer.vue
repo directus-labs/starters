@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-
 export interface SocialLink {
 	service: string;
 	url: string;
@@ -30,6 +28,10 @@ export interface FooterProps {
 const props = defineProps<FooterProps>();
 const runtimeConfig = useRuntimeConfig();
 
+// Using template ref to expose the footer to the layout for visual editing
+const footerRef = useTemplateRef('footerRef');
+defineExpose({ footerRef });
+
 const lightLogoUrl = computed(() =>
 	props.globals.logo ? `${runtimeConfig.public.directusUrl}/assets/${props.globals.logo}` : '/images/logo.svg',
 );
@@ -40,7 +42,7 @@ const darkLogoUrl = computed(() =>
 </script>
 
 <template>
-	<footer v-if="globals" class="bg-gray dark:bg-[var(--background-variant-color)] py-16">
+	<footer v-if="globals" ref="footerRef" class="bg-gray dark:bg-[var(--background-variant-color)] py-16">
 		<Container class="text-foreground dark:text-white">
 			<div class="flex flex-col md:flex-row justify-between items-start gap-8 pt-8">
 				<div class="flex-1">

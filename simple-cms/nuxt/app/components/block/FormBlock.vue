@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { setAttr } from '@directus/visual-editing';
-
 interface CustomFormData {
 	id: string;
 	tagline: string | null;
@@ -19,63 +17,49 @@ interface CustomForm {
 	fields: FormField[];
 }
 
-const props = defineProps<{ data: CustomFormData }>();
-
-const { id, tagline, headline, form } = props.data;
+const { setAttr } = useVisualEditing();
+defineProps<{ data: CustomFormData }>();
 </script>
 
 <template>
-	<section
-		v-if="form"
-		class="mx-auto"
-		v-bind="
-			id
-				? {
-						'data-directus': setAttr({
-							collection: 'block_form',
-							item: id,
-							fields: ['tagline', 'headline', 'form'],
-							mode: 'drawer',
-						}),
-					}
-				: {}
-		"
-	>
+	<section v-if="data.form" class="mx-auto">
 		<Tagline
-			v-if="tagline"
-			:tagline="tagline"
-			v-bind="
-				id
-					? { 'data-directus': setAttr({ collection: 'block_form', item: id, fields: 'tagline', mode: 'popover' }) }
-					: {}
+			v-if="data.tagline"
+			:tagline="data.tagline"
+			:data-directus="
+				setAttr({
+					collection: 'block_form',
+					item: data.id,
+					fields: 'tagline',
+					mode: 'popover',
+				})
 			"
 		/>
 
 		<Headline
-			v-if="headline"
-			:headline="headline"
-			v-bind="
-				id
-					? { 'data-directus': setAttr({ collection: 'block_form', item: id, fields: 'headline', mode: 'popover' }) }
-					: {}
+			v-if="data.headline"
+			:headline="data.headline"
+			:data-directus="
+				setAttr({
+					collection: 'block_form',
+					item: data.id,
+					fields: 'headline',
+					mode: 'popover',
+				})
 			"
 		/>
 
 		<div
-			v-bind="
-				form?.id
-					? {
-							'data-directus': setAttr({
-								collection: 'forms',
-								item: form.id,
-								fields: ['title', 'submit_label', 'success_message', 'success_redirect_url', 'on_success'],
-								mode: 'drawer',
-							}),
-						}
-					: {}
+			:data-directus="
+				setAttr({
+					collection: 'block_form',
+					item: data.id,
+					fields: ['form'],
+					mode: 'popover',
+				})
 			"
 		>
-			<FormBuilder :form="form" class="mt-8" />
+			<FormBuilder :form="data.form" class="mt-8" />
 		</div>
 	</section>
 </template>

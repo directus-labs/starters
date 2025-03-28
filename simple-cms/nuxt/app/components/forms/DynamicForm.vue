@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { buildZodSchema } from '~/lib/zodSchemaBuilder';
-import FormField from './BaseFormField.vue';
+import type { FormField } from '#shared/types/schema';
+import BaseFormField from './BaseFormField.vue';
 import BaseButton from '../base/BaseButton.vue';
-import { setAttr } from '@directus/visual-editing';
 
 const props = defineProps<{
 	fields: FormField[];
@@ -15,6 +14,8 @@ const props = defineProps<{
 }>();
 
 const isSubmitting = ref(false);
+
+const { setAttr } = useVisualEditing();
 
 const sortedFields = computed(() => [...props.fields].sort((a, b) => (a.sort || 0) - (b.sort || 0)));
 
@@ -85,56 +86,23 @@ const onSubmitForm = handleSubmit(async (formValues) => {
 		v-if="schema"
 		:validation-schema="schema"
 		:initial-values="initialValues"
-		v-bind="
-			props.formId
-				? {
-						'data-directus': setAttr({
-							collection: 'forms',
-							item: props.formId,
-							fields: 'fields',
-							mode: 'drawer',
-						}),
-					}
-				: {}
+		:data-directus="
+			setAttr({
+				collection: 'forms',
+				item: props.formId,
+				fields: 'fields',
+				mode: 'popover',
+			})
 		"
 		@submit.prevent="onSubmitForm"
 	>
 		<div class="flex flex-wrap gap-4">
-			<div
-				v-for="field in validFields"
-				:key="field.id"
-				class="w-full"
-				v-bind="
-					field?.id
-						? {
-								'data-directus': setAttr({
-									collection: 'form_fields',
-									item: field.id,
-									fields: ['label', 'type', 'required', 'placeholder', 'help', 'choices'],
-									mode: 'drawer',
-								}),
-							}
-						: {}
-				"
-			>
-				<FormField :field="field" :model-value="values[field.name]" />
+			<div v-for="field in validFields" :key="field.id" class="w-full">
+				<BaseFormField :field="field" :model-value="values[field.name]" />
 			</div>
 
 			<div class="w-full">
-				<div
-					v-bind="
-						props.formId
-							? {
-									'data-directus': setAttr({
-										collection: 'forms',
-										item: props.formId,
-										fields: 'submit_label',
-										mode: 'popover',
-									}),
-								}
-							: {}
-					"
-				>
+				<div>
 					<BaseButton
 						:id="`submit-${submitLabel.replace(/\s+/g, '-').toLowerCase()}`"
 						type="submit"

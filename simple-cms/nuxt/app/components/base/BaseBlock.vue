@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { computed, ref, onMounted, nextTick } from 'vue';
-import { useRuntimeConfig } from '#app';
-import { apply } from '@directus/visual-editing';
-
 import Hero from '~/components/block/Hero.vue';
 import RichText from '~/components/block/RichText.vue';
 import Gallery from '~/components/block/Gallery.vue';
@@ -20,10 +16,6 @@ interface BaseBlockProps {
 
 const props = defineProps<BaseBlockProps>();
 const blockRef = ref<HTMLElement | null>(null);
-const componentData = ref(props.block.item);
-const {
-	public: { enableVisualEditing, directusUrl },
-} = useRuntimeConfig();
 
 const components: Record<string, any> = {
 	block_hero: Hero,
@@ -35,16 +27,7 @@ const components: Record<string, any> = {
 };
 
 const Component = computed(() => components[props.block.collection] || null);
-
-onMounted(async () => {
-	if (!enableVisualEditing) return;
-	await nextTick();
-	if (!blockRef.value) return;
-	await apply({
-		directusUrl,
-		elements: blockRef.value,
-	});
-});
+const componentData = computed(() => props.block.item);
 </script>
 
 <template>

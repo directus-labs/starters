@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import type { FormField } from '#shared/types/schema';
 import { useField } from 'vee-validate';
+import { Info } from 'lucide-vue-next';
+
 import Input from '~/components/ui/input/Input.vue';
 import { Textarea } from '~/components/ui/textarea';
 import CheckboxField from './fields/CheckboxField.vue';
@@ -7,14 +10,11 @@ import CheckboxGroupField from './fields/CheckboxGroupField.vue';
 import RadioGroupField from './fields/RadioGroupField.vue';
 import SelectField from './fields/SelectField.vue';
 import FileUploadField from './fields/FileUploadField.vue';
-import { Info } from 'lucide-vue-next';
-import type { FormField } from '../../../shared/types/schema';
-import { setAttr } from '@directus/visual-editing';
 
 const props = defineProps<{ field: FormField }>();
 const { value, errorMessage } = useField(props.field.name ?? '');
 
-const componentMap: Record<string, any> = {
+const componentMap: Record<string, Component> = {
 	textarea: Textarea,
 	checkbox: CheckboxField,
 	checkbox_group: CheckboxGroupField,
@@ -47,22 +47,7 @@ const getComponentProps = (field: FormField) => {
 </script>
 
 <template>
-	<div
-		v-if="props.field.type !== 'hidden'"
-		:class="`field-width-${field.width ?? '100'}`"
-		v-bind="
-			field?.id
-				? {
-						'data-directus': setAttr({
-							collection: 'form_fields',
-							item: field.id,
-							fields: ['label', 'type', 'required', 'placeholder', 'help', 'choices'],
-							mode: 'drawer',
-						}),
-					}
-				: {}
-		"
-	>
+	<div v-if="props.field.type !== 'hidden'" :class="`field-width-${field.width ?? '100'}`">
 		<FormItem class="pt-2">
 			<FormLabel :for="field.name ?? ''" class="flex items-center justify-between">
 				<div class="flex items-center space-x-1 h-[20px]">

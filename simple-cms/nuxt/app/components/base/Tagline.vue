@@ -1,24 +1,20 @@
 <script setup lang="ts">
-import { setAttr } from '@directus/visual-editing';
-
 interface TaglineProps {
 	tagline?: string | null;
 	className?: string;
 	as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
-	itemId?: string;
-	collection?: string;
 }
-const { as = 'h2', className = '', tagline, itemId, collection } = defineProps<TaglineProps>();
+
+withDefaults(defineProps<TaglineProps>(), {
+	as: 'h2',
+});
 </script>
 
 <template>
 	<component
 		:is="as"
 		v-if="tagline"
-		:class="`font-heading text-accent font-normal uppercase ${className} text-lg md:text-xl lg:text-tagline`"
-		:data-directus="
-			itemId && collection ? setAttr({ collection, item: itemId, fields: 'tagline', mode: 'popover' }) : undefined
-		"
+		:class="`font-heading text-accent font-normal uppercase text-lg md:text-xl lg:text-tagline`"
 	>
 		{{ tagline }}
 	</component>

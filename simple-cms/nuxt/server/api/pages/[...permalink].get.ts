@@ -40,6 +40,7 @@ export default defineEventHandler(async (event) => {
 											{
 												pricing_cards: [
 													'id',
+													'sort',
 													'title',
 													'description',
 													'price',

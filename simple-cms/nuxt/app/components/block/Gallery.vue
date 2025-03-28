@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { setAttr } from '@directus/visual-editing';
 import { ZoomIn, ArrowLeft, ArrowRight, X } from 'lucide-vue-next';
 
 interface GalleryItem {
@@ -19,14 +17,13 @@ interface GalleryProps {
 }
 
 const props = defineProps<GalleryProps>();
-const { id, tagline, headline, items } = props.data;
 
 const isLightboxOpen = ref(false);
 const currentIndex = ref(0);
 
 const sortedItems = computed(() => {
-	if (!items) return [];
-	return [...items].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0));
+	if (!props.data.items) return [];
+	return [...props.data.items].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0));
 });
 
 const currentItem = computed(() => {
@@ -72,6 +69,8 @@ function handleKeyDown(e: KeyboardEvent) {
 	}
 }
 
+const { setAttr } = useVisualEditing();
+
 onMounted(() => {
 	window.addEventListener('keydown', handleKeyDown);
 });
@@ -84,20 +83,20 @@ onUnmounted(() => {
 <template>
 	<section class="relative">
 		<Tagline
-			v-if="tagline"
-			:tagline="tagline"
-			:data-directus="setAttr({ collection: 'block_gallery', item: id, fields: 'tagline', mode: 'popover' })"
+			v-if="data.tagline"
+			:tagline="data.tagline"
+			:data-directus="setAttr({ collection: 'block_gallery', item: data.id, fields: 'tagline', mode: 'popover' })"
 		/>
 		<Headline
-			v-if="headline"
-			:headline="headline"
-			:data-directus="setAttr({ collection: 'block_gallery', item: id, fields: 'headline', mode: 'popover' })"
+			v-if="data.headline"
+			:headline="data.headline"
+			:data-directus="setAttr({ collection: 'block_gallery', item: data.id, fields: 'headline', mode: 'popover' })"
 		/>
 
 		<div
 			v-if="sortedItems.length"
 			class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-			:data-directus="setAttr({ collection: 'block_gallery', item: id, fields: 'items', mode: 'modal' })"
+			:data-directus="setAttr({ collection: 'block_gallery', item: data.id, fields: 'items', mode: 'modal' })"
 		>
 			<div
 				v-for="(item, index) in sortedItems"

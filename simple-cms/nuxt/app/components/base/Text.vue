@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { useRuntimeConfig, navigateTo } from '#app';
-import { setAttr } from '@directus/visual-editing';
-
 interface ProseProps {
 	content: string;
 	size?: 'sm' | 'md' | 'lg';
@@ -47,9 +43,6 @@ onMounted(() => {
 <template>
 	<div
 		ref="contentEl"
-		:data-directus="
-			itemId && collection ? setAttr({ collection, item: itemId, fields: 'content', mode: 'popover' }) : undefined
-		"
 		:class="[
 			{
 				'prose-sm': size === 'sm',

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Post } from '#shared/types/schema';
-import { setAttr } from '@directus/visual-editing';
 import { ChevronsLeft, ChevronsRight, ChevronLeft, ChevronRight } from 'lucide-vue-next';
 
 interface PostsProps {
@@ -14,7 +13,6 @@ interface PostsProps {
 }
 
 const props = defineProps<PostsProps>();
-const { id, tagline, headline } = props.data;
 
 const route = useRoute();
 const router = useRouter();
@@ -26,7 +24,7 @@ const visiblePages = 5;
 const { data: postsData, error } = await useFetch<{
 	posts: Post[];
 	count: number;
-}>(`/api/posts`, {
+}>('/api/posts', {
 	key: `block-posts-${props.data?.id}-${currentPage.value}`,
 	query: { page: currentPage, limit: perPage },
 	watch: [currentPage],
@@ -57,37 +55,39 @@ function handlePageChange(page: number) {
 		router.push({ query: { page } });
 	}
 }
+
+const { setAttr } = useVisualEditing();
 </script>
 
 <template>
 	<div>
 		<Tagline
-			v-if="tagline"
-			:tagline="tagline"
-			v-bind="
-				id
-					? { 'data-directus': setAttr({ collection: 'block_posts', item: id, fields: 'tagline', mode: 'popover' }) }
-					: {}
+			v-if="data.tagline"
+			:tagline="data.tagline"
+			:data-directus="
+				setAttr({
+					collection: 'block_posts',
+					item: data.id,
+					fields: 'tagline',
+					mode: 'popover',
+				})
 			"
 		/>
 		<Headline
-			v-if="headline"
-			:headline="headline"
-			v-bind="
-				id
-					? { 'data-directus': setAttr({ collection: 'block_posts', item: id, fields: 'headline', mode: 'popover' }) }
-					: {}
-			"
+			v-if="data.headline"
+			:headline="data.headline"
+			:data-directus="setAttr({ collection: 'block_posts', item: data.id, fields: 'headline', mode: 'popover' })"
 		/>
-
-		<p v-if="error" class="text-center text-red-500">{{ error }}</p>
 
 		<div
 			class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-			v-bind="
-				id
-					? { 'data-directus': setAttr({ collection: 'block_posts', item: id, fields: ['posts'], mode: 'modal' }) }
-					: {}
+			:data-directus="
+				setAttr({
+					collection: 'block_posts',
+					item: data.id,
+					fields: ['collection', 'limit'],
+					mode: 'popover',
+				})
 			"
 		>
 			<template v-if="posts?.length">

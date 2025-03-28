@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import Text from '~/components/base/Text.vue';
-import DirectusImage from '~/components/shared/DirectusImage.vue';
-import { setAttr } from '@directus/visual-editing';
-
 interface HeroProps {
 	data: {
 		id: string;
@@ -25,74 +21,71 @@ interface HeroProps {
 	};
 }
 
-const props = defineProps<HeroProps>();
-const { id, tagline, headline, description, layout, image, button_group } = props.data;
+const { setAttr } = useVisualEditing();
+defineProps<HeroProps>();
 </script>
 
 <template>
 	<section
 		class="relative w-full mx-auto flex flex-col gap-6 md:gap-12"
 		:class="{
-			'items-center text-center': layout === 'image_center',
-			'md:flex-row-reverse items-center': layout === 'image_left',
-			'md:flex-row items-center': layout !== 'image_center' && layout !== 'image_left',
+			'items-center text-center': data.layout === 'image_center',
+			'md:flex-row-reverse items-center': data.layout === 'image_left',
+			'md:flex-row items-center': data.layout !== 'image_center' && data.layout !== 'image_left',
 		}"
-		:data-directus="
-			setAttr({
-				collection: 'block_hero',
-				item: id,
-				fields: ['layout', 'image', 'tagline', 'headline', 'description', 'button_group'],
-			})
-		"
 	>
 		<div
 			class="flex flex-col gap-4 w-full"
 			:class="{
-				'md:w-3/4 xl:w-2/3 items-center': layout === 'image_center',
-				'md:w-1/2 items-start': layout !== 'image_center',
+				'md:w-3/4 xl:w-2/3 items-center': data.layout === 'image_center',
+				'md:w-1/2 items-start': data.layout !== 'image_center',
 			}"
 		>
 			<Tagline
-				:tagline="tagline"
-				:data-directus="setAttr({ collection: 'block_hero', item: id, fields: 'tagline', mode: 'popover' })"
+				:tagline="data.tagline"
+				:data-directus="setAttr({ collection: 'block_hero', item: data.id, fields: 'tagline', mode: 'popover' })"
 			/>
 			<Headline
-				:headline="headline"
-				:data-directus="setAttr({ collection: 'block_hero', item: id, fields: 'headline', mode: 'popover' })"
+				:headline="data.headline"
+				:data-directus="setAttr({ collection: 'block_hero', item: data.id, fields: 'headline', mode: 'popover' })"
 			/>
 			<Text
-				v-if="description"
-				:content="description"
-				:data-directus="setAttr({ collection: 'block_hero', item: id, fields: 'description', mode: 'popover' })"
+				v-if="data.description"
+				:content="data.description"
+				:data-directus="setAttr({ collection: 'block_hero', item: data.id, fields: 'description', mode: 'popover' })"
 			/>
 
 			<div
-				v-if="button_group?.buttons?.length"
+				v-if="data.button_group?.buttons?.length"
 				class="mt-6"
-				:class="{ 'flex justify-center': layout === 'image_center' }"
-				:data-directus="
-					setAttr({ collection: 'block_button_group', item: button_group.id, fields: 'buttons', mode: 'modal' })
-				"
+				:class="{ 'flex justify-center': data.layout === 'image_center' }"
 			>
-				<ButtonGroup :buttons="button_group.buttons" />
+				<ButtonGroup
+					:buttons="data.button_group.buttons"
+					:data-directus="
+						setAttr({ collection: 'block_button_group', item: data.button_group?.id, fields: 'buttons', mode: 'modal' })
+					"
+				/>
 			</div>
 		</div>
 
 		<div
-			v-if="image"
+			v-if="data.image"
 			class="relative w-full"
 			:class="{
-				'md:w-3/4 xl:w-2/3 h-[400px]': layout === 'image_center',
-				'md:w-1/2 h-[562px]': layout !== 'image_center',
+				'md:w-3/4 xl:w-2/3 h-[400px]': data.layout === 'image_center',
+				'md:w-1/2 h-[562px]': data.layout !== 'image_center',
 			}"
-			:data-directus="setAttr({ collection: 'block_hero', item: id, fields: 'image', mode: 'modal' })"
 		>
 			<DirectusImage
-				:uuid="image"
-				:alt="tagline || headline || 'Hero Image'"
+				:uuid="data.image"
+				:alt="data.tagline || data.headline || 'Hero Image'"
 				:fill="true"
-				:sizes="layout === 'image_center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'"
+				:sizes="data.layout === 'image_center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'"
 				class="object-contain"
+				:data-directus="
+					setAttr({ collection: 'block_hero', item: data.id, fields: ['image', 'layout'], mode: 'modal' })
+				"
 			/>
 		</div>
 	</section>

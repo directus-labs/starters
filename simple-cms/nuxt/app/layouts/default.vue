@@ -1,30 +1,30 @@
-<script setup>
-const { data: siteData, error: siteError, status } = await useFetch('/api/site-data');
+<script setup lang="ts">
+const {
+	data: siteData,
+	error: siteError,
+	refresh,
+} = await useFetch('/api/site-data', {
+	key: 'site-data',
+});
 
-const fallbackSiteData = {
-	headerNavigation: { items: [] },
-	footerNavigation: { items: [] },
-	globals: {
-		title: 'Simple CMS',
-		description: 'A starter CMS template powered by Nuxt and Directus.',
-		logo: '',
-		social_links: [],
-		accent_color: '#6644ff',
-		favicon: '',
-	},
-};
+const { isVisualEditingEnabled, apply } = useVisualEditing();
 
-const finalSiteData = computed(() => siteData.value || fallbackSiteData);
+const navigation = useTemplateRef('navigationRef');
+const footer = useTemplateRef('footerRef');
 
-const headerNavigation = computed(() => finalSiteData.value?.headerNavigation || { items: [] });
-const footerNavigation = computed(() => finalSiteData.value?.footerNavigation || { items: [] });
-const globals = computed(() => finalSiteData.value?.globals || fallbackSiteData.globals);
+if (siteError.value) {
+	throw createError({
+		statusCode: 500,
+		statusMessage: 'Failed to load site data. Please try again later.',
+		fatal: true,
+	});
+}
 
 useHead({
 	style: [
 		{
 			id: 'accent-color',
-			innerHTML: `:root { --accent-color: ${unref(globals).accent_color} !important; }`,
+			innerHTML: `:root { --accent-color: ${unref(siteData)?.globals.accent_color || '#6644ff'} !important; }`,
 		},
 	],
 	bodyAttrs: {
@@ -33,25 +33,35 @@ useHead({
 });
 
 useSeoMeta({
-	titleTemplate: `%s / ${unref(globals).title}`,
-	ogSiteName: unref(globals).title,
+	titleTemplate: `%s / ${unref(siteData)?.globals.title}`,
+	ogSiteName: unref(siteData)?.globals.title,
+});
+
+onMounted(() => {
+	if (!isVisualEditingEnabled.value) return;
+	apply({
+		elements: [navigation.value?.navigationRef as HTMLElement, footer.value?.footerRef as HTMLElement],
+		onSaved: () => {
+			refresh();
+		},
+	});
 });
 </script>
 
 <template>
 	<div>
-		<div v-if="siteError">
-			<p>Failed to load site data. Please try again later.</p>
-		</div>
-
-		<div v-else-if="status === 'pending'">
-			<p>Loading...</p>
-		</div>
-
-		<div v-else>
-			<NavigationBar v-if="headerNavigation" :navigation="headerNavigation" :globals="globals" />
-			<NuxtPage />
-			<Footer v-if="footerNavigation" :navigation="footerNavigation" :globals="globals" />
-		</div>
+		<NavigationBar
+			v-if="siteData?.headerNavigation"
+			ref="navigationRef"
+			:navigation="siteData.headerNavigation"
+			:globals="siteData.globals"
+		/>
+		<NuxtPage />
+		<Footer
+			v-if="siteData?.footerNavigation"
+			ref="footerRef"
+			:navigation="siteData.footerNavigation"
+			:globals="siteData.globals"
+		/>
 	</div>
 </template>

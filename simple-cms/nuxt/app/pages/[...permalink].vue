@@ -4,10 +4,15 @@ import type { Page, PageBlock } from '#shared/types/schema';
 const route = useRoute();
 const { enabled, state } = useLivePreview();
 const pageUrl = useRequestURL();
+const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
 
 const permalink = `/${((route.params.permalink as string[]) || []).join('/')}`;
 
-const { data: page, error } = await useFetch<Page>(`/api/pages/${permalink}`, {
+const {
+	data: page,
+	error,
+	refresh,
+} = await useFetch<Page>(`/api/pages/${permalink}`, {
 	key: `pages-${permalink}`,
 	query: {
 		preview: enabled.value ? true : undefined,
@@ -27,6 +32,13 @@ useSeoMeta({
 	ogTitle: page.value?.seo?.title || page.value?.title || '',
 	ogDescription: page.value?.seo?.meta_description || '',
 	ogUrl: pageUrl.toString(),
+});
+
+onMounted(() => {
+	if (!isVisualEditingEnabled.value) return;
+	apply({
+		onSaved: () => refresh(),
+	});
 });
 </script>
 

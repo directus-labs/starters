@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
 			withToken(
 				token as string,
 				readItems('posts', {
-					filter: { status: { _eq: 'published' }, slug: { _neq: slug } },
+					filter: { slug: { _neq: slug } },
 					fields: ['id', 'title', 'image', 'slug'],
 					limit: 2,
 				}),

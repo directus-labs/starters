@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { useRuntimeConfig } from '#app';
 import { Menu, ChevronDown } from 'lucide-vue-next';
 import SearchModal from '~/components/base/SearchModel.vue';
 
@@ -11,6 +9,10 @@ interface NavigationItem {
 	page?: { permalink: string };
 	children?: NavigationItem[];
 }
+
+// Using template ref to expose the navigation bar to the layout for visual editing
+const navigationRef = useTemplateRef('navigationRef');
+defineExpose({ navigationRef });
 
 interface Navigation {
 	items: NavigationItem[];
@@ -28,6 +30,7 @@ const props = defineProps<{
 
 const menuOpen = ref(false);
 const runtimeConfig = useRuntimeConfig();
+const { setAttr } = useVisualEditing();
 
 const lightLogoUrl = computed(() =>
 	props.globals?.logo ? `${runtimeConfig.public.directusUrl}/assets/${props.globals.logo}` : '/images/logo.svg',
@@ -43,7 +46,7 @@ const handleLinkClick = () => {
 </script>
 
 <template>
-	<header class="sticky top-0 z-50 w-full bg-background text-foreground">
+	<header ref="navigationRef" class="sticky top-0 z-50 w-full bg-background text-foreground">
 		<Container class="flex items-center justify-between p-4">
 			<NuxtLink to="/" class="flex-shrink-0">
 				<img :src="lightLogoUrl" alt="Logo" class="w-[120px] h-auto dark:hidden" width="150" height="100" />
@@ -59,7 +62,12 @@ const handleLinkClick = () => {
 
 			<nav class="flex items-center gap-4">
 				<SearchModal />
-				<NavigationMenu class="hidden md:flex">
+				<NavigationMenu
+					class="hidden md:flex"
+					:data-directus="
+						setAttr({ collection: 'navigation', item: props.navigation.id, fields: ['items'], mode: 'modal' })
+					"
+				>
 					<NavigationMenuList class="flex gap-6">
 						<NavigationMenuItem v-for="section in props.navigation.items" :key="section.id">
 							<template v-if="section.children?.length">
