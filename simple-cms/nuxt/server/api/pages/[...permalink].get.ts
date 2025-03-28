@@ -4,6 +4,7 @@ export default defineEventHandler(async (event) => {
 	const params = getRouterParams(event);
 	const query = getQuery(event);
 
+	// We're adding a leading slash to the permalink to match the Directus page permalink format
 	const permalink = withLeadingSlash(params.permalink);
 
 	// Handle live preview

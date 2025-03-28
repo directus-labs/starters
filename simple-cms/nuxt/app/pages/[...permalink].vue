@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import type { Page, PageBlock } from '#shared/types/schema';
+import { withTrailingSlash } from 'ufo';
 
 const route = useRoute();
 const { enabled, state } = useLivePreview();
 const pageUrl = useRequestURL();
 const { isVisualEditingEnabled, apply } = useVisualEditing();
 
-const permalink = `/${((route.params.permalink as string[]) || []).join('/')}`;
+// We use trailing slash here to prevent double slashes in the permalink
+const permalink = withTrailingSlash(`${((route.params.permalink as string[]) || []).join('/')}`);
 
 const {
 	data: page,
