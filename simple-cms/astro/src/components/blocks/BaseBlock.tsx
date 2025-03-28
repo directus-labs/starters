@@ -6,8 +6,7 @@ import Hero from './Hero';
 import RichText from './RichText';
 import Pricing from './Pricing';
 import type { PageBlock } from '@/types/directus-schema';
-import { setAttr } from '@/lib/directus/visual-editing-helper';
-import DirectusVisualEditing from '@/components/shared/DirectusVisualEditing';
+import { setAttr } from '@directus/visual-editing';
 
 interface BaseBlockProps {
   block: PageBlock;
@@ -40,7 +39,6 @@ export default function BaseBlock({ block }: BaseBlockProps) {
         mode: 'modal',
       })}
     >
-      <DirectusVisualEditing />
       <Component data={block.item} blockId={block.id} itemId={itemId} />
     </div>
   ) : null;

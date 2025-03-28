@@ -5,7 +5,7 @@ import { submitForm } from '@/lib/directus/forms';
 import type { FormField } from '@/types/directus-schema';
 import { cn } from '@/lib/utils';
 import React from 'react';
-import { setAttr } from '@/lib/directus/visual-editing-helper';
+import { setAttr } from '@directus/visual-editing';
 
 interface FormBuilderProps {
   className?: string;

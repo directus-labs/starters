@@ -2,7 +2,8 @@ import React from 'react';
 import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import PricingCard from '@/components/blocks/PricingCard';
-import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
+import { setAttr } from '@directus/visual-editing';
+import { useDirectusVisualEditing } from '@/lib/directus/useDirectusVisualEditing';
 
 interface PricingProps {
   data: {

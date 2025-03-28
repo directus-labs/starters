@@ -3,7 +3,8 @@ import Tagline from '../ui/Tagline';
 import FormBuilder from '../forms/FormBuilder';
 import Headline from '../ui/Headline';
 import React from 'react';
-import { setAttr, useDirectusVisualEditing } from '@/lib/directus/visual-editing-helper';
+import { setAttr } from '@directus/visual-editing';
+import { useDirectusVisualEditing } from '@/lib/directus/useDirectusVisualEditing';
 
 interface FormBlockProps {
   data: {

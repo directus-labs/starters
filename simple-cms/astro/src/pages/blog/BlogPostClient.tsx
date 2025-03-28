@@ -1,15 +1,15 @@
 'use client';
 
 import React from 'react';
-import { useDirectusVisualEditing, setAttr } from '@/lib/directus/visual-editing-helper';
 import DirectusImage from '@/components/shared/DirectusImage';
 import BaseText from '@/components/ui/Text';
 import { Separator } from '@/components/ui/separator';
 import ShareDialog from '@/components/ui/ShareDialog';
 import Headline from '@/components/ui/Headline';
 import Container from '@/components/ui/Container';
-import DirectusVisualEditing from '@/components/shared/DirectusVisualEditing';
 import type { Post } from '@/types/directus-schema';
+import { setAttr } from '@directus/visual-editing';
+import { useDirectusVisualEditing } from '@/lib/directus/useDirectusVisualEditing';
 
 interface Author {
   id: string;
@@ -40,7 +40,7 @@ export default function BlogPostClient({
   return (
     <>
       {isDraft && <p>(Draft Mode)</p>}
-      <DirectusVisualEditing />
+
       <Container className="py-12">
         {postData.image && (
           <div className="mb-8">
