@@ -42,7 +42,6 @@ export default defineCachedEventHandler(
 				...pages.map((page: Page) => ({
 					id: page.id,
 					title: page.title,
-					description: page.description,
 					type: 'Page',
 					link: `/${page.permalink.replace(/^\/+/, '')}`,
 					content: '',
