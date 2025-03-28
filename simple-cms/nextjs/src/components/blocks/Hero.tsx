@@ -14,7 +14,7 @@ interface HeroProps {
 		tagline: string;
 		headline: string;
 		description: string;
-		layout: 'left' | 'center' | 'right';
+		layout: 'image_left' | 'image_center' | 'image_left';
 		image: string;
 		button_group?: {
 			id: string;
@@ -40,9 +40,9 @@ export default function Hero({ data, itemId }: HeroProps) {
 		<section
 			className={cn(
 				'relative w-full mx-auto flex flex-col gap-6 md:gap-12',
-				layout === 'center'
+				layout === 'image_center'
 					? 'items-center text-center'
-					: layout === 'right'
+					: layout === 'image_left'
 						? 'md:flex-row-reverse items-center'
 						: 'md:flex-row items-center',
 			)}
@@ -60,7 +60,7 @@ export default function Hero({ data, itemId }: HeroProps) {
 			<div
 				className={cn(
 					'flex flex-col gap-4 w-full',
-					layout === 'center' ? 'md:w-3/4 xl:w-2/3 items-center' : 'md:w-1/2 items-start',
+					layout === 'image_center' ? 'md:w-3/4 xl:w-2/3 items-center' : 'md:w-1/2 items-start',
 				)}
 			>
 				<Tagline
@@ -106,7 +106,7 @@ export default function Hero({ data, itemId }: HeroProps) {
 				)}
 				{button_group && button_group.buttons.length > 0 && (
 					<div
-						className={cn(layout === 'center' && 'flex justify-center', 'mt-6')}
+						className={cn(layout === 'image_center' && 'flex justify-center', 'mt-6')}
 						data-directus={
 							itemId && button_group.buttons.length > 0
 								? setAttr({
@@ -124,7 +124,10 @@ export default function Hero({ data, itemId }: HeroProps) {
 			</div>
 			{image && (
 				<div
-					className={cn('relative w-full', layout === 'center' ? 'md:w-3/4 xl:w-2/3 h-[400px]' : 'md:w-1/2 h-[562px]')}
+					className={cn(
+						'relative w-full',
+						layout === 'image_center' ? 'md:w-3/4 xl:w-2/3 h-[400px]' : 'md:w-1/2 h-[562px]',
+					)}
 					data-directus={
 						itemId
 							? setAttr({
@@ -140,7 +143,7 @@ export default function Hero({ data, itemId }: HeroProps) {
 						uuid={image}
 						alt={tagline || headline || 'Hero Image'}
 						fill
-						sizes={layout === 'center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
+						sizes={layout === 'image_center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
 						className="object-contain"
 					/>
 				</div>
