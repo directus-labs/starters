@@ -20,9 +20,6 @@
 	const sortedFields = [...fields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
 	const formSchema = buildZodSchema(fields);
 
-	console.log('fields', fields);
-	console.log('formSchema', formSchema);
-
 	const defaultValues = fields.reduce<Record<string, any>>((defaults, field) => {
 		if (!field.name) return defaults;
 		switch (field.type) {
@@ -54,9 +51,7 @@
 		e.preventDefault();
 		// const f = await superValidate($formData, zod(formSchema));
 		const f = await validateForm();
-		console.log('form validated', f);
 		$errors = f.errors;
-		console.log('superform', form);
 		if (f.valid) {
 			onSubmit($formData);
 		}

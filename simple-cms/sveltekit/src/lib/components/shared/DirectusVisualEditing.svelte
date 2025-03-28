@@ -23,15 +23,11 @@
 	onMount(async () => {
 		const { apply, setAttr } = await import('@directus/visual-editing');
 		attr = setAttr(editConfig);
-		apply({
-			directusUrl: PUBLIC_DIRECTUS_URL,
-			elements: el
-			// onSaved: async (...e) => {
-			// 	console.log('SAVED', e);
-			// 	await new Promise((r) => setTimeout(r, 2000));
-			// 	invalidateAll();
-			// }
-		});
+		// apply({
+		// 	directusUrl: PUBLIC_DIRECTUS_URL,
+		// 	elements: el
+
+		// });
 	});
 </script>
 
