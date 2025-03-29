@@ -6,30 +6,31 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogClose } fr
 import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-react';
 import React from 'react';
 import { setAttr } from '@directus/visual-editing';
-import { useDirectusVisualEditing } from '@/lib/directus/useDirectusVisualEditing';
 
-interface GalleryProps {
-  data: {
-    tagline?: string;
-    headline?: string;
-    items: Array<{
-      id: string;
-      directus_file: string;
-      sort?: number;
-    }>;
-  };
-  itemId?: string;
+interface GalleryItem {
+  id: string;
+  directus_file: string;
+  sort?: number;
 }
 
-const Gallery = ({ data, itemId }: GalleryProps) => {
-  const galleryData = useDirectusVisualEditing(data, itemId, 'block_gallery');
-  const { tagline, headline, items = [] } = galleryData;
+interface GalleryData {
+  id: string;
+  tagline?: string;
+  headline?: string;
+  items: GalleryItem[];
+}
+
+interface GalleryProps {
+  data: GalleryData;
+}
+
+const Gallery = ({ data }: GalleryProps) => {
+  const { tagline, headline, items, id } = data;
 
   const [isLightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const sortedItems = [...items].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0));
-
   const isValidIndex = sortedItems.length > 0 && currentIndex >= 0 && currentIndex < sortedItems.length;
 
   const handleOpenLightbox = (index: number) => {
@@ -38,11 +39,11 @@ const Gallery = ({ data, itemId }: GalleryProps) => {
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : sortedItems.length - 1));
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : sortedItems.length - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex < sortedItems.length - 1 ? prevIndex + 1 : 0));
+    setCurrentIndex((prev) => (prev < sortedItems.length - 1 ? prev + 1 : 0));
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -79,47 +80,35 @@ const Gallery = ({ data, itemId }: GalleryProps) => {
       {tagline && (
         <Tagline
           tagline={tagline}
-          data-directus={
-            itemId
-              ? setAttr({
-                  collection: 'block_gallery',
-                  item: itemId,
-                  fields: 'tagline',
-                  mode: 'popover',
-                })
-              : undefined
-          }
+          data-directus={setAttr({
+            collection: 'block_gallery',
+            item: id,
+            fields: 'tagline',
+            mode: 'popover',
+          })}
         />
       )}
       {headline && (
         <Headline
           headline={headline}
-          data-directus={
-            itemId
-              ? setAttr({
-                  collection: 'block_gallery',
-                  item: itemId,
-                  fields: 'headline',
-                  mode: 'popover',
-                })
-              : undefined
-          }
+          data-directus={setAttr({
+            collection: 'block_gallery',
+            item: id,
+            fields: 'headline',
+            mode: 'popover',
+          })}
         />
       )}
 
       {sortedItems.length > 0 && (
         <div
           className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-          data-directus={
-            itemId
-              ? setAttr({
-                  collection: 'block_gallery',
-                  item: itemId,
-                  fields: ['items'],
-                  mode: 'modal',
-                })
-              : undefined
-          }
+          data-directus={setAttr({
+            collection: 'block_gallery',
+            item: id,
+            fields: 'items',
+            mode: 'modal',
+          })}
         >
           {sortedItems.map((item, index) => (
             <div
@@ -128,13 +117,17 @@ const Gallery = ({ data, itemId }: GalleryProps) => {
               onClick={() => handleOpenLightbox(index)}
               aria-label={`Gallery item ${item.id}`}
             >
-              <DirectusImage
-                uuid={item.directus_file}
-                alt={`Gallery item ${item.id}`}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                className="w-full h-auto object-cover rounded-lg"
-              />
+              {item.directus_file ? (
+                <DirectusImage
+                  uuid={item.directus_file}
+                  alt={`Gallery item ${item.id}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="w-full h-auto object-cover rounded-lg"
+                />
+              ) : (
+                <div className="flex items-center justify-center h-full text-sm text-gray-500">Image not available</div>
+              )}
               <div className="absolute inset-0 bg-white bg-opacity-60 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity duration-300">
                 <ZoomIn className="size-10 text-gray-800" />
               </div>

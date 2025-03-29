@@ -8,7 +8,13 @@ import { getDirectusAssetURL } from '../../lib/directus/directus-utils';
 import type { DirectusFile, ExtensionSeoMetadata } from '@/types/directus-schema';
 import BlogPostClient from './BlogPostClient';
 
-const { slug } = Astro.params;
+const slugParam = Astro.params.slug;
+const slug = Array.isArray(slugParam)
+  ? slugParam.join('/')
+  : typeof slugParam === 'string'
+  ? slugParam
+  : '';
+
 const query = Astro.url.searchParams;
 
 const isPreview = query.get("preview") === "true";
@@ -46,13 +52,15 @@ const metadata = {
 };
 ---
 <Layout metadata={metadata}>
-  <BlogPostClient
+    <BlogPostClient
     client:load
-    post={post}
+    initialPost={post}
     relatedPosts={relatedPosts}
     author={author}
     authorName={authorName}
     postUrl={postUrl}
+    slug={slug}
+    token={authToken}
     isDraft={isPreview}
   />
 </Layout>

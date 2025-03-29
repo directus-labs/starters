@@ -1,12 +1,12 @@
 ---
 import { fetchSiteData } from '../lib/directus/fetchers';
 import { getDirectusAssetURL } from '../lib/directus/directus-utils';
-import NavigationBar from '@/components/layout/NavigationBar';
-import Footer from '@/components/layout/Footer.astro';
+import VisualEditingLayout from '@/components/layout/VisualEditingLayout';
 import '../styles/global.css';
 import '../styles/fonts.css';
 
 const { globals, headerNavigation, footerNavigation } = await fetchSiteData();
+
 const siteTitle = globals?.title || 'Simple CMS';
 const siteDescription = globals?.description || 'A starter CMS template powered by Directus and Astro.';
 const faviconURL = globals?.favicon ? getDirectusAssetURL(globals.favicon) : '/favicon.ico';
@@ -14,7 +14,8 @@ const accentColor = globals?.accent_color || '#6644ff';
 
 const { metadata } = Astro.props;
 
-const fullTitle = metadata && metadata.title ? `${metadata.title} | ${siteTitle}` : siteTitle;
+const fullTitle =
+  metadata && metadata.title ? `${metadata.title} | ${siteTitle}` : siteTitle;
 ---
 <html lang="en" style={`--accent-color: ${accentColor};`}>
   <head>
@@ -32,27 +33,32 @@ const fullTitle = metadata && metadata.title ? `${metadata.title} | ${siteTitle}
       </>
     )}
 
-<script is:inline>
-  const getThemePreference = () => {
-    if (localStorage.getItem('theme')) {
-      return localStorage.getItem('theme');
-    }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  };
-  const isDark = getThemePreference() === 'dark';
-  document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
-  const observer = new MutationObserver(() => {
-    const isDark = document.documentElement.classList.contains('dark');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  });
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-</script>
+    <script is:inline>
+      const getThemePreference = () => {
+        if (localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
+      const isDark = getThemePreference() === 'dark';
+      document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+      const observer = new MutationObserver(() => {
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    </script>
   </head>
   <body class="antialiased font-sans flex flex-col min-h-screen">
-    <NavigationBar client:load navigation={headerNavigation} globals={globals} />
-    <main class="flex-grow">
-      <slot />
-    </main>
-    <Footer navigation={footerNavigation} globals={globals} />
+    <VisualEditingLayout
+      headerNavigation={headerNavigation}
+      footerNavigation={footerNavigation}
+      globals={globals}
+      client:load
+    >
+      <main class="flex-grow">
+        <slot />
+      </main>
+    </VisualEditingLayout>
   </body>
 </html>

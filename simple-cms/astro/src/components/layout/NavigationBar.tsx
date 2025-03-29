@@ -1,5 +1,5 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -8,39 +8,31 @@ import {
   NavigationMenuContent,
   NavigationMenuLink,
   NavigationMenuViewport,
-} from "@/components/ui/navigation-menu";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "@/components/ui/collapsible";
-import { ChevronDown, Menu } from "lucide-react";
-import Container from "../ui/Container";
-import ThemeToggle from "../ui/ThemeToggle";
-import SearchModal from "../ui/SearchModal";
+} from '@/components/ui/navigation-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
-export default function NavigationBar({
-  navigation,
-  globals,
-}: {
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
+import { ChevronDown, Menu } from 'lucide-react';
+import Container from '@/components/ui/Container';
+import ThemeToggle from '@/components/ui/ThemeToggle';
+import SearchModal from '@/components/ui/SearchModal';
+import { Button } from '@/components/ui/button';
+import { forwardRef } from 'react';
+import { setAttr } from '@directus/visual-editing';
+
+interface NavigationBarProps {
   navigation: any;
   globals: any;
-}) {
+}
+
+const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation, globals }, ref) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
   const directusURL = import.meta.env.PUBLIC_DIRECTUS_URL;
-  const lightLogoUrl = globals?.logo
-    ? `${directusURL}/assets/${globals.logo}`
-    : "/images/logo.svg";
-  const darkLogoUrl = globals?.logo_dark_mode
-    ? `${directusURL}/assets/${globals.logo_dark_mode}`
-    : "";
+
+  const lightLogoUrl = globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg';
+
+  const darkLogoUrl = globals?.logo_dark_mode ? `${directusURL}/assets/${globals.logo_dark_mode}` : '';
 
   const handleLinkClick = () => {
     setMobileMenuOpen(false);
@@ -54,16 +46,10 @@ export default function NavigationBar({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background text-foreground">
+    <header ref={ref} className="sticky top-0 z-50 w-full bg-background text-foreground">
       <Container className="flex items-center justify-between p-4">
         <a href="/" className="flex-shrink-0">
-          <img
-            src={lightLogoUrl}
-            alt="Logo"
-            width={150}
-            height={100}
-            className="w-[120px] h-auto dark:hidden"
-          />
+          <img src={lightLogoUrl} alt="Logo" width={150} height={100} className="w-[120px] h-auto dark:hidden" />
           {darkLogoUrl && (
             <img
               src={darkLogoUrl}
@@ -76,7 +62,19 @@ export default function NavigationBar({
         </a>
         <nav className="flex items-center gap-4">
           <SearchModal />
-          <NavigationMenu className="hidden md:flex">
+          <NavigationMenu
+            className="hidden md:flex"
+            data-directus={
+              navigation
+                ? setAttr({
+                    collection: 'navigation',
+                    item: navigation.id,
+                    fields: ['items'],
+                    mode: 'modal',
+                  })
+                : undefined
+            }
+          >
             <NavigationMenuList>
               {navigation?.items?.map((section: any) => (
                 <NavigationMenuItem key={section.id}>
@@ -90,7 +88,7 @@ export default function NavigationBar({
                           {section.children.map((child: any) => (
                             <li key={child.id}>
                               <NavigationMenuLink
-                                href={child.page?.permalink || child.url || "#"}
+                                href={child.page?.permalink || child.url || '#'}
                                 className="font-heading text-nav block w-full p-2 rounded-md hover:text-accent"
                               >
                                 {child.title}
@@ -102,7 +100,7 @@ export default function NavigationBar({
                     </>
                   ) : (
                     <NavigationMenuLink
-                      href={section.page?.permalink || section.url || "#"}
+                      href={section.page?.permalink || section.url || '#'}
                       className="font-heading text-nav block p-2 hover:text-accent"
                     >
                       {section.title}
@@ -114,10 +112,7 @@ export default function NavigationBar({
             <NavigationMenuViewport />
           </NavigationMenu>
           <div className="flex md:hidden">
-            <DropdownMenu
-              open={mobileMenuOpen}
-              onOpenChange={setMobileMenuOpen}
-            >
+            <DropdownMenu open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
@@ -128,22 +123,16 @@ export default function NavigationBar({
                   <Menu className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="mt-2 w-[200px] bg-popover"
-              >
+              <DropdownMenuContent align="end" className="mt-2 w-[200px] bg-popover">
                 {navigation?.items?.map((section: any) => (
                   <div key={section.id} className="p-2">
                     {section.children && section.children.length > 0 ? (
-                      <Collapsible
-                        open={openSections[section.id]}
-                        onOpenChange={() => toggleSection(section.id)}
-                      >
+                      <Collapsible open={openSections[section.id]} onOpenChange={() => toggleSection(section.id)}>
                         <CollapsibleTrigger className="flex w-full items-center justify-between p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md">
                           {section.title}
                           <ChevronDown
                             className={`h-4 w-4 transition-transform duration-200 ${
-                              openSections[section.id] ? "rotate-180" : ""
+                              openSections[section.id] ? 'rotate-180' : ''
                             }`}
                           />
                         </CollapsibleTrigger>
@@ -151,7 +140,7 @@ export default function NavigationBar({
                           {section.children.map((child: any) => (
                             <a
                               key={child.id}
-                              href={child.page?.permalink || child.url || "#"}
+                              href={child.page?.permalink || child.url || '#'}
                               className="block p-2 text-sm hover:bg-accent hover:text-accent-foreground rounded-md"
                               onClick={handleLinkClick}
                             >
@@ -162,7 +151,7 @@ export default function NavigationBar({
                       </Collapsible>
                     ) : (
                       <a
-                        href={section.page?.permalink || section.url || "#"}
+                        href={section.page?.permalink || section.url || '#'}
                         className="block p-2 text-sm hover:bg-accent hover:text-accent-foreground rounded-md"
                         onClick={handleLinkClick}
                       >
@@ -179,4 +168,7 @@ export default function NavigationBar({
       </Container>
     </header>
   );
-}
+});
+
+NavigationBar.displayName = 'NavigationBar';
+export default NavigationBar;

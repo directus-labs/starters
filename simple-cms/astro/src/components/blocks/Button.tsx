@@ -21,7 +21,6 @@ export interface ButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   block?: boolean;
-  disableDirectusEditing?: boolean;
 }
 
 const Button = ({
@@ -40,7 +39,6 @@ const Button = ({
   onClick,
   disabled = false,
   block = false,
-  disableDirectusEditing = false,
 }: ButtonProps) => {
   const icons: Record<string, LucideIcon> = {
     arrow: ArrowRight,
@@ -64,19 +62,7 @@ const Button = ({
   );
 
   const content = (
-    <span
-      className="flex items-center space-x-2"
-      data-directus={
-        id && !disableDirectusEditing
-          ? setAttr({
-              collection: 'block_button',
-              item: id,
-              fields: ['label', 'url', 'variant', 'type'],
-              mode: 'popover',
-            })
-          : undefined
-      }
-    >
+    <span className="flex items-center space-x-2">
       {icon && iconPosition === 'left' && Icon && <Icon className="size-4 shrink-0" />}
       {label && <span>{label}</span>}
       {icon && iconPosition === 'right' && Icon && <Icon className="size-4 shrink-0" />}

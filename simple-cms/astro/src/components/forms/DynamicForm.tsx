@@ -12,11 +12,10 @@ interface DynamicFormProps {
   fields: FormFieldType[];
   onSubmit: (data: Record<string, any>) => void;
   submitLabel: string;
-  itemId?: string;
-  formId?: string;
+  id: string;
 }
 
-const DynamicForm = ({ fields, onSubmit, submitLabel, itemId, formId }: DynamicFormProps) => {
+const DynamicForm = ({ fields, onSubmit, submitLabel, id }: DynamicFormProps) => {
   const sortedFields = [...fields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
   const formSchema = buildZodSchema(fields);
 
@@ -49,56 +48,28 @@ const DynamicForm = ({ fields, onSubmit, submitLabel, itemId, formId }: DynamicF
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-wrap gap-4"
-        data-directus={
-          itemId && formId
-            ? setAttr({
-                collection: 'forms',
-                item: formId,
-                fields: 'fields',
-                mode: 'drawer',
-              })
-            : undefined
-        }
+        data-directus={setAttr({
+          collection: 'forms',
+          item: id,
+          fields: 'fields',
+          mode: 'popover',
+        })}
       >
         {sortedFields.map((field) => (
-          <div
-            key={field.id}
-            className="w-full"
-            data-directus={
-              itemId && field.id
-                ? setAttr({
-                    collection: 'form_fields',
-                    item: field.id,
-                    fields: ['label', 'type', 'required', 'placeholder', 'help_text', 'options'],
-                    mode: 'drawer',
-                  })
-                : undefined
-            }
-          >
+          <div key={field.id} className="w-full">
             <Field key={field.id} field={field} form={form} />
           </div>
         ))}
         <div className="w-full">
           <div
-            data-directus={
-              itemId && formId
-                ? setAttr({
-                    collection: 'forms',
-                    item: formId,
-                    fields: 'submit_label',
-                    mode: 'popover',
-                  })
-                : undefined
-            }
+            data-directus={setAttr({
+              collection: 'forms',
+              item: id,
+              fields: 'submit_label',
+              mode: 'popover',
+            })}
           >
-            <Button
-              type="submit"
-              label={submitLabel}
-              icon="arrow"
-              iconPosition="right"
-              id={`submit-${formId || 'form'}`}
-              disableDirectusEditing={true}
-            />
+            <Button type="submit" label={submitLabel} icon="arrow" iconPosition="right" id={`submit-${id || 'form'}`} />
           </div>
         </div>
       </form>
