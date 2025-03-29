@@ -1,8 +1,9 @@
 ---
 export const prerender = false;
+
 import Layout from '../layouts/BaseLayout.astro';
 import { fetchPageData } from '../lib/directus/fetchers';
-import PageBuilder from '../components/layout/PageBuilder.astro';
+import PageClient from './PageClient';
 import type { PageBlock } from '../types/directus-schema';
 
 const { permalink } = Astro.params;
@@ -33,14 +34,15 @@ const metadata = page
         title: page.seo?.title ?? page.title ?? '',
         description: page.seo?.meta_description ?? '',
         url: `${siteURL}${resolvedPermalink}`,
-        type: 'website'
-      }
+        type: 'website',
+      },
     }
   : { title: '404 - Page Not Found', description: '' };
 ---
+
 <Layout metadata={metadata}>
   {page ? (
-    <PageBuilder sections={blocks} />
+    <PageClient client:load permalink={resolvedPermalink} initialSections={blocks} />
   ) : (
     <div class="text-center text-xl mt-20">404 - Page Not Found</div>
   )}
