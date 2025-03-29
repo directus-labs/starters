@@ -7,14 +7,14 @@ import DirectusImage from '@/components/shared/DirectusImage';
 import ButtonGroup from '@/components/blocks/ButtonGroup';
 import { cn } from '@/lib/utils';
 import { setAttr } from '@directus/visual-editing';
-import { useDirectusVisualEditing } from '@/lib/directus/useDirectusVisualEditing';
 
 interface HeroProps {
 	data: {
+		id: string;
 		tagline: string;
 		headline: string;
 		description: string;
-		layout: 'image_left' | 'image_center' | 'image_left';
+		layout: 'image_left' | 'image_center' | 'image_right';
 		image: string;
 		button_group?: {
 			id: string;
@@ -29,12 +29,10 @@ interface HeroProps {
 			}>;
 		};
 	};
-	itemId?: string;
 }
 
-export default function Hero({ data, itemId }: HeroProps) {
-	const heroData = useDirectusVisualEditing(data, itemId, 'block_hero');
-	const { layout, tagline, headline, description, image, button_group } = heroData;
+export default function Hero({ data }: HeroProps) {
+	const { id, layout, tagline, headline, description, image, button_group } = data;
 
 	return (
 		<section
@@ -46,16 +44,6 @@ export default function Hero({ data, itemId }: HeroProps) {
 						? 'md:flex-row-reverse items-center'
 						: 'md:flex-row items-center',
 			)}
-			data-directus={
-				itemId
-					? setAttr({
-							collection: 'block_hero',
-							item: itemId,
-							fields: ['tagline', 'headline', 'description', 'layout', 'image', 'button_group'],
-							mode: 'drawer',
-						})
-					: undefined
-			}
 		>
 			<div
 				className={cn(
@@ -65,58 +53,42 @@ export default function Hero({ data, itemId }: HeroProps) {
 			>
 				<Tagline
 					tagline={tagline}
-					data-directus={
-						itemId
-							? setAttr({
-									collection: 'block_hero',
-									item: itemId,
-									fields: 'tagline',
-									mode: 'popover',
-								})
-							: undefined
-					}
+					data-directus={setAttr({
+						collection: 'block_hero',
+						item: id,
+						fields: 'tagline',
+						mode: 'popover',
+					})}
 				/>
 				<Headline
 					headline={headline}
-					data-directus={
-						itemId
-							? setAttr({
-									collection: 'block_hero',
-									item: itemId,
-									fields: 'headline',
-									mode: 'popover',
-								})
-							: undefined
-					}
+					data-directus={setAttr({
+						collection: 'block_hero',
+						item: id,
+						fields: 'headline',
+						mode: 'popover',
+					})}
 				/>
 				{description && (
 					<BaseText
 						content={description}
-						data-directus={
-							itemId
-								? setAttr({
-										collection: 'block_hero',
-										item: itemId,
-										fields: 'description',
-										mode: 'popover',
-									})
-								: undefined
-						}
+						data-directus={setAttr({
+							collection: 'block_hero',
+							item: id,
+							fields: 'description',
+							mode: 'popover',
+						})}
 					/>
 				)}
 				{button_group && button_group.buttons.length > 0 && (
 					<div
 						className={cn(layout === 'image_center' && 'flex justify-center', 'mt-6')}
-						data-directus={
-							itemId && button_group.buttons.length > 0
-								? setAttr({
-										collection: 'block_button_group',
-										item: button_group.id,
-										fields: ['buttons'],
-										mode: 'modal',
-									})
-								: undefined
-						}
+						data-directus={setAttr({
+							collection: 'block_button_group',
+							item: button_group.id,
+							fields: 'buttons',
+							mode: 'modal',
+						})}
 					>
 						<ButtonGroup buttons={button_group.buttons} />
 					</div>
@@ -128,16 +100,12 @@ export default function Hero({ data, itemId }: HeroProps) {
 						'relative w-full',
 						layout === 'image_center' ? 'md:w-3/4 xl:w-2/3 h-[400px]' : 'md:w-1/2 h-[562px]',
 					)}
-					data-directus={
-						itemId
-							? setAttr({
-									collection: 'block_hero',
-									item: itemId,
-									fields: ['image'],
-									mode: 'modal',
-								})
-							: undefined
-					}
+					data-directus={setAttr({
+						collection: 'block_hero',
+						item: id,
+						fields: ['image', 'layout'],
+						mode: 'modal',
+					})}
 				>
 					<DirectusImage
 						uuid={image}

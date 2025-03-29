@@ -6,7 +6,6 @@ import DynamicForm from './DynamicForm';
 import { submitForm } from '@/lib/directus/forms';
 import { FormField } from '@/types/directus-schema';
 import { cn } from '@/lib/utils';
-import { setAttr } from '@directus/visual-editing';
 
 interface FormBuilderProps {
 	className?: string;
@@ -24,7 +23,7 @@ interface FormBuilderProps {
 	};
 }
 
-const FormBuilder = ({ form, className, itemId }: FormBuilderProps) => {
+const FormBuilder = ({ form, className }: FormBuilderProps) => {
 	const [isSubmitted, setIsSubmitted] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
@@ -54,19 +53,7 @@ const FormBuilder = ({ form, className, itemId }: FormBuilderProps) => {
 
 	if (isSubmitted) {
 		return (
-			<div
-				className="flex flex-col items-center justify-center space-y-4 p-6 text-center"
-				data-directus={
-					itemId && form.id
-						? setAttr({
-								collection: 'forms',
-								item: form.id,
-								fields: 'success_message',
-								mode: 'popover',
-							})
-						: undefined
-				}
-			>
+			<div className="flex flex-col items-center justify-center space-y-4 p-6 text-center">
 				<CheckCircle className="size-12 text-green-500" />
 				<p className="text-gray-600">{form.success_message || 'Your form has been submitted successfully.'}</p>
 			</div>
@@ -75,23 +62,7 @@ const FormBuilder = ({ form, className, itemId }: FormBuilderProps) => {
 
 	return (
 		<div className={cn('space-y-6 border border-input p-8 rounded-lg', className)}>
-			{form.title && (
-				<h3
-					className="text-xl font-semibold mb-4"
-					data-directus={
-						itemId && form.id
-							? setAttr({
-									collection: 'forms',
-									item: form.id,
-									fields: 'title',
-									mode: 'popover',
-								})
-							: undefined
-					}
-				>
-					{form.title}
-				</h3>
-			)}
+			{form.title && <h3 className="text-xl font-semibold mb-4">{form.title}</h3>}
 
 			{error && (
 				<div className="p-4 text-red-500 bg-red-100 rounded-md">
@@ -103,8 +74,7 @@ const FormBuilder = ({ form, className, itemId }: FormBuilderProps) => {
 				fields={form.fields}
 				onSubmit={handleSubmit}
 				submitLabel={form.submit_label || 'Submit'}
-				formId={form.id}
-				itemId={itemId}
+				id={form.id}
 			/>
 		</div>
 	);

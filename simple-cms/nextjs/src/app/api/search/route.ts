@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 					filter: {
 						_or: [{ title: { _contains: search } }, { permalink: { _contains: search } }],
 					},
-					fields: ['id', 'title', 'permalink'],
+					fields: ['id', 'title', 'permalink', 'seo'],
 				}),
 			),
 
@@ -46,7 +46,7 @@ export async function GET(request: Request) {
 			...pages.map((page: any) => ({
 				id: page.id,
 				title: page.title,
-				description: page.description,
+				description: page.seo.meta_description,
 				type: 'Page',
 				link: `/${page.permalink.replace(/^\/+/, '')}`,
 			})),

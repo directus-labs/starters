@@ -19,22 +19,19 @@ import {
 import { Post } from '@/types/directus-schema';
 import { fetchPaginatedPosts, fetchTotalPostCount } from '@/lib/directus/fetchers';
 import { setAttr } from '@directus/visual-editing';
-import { useDirectusVisualEditing } from '@/lib/directus/useDirectusVisualEditing';
 
 interface PostsProps {
 	data: {
+		id: string;
 		tagline?: string;
 		headline?: string;
 		posts: Post[];
 		limit: number;
 	};
-	itemId?: string;
 }
 
-const Posts = ({ data, itemId }: PostsProps) => {
-	const postsData = useDirectusVisualEditing(data, itemId, 'block_posts');
-	const { tagline, headline, posts, limit } = postsData;
-
+const Posts = ({ data }: PostsProps) => {
+	const { tagline, headline, posts, limit, id } = data;
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const visiblePages = 5;
@@ -66,7 +63,6 @@ const Posts = ({ data, itemId }: PostsProps) => {
 
 					return;
 				}
-
 				const response = await fetchPaginatedPosts(perPage, currentPage);
 				setPaginatedPosts(response);
 			} catch (error) {
@@ -93,18 +89,9 @@ const Posts = ({ data, itemId }: PostsProps) => {
 		} else {
 			const rangeStart = Math.max(1, currentPage - 2);
 			const rangeEnd = Math.min(totalPages, currentPage + 2);
-
-			if (rangeStart > 1) {
-				pages.push('ellipsis-start');
-			}
-
-			for (let i = rangeStart; i <= rangeEnd; i++) {
-				pages.push(i);
-			}
-
-			if (rangeEnd < totalPages) {
-				pages.push('ellipsis-end');
-			}
+			if (rangeStart > 1) pages.push('ellipsis-start');
+			for (let i = rangeStart; i <= rangeEnd; i++) pages.push(i);
+			if (rangeEnd < totalPages) pages.push('ellipsis-end');
 		}
 
 		return pages;
@@ -117,46 +104,34 @@ const Posts = ({ data, itemId }: PostsProps) => {
 			{tagline && (
 				<Tagline
 					tagline={tagline}
-					data-directus={
-						itemId
-							? setAttr({
-									collection: 'block_posts',
-									item: itemId,
-									fields: 'tagline',
-									mode: 'popover',
-								})
-							: undefined
-					}
+					data-directus={setAttr({
+						collection: 'block_posts',
+						item: id,
+						fields: 'tagline',
+						mode: 'popover',
+					})}
 				/>
 			)}
 			{headline && (
 				<Headline
 					headline={headline}
-					data-directus={
-						itemId
-							? setAttr({
-									collection: 'block_posts',
-									item: itemId,
-									fields: 'headline',
-									mode: 'popover',
-								})
-							: undefined
-					}
+					data-directus={setAttr({
+						collection: 'block_posts',
+						item: id,
+						fields: 'headline',
+						mode: 'popover',
+					})}
 				/>
 			)}
 
 			<div
 				className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-				data-directus={
-					itemId
-						? setAttr({
-								collection: 'block_posts',
-								item: itemId,
-								fields: ['posts'],
-								mode: 'modal',
-							})
-						: undefined
-				}
+				data-directus={setAttr({
+					collection: 'block_posts',
+					item: id,
+					fields: ['collection', 'limit'],
+					mode: 'popover',
+				})}
 			>
 				{paginatedPosts.length > 0 ? (
 					paginatedPosts.map((post) => (

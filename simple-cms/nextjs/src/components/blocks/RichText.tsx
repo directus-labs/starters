@@ -3,26 +3,24 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import Tagline from '../ui/Tagline';
+import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import Text from '@/components/ui/Text';
 import { setAttr } from '@directus/visual-editing';
-import { useDirectusVisualEditing } from '@/lib/directus/useDirectusVisualEditing';
 
 interface RichTextProps {
 	data: {
+		id: string;
 		tagline?: string;
 		headline?: string;
-		content: string;
+		content?: string;
 		alignment?: 'left' | 'center' | 'right';
 	};
 	className?: string;
-	itemId?: string;
 }
 
-const RichText = ({ data, className, itemId }: RichTextProps) => {
-	const richTextData = useDirectusVisualEditing(data, itemId, 'block_richtext');
-	const { tagline, headline, content, alignment = 'left' } = richTextData;
+const RichText = ({ data, className }: RichTextProps) => {
+	const { id, tagline, headline, content, alignment = 'left' } = data;
 
 	const router = useRouter();
 
@@ -66,46 +64,36 @@ const RichText = ({ data, className, itemId }: RichTextProps) => {
 			{tagline && (
 				<Tagline
 					tagline={tagline}
-					data-directus={
-						itemId
-							? setAttr({
-									collection: 'block_richtext',
-									item: itemId,
-									fields: 'tagline',
-									mode: 'popover',
-								})
-							: undefined
-					}
+					data-directus={setAttr({
+						collection: 'block_richtext',
+						item: id,
+						fields: 'tagline',
+						mode: 'popover',
+					})}
 				/>
 			)}
 			{headline && (
 				<Headline
 					headline={headline}
-					data-directus={
-						itemId
-							? setAttr({
-									collection: 'block_richtext',
-									item: itemId,
-									fields: 'headline',
-									mode: 'popover',
-								})
-							: undefined
-					}
+					data-directus={setAttr({
+						collection: 'block_richtext',
+						item: id,
+						fields: 'headline',
+						mode: 'popover',
+					})}
 				/>
 			)}
-			<Text
-				content={content}
-				data-directus={
-					itemId
-						? setAttr({
-								collection: 'block_richtext',
-								item: itemId,
-								fields: 'content',
-								mode: 'popover',
-							})
-						: undefined
-				}
-			/>
+			{content && (
+				<Text
+					content={content}
+					data-directus={setAttr({
+						collection: 'block_richtext',
+						item: id,
+						fields: 'content',
+						mode: 'popover',
+					})}
+				/>
+			)}
 		</div>
 	);
 };

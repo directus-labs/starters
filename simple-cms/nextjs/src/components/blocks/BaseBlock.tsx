@@ -6,7 +6,6 @@ import Gallery from '@/components/blocks/Gallery';
 import Pricing from '@/components/blocks/Pricing';
 import Posts from '@/components/blocks/Posts';
 import Form from '@/components/blocks/Form';
-import { setAttr } from '@directus/visual-editing';
 
 interface BaseBlockProps {
 	block: {
@@ -33,19 +32,7 @@ const BaseBlock = ({ block }: BaseBlockProps) => {
 	}
 	const itemId = block.item?.id;
 
-	return (
-		<div
-			className="relative"
-			data-directus={setAttr({
-				collection: 'page_blocks',
-				item: block.id,
-				fields: ['item', 'collection', 'background', 'hide_block'],
-				mode: 'modal',
-			})}
-		>
-			<Component data={block.item} blockId={block.id} itemId={itemId} />
-		</div>
-	);
+	return <Component data={block.item} blockId={block.id} itemId={itemId} />;
 };
 
 export default BaseBlock;

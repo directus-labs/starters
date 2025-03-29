@@ -2,7 +2,6 @@ import { Button as ShadcnButton, buttonVariants } from '@/components/ui/button';
 import { LucideIcon, ArrowRight, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { setAttr } from '@directus/visual-editing';
 
 export interface ButtonProps {
 	id: string;
@@ -20,7 +19,6 @@ export interface ButtonProps {
 	onClick?: () => void;
 	disabled?: boolean;
 	block?: boolean;
-	disableDirectusEditing?: boolean;
 }
 
 const Button = ({
@@ -39,7 +37,6 @@ const Button = ({
 	onClick,
 	disabled = false,
 	block = false,
-	disableDirectusEditing = false,
 }: ButtonProps) => {
 	const icons: Record<string, LucideIcon> = {
 		arrow: ArrowRight,
@@ -63,19 +60,7 @@ const Button = ({
 	);
 
 	const content = (
-		<span
-			className="flex items-center space-x-2"
-			data-directus={
-				id && !disableDirectusEditing
-					? setAttr({
-							collection: 'block_button',
-							item: id,
-							fields: ['label', 'url', 'variant', 'type'],
-							mode: 'popover',
-						})
-					: undefined
-			}
-		>
+		<span className="flex items-center space-x-2">
 			{icon && iconPosition === 'left' && Icon && <Icon className="size-4 shrink-0" />}
 			{label && <span>{label}</span>}
 			{icon && iconPosition === 'right' && Icon && <Icon className="size-4 shrink-0" />}
