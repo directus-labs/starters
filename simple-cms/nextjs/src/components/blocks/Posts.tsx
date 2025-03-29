@@ -18,9 +18,11 @@ import {
 } from '../ui/pagination';
 import { Post } from '@/types/directus-schema';
 import { fetchPaginatedPosts, fetchTotalPostCount } from '@/lib/directus/fetchers';
+import { setAttr } from '@directus/visual-editing';
 
 interface PostsProps {
 	data: {
+		id: string;
 		tagline?: string;
 		headline?: string;
 		posts: Post[];
@@ -29,7 +31,7 @@ interface PostsProps {
 }
 
 const Posts = ({ data }: PostsProps) => {
-	const { tagline, headline, posts, limit } = data;
+	const { tagline, headline, posts, limit, id } = data;
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const visiblePages = 5;
@@ -61,7 +63,6 @@ const Posts = ({ data }: PostsProps) => {
 
 					return;
 				}
-
 				const response = await fetchPaginatedPosts(perPage, currentPage);
 				setPaginatedPosts(response);
 			} catch (error) {
@@ -70,7 +71,7 @@ const Posts = ({ data }: PostsProps) => {
 		};
 
 		fetchPosts();
-	}, [currentPage, perPage]);
+	}, [currentPage, perPage, posts]);
 
 	const handlePageChange = (page: number) => {
 		if (page >= 1 && page <= totalPages) {
@@ -88,18 +89,9 @@ const Posts = ({ data }: PostsProps) => {
 		} else {
 			const rangeStart = Math.max(1, currentPage - 2);
 			const rangeEnd = Math.min(totalPages, currentPage + 2);
-
-			if (rangeStart > 1) {
-				pages.push('ellipsis-start');
-			}
-
-			for (let i = rangeStart; i <= rangeEnd; i++) {
-				pages.push(i);
-			}
-
-			if (rangeEnd < totalPages) {
-				pages.push('ellipsis-end');
-			}
+			if (rangeStart > 1) pages.push('ellipsis-start');
+			for (let i = rangeStart; i <= rangeEnd; i++) pages.push(i);
+			if (rangeEnd < totalPages) pages.push('ellipsis-end');
 		}
 
 		return pages;
@@ -109,10 +101,38 @@ const Posts = ({ data }: PostsProps) => {
 
 	return (
 		<div>
-			{tagline && <Tagline tagline={tagline} />}
-			{headline && <Headline headline={headline} />}
+			{tagline && (
+				<Tagline
+					tagline={tagline}
+					data-directus={setAttr({
+						collection: 'block_posts',
+						item: id,
+						fields: 'tagline',
+						mode: 'popover',
+					})}
+				/>
+			)}
+			{headline && (
+				<Headline
+					headline={headline}
+					data-directus={setAttr({
+						collection: 'block_posts',
+						item: id,
+						fields: 'headline',
+						mode: 'popover',
+					})}
+				/>
+			)}
 
-			<div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+			<div
+				className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+				data-directus={setAttr({
+					collection: 'block_posts',
+					item: id,
+					fields: ['collection', 'limit'],
+					mode: 'popover',
+				})}
+			>
 				{paginatedPosts.length > 0 ? (
 					paginatedPosts.map((post) => (
 						<Link key={post.id} href={`/blog/${post.slug}`} className="group block overflow-hidden rounded-lg">

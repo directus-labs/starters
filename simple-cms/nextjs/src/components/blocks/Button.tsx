@@ -22,6 +22,7 @@ export interface ButtonProps {
 }
 
 const Button = ({
+	id,
 	label,
 	variant,
 	url,

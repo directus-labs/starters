@@ -3,22 +3,25 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import Tagline from '../ui/Tagline';
+import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import Text from '@/components/ui/Text';
+import { setAttr } from '@directus/visual-editing';
 
 interface RichTextProps {
 	data: {
+		id: string;
 		tagline?: string;
 		headline?: string;
-		content: string;
+		content?: string;
 		alignment?: 'left' | 'center' | 'right';
 	};
 	className?: string;
 }
 
 const RichText = ({ data, className }: RichTextProps) => {
-	const { tagline, headline, content, alignment = 'left' } = data;
+	const { id, tagline, headline, content, alignment = 'left' } = data;
+
 	const router = useRouter();
 
 	useEffect(() => {
@@ -58,9 +61,39 @@ const RichText = ({ data, className }: RichTextProps) => {
 				className,
 			)}
 		>
-			{tagline && <Tagline tagline={tagline} />}
-			{headline && <Headline headline={headline} />}
-			<Text content={content} />
+			{tagline && (
+				<Tagline
+					tagline={tagline}
+					data-directus={setAttr({
+						collection: 'block_richtext',
+						item: id,
+						fields: 'tagline',
+						mode: 'popover',
+					})}
+				/>
+			)}
+			{headline && (
+				<Headline
+					headline={headline}
+					data-directus={setAttr({
+						collection: 'block_richtext',
+						item: id,
+						fields: 'headline',
+						mode: 'popover',
+					})}
+				/>
+			)}
+			{content && (
+				<Text
+					content={content}
+					data-directus={setAttr({
+						collection: 'block_richtext',
+						item: id,
+						fields: 'content',
+						mode: 'popover',
+					})}
+				/>
+			)}
 		</div>
 	);
 };

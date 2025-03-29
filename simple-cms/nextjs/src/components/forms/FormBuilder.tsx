@@ -6,8 +6,10 @@ import DynamicForm from './DynamicForm';
 import { submitForm } from '@/lib/directus/forms';
 import { FormField } from '@/types/directus-schema';
 import { cn } from '@/lib/utils';
+
 interface FormBuilderProps {
 	className?: string;
+	itemId?: string;
 	form: {
 		id: string;
 		on_success?: 'redirect' | 'message' | null;
@@ -60,12 +62,20 @@ const FormBuilder = ({ form, className }: FormBuilderProps) => {
 
 	return (
 		<div className={cn('space-y-6 border border-input p-8 rounded-lg', className)}>
+			{form.title && <h3 className="text-xl font-semibold mb-4">{form.title}</h3>}
+
 			{error && (
 				<div className="p-4 text-red-500 bg-red-100 rounded-md">
 					<strong>Error:</strong> {error}
 				</div>
 			)}
-			<DynamicForm fields={form.fields} onSubmit={handleSubmit} submitLabel={form.submit_label || 'Submit'} />
+
+			<DynamicForm
+				fields={form.fields}
+				onSubmit={handleSubmit}
+				submitLabel={form.submit_label || 'Submit'}
+				id={form.id}
+			/>
 		</div>
 	);
 };

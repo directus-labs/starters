@@ -1,15 +1,15 @@
 /* eslint-disable no-useless-escape */
 export interface ExtensionSeoMetadata {
-    title?: string;
-    meta_description?: string;
-    og_image?: string;
-    additional_fields?: Record<string, unknown>;
-    sitemap?: {
-        change_frequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
-        priority: string;
-    };
-    no_index?: boolean;
-    no_follow?: boolean;
+	title?: string;
+	meta_description?: string;
+	og_image?: string;
+	additional_fields?: Record<string, unknown>;
+	sitemap?: {
+		change_frequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+		priority: string;
+	};
+	no_index?: boolean;
+	no_follow?: boolean;
 }
 
 export interface BlockButton {
@@ -59,7 +59,7 @@ export interface BlockGallery {
 	/** @description Smaller copy shown above the headline to label a section or add extra context. */
 	tagline?: string | null;
 	/** @description Images to include in the image gallery. */
-	items?: BlockGalleryItem[] | string[] | null;
+	items?: DirectusFile[] | string[] | null;
 }
 
 export interface BlockGalleryItem {
@@ -225,10 +225,7 @@ export interface Globals {
 	/** @required */
 	id: string;
 	/** @description Social media profile URLs */
-	social_links?: Array<{
-		service: 'facebook' | 'instagram' | 'linkedin' | 'twitter' | 'vimeo' | 'youtube' | 'github' | 'discord' | 'docker';
-		url: string;
-	}> | null;
+	social_links?: any | null;
 	/** @description Short phrase describing the site. */
 	tagline?: string | null;
 	/** @description Main site title */
@@ -577,10 +574,25 @@ export interface DirectusSettings {
 		| `/(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{\';\'?>.<,])(?!.*\\s).*$/`
 		| null;
 	storage_asset_transform?: 'all' | 'none' | 'presets' | null;
-	storage_asset_presets?: Array<{ key: string; fit: 'contain' | 'cover' | 'inside' | 'outside'; width: number; height: number; quality: number; withoutEnlargement: boolean; format: 'auto' | 'jpeg' | 'png' | 'webp' | 'tiff' | 'avif'; transforms: any }> | null;
+	storage_asset_presets?: Array<{
+		key: string;
+		fit: 'contain' | 'cover' | 'inside' | 'outside';
+		width: number;
+		height: number;
+		quality: number;
+		withoutEnlargement: boolean;
+		format: 'auto' | 'jpeg' | 'png' | 'webp' | 'tiff' | 'avif';
+		transforms: any;
+	}> | null;
 	custom_css?: string | null;
 	storage_default_folder?: DirectusFolder | string | null;
-	basemaps?: Array<{ name: string; type: 'raster' | 'tile' | 'style'; url: string; tileSize: number; attribution: string }> | null;
+	basemaps?: Array<{
+		name: string;
+		type: 'raster' | 'tile' | 'style';
+		url: string;
+		tileSize: number;
+		attribution: string;
+	}> | null;
 	mapbox_key?: string | null;
 	module_bar?: any | null;
 	project_descriptor?: string | null;
@@ -876,5 +888,5 @@ export enum CollectionNames {
 	directus_operations = 'directus_operations',
 	directus_translations = 'directus_translations',
 	directus_versions = 'directus_versions',
-	directus_extensions = 'directus_extensions'
+	directus_extensions = 'directus_extensions',
 }
