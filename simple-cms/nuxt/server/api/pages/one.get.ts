@@ -1,14 +1,14 @@
-import { withLeadingSlash } from 'ufo';
+import { withoutTrailingSlash, withLeadingSlash } from 'ufo';
 
 export default defineEventHandler(async (event) => {
-	const params = getRouterParams(event);
 	const query = getQuery(event);
 
-	// We're adding a leading slash to the permalink to match the Directus page permalink format
-	const permalink = withLeadingSlash(params.permalink);
-
 	// Handle live preview
-	const { preview, token: rawToken } = query;
+	const { preview, token: rawToken, permalink: rawPermalink } = query;
+
+	// Ensure the permalink is formatted correctly
+	const permalink = withoutTrailingSlash(withLeadingSlash(String(rawPermalink)));
+
 	const token = preview === 'true' && rawToken ? String(rawToken) : null;
 
 	try {

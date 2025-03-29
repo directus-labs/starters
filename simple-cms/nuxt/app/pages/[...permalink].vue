@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import type { Page, PageBlock } from '#shared/types/schema';
-import { withTrailingSlash } from 'ufo';
+import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
 const route = useRoute();
 const { enabled, state } = useLivePreview();
 const pageUrl = useRequestURL();
 const { isVisualEditingEnabled, apply } = useVisualEditing();
 
-// We use trailing slash here to prevent double slashes in the permalink
-const permalink = withTrailingSlash(`${((route.params.permalink as string[]) || []).join('/')}`);
+const permalink = withoutTrailingSlash(withLeadingSlash(route.path));
 
 const {
 	data: page,
 	error,
 	refresh,
-} = await useFetch<Page>(`/api/pages/${permalink}`, {
+} = await useFetch<Page>('/api/pages/one', {
 	key: `pages-${permalink}`,
 	query: {
+		permalink,
 		preview: enabled.value ? true : undefined,
 		token: enabled.value ? state.token : undefined,
 	},
