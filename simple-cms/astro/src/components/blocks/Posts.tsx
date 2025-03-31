@@ -1,9 +1,9 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { ChevronFirst, ChevronLast } from "lucide-react";
-import Tagline from "../ui/Tagline";
-import Headline from "@/components/ui/Headline";
-import DirectusImage from "@/components/shared/DirectusImage";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { ChevronFirst, ChevronLast } from 'lucide-react';
+import Tagline from '../ui/Tagline';
+import Headline from '@/components/ui/Headline';
+import DirectusImage from '@/components/shared/DirectusImage';
 
 import {
   Pagination,
@@ -13,15 +13,14 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "../ui/pagination";
-import type { Post } from "@/types/directus-schema";
-import {
-  fetchPaginatedPosts,
-  fetchTotalPostCount,
-} from "@/lib/directus/fetchers";
+} from '../ui/pagination';
+import type { Post } from '@/types/directus-schema';
+import { fetchPaginatedPosts, fetchTotalPostCount } from '@/lib/directus/fetchers';
+import { setAttr } from '@directus/visual-editing';
 
 interface PostsProps {
   data: {
+    id: string;
     tagline?: string;
     headline?: string;
     posts: Post[];
@@ -30,22 +29,22 @@ interface PostsProps {
 }
 
 const Posts = ({ data }: PostsProps) => {
-  const { tagline, headline, posts, limit } = data;
+  const { tagline, headline, posts, limit, id } = data;
 
   const visiblePages = 5;
-
   const perPage = limit || 6;
 
   const [currentPage, setCurrentPage] = useState(() => {
-    if (typeof window !== "undefined") {
+    if (typeof window !== 'undefined') {
       const sp = new URLSearchParams(window.location.search);
-      return Number(sp.get("page")) || 1;
+      return Number(sp.get('page')) || 1;
     }
+
     return 1;
   });
-  const [paginatedPosts, setPaginatedPosts] = useState<Post[]>(
-    currentPage === 1 ? posts : []
-  );
+
+  const [paginatedPosts, setPaginatedPosts] = useState<Post[]>(currentPage === 1 ? posts : []);
+
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
@@ -54,7 +53,7 @@ const Posts = ({ data }: PostsProps) => {
         const totalCount = await fetchTotalPostCount();
         setTotalPages(Math.ceil(totalCount / perPage));
       } catch (error) {
-        console.error("Error fetching total post count:", error);
+        console.error('Error fetching total post count:', error);
       }
     };
 
@@ -73,24 +72,26 @@ const Posts = ({ data }: PostsProps) => {
         const response = await fetchPaginatedPosts(perPage, currentPage);
         setPaginatedPosts(response);
       } catch (error) {
-        console.error("Error fetching paginated posts:", error);
+        console.error('Error fetching paginated posts:', error);
       }
     };
 
     fetchPosts();
-  }, [currentPage, perPage]);
+  }, [currentPage, perPage, posts]);
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
-      if (typeof window !== "undefined") {
-        window.history.replaceState({}, "", `?page=${page}`);
+
+      if (typeof window !== 'undefined') {
+        window.history.replaceState({}, '', `?page=${page}`);
       }
     }
   };
 
   const generatePagination = () => {
     const pages: (number | string)[] = [];
+
     if (totalPages <= visiblePages) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -100,7 +101,7 @@ const Posts = ({ data }: PostsProps) => {
       const rangeEnd = Math.min(totalPages, currentPage + 2);
 
       if (rangeStart > 1) {
-        pages.push("ellipsis-start");
+        pages.push('ellipsis-start');
       }
 
       for (let i = rangeStart; i <= rangeEnd; i++) {
@@ -108,7 +109,7 @@ const Posts = ({ data }: PostsProps) => {
       }
 
       if (rangeEnd < totalPages) {
-        pages.push("ellipsis-end");
+        pages.push('ellipsis-end');
       }
     }
 
@@ -119,25 +120,45 @@ const Posts = ({ data }: PostsProps) => {
 
   return (
     <div>
-      {tagline && <Tagline tagline={tagline} />}
-      {headline && <Headline headline={headline} />}
+      {tagline && (
+        <Tagline
+          tagline={tagline}
+          data-directus={setAttr({
+            collection: 'block_posts',
+            item: id,
+            fields: 'tagline',
+            mode: 'popover',
+          })}
+        />
+      )}
+      {headline && (
+        <Headline
+          headline={headline}
+          data-directus={setAttr({
+            collection: 'block_posts',
+            item: id,
+            fields: 'headline',
+            mode: 'popover',
+          })}
+        />
+      )}
 
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div
+        className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
+        data-directus={setAttr({
+          collection: 'block_posts',
+          item: id,
+          fields: ['collection', 'limit'],
+          mode: 'popover',
+        })}
+      >
         {paginatedPosts.length > 0 ? (
           paginatedPosts.map((post) => (
-            <a
-              key={post.id}
-              href={`/blog/${post.slug}`}
-              className="group block overflow-hidden rounded-lg"
-            >
+            <a key={post.id} href={`/blog/${post.slug}`} className="group block overflow-hidden rounded-lg">
               <div className="relative w-full h-64 rounded-lg overflow-hidden">
                 {post.image && (
                   <DirectusImage
-                    uuid={
-                      typeof post.image === "string"
-                        ? post.image
-                        : post.image?.id
-                    }
+                    uuid={typeof post.image === 'string' ? post.image : post.image?.id}
                     alt={post.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -149,11 +170,7 @@ const Posts = ({ data }: PostsProps) => {
                 <h3 className="text-xl group-hover:text-accent font-heading transition-colors duration-300">
                   {post.title}
                 </h3>
-                {post.description && (
-                  <p className="text-sm text-foreground mt-2">
-                    {post.description}
-                  </p>
-                )}
+                {post.description && <p className="text-sm text-foreground mt-2">{post.description}</p>}
               </div>
             </a>
           ))
@@ -192,7 +209,7 @@ const Posts = ({ data }: PostsProps) => {
             )}
 
             {paginationLinks.map((page, index) =>
-              typeof page === "number" ? (
+              typeof page === 'number' ? (
                 <PaginationItem key={index}>
                   <PaginationLink
                     href="#"
@@ -209,7 +226,7 @@ const Posts = ({ data }: PostsProps) => {
                 <PaginationItem key={index}>
                   <PaginationEllipsis />
                 </PaginationItem>
-              )
+              ),
             )}
 
             {totalPages > visiblePages && currentPage < totalPages && (

@@ -1,10 +1,9 @@
-"use client";
-
-import type { FormField } from "@/types/directus-schema";
-import Tagline from "../ui/Tagline";
-import FormBuilder from "../forms/FormBuilder";
-import Headline from "../ui/Headline";
-import React from "react";
+import type { FormField } from '@/types/directus-schema';
+import Tagline from '../ui/Tagline';
+import FormBuilder from '../forms/FormBuilder';
+import Headline from '../ui/Headline';
+import React from 'react';
+import { setAttr } from '@directus/visual-editing';
 
 interface FormBlockProps {
   data: {
@@ -13,7 +12,7 @@ interface FormBlockProps {
     headline: string | null;
     form: {
       id: string;
-      on_success?: "redirect" | "message" | null;
+      on_success?: 'redirect' | 'message' | null;
       sort?: number | null;
       submit_label?: string;
       success_message?: string | null;
@@ -34,9 +33,40 @@ const FormBlock = ({ data }: FormBlockProps) => {
 
   return (
     <section className="mx-auto">
-      {tagline && <Tagline tagline={tagline} />}
-      {headline && <Headline headline={headline} />}
-      <FormBuilder form={form} className="mt-8" />
+      {tagline && (
+        <Tagline
+          tagline={tagline}
+          data-directus={setAttr({
+            collection: 'block_form',
+            item: data.id,
+            fields: 'tagline',
+            mode: 'popover',
+          })}
+        />
+      )}
+
+      {headline && (
+        <Headline
+          headline={headline}
+          data-directus={setAttr({
+            collection: 'block_form',
+            item: data.id,
+            fields: 'headline',
+            mode: 'popover',
+          })}
+        />
+      )}
+
+      <div
+        data-directus={setAttr({
+          collection: 'block_form',
+          item: data.id,
+          fields: ['form'],
+          mode: 'popover',
+        })}
+      >
+        <FormBuilder form={form} className="mt-8" />
+      </div>
     </section>
   );
 };
