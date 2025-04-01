@@ -1,14 +1,31 @@
 // @ts-check
-import { defineConfig } from "astro/config";
-import react from "@astrojs/react";
+import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
 
-// https://astro.build/config
+const directusUrl = process.env.NEXT_PUBLIC_DIRECTUS_URL || process.env.DIRECTUS_URL || '';
+const directusHost = directusUrl?.split('//')[1];
+
+const siteUrl = process.env.PUBLIC_SITE_URL || 'http://localhost:4321';
+
 export default defineConfig({
-  site: process.env.CI
-    ? "starters-simple-cms-nextjs.vercel.app"
-    : "http://localhost:4321",
+  site: siteUrl,
   integrations: [react()],
+  image: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: directusHost,
+        pathname: '/assets/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '8055',
+        pathname: '/assets/**',
+      },
+    ],
+  },
   vite: {
-    envPrefix: ["PUBLIC_", "DIRECTUS_"],
+    envPrefix: ['PUBLIC_', 'DIRECTUS_'],
   },
 });

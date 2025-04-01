@@ -3,6 +3,8 @@ import { Separator } from '@/components/ui/separator';
 import Button from '@/components/blocks/Button';
 import { CheckCircle2 } from 'lucide-react';
 import { setAttr } from '@directus/visual-editing';
+import type { VariantProps } from 'class-variance-authority';
+import type { buttonVariants } from '@/components/ui/button';
 
 export interface PricingCardProps {
   card: {
@@ -120,7 +122,11 @@ const PricingCard = ({ card }: PricingCardProps) => {
               mode: 'popover',
             })}
             label={card.button.label}
-            variant={card.button.variant}
+            variant={
+              ['link', 'default', 'destructive', 'outline', 'secondary', 'ghost'].includes(card.button.variant || '')
+                ? (card.button.variant as VariantProps<typeof buttonVariants>['variant'])
+                : 'default'
+            }
             url={card.button.url}
             block={true}
           />

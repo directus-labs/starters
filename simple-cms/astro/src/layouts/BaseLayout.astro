@@ -1,9 +1,9 @@
 ---
-import { fetchSiteData } from '../lib/directus/fetchers';
-import { getDirectusAssetURL } from '../lib/directus/directus-utils';
+import { fetchSiteData } from '@/lib/directus/fetchers';
+import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
 import VisualEditingLayout from '@/components/layout/VisualEditingLayout';
-import '../styles/global.css';
-import '../styles/fonts.css';
+import '@/styles/global.css';
+import '@/styles/fonts.css';
 
 const { globals, headerNavigation, footerNavigation } = await fetchSiteData();
 

@@ -12,7 +12,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '../ui/pagination';
+} from '@/components/ui/pagination';
 import type { Post } from '@/types/directus-schema';
 import { fetchPaginatedPosts, fetchTotalPostCount } from '@/lib/directus/fetchers';
 import { setAttr } from '@directus/visual-editing';
@@ -51,8 +51,8 @@ const Posts = ({ data }: PostsProps) => {
       try {
         const totalCount = await fetchTotalPostCount();
         setTotalPages(Math.ceil(totalCount / perPage));
-      } catch (error) {
-        console.error('Error fetching total post count:', error);
+      } catch {
+        throw new Error('Error fetching total post count');
       }
     };
 
@@ -70,8 +70,8 @@ const Posts = ({ data }: PostsProps) => {
 
         const response = await fetchPaginatedPosts(perPage, currentPage);
         setPaginatedPosts(response);
-      } catch (error) {
-        console.error('Error fetching paginated posts:', error);
+      } catch {
+        throw new Error('Error fetching paginated posts:');
       }
     };
 

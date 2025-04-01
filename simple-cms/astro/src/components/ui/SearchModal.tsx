@@ -63,9 +63,9 @@ export default function SearchModal() {
     try {
       const data = await searchContent(search);
       setResults(data.filter((r) => r.link));
-    } catch (error) {
-      console.error('Error fetching search results:', error);
+    } catch {
       setResults([]);
+      throw new Error('Error fetching search results');
     } finally {
       setLoading(false);
     }

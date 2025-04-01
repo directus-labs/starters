@@ -1,10 +1,10 @@
 ---
 export const prerender = false;
 
-import Layout from '../layouts/BaseLayout.astro';
-import { fetchPageData } from '../lib/directus/fetchers';
+import Layout from '@/layouts/BaseLayout.astro';
+import { fetchPageData } from '@/lib/directus/fetchers';
 import PageClient from './PageClient';
-import type { PageBlock } from '../types/directus-schema';
+import type { PageBlock } from '@/types/directus-schema';
 
 const { permalink } = Astro.params;
 const permalinkSegments = Array.isArray(permalink) ? permalink : [permalink];

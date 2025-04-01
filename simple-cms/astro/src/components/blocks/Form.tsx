@@ -1,8 +1,7 @@
 import type { FormField } from '@/types/directus-schema';
-import Tagline from '../ui/Tagline';
-import FormBuilder from '../forms/FormBuilder';
-import Headline from '../ui/Headline';
-import React from 'react';
+import Tagline from '@/components/ui/Tagline';
+import FormBuilder from '@/components/forms/FormBuilder';
+import Headline from '@/components/ui/Headline';
 import { setAttr } from '@directus/visual-editing';
 
 interface FormBlockProps {

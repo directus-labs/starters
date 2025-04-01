@@ -1,11 +1,9 @@
 ---
 export const prerender = false;
 
-import Layout from '../../layouts/BaseLayout.astro';
-
-import { fetchPostBySlug, fetchRelatedPosts, fetchAuthorById } from '../../lib/directus/fetchers';
-import { getDirectusAssetURL } from '../../lib/directus/directus-utils';
-import type { DirectusFile, ExtensionSeoMetadata } from '@/types/directus-schema';
+import Layout from '@/layouts/BaseLayout.astro';
+import { fetchPostBySlug, fetchRelatedPosts, fetchAuthorById } from '@/lib/directus/fetchers';
+import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
 import BlogPostClient from './BlogPostClient';
 
 const slugParam = Astro.params.slug;

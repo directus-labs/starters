@@ -21,8 +21,25 @@ import { forwardRef } from 'react';
 import { setAttr } from '@directus/visual-editing';
 
 interface NavigationBarProps {
-  navigation: any;
-  globals: any;
+  navigation: {
+    id: string;
+    items: {
+      id: string;
+      title: string;
+      url?: string;
+      page?: { permalink: string };
+      children?: {
+        id: string;
+        title: string;
+        url?: string;
+        page?: { permalink: string };
+      }[];
+    }[];
+  };
+  globals: {
+    logo?: string;
+    logo_dark_mode?: string;
+  };
 }
 
 const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation, globals }, ref) => {
@@ -76,38 +93,48 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation,
             }
           >
             <NavigationMenuList>
-              {navigation?.items?.map((section: any) => (
-                <NavigationMenuItem key={section.id}>
-                  {section.children && section.children.length > 0 ? (
-                    <>
-                      <NavigationMenuTrigger className="font-heading text-nav focus:outline-none">
+              {navigation?.items?.map(
+                (section: {
+                  id: string;
+                  title: string;
+                  url?: string;
+                  page?: { permalink: string };
+                  children?: { id: string; title: string; url?: string; page?: { permalink: string } }[];
+                }) => (
+                  <NavigationMenuItem key={section.id}>
+                    {section.children && section.children.length > 0 ? (
+                      <>
+                        <NavigationMenuTrigger className="font-heading text-nav focus:outline-none">
+                          {section.title}
+                        </NavigationMenuTrigger>
+                        <NavigationMenuContent className="bg-background">
+                          <ul className="flex flex-col gap-2 p-4 w-[200px] bg-popover">
+                            {section.children.map(
+                              (child: { id: string; title: string; url?: string; page?: { permalink: string } }) => (
+                                <li key={child.id}>
+                                  <NavigationMenuLink
+                                    href={child.page?.permalink || child.url || '#'}
+                                    className="font-heading text-nav block w-full p-2 rounded-md hover:text-accent"
+                                  >
+                                    {child.title}
+                                  </NavigationMenuLink>
+                                </li>
+                              ),
+                            )}
+                          </ul>
+                        </NavigationMenuContent>
+                      </>
+                    ) : (
+                      <NavigationMenuLink
+                        href={section.page?.permalink || section.url || '#'}
+                        className="font-heading text-nav block p-2 hover:text-accent"
+                      >
                         {section.title}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent className="bg-background">
-                        <ul className="flex flex-col gap-2 p-4 w-[200px] bg-popover">
-                          {section.children.map((child: any) => (
-                            <li key={child.id}>
-                              <NavigationMenuLink
-                                href={child.page?.permalink || child.url || '#'}
-                                className="font-heading text-nav block w-full p-2 rounded-md hover:text-accent"
-                              >
-                                {child.title}
-                              </NavigationMenuLink>
-                            </li>
-                          ))}
-                        </ul>
-                      </NavigationMenuContent>
-                    </>
-                  ) : (
-                    <NavigationMenuLink
-                      href={section.page?.permalink || section.url || '#'}
-                      className="font-heading text-nav block p-2 hover:text-accent"
-                    >
-                      {section.title}
-                    </NavigationMenuLink>
-                  )}
-                </NavigationMenuItem>
-              ))}
+                      </NavigationMenuLink>
+                    )}
+                  </NavigationMenuItem>
+                ),
+              )}
             </NavigationMenuList>
             <NavigationMenuViewport />
           </NavigationMenu>
@@ -124,42 +151,52 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation,
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="mt-2 w-[200px] bg-popover">
-                {navigation?.items?.map((section: any) => (
-                  <div key={section.id} className="p-2">
-                    {section.children && section.children.length > 0 ? (
-                      <Collapsible open={openSections[section.id]} onOpenChange={() => toggleSection(section.id)}>
-                        <CollapsibleTrigger className="flex w-full items-center justify-between p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md">
+                {navigation?.items?.map(
+                  (section: {
+                    id: string;
+                    title: string;
+                    url?: string;
+                    page?: { permalink: string };
+                    children?: { id: string; title: string; url?: string; page?: { permalink: string } }[];
+                  }) => (
+                    <div key={section.id} className="p-2">
+                      {section.children && section.children.length > 0 ? (
+                        <Collapsible open={openSections[section.id]} onOpenChange={() => toggleSection(section.id)}>
+                          <CollapsibleTrigger className="flex w-full items-center justify-between p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md">
+                            {section.title}
+                            <ChevronDown
+                              className={`h-4 w-4 transition-transform duration-200 ${
+                                openSections[section.id] ? 'rotate-180' : ''
+                              }`}
+                            />
+                          </CollapsibleTrigger>
+                          <CollapsibleContent className="ml-4 mt-2">
+                            {section.children.map(
+                              (child: { id: string; title: string; url?: string; page?: { permalink: string } }) => (
+                                <a
+                                  key={child.id}
+                                  href={child.page?.permalink || child.url || '#'}
+                                  className="block p-2 text-sm hover:bg-accent hover:text-accent-foreground rounded-md"
+                                  onClick={handleLinkClick}
+                                >
+                                  {child.title}
+                                </a>
+                              ),
+                            )}
+                          </CollapsibleContent>
+                        </Collapsible>
+                      ) : (
+                        <a
+                          href={section.page?.permalink || section.url || '#'}
+                          className="block p-2 text-sm hover:bg-accent hover:text-accent-foreground rounded-md"
+                          onClick={handleLinkClick}
+                        >
                           {section.title}
-                          <ChevronDown
-                            className={`h-4 w-4 transition-transform duration-200 ${
-                              openSections[section.id] ? 'rotate-180' : ''
-                            }`}
-                          />
-                        </CollapsibleTrigger>
-                        <CollapsibleContent className="ml-4 mt-2">
-                          {section.children.map((child: any) => (
-                            <a
-                              key={child.id}
-                              href={child.page?.permalink || child.url || '#'}
-                              className="block p-2 text-sm hover:bg-accent hover:text-accent-foreground rounded-md"
-                              onClick={handleLinkClick}
-                            >
-                              {child.title}
-                            </a>
-                          ))}
-                        </CollapsibleContent>
-                      </Collapsible>
-                    ) : (
-                      <a
-                        href={section.page?.permalink || section.url || '#'}
-                        className="block p-2 text-sm hover:bg-accent hover:text-accent-foreground rounded-md"
-                        onClick={handleLinkClick}
-                      >
-                        {section.title}
-                      </a>
-                    )}
-                  </div>
-                ))}
+                        </a>
+                      )}
+                    </div>
+                  ),
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
