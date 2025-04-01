@@ -1,19 +1,18 @@
 import React from 'react';
 import { Button as ShadcnButton, buttonVariants } from '@/components/ui/button';
+import type { VariantProps } from 'class-variance-authority';
 import { type LucideIcon, ArrowRight, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-import { setAttr } from '@directus/visual-editing';
 
 export interface ButtonProps {
   id: string;
   label?: string | null;
-  variant?: string | null;
   url?: string | null;
   type?: 'page' | 'post' | 'url' | 'submit' | null;
   page?: { permalink: string | null };
   post?: { slug: string | null };
-  size?: 'default' | 'sm' | 'lg' | 'icon';
+  size?: VariantProps<typeof buttonVariants>['size'];
+  variant?: VariantProps<typeof buttonVariants>['variant'];
   icon?: 'arrow' | 'plus';
   customIcon?: LucideIcon;
   iconPosition?: 'left' | 'right';
@@ -24,7 +23,6 @@ export interface ButtonProps {
 }
 
 const Button = ({
-  id,
   label,
   variant,
   url,
@@ -40,7 +38,7 @@ const Button = ({
   disabled = false,
   block = false,
 }: ButtonProps) => {
-  const icons: Record<string, LucideIcon> = {
+  const icons: Record<'arrow' | 'plus', LucideIcon> = {
     arrow: ArrowRight,
     plus: Plus,
   };
@@ -50,15 +48,13 @@ const Button = ({
   const href = (() => {
     if (type === 'page' && page?.permalink) return page.permalink;
     if (type === 'post' && post?.slug) return `/blog/${post.slug}`;
-
     return url || undefined;
   })();
 
   const buttonClasses = cn(
-    buttonVariants({ variant: variant as any, size }),
+    buttonVariants({ variant, size, block }),
     className,
     disabled && 'opacity-50 cursor-not-allowed',
-    block && 'w-full',
   );
 
   const content = (
@@ -71,7 +67,7 @@ const Button = ({
 
   if (href) {
     return (
-      <ShadcnButton asChild variant={variant as any} size={size} className={buttonClasses} disabled={disabled}>
+      <ShadcnButton asChild variant={variant} size={size} className={buttonClasses} disabled={disabled}>
         {href.startsWith('/') ? (
           <a href={href}>{content}</a>
         ) : (
@@ -84,7 +80,7 @@ const Button = ({
   }
 
   return (
-    <ShadcnButton variant={variant as any} size={size} className={buttonClasses} onClick={onClick} disabled={disabled}>
+    <ShadcnButton variant={variant} size={size} className={buttonClasses} onClick={onClick} disabled={disabled}>
       {content}
     </ShadcnButton>
   );

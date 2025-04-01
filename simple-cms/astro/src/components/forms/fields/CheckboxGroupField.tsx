@@ -1,24 +1,18 @@
-import { Checkbox } from "@/components/ui/checkbox";
-import type { UseFormReturn } from "react-hook-form";
-import React from "react";
+import { Checkbox } from '@/components/ui/checkbox';
+import type { UseFormReturn } from 'react-hook-form';
 
 interface CheckboxGroupFieldProps {
   name: string;
   options: { value: string; text: string }[];
-  form: UseFormReturn<any>;
+  form: UseFormReturn<Record<string, string[]>>;
 }
 
-const CheckboxGroupField = ({
-  name,
-  options,
-  form,
-}: CheckboxGroupFieldProps) => {
+const CheckboxGroupField = ({ name, options, form }: CheckboxGroupFieldProps) => {
   const currentValues = form.watch(name) || [];
 
   const toggleValue = (value: string, checked?: boolean) => {
-    const updatedValues = checked
-      ? [...currentValues, value]
-      : currentValues.filter((v: string) => v !== value);
+    const updatedValues = checked ? [...currentValues, value] : currentValues.filter((v) => v !== value);
+
     form.setValue(name, updatedValues);
   };
 

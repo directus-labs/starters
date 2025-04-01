@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import DirectusImage from '@/components/shared/DirectusImage';
-import Tagline from '../ui/Tagline';
+import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogClose } from '@/components/ui/dialog';
 import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-react';
-import React from 'react';
 import { setAttr } from '@directus/visual-editing';
 
 interface GalleryItem {

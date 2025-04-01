@@ -1,10 +1,9 @@
-import Tagline from '../ui/Tagline';
+import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import BaseText from '@/components/ui/Text';
 import DirectusImage from '@/components/shared/DirectusImage';
 import ButtonGroup from '@/components/blocks/ButtonGroup';
 import { cn } from '@/lib/utils';
-import React from 'react';
 import { setAttr } from '@directus/visual-editing';
 
 interface HeroProps {
@@ -111,7 +110,7 @@ export default function Hero({ data }: HeroProps) {
             alt={tagline || headline || 'Hero Image'}
             fill
             sizes={layout === 'image_center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
-            className="object-contain"
+            className="object-cover"
           />
         </div>
       )}

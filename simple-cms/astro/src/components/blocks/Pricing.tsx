@@ -1,4 +1,3 @@
-import React from 'react';
 import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import PricingCard from '@/components/blocks/PricingCard';

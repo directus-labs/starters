@@ -1,7 +1,6 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import { ChevronFirst, ChevronLast } from 'lucide-react';
-import Tagline from '../ui/Tagline';
+import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import DirectusImage from '@/components/shared/DirectusImage';
 

@@ -1,16 +1,16 @@
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { setAttr } from '@directus/visual-editing';
 import Button from '@/components/blocks/Button';
 import { Form } from '@/components/ui/form';
 import Field from './FormField';
 import { buildZodSchema } from '@/lib/zodSchemaBuilder';
 import type { FormField as FormFieldType } from '@/types/directus-schema';
-import React from 'react';
-import { setAttr } from '@directus/visual-editing';
 
 interface DynamicFormProps {
   fields: FormFieldType[];
-  onSubmit: (data: Record<string, any>) => void;
+  onSubmit: (data: Record<string, unknown>) => void;
   submitLabel: string;
   id: string;
 }
@@ -18,24 +18,27 @@ interface DynamicFormProps {
 const DynamicForm = ({ fields, onSubmit, submitLabel, id }: DynamicFormProps) => {
   const sortedFields = [...fields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
   const formSchema = buildZodSchema(fields);
+  type FormValues = z.infer<typeof formSchema>;
 
-  const form = useForm({
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: fields.reduce<Record<string, any>>((defaults, field) => {
+    defaultValues: fields.reduce<Partial<FormValues>>((defaults, field) => {
       if (!field.name) return defaults;
+
+      const name = field.name as keyof FormValues;
 
       switch (field.type) {
         case 'checkbox':
-          defaults[field.name] = false;
+          defaults[name] = false as FormValues[typeof name];
           break;
         case 'checkbox_group':
-          defaults[field.name] = [];
+          defaults[name] = [] as FormValues[typeof name];
           break;
         case 'radio':
-          defaults[field.name] = '';
+          defaults[name] = '' as FormValues[typeof name];
           break;
         default:
-          defaults[field.name] = '';
+          defaults[name] = '' as FormValues[typeof name];
           break;
       }
 

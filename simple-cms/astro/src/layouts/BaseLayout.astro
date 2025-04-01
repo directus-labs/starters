@@ -14,8 +14,7 @@ const accentColor = globals?.accent_color || '#6644ff';
 
 const { metadata } = Astro.props;
 
-const fullTitle =
-  metadata && metadata.title ? `${metadata.title} | ${siteTitle}` : siteTitle;
+const fullTitle = metadata?.title ? `${metadata.title} | ${siteTitle}` : siteTitle;
 ---
 <html lang="en" style={`--accent-color: ${accentColor};`}>
   <head>

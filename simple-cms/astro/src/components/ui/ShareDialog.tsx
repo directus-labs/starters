@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { Copy, Share } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Copy, Share } from 'lucide-react';
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -11,10 +11,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import React from "react";
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface ShareDialogProps {
   postUrl: string;
@@ -32,25 +31,21 @@ const ShareDialog = ({ postUrl, postTitle }: ShareDialogProps) => {
 
   const socialLinks = [
     {
-      service: "reddit",
-      url: `http://www.reddit.com/submit?url=${encodeURIComponent(
-        postUrl
-      )}&title=${encodeURIComponent(postTitle)}`,
-      icon: "/icons/social/reddit.svg",
+      service: 'reddit',
+      url: `http://www.reddit.com/submit?url=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(postTitle)}`,
+      icon: '/icons/social/reddit.svg',
     },
     {
-      service: "x",
-      url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-        postUrl
-      )}&text=${encodeURIComponent(postTitle)}`,
-      icon: "/icons/social/x.svg",
+      service: 'x',
+      url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(postTitle)}`,
+      icon: '/icons/social/x.svg',
     },
     {
-      service: "linkedin",
+      service: 'linkedin',
       url: `https://www.linkedin.com/shareArticle/?mini=true&url=${encodeURIComponent(
-        postUrl
+        postUrl,
       )}&title=${encodeURIComponent(postTitle)}`,
-      icon: "/icons/social/linkedin.svg",
+      icon: '/icons/social/linkedin.svg',
     },
   ];
 
@@ -97,11 +92,7 @@ const ShareDialog = ({ postUrl, postTitle }: ShareDialogProps) => {
             <Copy />
           </Button>
         </div>
-        {copied && (
-          <p className="mt-2 text-sm text-green-600">
-            Link copied to clipboard!
-          </p>
-        )}
+        {copied && <p className="mt-2 text-sm text-green-600">Link copied to clipboard!</p>}
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="secondary">

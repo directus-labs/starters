@@ -1,6 +1,5 @@
-import { Input } from "@/components/ui/input";
-import type { UseFormReturn } from "react-hook-form";
-import React from "react";
+import { Input } from '@/components/ui/input';
+import type { UseFormReturn } from 'react-hook-form';
 
 interface FileUploadFieldProps {
   name: string;

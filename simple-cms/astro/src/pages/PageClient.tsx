@@ -21,10 +21,14 @@ const fetchBlocks = async (permalink: string): Promise<PageBlock[]> => {
 export default function PageClient({ initialSections, permalink }: PageClientProps) {
   const { isVisualEditingEnabled, apply } = useVisualEditing();
 
-  const { data: sections = initialSections, mutate } = useSWR(permalink, () => fetchBlocks(permalink), {
-    fallbackData: initialSections,
-    revalidateOnFocus: false,
-  });
+  const { data: sections = initialSections, mutate } = useSWR(
+    isVisualEditingEnabled ? permalink : null,
+    () => fetchBlocks(permalink),
+    {
+      fallbackData: initialSections,
+      revalidateOnFocus: false,
+    },
+  );
 
   useEffect(() => {
     if (isVisualEditingEnabled) {

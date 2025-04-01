@@ -4,7 +4,8 @@ import DynamicForm from './DynamicForm';
 import { submitForm } from '@/lib/directus/forms';
 import type { FormField } from '@/types/directus-schema';
 import { cn } from '@/lib/utils';
-import React from 'react';
+import { buildZodSchema } from '@/lib/zodSchemaBuilder';
+import { z } from 'zod';
 
 interface FormBuilderProps {
   className?: string;
@@ -27,7 +28,9 @@ const FormBuilder = ({ form, className }: FormBuilderProps) => {
 
   if (!form.is_active) return null;
 
-  const handleSubmit = async (data: Record<string, any>) => {
+  type FormValues = z.infer<ReturnType<typeof buildZodSchema>>;
+
+  const handleSubmit = async (data: FormValues) => {
     setError(null);
 
     try {
@@ -44,8 +47,7 @@ const FormBuilder = ({ form, className }: FormBuilderProps) => {
       } else {
         setIsSubmitted(true);
       }
-    } catch (err) {
-      console.error('Error submitting form:', err);
+    } catch {
       setError('Failed to submit the form. Please try again later.');
     }
   };
