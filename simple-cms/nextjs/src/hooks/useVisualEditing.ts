@@ -1,11 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { apply as applyVisualEditing, setAttr } from '@directus/visual-editing';
 
 interface ApplyOptions {
-	directusUrl: string;
 	elements?: HTMLElement[] | HTMLElement;
 	onSaved?: () => void;
 	mode?: 'modal' | 'popover' | 'drawer';
@@ -14,23 +13,52 @@ interface ApplyOptions {
 export function useVisualEditing() {
 	const [isVisualEditingEnabled, setIsVisualEditingEnabled] = useState(false);
 	const searchParams = useSearchParams();
+	const pathname = usePathname();
+	const router = useRouter();
 
-	const enableVisualEditing = process.env.NEXT_PUBLIC_ENABLE_VISUAL_EDITING === 'true';
+	const enableVisualEditingEnv = process.env.NEXT_PUBLIC_ENABLE_VISUAL_EDITING === 'true';
 	const directusUrl = process.env.NEXT_PUBLIC_DIRECTUS_URL || '';
 
-	// Check the URL query parameter on mount and when it changes.
 	useEffect(() => {
-		const visualEditingParam = searchParams.get('visual-editing');
-		if (visualEditingParam === 'true' && enableVisualEditing) {
-			setIsVisualEditingEnabled(true);
-		} else if (visualEditingParam === 'false') {
-			setIsVisualEditingEnabled(false);
-		}
-	}, [searchParams, enableVisualEditing]);
+		if (typeof window === 'undefined') return;
 
-	// Only apply visual editing if it's enabled.
+		const param = searchParams.get('visual-editing');
+
+		if (!enableVisualEditingEnv) {
+			if (param === 'true') {
+				console.warn('Visual editing is not enabled in this environment.');
+			}
+
+			return;
+		}
+
+		if (param === 'true') {
+			localStorage.setItem('visual-editing', 'true');
+		} else if (param === 'false') {
+			localStorage.removeItem('visual-editing');
+
+			const newParams = new URLSearchParams(searchParams.toString());
+			newParams.delete('visual-editing');
+
+			const cleanUrl = pathname + (newParams.toString() ? `?${newParams}` : '');
+			window.history.replaceState({}, '', cleanUrl);
+		}
+
+		const persisted = localStorage.getItem('visual-editing') === 'true';
+		setIsVisualEditingEnabled(persisted);
+
+		if (persisted && param !== 'true') {
+			const newParams = new URLSearchParams(searchParams.toString());
+			newParams.set('visual-editing', 'true');
+
+			const updatedUrl = pathname + (newParams.toString() ? `?${newParams}` : '');
+			window.history.replaceState({}, '', updatedUrl);
+		}
+	}, [searchParams, pathname, enableVisualEditingEnv]);
+
 	const apply = (options: Pick<ApplyOptions, 'elements' | 'onSaved' | 'mode'>) => {
 		if (!isVisualEditingEnabled) return;
+
 		applyVisualEditing({
 			...options,
 			directusUrl,
