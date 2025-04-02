@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
 
 const directusUrl = process.env.NEXT_PUBLIC_DIRECTUS_URL || process.env.DIRECTUS_URL || '';
 const directusHost = directusUrl?.split('//')[1];
@@ -9,6 +10,7 @@ const siteUrl = process.env.PUBLIC_SITE_URL || 'http://localhost:4321';
 
 export default defineConfig({
   site: siteUrl,
+  adapter: vercel(),
   integrations: [react()],
   image: {
     remotePatterns: [

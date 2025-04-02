@@ -4,7 +4,7 @@ export const prerender = false;
 import Layout from '@/layouts/BaseLayout.astro';
 import { fetchPostBySlug, fetchRelatedPosts, fetchAuthorById } from '@/lib/directus/fetchers';
 import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
-import BlogPostClient from './BlogPostClient';
+import BlogPostClient from '@/components/layout/BlogPostClient';
 import type { Post } from '@/types/directus-schema';
 
 const slugParam = Astro.params.slug;

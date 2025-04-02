@@ -10,7 +10,9 @@
     "generate:types": "tsx ./src/lib/directus/generateDirectusTypes.ts"
   },
   "dependencies": {
+    "@astrojs/node": "^9.1.3",
     "@astrojs/react": "^4.2.2",
+    "@astrojs/vercel": "^8.1.3",
     "@directus/sdk": "^19.1.0",
     "@directus/visual-editing": "^1.0.1",
     "@hookform/resolvers": "^4.1.3",
