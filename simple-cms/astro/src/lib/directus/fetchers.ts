@@ -1,6 +1,6 @@
 import type { QueryFilter } from '@directus/sdk';
 import { useDirectus } from './directus';
-import type { BlockPost, PageBlock, Post, Schema } from '@/types/directus-schema';
+import type { BlockPost, Page, PageBlock, Post, Schema } from '@/types/directus-schema';
 
 const { directus, readItems, readItem, readSingleton, aggregate } = useDirectus();
 
@@ -376,5 +376,34 @@ export const searchContent = async (search: string) => {
     ];
   } catch {
     throw new Error('Failed to search content');
+  }
+};
+
+export const fetchAllPosts = async (): Promise<Post[]> => {
+  try {
+    const posts = await directus.request(
+      readItems('posts', {
+        fields: ['id', 'slug', 'status', 'title'],
+        filter: { status: { _eq: 'published' } },
+      }),
+    );
+
+    return posts;
+  } catch {
+    throw new Error('Failed to fetch all blog posts');
+  }
+};
+export const fetchAllPages = async (): Promise<Page[]> => {
+  try {
+    const pages = await directus.request(
+      readItems('pages', {
+        fields: ['id', 'permalink', 'title'],
+        filter: { status: { _neq: 'draft' } },
+      }),
+    );
+
+    return pages.filter((p) => typeof p.permalink === 'string');
+  } catch {
+    throw new Error('Failed to fetch all pages');
   }
 };
