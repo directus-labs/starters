@@ -1,16 +1,31 @@
 ---
-export const prerender = false;
+export const prerender = true;
 
 import Layout from '@/layouts/BaseLayout.astro';
-import { fetchPageData } from '@/lib/directus/fetchers';
+import { fetchAllPages, fetchPageData } from '@/lib/directus/fetchers';
 import PageClient from '@/components/layout/PageClient';
 import type { Page, PageBlock } from '@/types/directus-schema';
 
-const { permalink } = Astro.params;
-const permalinkSegments = Array.isArray(permalink) ? permalink : [permalink];
-const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+export async function getStaticPaths() {
+  const pages = await fetchAllPages();
+  return pages.map((page) => {
+    const cleaned = page.permalink.replace(/^\/+|\/+$/g, '');
+    return { params: { permalink: cleaned.length === 0 ? undefined: cleaned } };
+  });
+}
 
-let page: Page | null = null
+const { permalink } = Astro.params;
+
+const permalinkSegments =
+  typeof permalink === 'string'
+    ? permalink.split('/')
+    : Array.isArray(permalink)
+    ? permalink
+    : [];
+const resolvedPermalink =
+  `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+
+let page: Page | null = null;
 try {
   page = await fetchPageData(resolvedPermalink);
 } catch (error) {
@@ -22,7 +37,10 @@ if (!page || !page.blocks) {
   page = null;
 }
 
-const blocks: PageBlock[] = page?.blocks?.filter((block: any): block is PageBlock => typeof block === 'object' && block.collection) ?? [];
+const blocks: PageBlock[] =
+  page?.blocks?.filter((block: any): block is PageBlock =>
+    typeof block === 'object' && block.collection
+  ) ?? [];
 
 const siteURL = import.meta.env.PUBLIC_SITE_URL || '';
 

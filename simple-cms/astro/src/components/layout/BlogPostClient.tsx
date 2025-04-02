@@ -1,7 +1,7 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import useSWR from 'swr';
-import { useEffect } from 'react';
 import DirectusImage from '@/components/shared/DirectusImage';
 import BaseText from '@/components/ui/Text';
 import { Separator } from '@/components/ui/separator';
@@ -42,14 +42,30 @@ export default function BlogPostClient({
 }: BlogPostClientProps) {
   const { isVisualEditingEnabled, apply } = useVisualEditing();
 
-  const { data: post = initialPost, mutate } = useSWR(
-    slug ? `/api/blog-post/${encodeURIComponent(slug)}${token ? `?token=${token}` : ''}` : null,
+  const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setIsPreviewEnabled(params.get('preview') === 'true');
+  }, []);
+
+  const shouldFetchLive = (isVisualEditingEnabled || isPreviewEnabled) && slug;
+
+  const swrKey = shouldFetchLive
+    ? `/api/blog-post/${encodeURIComponent(slug!)}${
+        token
+          ? `?token=${token}&preview=${isPreviewEnabled}&visual-editing=${isVisualEditingEnabled}`
+          : `?preview=${isPreviewEnabled}&visual-editing=${isVisualEditingEnabled}`
+      }`
+    : null;
+
+  const { data: swrData, mutate } = useSWR(
+    swrKey,
     async (url: string) => {
       const res = await fetch(url);
 
       if (!res.ok) {
         const error = await res.json();
-
         throw new Error(error.error || 'Failed to fetch post');
       }
 
@@ -57,13 +73,12 @@ export default function BlogPostClient({
       return data.post as Post;
     },
     {
-      fallbackData: initialPost,
       revalidateOnFocus: false,
       shouldRetryOnError: false,
     },
   );
 
-  if (!post) return null;
+  const post = shouldFetchLive ? (swrData ?? initialPost) : initialPost;
 
   useEffect(() => {
     if (isVisualEditingEnabled) {
@@ -74,6 +89,8 @@ export default function BlogPostClient({
       });
     }
   }, [isVisualEditingEnabled, apply, mutate]);
+
+  if (!post) return null;
 
   return (
     <>

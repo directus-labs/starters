@@ -1,17 +1,10 @@
-// src/pages/api/page-blocks.ts
 import type { APIRoute } from 'astro';
 import { fetchPageData } from '@/lib/directus/fetchers';
+export const prerender = false;
 
-export const GET: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async ({ request }) => {
+  const url = new URL(request.url);
   const permalink = url.searchParams.get('permalink') || '/';
-  const isEditing = url.searchParams.get('visual-editing') === 'true';
-
-  if (!isEditing) {
-    return new Response(JSON.stringify({ blocks: [] }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
 
   try {
     const page = await fetchPageData(permalink);

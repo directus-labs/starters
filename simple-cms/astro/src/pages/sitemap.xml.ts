@@ -1,4 +1,4 @@
-import { useDirectus } from '@/lib/directus/directus';
+import { fetchAllPages, fetchAllPosts } from '@/lib/directus/fetchers';
 
 export async function GET() {
   const siteUrl = import.meta.env.PUBLIC_SITE_URL;
@@ -7,44 +7,20 @@ export async function GET() {
     throw new Error('Environment variable PUBLIC_SITE_URL is not set');
   }
 
-  const { directus, readItems } = useDirectus();
-
   try {
-    const pagesPromise = directus.request(
-      readItems('pages', {
-        filter: { status: { _eq: 'published' } },
-        fields: ['permalink', 'published_at'],
-        limit: -1,
-      }),
-    );
+    const [pages, posts] = await Promise.all([fetchAllPages(), fetchAllPosts()]);
 
-    const postsPromise = directus.request(
-      readItems('posts', {
-        filter: { status: { _eq: 'published' } },
-        fields: ['slug', 'published_at'],
-        limit: -1,
-      }),
-    );
+    const pageUrls = pages.map((page) => ({
+      url: `${siteUrl}${page.permalink}`,
+      lastModified: page.published_at || new Date().toISOString(),
+    }));
 
-    const [pages, posts] = await Promise.all([pagesPromise, postsPromise]);
+    const postUrls = posts.map((post) => ({
+      url: `${siteUrl}/blog/${post.slug}`,
+      lastModified: post.published_at || new Date().toISOString(),
+    }));
 
-    const pageUrls = pages
-      .filter((page: { permalink: string; published_at?: string | null }) => page.permalink)
-      .map((page: { permalink: string; published_at?: string | null }) => ({
-        url: `${siteUrl}${page.permalink}`,
-        lastModified: page.published_at || new Date().toISOString(),
-      }));
-
-    const postUrls = posts
-      .filter((post: { slug?: string | null; published_at?: string | null }) => post.slug)
-      .map((post: { slug?: string | null; published_at?: string | null }) => ({
-        url: `${siteUrl}/blog/${post.slug}`,
-        lastModified: post.published_at || new Date().toISOString(),
-      }));
-
-    const urls = [...pageUrls, ...postUrls];
-
-    const sitemapEntries = urls
+    const sitemapEntries = [...pageUrls, ...postUrls]
       .map(
         (entry) => `
   <url>
