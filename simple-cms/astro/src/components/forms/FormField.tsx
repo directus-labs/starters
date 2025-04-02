@@ -60,7 +60,7 @@ const Field = ({ field, form }: FieldProps) => {
       <ShadcnFormField
         control={form.control}
         name={field.name!}
-        render={({ field: formField }) => (
+        render={() => (
           <FormItem>
             <FormLabel
               htmlFor={field.name!}

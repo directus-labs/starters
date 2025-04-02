@@ -1,5 +1,6 @@
 'use client';
-import { useState } from 'react';
+
+import { useEffect, useState } from 'react';
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -10,13 +11,12 @@ import {
   NavigationMenuViewport,
 } from '@/components/ui/navigation-menu';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
 import { ChevronDown, Menu } from 'lucide-react';
-import Container from '@/components/ui/Container';
-import ThemeToggle from '@/components/ui/ThemeToggle';
-import SearchModal from '@/components/ui/SearchModal';
 import { Button } from '@/components/ui/button';
+import Container from '@/components/ui/Container';
+import SearchModal from '@/components/ui/SearchModal';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 import { forwardRef } from 'react';
 import { setAttr } from '@directus/visual-editing';
 
@@ -48,34 +48,38 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation,
   const directusURL = import.meta.env.PUBLIC_DIRECTUS_URL;
 
   const lightLogoUrl = globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg';
-
   const darkLogoUrl = globals?.logo_dark_mode ? `${directusURL}/assets/${globals.logo_dark_mode}` : '';
 
   const handleLinkClick = () => {
     setMobileMenuOpen(false);
   };
 
-  const toggleSection = (sectionId: string) => {
+  const toggleSection = (id: string) => {
     setOpenSections((prev) => ({
       ...prev,
-      [sectionId]: !prev[sectionId],
+      [id]: !prev[id],
     }));
   };
+
+  // Close mobile menu on window resize or navigation
+  useEffect(() => {
+    const handleResize = () => setMobileMenuOpen(false);
+    const handleRouteChange = () => setMobileMenuOpen(false);
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('popstate', handleRouteChange);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('popstate', handleRouteChange);
+    };
+  }, []);
 
   return (
     <header ref={ref} className="sticky top-0 z-50 w-full bg-background text-foreground">
       <Container className="flex items-center justify-between p-4">
         <a href="/" className="flex-shrink-0">
-          <img src={lightLogoUrl} alt="Logo" width={150} height={100} className="w-[120px] h-auto dark:hidden" />
-          {darkLogoUrl && (
-            <img
-              src={darkLogoUrl}
-              alt="Logo (Dark Mode)"
-              width={150}
-              height={100}
-              className="w-[120px] h-auto hidden dark:block"
-            />
-          )}
+          <img src={lightLogoUrl} alt="Logo" className="w-[120px] h-auto dark:hidden" />
+          {darkLogoUrl && <img src={darkLogoUrl} alt="Dark Logo" className="w-[120px] h-auto hidden dark:block" />}
         </a>
         <nav className="flex items-center gap-4">
           <SearchModal />
@@ -92,52 +96,44 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation,
                 : undefined
             }
           >
-            <NavigationMenuList>
-              {navigation?.items?.map(
-                (section: {
-                  id: string;
-                  title: string;
-                  url?: string;
-                  page?: { permalink: string };
-                  children?: { id: string; title: string; url?: string; page?: { permalink: string } }[];
-                }) => (
-                  <NavigationMenuItem key={section.id}>
-                    {section.children && section.children.length > 0 ? (
-                      <>
-                        <NavigationMenuTrigger className="font-heading text-nav focus:outline-none">
-                          {section.title}
-                        </NavigationMenuTrigger>
-                        <NavigationMenuContent className="bg-background">
-                          <ul className="flex flex-col gap-2 p-4 w-[200px] bg-popover">
-                            {section.children.map(
-                              (child: { id: string; title: string; url?: string; page?: { permalink: string } }) => (
-                                <li key={child.id}>
-                                  <NavigationMenuLink
-                                    href={child.page?.permalink || child.url || '#'}
-                                    className="font-heading text-nav block w-full p-2 rounded-md hover:text-accent"
-                                  >
-                                    {child.title}
-                                  </NavigationMenuLink>
-                                </li>
-                              ),
-                            )}
-                          </ul>
-                        </NavigationMenuContent>
-                      </>
-                    ) : (
-                      <NavigationMenuLink
-                        href={section.page?.permalink || section.url || '#'}
-                        className="font-heading text-nav block p-2 hover:text-accent"
-                      >
-                        {section.title}
-                      </NavigationMenuLink>
-                    )}
-                  </NavigationMenuItem>
-                ),
-              )}
+            <NavigationMenuList className="flex gap-6">
+              {navigation?.items?.map((section) => (
+                <NavigationMenuItem key={section.id}>
+                  {section.children?.length ? (
+                    <>
+                      <NavigationMenuTrigger className="font-heading text-nav focus:outline-none">
+                        <span className="font-heading text-nav">{section.title}</span>
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent className="bg-background">
+                        <ul className="flex flex-col gap-2 p-4 w-[200px] bg-popover">
+                          {section.children.map((child) => (
+                            <li key={child.id}>
+                              <NavigationMenuLink
+                                href={child.page?.permalink || child.url || '#'}
+                                className="font-heading text-nav block w-full p-2 rounded-md hover:text-accent"
+                              >
+                                {child.title}
+                              </NavigationMenuLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </NavigationMenuContent>
+                    </>
+                  ) : (
+                    <NavigationMenuLink
+                      href={section.page?.permalink || section.url || '#'}
+                      className="font-heading text-nav"
+                    >
+                      {section.title}
+                    </NavigationMenuLink>
+                  )}
+                </NavigationMenuItem>
+              ))}
             </NavigationMenuList>
             <NavigationMenuViewport />
           </NavigationMenu>
+
+          {/* Mobile menu */}
           <div className="flex md:hidden">
             <DropdownMenu open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <DropdownMenuTrigger asChild>
@@ -145,61 +141,57 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation,
                   variant="ghost"
                   size="icon"
                   aria-label="Open menu"
-                  className="text-foreground hover:bg-accent hover:text-accent-foreground"
+                  className="dark:text-white dark:hover:text-accent"
                 >
                   <Menu className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="mt-2 w-[200px] bg-popover">
-                {navigation?.items?.map(
-                  (section: {
-                    id: string;
-                    title: string;
-                    url?: string;
-                    page?: { permalink: string };
-                    children?: { id: string; title: string; url?: string; page?: { permalink: string } }[];
-                  }) => (
-                    <div key={section.id} className="p-2">
-                      {section.children && section.children.length > 0 ? (
+              <DropdownMenuContent
+                align="start"
+                className="top-full w-screen max-w-full p-6 shadow-md bg-background z-50"
+              >
+                <div className="flex flex-col gap-4">
+                  {navigation?.items?.map((section) => (
+                    <div key={section.id}>
+                      {section.children?.length ? (
                         <Collapsible open={openSections[section.id]} onOpenChange={() => toggleSection(section.id)}>
-                          <CollapsibleTrigger className="flex w-full items-center justify-between p-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-md">
-                            {section.title}
+                          <CollapsibleTrigger className="flex items-center justify-between w-full font-heading text-nav hover:text-accent">
+                            <span>{section.title}</span>
                             <ChevronDown
                               className={`h-4 w-4 transition-transform duration-200 ${
                                 openSections[section.id] ? 'rotate-180' : ''
                               }`}
                             />
                           </CollapsibleTrigger>
-                          <CollapsibleContent className="ml-4 mt-2">
-                            {section.children.map(
-                              (child: { id: string; title: string; url?: string; page?: { permalink: string } }) => (
-                                <a
-                                  key={child.id}
-                                  href={child.page?.permalink || child.url || '#'}
-                                  className="block p-2 text-sm hover:bg-accent hover:text-accent-foreground rounded-md"
-                                  onClick={handleLinkClick}
-                                >
-                                  {child.title}
-                                </a>
-                              ),
-                            )}
+                          <CollapsibleContent className="ml-4 mt-2 flex flex-col gap-2">
+                            {section.children.map((child) => (
+                              <a
+                                key={child.id}
+                                href={child.page?.permalink || child.url || '#'}
+                                className="font-heading text-nav"
+                                onClick={handleLinkClick}
+                              >
+                                {child.title}
+                              </a>
+                            ))}
                           </CollapsibleContent>
                         </Collapsible>
                       ) : (
                         <a
                           href={section.page?.permalink || section.url || '#'}
-                          className="block p-2 text-sm hover:bg-accent hover:text-accent-foreground rounded-md"
+                          className="font-heading text-nav"
                           onClick={handleLinkClick}
                         >
                           {section.title}
                         </a>
                       )}
                     </div>
-                  ),
-                )}
+                  ))}
+                </div>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
+
           <ThemeToggle />
         </nav>
       </Container>

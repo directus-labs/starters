@@ -19,6 +19,7 @@ const fullTitle = metadata?.title ? `${metadata.title} | ${siteTitle}` : siteTit
 <html lang="en" style={`--accent-color: ${accentColor};`}>
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={metadata?.description || siteDescription} />
     <link rel="icon" href={faviconURL} />

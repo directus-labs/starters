@@ -55,7 +55,31 @@ export default function VisualEditingLayout({
 
   return (
     <>
-      <NavigationBar ref={navRef} navigation={siteData.headerNavigation} globals={siteData.globals} />
+      <NavigationBar
+        ref={navRef}
+        navigation={{
+          ...siteData.headerNavigation,
+          items: (siteData.headerNavigation.items || []).map((item: any) => ({
+            id: item.id,
+            title: item.title || '',
+            url: item.url,
+            page: item.page ? { permalink: item.page.permalink || '' } : undefined,
+            children: (item.children || []).map((child: any) => ({
+              id: child.id,
+              title: child.title || '',
+              url: child.url,
+              page: child.page ? { permalink: child.page.permalink || '' } : undefined,
+            })),
+          })),
+        }}
+        globals={{
+          ...siteData.globals,
+          logo: typeof siteData.globals.logo === 'string' ? siteData.globals.logo : undefined,
+          logo_dark_mode:
+            typeof siteData.globals.logo_dark_mode === 'string' ? siteData.globals.logo_dark_mode : undefined,
+        }}
+      />
+
       {children}
       <Footer
         ref={footerRef}

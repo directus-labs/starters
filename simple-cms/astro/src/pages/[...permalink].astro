@@ -4,13 +4,13 @@ export const prerender = false;
 import Layout from '@/layouts/BaseLayout.astro';
 import { fetchPageData } from '@/lib/directus/fetchers';
 import PageClient from './PageClient';
-import type { PageBlock } from '@/types/directus-schema';
+import type { Page, PageBlock } from '@/types/directus-schema';
 
 const { permalink } = Astro.params;
 const permalinkSegments = Array.isArray(permalink) ? permalink : [permalink];
 const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
 
-let page;
+let page: Page | null = null
 try {
   page = await fetchPageData(resolvedPermalink);
 } catch (error) {
