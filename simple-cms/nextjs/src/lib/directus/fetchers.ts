@@ -16,6 +16,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 				fields: [
 					'title',
 					'seo',
+					'id',
 					{
 						blocks: [
 							'id',
@@ -26,9 +27,10 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 							'hide_block',
 							{
 								item: {
-									block_richtext: ['tagline', 'headline', 'content', 'alignment'],
-									block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] }],
+									block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
+									block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] as any }],
 									block_pricing: [
+										'id',
 										'tagline',
 										'headline',
 										{
@@ -55,6 +57,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 										},
 									],
 									block_hero: [
+										'id',
 										'tagline',
 										'headline',
 										'description',
@@ -77,7 +80,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 											],
 										},
 									],
-									block_posts: ['tagline', 'headline', 'collection', 'limit'],
+									block_posts: ['id', 'tagline', 'headline', 'collection', 'limit'],
 									block_form: [
 										'id',
 										'tagline',
@@ -166,12 +169,14 @@ export const fetchSiteData = async () => {
 		const [globals, headerNavigation, footerNavigation] = await Promise.all([
 			directus.request(
 				readSingleton('globals', {
-					fields: ['title', 'description', 'logo', 'logo_dark_mode', 'social_links', 'accent_color', 'favicon'],
+					fields: ['id', 'title', 'description', 'logo', 'logo_dark_mode', 'social_links', 'accent_color', 'favicon'],
 				}),
 			),
 			directus.request(
 				readItem('navigation', 'main', {
 					fields: [
+						'id',
+						'title',
 						{
 							items: [
 								'id',
@@ -189,6 +194,8 @@ export const fetchSiteData = async () => {
 			directus.request(
 				readItem('navigation', 'footer', {
 					fields: [
+						'id',
+						'title',
 						{
 							items: [
 								'id',
@@ -276,7 +283,7 @@ export const fetchAuthorById = async (authorId: string) => {
 	try {
 		const author = await directus.request(
 			readUser(authorId, {
-				fields: ['first_name', 'last_name', 'avatar'],
+				fields: ['id', 'first_name', 'last_name', 'avatar'],
 			}),
 		);
 

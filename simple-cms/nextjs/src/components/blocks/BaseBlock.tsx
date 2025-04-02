@@ -1,3 +1,5 @@
+'use client';
+
 import RichText from '@/components/blocks/RichText';
 import Hero from '@/components/blocks/Hero';
 import Gallery from '@/components/blocks/Gallery';
@@ -28,8 +30,9 @@ const BaseBlock = ({ block }: BaseBlockProps) => {
 	if (!Component) {
 		return null;
 	}
+	const itemId = block.item?.id;
 
-	return <Component data={block.item} id={`block-${block.id}`} />;
+	return <Component data={block.item} blockId={block.id} itemId={itemId} />;
 };
 
 export default BaseBlock;

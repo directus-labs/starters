@@ -1,9 +1,10 @@
 'use client';
 
 import { FormField } from '@/types/directus-schema';
-import Tagline from '../ui/Tagline';
+import Tagline from '@/components/ui/Tagline';
 import FormBuilder from '../forms/FormBuilder';
-import Headline from '../ui/Headline';
+import Headline from '@/components/ui/Headline';
+import { setAttr } from '@directus/visual-editing';
 
 interface FormBlockProps {
 	data: {
@@ -22,6 +23,8 @@ interface FormBlockProps {
 			fields: FormField[];
 		};
 	};
+	itemId?: string;
+	blockId?: string;
 }
 
 const FormBlock = ({ data }: FormBlockProps) => {
@@ -33,9 +36,40 @@ const FormBlock = ({ data }: FormBlockProps) => {
 
 	return (
 		<section className="mx-auto">
-			{tagline && <Tagline tagline={tagline} />}
-			{headline && <Headline headline={headline} />}
-			<FormBuilder form={form} className="mt-8" />
+			{tagline && (
+				<Tagline
+					tagline={tagline}
+					data-directus={setAttr({
+						collection: 'block_form',
+						item: data.id,
+						fields: 'tagline',
+						mode: 'popover',
+					})}
+				/>
+			)}
+
+			{headline && (
+				<Headline
+					headline={headline}
+					data-directus={setAttr({
+						collection: 'block_form',
+						item: data.id,
+						fields: 'headline',
+						mode: 'popover',
+					})}
+				/>
+			)}
+
+			<div
+				data-directus={setAttr({
+					collection: 'block_form',
+					item: data.id,
+					fields: ['form'],
+					mode: 'popover',
+				})}
+			>
+				<FormBuilder form={form} className="mt-8" />
+			</div>
 		</section>
 	);
 };
