@@ -17,8 +17,10 @@
 		<div class="flex items-center gap-x-2">
 			<Checkbox
 				id={`${name}-${option.value}`}
-				bind:checked={$formData[name]}
-				required={!!form[name].required}
+				checked={$formData[name]}
+				onCheckedChange={(checked) => {
+					formData[name] = checked;
+				}}
 			/>
 			<label for={`${name}-${option.value}`} class="text-sm">
 				{option.text}

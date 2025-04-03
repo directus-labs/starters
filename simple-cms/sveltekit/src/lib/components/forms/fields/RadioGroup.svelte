@@ -9,11 +9,13 @@
 	}
 
 	const { name, options, form }: RadioGroupFieldProps = $props();
+
+	let { form: formData } = $derived(form);
 </script>
 
 <!-- value={form.watch(name)} -->
 <!-- onValueChange={(value) => form.setValue(name, value)} -->
-<RadioGroup.Root class="">
+<RadioGroup.Root bind:value={$formData[name]}>
 	{#each options as option (option.value)}
 		<div class="flex items-center gap-x-2">
 			<RadioGroup.Item id={`${name}-${option.value}`} value={option.value} />
