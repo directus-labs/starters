@@ -14,7 +14,7 @@ services:
       timeout: 5s
       retries: 5
       start_interval: 5s
-      start_period: 30s
+      start_period: 15s
 
   cache:
     image: redis:6
@@ -24,10 +24,10 @@ services:
       timeout: 5s
       retries: 5
       start_interval: 5s
-      start_period: 30s
+      start_period: 15s
 
   directus:
-    image: directus/directus:11.4.1
+    image: directus/directus:11.6.1
     ports:
       - ${DIRECTUS_PORT}:8055
     volumes:
@@ -76,3 +76,10 @@ services:
       EXTENSIONS_AUTO_RELOAD: ${EXTENSIONS_AUTO_RELOAD}
 
       CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC: ${CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC}
+
+      EMAIL_TRANSPORT: ${EMAIL_TRANSPORT}
+      EMAIL_FROM: ${EMAIL_FROM}
+      EMAIL_SMTP_HOST: ${EMAIL_SMTP_HOST}
+      EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT}
+      EMAIL_SMTP_USER: ${EMAIL_SMTP_USER}
+      EMAIL_SMTP_PASSWORD: ${EMAIL_SMTP_PASSWORD}
