@@ -11,10 +11,13 @@
 	import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-svelte';
 	import Headline from '../ui/Headline.svelte';
 	import Title from '../ui/Title.svelte';
+	import Tagline from '../ui/Tagline.svelte';
+	import setAttr from '$lib/directus/visualEditing';
 
 	interface GalleryProps {
 		data: {
-			title?: string;
+			id: string;
+			tagline?: string;
 			headline?: string;
 			items: Array<{
 				id: string;
@@ -25,7 +28,7 @@
 	}
 
 	let { data }: GalleryProps = $props();
-	const { title, headline, items = [] } = $derived(data);
+	const { tagline, headline, items = [], id } = $derived(data);
 	let isLightboxOpen = $state(false);
 	let currentIndex = $state(0);
 
@@ -57,15 +60,39 @@
 </script>
 
 <section class="p-6">
-	{#if title}
-		<Title {title} />
+	{#if tagline}
+		<Tagline
+			{tagline}
+			data-directus={setAttr({
+				collection: 'block_gallery',
+				item: id,
+				fields: 'tagline',
+				mode: 'popover'
+			})}
+		/>
 	{/if}
 	{#if headline}
-		<Headline {headline} />
+		<Headline
+			{headline}
+			data-directus={setAttr({
+				collection: 'block_gallery',
+				item: id,
+				fields: 'headline',
+				mode: 'popover'
+			})}
+		/>
 	{/if}
 
 	{#if sortedItems.length > 0}
-		<div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+		<div
+			class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3"
+			data-directus={setAttr({
+				collection: 'block_gallery',
+				item: id,
+				fields: 'items',
+				mode: 'modal'
+			})}
+		>
 			{#each sortedItems as item, index}
 				<button
 					class="group relative h-[300px] overflow-hidden rounded-lg transition-shadow duration-300 hover:shadow-lg"

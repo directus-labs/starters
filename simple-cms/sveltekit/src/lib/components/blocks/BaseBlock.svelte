@@ -5,7 +5,6 @@
 	import Pricing from '$lib/components/blocks/Pricing.svelte';
 	import Posts from '$lib/components/blocks/Posts.svelte';
 	import Form from '$lib/components/blocks/Form.svelte';
-	import DirectusVisualEditing from '../shared/DirectusVisualEditing.svelte';
 	interface BaseBlockProps {
 		block: {
 			collection: string;
@@ -28,14 +27,8 @@
 	const Component = $derived(components[block.collection as keyof typeof components]);
 </script>
 
-<!-- <pre>{JSON.stringify(block, null, 2)}</pre> -->
 {#if Component}
-	<DirectusVisualEditing
-		editConfig={{ collection: block.collection, item: block.item.id }}
-		data-block-type={block.collection}
-	>
-		<Component data={block.item} />
-	</DirectusVisualEditing>
+	<Component data={block.item} />
 {:else}
 	<div>
 		<h1>Block not found {block.collection}</h1>

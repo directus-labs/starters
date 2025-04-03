@@ -1,22 +1,24 @@
 <script lang="ts">
+	import setAttr from '$lib/directus/visualEditing';
 	import { cn } from '$lib/utils';
-	import Title from '../ui/Headline.svelte';
 	import Headline from '../ui/Headline.svelte';
+	import Tagline from '../ui/Tagline.svelte';
 	import Text from '../ui/Text.svelte';
 
 	interface RichTextProps {
 		data: {
-			title?: string;
+			id: string;
 			headline?: string;
 			content: string;
 			alignment?: 'left' | 'center' | 'right';
+			tagline?: string;
 		};
 		className?: string;
 	}
 
 	let { data, className }: RichTextProps = $props();
 
-	const { title, headline, content, alignment = 'left' } = data;
+	const { headline, content, alignment = 'left', tagline, id } = $derived(data);
 </script>
 
 <div
@@ -26,11 +28,37 @@
 		className
 	)}
 >
-	{#if title}
-		<Title {title} />
+	{#if tagline}
+		<Tagline
+			{tagline}
+			data-directus={setAttr({
+				collection: 'block_richtext',
+				item: id,
+				fields: 'tagline',
+				mode: 'popover'
+			})}
+		/>
 	{/if}
 	{#if headline}
-		<Headline {headline} />
+		<Headline
+			{headline}
+			data-directus={setAttr({
+				collection: 'block_richtext',
+				item: id,
+				fields: 'headline',
+				mode: 'popover'
+			})}
+		/>
 	{/if}
-	<Text {content} />
+	{#if content}
+		<Text
+			{content}
+			data-directus={setAttr({
+				collection: 'block_richtext',
+				item: id,
+				fields: 'content',
+				mode: 'popover'
+			})}
+		/>
+	{/if}
 </div>

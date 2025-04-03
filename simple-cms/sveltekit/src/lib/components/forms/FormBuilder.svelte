@@ -71,6 +71,7 @@
 				fields={form.fields}
 				onSubmit={handleSubmit}
 				submitLabel={form.submit_label || 'Submit'}
+				id={form.id}
 			/>
 		</div>
 	{/if}

@@ -10,6 +10,7 @@
 	import { goto } from '$app/navigation';
 	import { ChevronDown, Menu } from 'lucide-svelte';
 	import * as Collapsible from '$lib/components/ui/collapsible';
+	import setAttr from '$lib/directus/visualEditing';
 
 	const globals = $derived(page.data.globals);
 	const navigation = $derived(page.data.headerNavigation);
@@ -43,7 +44,17 @@
 		<nav class="flex items-center gap-4">
 			<SearchModal />
 			<!-- <NavigationMenuItems /> -->
-			<div class="hidden gap-2 md:flex">
+			<div
+				class="hidden gap-2 md:flex"
+				data-directus={navigation
+					? setAttr({
+							collection: 'navigation',
+							item: navigation.id,
+							fields: ['items'],
+							mode: 'modal'
+						})
+					: undefined}
+			>
 				{#each navigation?.items as item (item.id)}
 					{#if item.children.length === 0}
 						<Button href={item.page.permalink} variant="ghost">{item.title}</Button>
@@ -123,56 +134,6 @@
 				</DropdownMenu.Root>
 			</div>
 
-			<!-- <div class="flex md:hidden">
-						<DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
-							<DropdownMenuTrigger asChild>
-								<Button
-									variant="link"
-									size="icon"
-									aria-label="Open menu"
-									className="dark:text-white dark:hover:text-accent"
-								>
-									<Menu />
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent align="start" className="top-full w-screen p-6 shadow-md max-w-full overflow-hidden">
-								<div className="flex flex-col gap-4">
-									{navigation?.items?.map((section: any) => (
-										<div key={section.id}>
-											{section.children && section.children.length > 0 ? (
-												<Collapsible>
-													<CollapsibleTrigger className="font-heading text-nav hover:text-accent w-full text-left flex items-center focus:outline-none">
-														<span>{section.title}</span>
-														<ChevronDown className="size-4 ml-1 hover:rotate-180 active:rotate-180 focus:rotate-180" />
-													</CollapsibleTrigger>
-													<CollapsibleContent className="ml-4 mt-2 flex flex-col gap-2">
-														{section.children.map((child: any) => (
-															<Link
-																key={child.id}
-																href={child.page?.permalink || child.url || '#'}
-																className="font-heading text-nav"
-																onClick={handleLinkClick}
-															>
-																{child.title}
-															</Link>
-														))}
-													</CollapsibleContent>
-												</Collapsible>
-											) : (
-												<Link
-													href={section.page?.permalink || section.url || '#'}
-													className="font-heading text-nav"
-													onClick={handleLinkClick}
-												>
-													{section.title}
-												</Link>
-											)}
-										</div>
-									))}
-								</div>
-							</DropdownMenuContent>
-						</DropdownMenu>
-					</div> -->
 			<LightSwitch />
 		</nav>
 	</Container>

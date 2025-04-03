@@ -1,31 +1,38 @@
 <script lang="ts">
-	import Title from '../ui/Title.svelte';
+	import setAttr from '$lib/directus/visualEditing';
 	import Headline from '../ui/Headline.svelte';
+	import Tagline from '../ui/Tagline.svelte';
 	import PricingCard from './PricingCard.svelte';
 
-	interface PricingProps {
-		data: {
-			title?: string;
-			headline?: string;
-			pricing_cards: Array<{
-				id: string;
-				title: string;
-				description?: string;
-				price?: string;
-				badge?: string;
-				features?: string[];
-				button?: {
-					label: string | null;
-					variant: string | null;
-					url: string | null;
-				};
-				is_highlighted?: boolean;
-			}>;
+	interface PricingCardType {
+		id: string;
+		title: string;
+		description?: string;
+		price?: string;
+		badge?: string;
+		features?: string[];
+		button?: {
+			id: string;
+			label: string | null;
+			variant: string | null;
+			url: string | null;
 		};
+		is_highlighted?: boolean;
+	}
+
+	interface PricingData {
+		id: string;
+		tagline?: string;
+		headline?: string;
+		pricing_cards: PricingCardType[];
+	}
+
+	interface PricingProps {
+		data: PricingData;
 	}
 
 	const { data }: PricingProps = $props();
-	const { title, headline, pricing_cards } = $derived(data);
+	const { tagline, headline, pricing_cards, id } = $derived(data);
 
 	const gridClasses = $derived.by(() => {
 		if (pricing_cards.length === 1) return 'grid-cols-1';
@@ -43,15 +50,39 @@
 
 {#if pricing_cards || Array.isArray(pricing_cards)}
 	<section class="space-y-8">
-		{#if title}
-			<Title {title} />
+		{#if tagline}
+			<Tagline
+				{tagline}
+				data-directus={setAttr({
+					collection: 'block_pricing',
+					item: id,
+					fields: 'tagline',
+					mode: 'popover'
+				})}
+			/>
 		{/if}
 		{#if headline}
-			<Headline {headline} />
+			<Headline
+				{headline}
+				data-directus={setAttr({
+					collection: 'block_pricing',
+					item: id,
+					fields: 'headline',
+					mode: 'popover'
+				})}
+			/>
 		{/if}
 
-		<div class={`grid gap-6 ${gridClasses} ${containerStyles}`}>
-			{#each pricing_cards as card}
+		<div
+			class={`grid gap-6 ${gridClasses} ${containerStyles}`}
+			data-directus={setAttr({
+				collection: 'block_pricing',
+				item: id,
+				fields: ['pricing_cards'],
+				mode: 'modal'
+			})}
+		>
+			{#each pricing_cards as card (card.id)}
 				<PricingCard {card} />
 			{/each}
 		</div>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import setAttr from '$lib/directus/visualEditing';
 	import type { FormField } from '$lib/types/directus-schema';
 	import FormBuilder from '../forms/FormBuilder.svelte';
 	import Headline from '../ui/Headline.svelte';
@@ -29,10 +30,35 @@
 
 <section class="mx-auto">
 	{#if tagline}
-		<Tagline {tagline} />
+		<Tagline
+			{tagline}
+			data-directus={setAttr({
+				collection: 'block_form',
+				item: data.id,
+				fields: 'tagline',
+				mode: 'popover'
+			})}
+		/>
 	{/if}
 	{#if headline}
-		<Headline {headline} />
+		<Headline
+			{headline}
+			data-directus={setAttr({
+				collection: 'block_form',
+				item: data.id,
+				fields: 'headline',
+				mode: 'popover'
+			})}
+		/>
 	{/if}
-	<FormBuilder {form} class="mt-8" />
+	<div
+		data-directus={setAttr({
+			collection: 'block_form',
+			item: data.id,
+			fields: ['form'],
+			mode: 'popover'
+		})}
+	>
+		<FormBuilder {form} class="mt-8" />
+	</div>
 </section>

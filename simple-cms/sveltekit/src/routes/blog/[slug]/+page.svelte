@@ -8,6 +8,7 @@
 	import type { PageData } from './$types';
 	import BaseText from '$lib/components/ui/Text.svelte';
 	import ShareDialog from '$lib/components/ui/ShareDialog.svelte';
+	import setAttr from '$lib/directus/visualEditing';
 
 	let { data }: { data: PageData } = $props();
 
@@ -20,7 +21,15 @@
 <Container class="py-12">
 	{#if post?.image}
 		<div class="mb-8">
-			<div class="relative h-[400px] w-full overflow-hidden rounded-lg">
+			<div
+				class="relative h-[400px] w-full overflow-hidden rounded-lg"
+				data-directus={setAttr({
+					collection: 'posts',
+					item: post.id,
+					fields: ['image', 'meta_header_image'],
+					mode: 'modal'
+				})}
+			>
 				<DirectusImage
 					uuid={post.image as string}
 					alt={post.title || 'post header image'}
@@ -31,17 +40,43 @@
 			</div>
 		</div>
 	{/if}
-	<Headline as="h2" headline={post.title} class="mb-4 !text-accent" />
+	<Headline
+		as="h2"
+		headline={post.title}
+		class="mb-4 !text-accent"
+		data-directus={setAttr({
+			collection: 'posts',
+			item: post.id,
+			fields: ['title', 'slug'],
+			mode: 'popover'
+		})}
+	/>
 	<Separator class="mb-8 border" />
 
 	<div class="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,_2fr)_400px]">
 		<main class="text-left">
-			<BaseText content={post.content || ''} />
+			<BaseText
+				content={post.content || ''}
+				data-directus={setAttr({
+					collection: 'posts',
+					item: post.id,
+					fields: ['content', 'meta_header_content'],
+					mode: 'drawer'
+				})}
+			/>
 		</main>
 
 		<aside class="h-fit max-w-[496px] space-y-6 rounded-lg bg-background-muted p-6">
 			{#if author}
-				<div class="flex items-center space-x-4">
+				<div
+					class="flex items-center space-x-4"
+					data-directus={setAttr({
+						collection: 'posts',
+						item: post.id,
+						fields: ['author'],
+						mode: 'popover'
+					})}
+				>
 					{#if author.avatar}
 						<DirectusImage
 							uuid={author.avatar as string}
@@ -53,14 +88,33 @@
 					{/if}
 					<div>
 						{#if authorName}
-							<p class="font-bold">{authorName}</p>
+							<p
+								class="font-bold"
+								data-directus={setAttr({
+									collection: 'posts',
+									item: post.id,
+									fields: ['author'],
+									mode: 'popover'
+								})}
+							>
+								{authorName}
+							</p>
 						{/if}
 					</div>
 				</div>
 			{/if}
 
 			{#if post.description}
-				<p class="">{post.description}</p>
+				<p
+					data-directus={setAttr({
+						collection: 'posts',
+						item: post.id,
+						fields: 'description',
+						mode: 'popover'
+					})}
+				>
+					{post.description}
+				</p>
 			{/if}
 
 			<div class="flex justify-start">

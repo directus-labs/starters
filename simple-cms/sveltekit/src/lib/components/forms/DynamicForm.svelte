@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { dev } from '$app/environment';
+	import setAttr from '$lib/directus/visualEditing';
 	import type { FormField as FormFieldType } from '$lib/types/directus-schema';
 	import { buildZodSchema } from '$lib/zodSchemaBuilder';
 	import Button from '../blocks/Button.svelte';
@@ -13,9 +14,10 @@
 		fields: FormFieldType[];
 		onSubmit: (data: Record<string, any>) => void;
 		submitLabel: string;
+		id: string;
 	}
 
-	const { fields, onSubmit, submitLabel }: DynamicFormProps = $props();
+	const { fields, onSubmit, submitLabel, id }: DynamicFormProps = $props();
 
 	const sortedFields = [...fields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
 	const formSchema = buildZodSchema(fields);
@@ -58,19 +60,37 @@
 	};
 </script>
 
-<form class="flex flex-wrap gap-4" {onsubmit}>
+<form
+	class="flex flex-wrap gap-4"
+	{onsubmit}
+	data-directus={setAttr({
+		collection: 'forms',
+		item: id,
+		fields: 'fields',
+		mode: 'popover'
+	})}
+>
 	{#each sortedFields as field (field.id)}
 		<Field {field} {form} />
 	{/each}
 
 	<div class="w-full">
-		<Button
-			type="submit"
-			icon="arrow"
-			label={submitLabel}
-			iconPosition="right"
-			id={`submit-${submitLabel.replace(/\s+/g, '-').toLowerCase()}`}
-		></Button>
+		<div
+			data-directus={setAttr({
+				collection: 'forms',
+				item: id,
+				fields: 'submit_label',
+				mode: 'popover'
+			})}
+		>
+			<Button
+				type="submit"
+				icon="arrow"
+				label={submitLabel}
+				iconPosition="right"
+				id={`submit-${submitLabel.replace(/\s+/g, '-').toLowerCase()}`}
+			></Button>
+		</div>
 	</div>
 	{#if dev}
 		<div class="flex w-full flex-col gap-2 rounded-xl bg-red-200 p-2">

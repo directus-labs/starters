@@ -17,7 +17,6 @@ export const fetchPageData = async (permalink: string, postPage = 1, fetch: Func
 			limit: 1,
 			fields: [
 				'title',
-				'description',
 				{
 					blocks: [
 						'id',
@@ -177,6 +176,7 @@ export const fetchSiteData = async (fetch: Function) => {
 			directus.request(
 				readSingleton('globals', {
 					fields: [
+						"id",
 						'title',
 						'description',
 						'logo',
@@ -190,6 +190,8 @@ export const fetchSiteData = async (fetch: Function) => {
 			directus.request(
 				readItem('navigation', 'main', {
 					fields: [
+						'id',
+						'title',
 						{
 							items: [
 								'id',
@@ -207,6 +209,8 @@ export const fetchSiteData = async (fetch: Function) => {
 			directus.request(
 				readItem('navigation', 'footer', {
 					fields: [
+						'id',
+						'title',
 						{
 							items: [
 								'id',
@@ -311,7 +315,7 @@ export const fetchAuthorById = async (authorId: string, fetch: Function) => {
 /**
  * Fetches paginated blog posts.
  */
-export const fetchPaginatedPosts = async (limit: number, page: number, fetch: Function) => {
+export const fetchPaginatedPosts = async (limit: number, page: number) => {
 	const { getDirectus, readItems } = useDirectus();
 	const directus = getDirectus(fetch);
 	try {
@@ -335,7 +339,7 @@ export const fetchPaginatedPosts = async (limit: number, page: number, fetch: Fu
 /**
  * Fetches the total number of published blog posts.
  */
-export const fetchTotalPostCount = async (fetch: Function): Promise<number> => {
+export const fetchTotalPostCount = async (): Promise<number> => {
 	const { getDirectus } = useDirectus();
 	const directus = getDirectus(fetch);
 
