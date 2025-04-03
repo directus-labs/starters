@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { useDirectus } from '$lib/directus/directus';
 
-export const GET: RequestHandler = async ({ request }) => {
+export const GET: RequestHandler = async ({ request, fetch }) => {
 	const { searchParams } = new URL(request.url);
 	const search = searchParams.get('search');
 
@@ -10,7 +10,8 @@ export const GET: RequestHandler = async ({ request }) => {
 		return json({ error: 'Query must be at least 3 characters.' }, { status: 400 });
 	}
 
-	const { directus, readItems } = useDirectus();
+	const { getDirectus, readItems } = useDirectus();
+	const directus = getDirectus(fetch);
 
 	try {
 		const [pages, posts] = await Promise.all([
