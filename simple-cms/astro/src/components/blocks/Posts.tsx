@@ -1,9 +1,10 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { ChevronFirst, ChevronLast } from 'lucide-react';
 import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import DirectusImage from '@/components/shared/DirectusImage';
-
 import {
   Pagination,
   PaginationContent,
@@ -14,7 +15,7 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import type { Post } from '@/types/directus-schema';
-import { fetchPaginatedPosts, fetchTotalPostCount } from '@/lib/directus/fetchers';
+import { fetchPaginatedPosts } from '@/lib/directus/fetchers';
 import { setAttr } from '@directus/visual-editing';
 
 interface PostsProps {
@@ -24,12 +25,12 @@ interface PostsProps {
     headline?: string;
     posts: Post[];
     limit: number;
+    totalPages: number;
   };
 }
 
 const Posts = ({ data }: PostsProps) => {
-  const { tagline, headline, posts, limit, id } = data;
-
+  const { tagline, headline, posts, limit, totalPages, id } = data;
   const visiblePages = 5;
   const perPage = limit || 6;
 
@@ -44,30 +45,14 @@ const Posts = ({ data }: PostsProps) => {
 
   const [paginatedPosts, setPaginatedPosts] = useState<Post[]>(currentPage === 1 ? posts : []);
 
-  const [totalPages, setTotalPages] = useState(0);
-
-  useEffect(() => {
-    const fetchTotalPages = async () => {
-      try {
-        const totalCount = await fetchTotalPostCount();
-        setTotalPages(Math.ceil(totalCount / perPage));
-      } catch {
-        throw new Error('Error fetching total post count');
-      }
-    };
-
-    fetchTotalPages();
-  }, [perPage]);
-
   useEffect(() => {
     const fetchPosts = async () => {
+      if (currentPage === 1) {
+        setPaginatedPosts(posts);
+        return;
+      }
+
       try {
-        if (currentPage === 1) {
-          setPaginatedPosts(posts);
-
-          return;
-        }
-
         const response = await fetchPaginatedPosts(perPage, currentPage);
         setPaginatedPosts(response);
       } catch {
@@ -100,16 +85,16 @@ const Posts = ({ data }: PostsProps) => {
       const rangeEnd = Math.min(totalPages, currentPage + 2);
 
       if (rangeStart > 1) {
-        pages.push('ellipsis-start');
+        pages.push(1);
+        if (rangeStart > 2) pages.push('ellipsis-start');
       }
 
       for (let i = rangeStart; i <= rangeEnd; i++) {
         pages.push(i);
       }
 
-      if (rangeEnd < totalPages) {
-        pages.push('ellipsis-end');
-      }
+      if (rangeEnd < totalPages - 1) pages.push('ellipsis-end');
+      if (rangeEnd < totalPages) pages.push(totalPages);
     }
 
     return pages;
@@ -177,7 +162,6 @@ const Posts = ({ data }: PostsProps) => {
           <p className="text-center text-gray-500">No posts available.</p>
         )}
       </div>
-
       {totalPages > 1 && (
         <Pagination>
           <PaginationContent>

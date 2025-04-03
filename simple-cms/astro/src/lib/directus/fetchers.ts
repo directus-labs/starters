@@ -7,7 +7,7 @@ const { directus, readItems, readItem, readSingleton, aggregate } = useDirectus(
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
  */
-export const fetchPageData = async (permalink: string, postPage = 1) => {
+export const fetchPageData = async (permalink: string, postPage = 1): Promise<Page> => {
   try {
     const pageData = await directus.request(
       readItems('pages', {
@@ -148,7 +148,17 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
             }),
           );
 
-          (block.item as BlockPost & { posts: Post[] }).posts = posts;
+          const countResponse = await directus.request(
+            aggregate('posts', {
+              aggregate: { count: '*' },
+              filter: { status: { _eq: 'published' } },
+            }),
+          );
+
+          const totalPages = Math.ceil(Number(countResponse[0]?.count || 0) / limit);
+
+          (block.item as BlockPost & { posts: Post[]; totalPages: number }).posts = posts;
+          (block.item as BlockPost & { totalPages: number }).totalPages = totalPages;
         }
       }
     }
@@ -301,26 +311,6 @@ export const fetchPaginatedPosts = async (limit: number, page: number) => {
     return response;
   } catch {
     throw new Error('Failed to fetch paginated posts');
-  }
-};
-
-/**
- * Fetches the total number of published blog posts.
- */
-export const fetchTotalPostCount = async (): Promise<number> => {
-  const { directus } = useDirectus();
-
-  try {
-    const response = await directus.request(
-      aggregate('posts', {
-        aggregate: { count: '*' },
-        filter: { status: { _eq: 'published' } },
-      }),
-    );
-
-    return Number(response[0]?.count) || 0;
-  } catch {
-    return 0;
   }
 };
 
