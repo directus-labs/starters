@@ -22,14 +22,14 @@ export default function VisualEditingLayout({
   globals,
   children,
 }: VisualEditingLayoutProps) {
-  const { data: siteData, mutate } = useSWR('/api/site-data', fetchSiteData, {
-    fallbackData: { globals, headerNavigation, footerNavigation },
-    revalidateOnFocus: false,
-  });
-
   const navRef = useRef<HTMLElement>(null);
   const footerRef = useRef<HTMLElement>(null);
   const { isVisualEditingEnabled, apply } = useVisualEditing();
+
+  const { data: siteData, mutate } = useSWR(isVisualEditingEnabled ? '/api/site-data' : null, fetchSiteData, {
+    fallbackData: { globals, headerNavigation, footerNavigation },
+    revalidateOnFocus: false,
+  });
 
   useEffect(() => {
     if (isVisualEditingEnabled) {
