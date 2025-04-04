@@ -29,5 +29,6 @@ export default defineConfig({
   },
   vite: {
     envPrefix: ['PUBLIC_', 'DIRECTUS_'],
+    assetsInclude: ['**/*.svg'],
   },
 });

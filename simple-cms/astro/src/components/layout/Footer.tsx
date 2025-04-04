@@ -3,6 +3,7 @@
 import { forwardRef } from 'react';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import Container from '@/components/ui/Container';
+import SocialIcon from '@/components/ui/SocialIcon';
 
 interface SocialLink {
   service: string;
@@ -49,7 +50,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ navigation, globals }, re
             {globals?.description && <p className="text-description mt-2">{globals.description}</p>}
             {globals?.social_links && (
               <div className="mt-4 flex space-x-4">
-                {globals.social_links.map((social: SocialLink) => (
+                {globals.social_links.map((social) => (
                   <a
                     key={social.service}
                     href={social.url}
@@ -57,11 +58,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ navigation, globals }, re
                     rel="noopener noreferrer"
                     className="size-8 rounded bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
                   >
-                    <img
-                      src={`/icons/social/${social.service}.svg`}
-                      alt={`${social.service} icon`}
-                      className="size-6 dark:invert"
-                    />
+                    <SocialIcon service={social.service} size={24} className="size-6" />
                   </a>
                 ))}
               </div>

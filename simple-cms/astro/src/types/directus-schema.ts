@@ -5,14 +5,7 @@ export interface ExtensionSeoMetadata {
   og_image?: string;
   additional_fields?: Record<string, unknown>;
   sitemap?: {
-    change_frequency:
-      | "always"
-      | "hourly"
-      | "daily"
-      | "weekly"
-      | "monthly"
-      | "yearly"
-      | "never";
+    change_frequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
     priority: string;
   };
   no_index?: boolean;
@@ -24,7 +17,7 @@ export interface BlockButton {
   id: string;
   sort?: number | null;
   /** @description What type of link is this? Page and Post allow you to link to internal content. URL is for external content. Group can contain other menu items. */
-  type?: "page" | "post" | "url" | null;
+  type?: 'page' | 'post' | 'url' | null;
   /** @description The internal page to link to. */
   page?: Page | string | null;
   /** @description The internal post to link to. */
@@ -32,7 +25,7 @@ export interface BlockButton {
   /** @description Text to include on the button. */
   label?: string | null;
   /** @description What type of button */
-  variant?: "default" | "outline" | "soft" | "ghost" | "link" | null;
+  variant?: 'default' | 'outline' | 'soft' | 'ghost' | 'link' | null;
   /** @description The id of the Button Group this button belongs to. */
   button_group?: BlockButtonGroup | string | null;
   /** @description The URL to link to. Could be relative (ie `/my-page`) or a full external URL (ie `https://docs.directus.io`) */
@@ -102,7 +95,7 @@ export interface BlockPost {
   /** @description Larger main headline for this page section. */
   headline?: string | null;
   /** @description The collection of content to fetch and display on the page within this block. @required */
-  collection: "posts";
+  collection: 'posts';
   /** @description Smaller copy shown above the headline to label a section or add extra context. */
   tagline?: string | null;
   limit?: number | null;
@@ -149,7 +142,7 @@ export interface BlockRichtext {
   /** @required */
   id: string;
   /** @description Controls how the content block is positioned on the page. Choose "Left" to align the block against the left margin or "Center" to position the block in the middle of the page. This setting affects the entire content block's placement, not the text alignment within it. */
-  alignment?: "left" | "center" | null;
+  alignment?: 'left' | 'center' | null;
   /** @description Smaller copy shown above the headline to label a section or add extra context. */
   tagline?: string | null;
 }
@@ -170,7 +163,7 @@ export interface FormField {
   /** @description Available rules: `email`, `url`, `min:5`, `max:20`, `length:10`. Combine with pipes example: `email|max:255` */
   validation?: string | null;
   /** @description Field width on the form */
-  width?: "100" | "67" | "50" | "33" | null;
+  width?: '100' | '67' | '50' | '33' | null;
   /** @description Options for radio or select inputs */
   choices?: Array<{ text: string; value: string }> | null;
   /** @description Parent form this field belongs to. */
@@ -184,7 +177,7 @@ export interface Form {
   /** @required */
   id: string;
   /** @description Action after successful submission. */
-  on_success?: "redirect" | "message" | null;
+  on_success?: 'redirect' | 'message' | null;
   sort?: number | null;
   /** @description Text shown on submit button. */
   submit_label?: string | null;
@@ -233,16 +226,7 @@ export interface Globals {
   id: string;
   /** @description Social media profile URLs */
   social_links?: Array<{
-    service:
-      | "facebook"
-      | "instagram"
-      | "linkedin"
-      | "twitter"
-      | "vimeo"
-      | "youtube"
-      | "github"
-      | "discord"
-      | "docker";
+    service: 'facebook' | 'instagram' | 'linkedin' | 'twitter' | 'vimeo' | 'youtube' | 'github' | 'discord' | 'docker';
     url: string;
   }> | null;
   /** @description Short phrase describing the site. */
@@ -289,7 +273,7 @@ export interface NavigationItem {
   /** @description Label shown to the user for the menu item. @required */
   title: string;
   /** @description What type of link is this? Page and Post allow you to link to internal content. URL is for external content. Group can contain other menu items. */
-  type?: "page" | "post" | "url" | "group" | null;
+  type?: 'page' | 'post' | 'url' | 'group' | null;
   /** @description The URL to link to. Could be relative (ie `/my-page`) or a full external URL (ie `https://docs.directus.io`) */
   url?: string | null;
   /** @description The internal post to link to. */
@@ -305,21 +289,13 @@ export interface PageBlock {
   /** @description The id of the page that this block belongs to. */
   page?: Page | string | null;
   /** @description The data for the block. */
-  item?:
-    | BlockHero
-    | BlockRichtext
-    | BlockForm
-    | BlockPost
-    | BlockGallery
-    | BlockPricing
-    | string
-    | null;
+  item?: BlockHero | BlockRichtext | BlockForm | BlockPost | BlockGallery | BlockPricing | string | null;
   /** @description The collection (type of block). */
   collection?: string | null;
   /** @description Temporarily hide this block on the website without having to remove it from your page. */
   hide_block?: boolean | null;
   /** @description Background color for the block to create contrast. Does not control dark or light mode for the entire site. */
-  background?: "light" | "dark" | null;
+  background?: 'light' | 'dark' | null;
 }
 
 export interface Page {
@@ -331,7 +307,7 @@ export interface Page {
   /** @description Unique URL for this page (start with `/`, can have multiple segments `/about/me`)). @required */
   permalink: string;
   /** @description Is this page published? */
-  status?: "draft" | "in_review" | "published";
+  status?: 'draft' | 'in_review' | 'published';
   /** @description Publish now or schedule for later. */
   published_at?: string | null;
   seo?: ExtensionSeoMetadata | null;
@@ -351,7 +327,7 @@ export interface Post {
   slug?: string | null;
   sort?: number | null;
   /** @description Is this post published? */
-  status?: "draft" | "in_review" | "published";
+  status?: 'draft' | 'in_review' | 'published';
   /** @description Title of the blog post (used in page title and meta tags) @required */
   title: string;
   /** @description Short summary of the blog post to entice readers. */
@@ -405,7 +381,7 @@ export interface DirectusCollection {
   archive_value?: string | null;
   unarchive_value?: string | null;
   sort_field?: string | null;
-  accountability?: "all" | "activity" | null | null;
+  accountability?: 'all' | 'activity' | null | null;
   color?: string | null;
   item_duplication_fields?: any | null;
   sort?: number | null;
@@ -606,22 +582,22 @@ export interface DirectusSettings {
     | `/^.{8,}$/`
     | `/(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{\';\'?>.<,])(?!.*\\s).*$/`
     | null;
-  storage_asset_transform?: "all" | "none" | "presets" | null;
+  storage_asset_transform?: 'all' | 'none' | 'presets' | null;
   storage_asset_presets?: Array<{
     key: string;
-    fit: "contain" | "cover" | "inside" | "outside";
+    fit: 'contain' | 'cover' | 'inside' | 'outside';
     width: number;
     height: number;
     quality: number;
     withoutEnlargement: boolean;
-    format: "auto" | "jpeg" | "png" | "webp" | "tiff" | "avif";
+    format: 'auto' | 'jpeg' | 'png' | 'webp' | 'tiff' | 'avif';
     transforms: any;
   }> | null;
   custom_css?: string | null;
   storage_default_folder?: DirectusFolder | string | null;
   basemaps?: Array<{
     name: string;
-    type: "raster" | "tile" | "style";
+    type: 'raster' | 'tile' | 'style';
     url: string;
     tileSize: number;
     attribution: string;
@@ -632,7 +608,7 @@ export interface DirectusSettings {
   default_language?: string;
   custom_aspect_ratios?: Array<{ text: string; value: number }> | null;
   public_favicon?: DirectusFile | string | null;
-  default_appearance?: "auto" | "light" | "dark";
+  default_appearance?: 'auto' | 'light' | 'dark';
   default_theme_light?: string | null;
   theme_light_overrides?: any | null;
   default_theme_dark?: string | null;
@@ -662,13 +638,7 @@ export interface DirectusUser {
   avatar?: DirectusFile | string | null;
   language?: string | null;
   tfa_secret?: string | null;
-  status?:
-    | "draft"
-    | "invited"
-    | "unverified"
-    | "active"
-    | "suspended"
-    | "archived";
+  status?: 'draft' | 'invited' | 'unverified' | 'active' | 'suspended' | 'archived';
   role?: DirectusRole | string | null;
   token?: string | null;
   last_access?: string | null;
@@ -677,7 +647,7 @@ export interface DirectusUser {
   external_identifier?: string | null;
   auth_data?: any | null;
   email_notifications?: boolean | null;
-  appearance?: null | "auto" | "light" | "dark" | null;
+  appearance?: null | 'auto' | 'light' | 'dark' | null;
   theme_dark?: string | null;
   theme_light?: string | null;
   theme_light_overrides?: any | null;
@@ -694,7 +664,7 @@ export interface DirectusWebhook {
   name?: string;
   method?: null;
   url?: string;
-  status?: "active" | "inactive";
+  status?: 'active' | 'inactive';
   data?: boolean;
   actions?: string[];
   collections?: string[];
@@ -882,51 +852,51 @@ export interface Schema {
 }
 
 export enum CollectionNames {
-  block_button = "block_button",
-  block_button_group = "block_button_group",
-  block_form = "block_form",
-  block_gallery = "block_gallery",
-  block_gallery_items = "block_gallery_items",
-  block_hero = "block_hero",
-  block_posts = "block_posts",
-  block_pricing = "block_pricing",
-  block_pricing_cards = "block_pricing_cards",
-  block_richtext = "block_richtext",
-  form_fields = "form_fields",
-  forms = "forms",
-  form_submissions = "form_submissions",
-  form_submission_values = "form_submission_values",
-  globals = "globals",
-  navigation = "navigation",
-  navigation_items = "navigation_items",
-  page_blocks = "page_blocks",
-  pages = "pages",
-  posts = "posts",
-  directus_access = "directus_access",
-  directus_activity = "directus_activity",
-  directus_collections = "directus_collections",
-  directus_comments = "directus_comments",
-  directus_fields = "directus_fields",
-  directus_files = "directus_files",
-  directus_folders = "directus_folders",
-  directus_migrations = "directus_migrations",
-  directus_permissions = "directus_permissions",
-  directus_policies = "directus_policies",
-  directus_presets = "directus_presets",
-  directus_relations = "directus_relations",
-  directus_revisions = "directus_revisions",
-  directus_roles = "directus_roles",
-  directus_sessions = "directus_sessions",
-  directus_settings = "directus_settings",
-  directus_users = "directus_users",
-  directus_webhooks = "directus_webhooks",
-  directus_dashboards = "directus_dashboards",
-  directus_panels = "directus_panels",
-  directus_notifications = "directus_notifications",
-  directus_shares = "directus_shares",
-  directus_flows = "directus_flows",
-  directus_operations = "directus_operations",
-  directus_translations = "directus_translations",
-  directus_versions = "directus_versions",
-  directus_extensions = "directus_extensions",
+  block_button = 'block_button',
+  block_button_group = 'block_button_group',
+  block_form = 'block_form',
+  block_gallery = 'block_gallery',
+  block_gallery_items = 'block_gallery_items',
+  block_hero = 'block_hero',
+  block_posts = 'block_posts',
+  block_pricing = 'block_pricing',
+  block_pricing_cards = 'block_pricing_cards',
+  block_richtext = 'block_richtext',
+  form_fields = 'form_fields',
+  forms = 'forms',
+  form_submissions = 'form_submissions',
+  form_submission_values = 'form_submission_values',
+  globals = 'globals',
+  navigation = 'navigation',
+  navigation_items = 'navigation_items',
+  page_blocks = 'page_blocks',
+  pages = 'pages',
+  posts = 'posts',
+  directus_access = 'directus_access',
+  directus_activity = 'directus_activity',
+  directus_collections = 'directus_collections',
+  directus_comments = 'directus_comments',
+  directus_fields = 'directus_fields',
+  directus_files = 'directus_files',
+  directus_folders = 'directus_folders',
+  directus_migrations = 'directus_migrations',
+  directus_permissions = 'directus_permissions',
+  directus_policies = 'directus_policies',
+  directus_presets = 'directus_presets',
+  directus_relations = 'directus_relations',
+  directus_revisions = 'directus_revisions',
+  directus_roles = 'directus_roles',
+  directus_sessions = 'directus_sessions',
+  directus_settings = 'directus_settings',
+  directus_users = 'directus_users',
+  directus_webhooks = 'directus_webhooks',
+  directus_dashboards = 'directus_dashboards',
+  directus_panels = 'directus_panels',
+  directus_notifications = 'directus_notifications',
+  directus_shares = 'directus_shares',
+  directus_flows = 'directus_flows',
+  directus_operations = 'directus_operations',
+  directus_translations = 'directus_translations',
+  directus_versions = 'directus_versions',
+  directus_extensions = 'directus_extensions',
 }

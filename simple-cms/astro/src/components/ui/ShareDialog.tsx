@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import SocialIcon from '@/components/ui/SocialIcon';
 
 interface ShareDialogProps {
   postUrl: string;
@@ -33,19 +34,16 @@ const ShareDialog = ({ postUrl, postTitle }: ShareDialogProps) => {
     {
       service: 'reddit',
       url: `http://www.reddit.com/submit?url=${encodeURIComponent(postUrl)}&title=${encodeURIComponent(postTitle)}`,
-      icon: '/icons/social/reddit.svg',
     },
     {
       service: 'x',
       url: `https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(postTitle)}`,
-      icon: '/icons/social/x.svg',
     },
     {
       service: 'linkedin',
       url: `https://www.linkedin.com/shareArticle/?mini=true&url=${encodeURIComponent(
         postUrl,
       )}&title=${encodeURIComponent(postTitle)}`,
-      icon: '/icons/social/linkedin.svg',
     },
   ];
 
@@ -70,13 +68,7 @@ const ShareDialog = ({ postUrl, postTitle }: ShareDialogProps) => {
               rel="noopener noreferrer"
               className="rounded bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
             >
-              <img
-                src={social.icon}
-                alt={`${social.service} icon`}
-                width={32}
-                height={32}
-                className="size-8 dark:invert"
-              />
+              <SocialIcon service={social.service} size={32} className="size-8" />
             </a>
           ))}
         </div>
