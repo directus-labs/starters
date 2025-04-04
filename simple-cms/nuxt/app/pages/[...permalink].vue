@@ -41,14 +41,12 @@ useSeoMeta({
 function applyPageBuilder() {
 	apply({
 		elements: pageBuilder.value as HTMLElement,
-		onSaved: () => {
-			refresh().then(() => {
-				// This makes sure the visual editor elements are updated after the page is refreshed. In case you've added new blocks to the page.
-				nextTick(() => {
-					apply({
-						elements: pageBuilder.value as HTMLElement,
-					});
-				});
+		onSaved: async () => {
+			await refresh();
+			// This makes sure the visual editor elements are updated after the page is refreshed. In case you've added new blocks to the page.
+			await nextTick();
+			apply({
+				elements: pageBuilder.value as HTMLElement,
 			});
 		},
 	});
