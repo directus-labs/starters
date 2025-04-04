@@ -44,7 +44,7 @@ const layoutStyles = {
 
 export default function Hero({ data }: HeroProps) {
   const { id, layout, tagline, headline, description, image, button_group } = data;
-  const styles = layoutStyles[layout];
+  const styles = layoutStyles[layout] ?? layoutStyles.image_left;
   const hasButtons = !!button_group?.buttons?.length;
 
   return (
