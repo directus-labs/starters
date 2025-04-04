@@ -97,10 +97,7 @@ const onSubmitForm = handleSubmit(async (formValues) => {
 		@submit.prevent="onSubmitForm"
 	>
 		<div class="flex flex-wrap gap-4">
-			<div v-for="field in validFields" :key="field.id" class="w-full">
-				<BaseFormField :field="field" :model-value="values[field.name]" />
-			</div>
-
+			<BaseFormField v-for="field in validFields" :key="field.id" :field="field" :model-value="values[field.name]" />
 			<div class="w-full">
 				<div>
 					<BaseButton
