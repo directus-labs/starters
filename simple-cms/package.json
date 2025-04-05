@@ -17,6 +17,10 @@
         "nuxt": {
             "name": "Nuxt.js",
             "path": "./nuxt"
+        },
+        "astro": {
+            "name": "Astro",
+            "path": "./astro"
         }
     }
   },
