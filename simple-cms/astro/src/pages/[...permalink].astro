@@ -1,0 +1,67 @@
+---
+export const prerender = true;
+
+import Layout from '@/layouts/BaseLayout.astro';
+import { fetchAllPages, fetchPageData } from '@/lib/directus/fetchers';
+import PageClient from '@/components/layout/PageClient';
+import type { Page, PageBlock } from '@/types/directus-schema';
+
+export async function getStaticPaths() {
+  const pages = await fetchAllPages();
+  return pages.map((page) => {
+    const cleaned = page.permalink.replace(/^\/+|\/+$/g, '');
+    return { params: { permalink: cleaned.length === 0 ? undefined: cleaned } };
+  });
+}
+
+const { permalink } = Astro.params;
+
+const permalinkSegments =
+  typeof permalink === 'string'
+    ? permalink.split('/')
+    : Array.isArray(permalink)
+    ? permalink
+    : [];
+const resolvedPermalink =
+  `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+
+let page: Page | null = null;
+try {
+  page = await fetchPageData(resolvedPermalink);
+} catch (error) {
+  console.error('Error loading page:', error);
+  page = null;
+}
+
+if (!page || !page.blocks) {
+  page = null;
+}
+
+const blocks: PageBlock[] =
+  page?.blocks?.filter((block: any): block is PageBlock =>
+    typeof block === 'object' && block.collection
+  ) ?? [];
+
+const siteURL = import.meta.env.PUBLIC_SITE_URL || '';
+
+const metadata = page
+  ? {
+      title: page.seo?.title ?? page.title ?? '',
+      description: page.seo?.meta_description ?? '',
+      openGraph: {
+        title: page.seo?.title ?? page.title ?? '',
+        description: page.seo?.meta_description ?? '',
+        url: `${siteURL}${resolvedPermalink}`,
+        type: 'website',
+      },
+    }
+  : { title: '404 - Page Not Found', description: '' };
+---
+
+<Layout metadata={metadata}>
+  {page ? (
+    <PageClient client:load permalink={resolvedPermalink} initialSections={blocks} />
+  ) : (
+    <div class="text-center text-xl mt-20">404 - Page Not Found</div>
+  )}
+</Layout>

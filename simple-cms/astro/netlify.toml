@@ -1,0 +1,3 @@
+[build]
+  command = "astro build"
+  publish = "dist"

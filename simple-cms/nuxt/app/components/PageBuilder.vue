@@ -14,11 +14,9 @@ const validBlocks = computed(() =>
 </script>
 
 <template>
-	<div>
-		<div v-for="block in validBlocks" :key="block.id" :data-background="block.background" class="py-16">
-			<Container>
-				<BaseBlock :block="block" />
-			</Container>
-		</div>
+	<div v-for="block in validBlocks" :key="block.id" :data-background="block.background" class="py-16">
+		<Container>
+			<BaseBlock :block="block" />
+		</Container>
 	</div>
 </template>

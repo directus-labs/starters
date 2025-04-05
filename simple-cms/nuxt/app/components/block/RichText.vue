@@ -65,7 +65,7 @@ const { setAttr } = useVisualEditing();
 					collection: 'block_richtext',
 					item: data.id,
 					fields: 'content',
-					mode: 'popover',
+					mode: 'drawer',
 				})
 			"
 		/>

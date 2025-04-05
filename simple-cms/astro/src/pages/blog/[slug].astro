@@ -1,0 +1,65 @@
+---
+export const prerender = false;
+
+import Layout from '@/layouts/BaseLayout.astro';
+import { fetchPostBySlug, fetchRelatedPosts, fetchAuthorById } from '@/lib/directus/fetchers';
+import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
+import BlogPostClient from '@/components/layout/BlogPostClient';
+import type { Post } from '@/types/directus-schema';
+
+const slugParam = Astro.params.slug;
+const slug = Array.isArray(slugParam)
+  ? slugParam.join('/')
+  : typeof slugParam === 'string'
+  ? slugParam
+  : '';
+
+const query = Astro.url.searchParams;
+
+const isPreview = query.get("preview") === "true";
+const authToken = query.get("token") || null;
+
+let post : Post | null  = null;
+try {
+  post = await fetchPostBySlug(slug as string, isPreview, authToken);
+} catch (error) {
+  console.error('Error loading post:', error);
+  post = null;
+}
+
+if (!post) {
+  return Astro.redirect('/404');
+}
+
+const relatedPosts = await fetchRelatedPosts(post.id);
+const author = post.author ? await fetchAuthorById(post.author as string) : null;
+const authorName = [author?.first_name, author?.last_name].filter(Boolean).join(' ');
+const siteURL = import.meta.env.PUBLIC_SITE_URL || '';
+const postUrl = `${siteURL}/blog/${slug}`;
+const ogImage = post.image ? getDirectusAssetURL(post.image as string) : null;
+
+const metadata = {
+  title: post?.seo?.title ?? post.title ?? '',
+  description: post?.seo?.meta_description ?? '',
+  openGraph: {
+    title: post?.seo?.title ?? post.title ?? '',
+    description: post?.seo?.meta_description ?? '',
+    url: postUrl,
+    type: 'article',
+    images: ogImage ? [{ url: ogImage }] : undefined,
+  },
+};
+---
+<Layout metadata={metadata}>
+    <BlogPostClient
+    client:load
+    initialPost={post}
+    relatedPosts={relatedPosts}
+    author={author}
+    authorName={authorName}
+    postUrl={postUrl}
+    slug={slug}
+    token={authToken}
+    isDraft={isPreview}
+  />
+</Layout>
