@@ -28,8 +28,8 @@ export default defineNuxtConfig({
 
 	runtimeConfig: {
 		public: {
-			siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-			directusUrl: process.env.DIRECTUS_URL,
+			siteUrl: (process.env.NUXT_PUBLIC_SITE_URL as string) || 'https://directus-cms-nuxt.vercel.app',
+			directusUrl: process.env.DIRECTUS_URL as string,
 			enableVisualEditing: process.env.NUXT_PUBLIC_ENABLE_VISUAL_EDITING !== 'false',
 		},
 		directusServerToken: process.env.DIRECTUS_SERVER_TOKEN,
@@ -82,7 +82,7 @@ export default defineNuxtConfig({
 	},
 
 	site: {
-		url: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+		url: process.env.NUXT_PUBLIC_SITE_URL || 'https://directus-cms-nuxt.vercel.app',
 	},
 	vue: {
 		propsDestructure: true,

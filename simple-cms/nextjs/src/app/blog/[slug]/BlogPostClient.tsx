@@ -11,19 +11,12 @@ import ShareDialog from '@/components/ui/ShareDialog';
 import Link from 'next/link';
 import Headline from '@/components/ui/Headline';
 import Container from '@/components/ui/container';
-import { Post } from '@/types/directus-schema';
-
-interface Author {
-	id: string;
-	first_name: string | null;
-	last_name: string | null;
-	avatar: string | any | null;
-}
+import { Post, DirectusUser } from '@/types/directus-schema';
 
 interface BlogPostClientProps {
 	post: Post;
 	relatedPosts: Post[];
-	author?: Author | null;
+	author?: DirectusUser | null;
 	authorName: string;
 	postUrl: string;
 	isDraft?: boolean;

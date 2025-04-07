@@ -98,6 +98,7 @@ defineProps<PricingCardProps>();
 		<div class="mt-auto pt-4">
 			<Button
 				v-if="card.button"
+				class="w-full"
 				id="card.button.uuid"
 				:data-directus="
 					setAttr({
