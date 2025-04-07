@@ -13,10 +13,10 @@
 			alignment?: 'left' | 'center' | 'right';
 			tagline?: string;
 		};
-		className?: string;
+		class?: string;
 	}
 
-	let { data, className }: RichTextProps = $props();
+	let { data, class: className }: RichTextProps = $props();
 
 	const { headline, content, alignment = 'left', tagline, id } = $derived(data);
 </script>

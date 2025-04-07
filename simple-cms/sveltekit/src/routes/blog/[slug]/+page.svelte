@@ -33,7 +33,7 @@
 				<DirectusImage
 					uuid={post.image as string}
 					alt={post.title || 'post header image'}
-					className="object-cover"
+					class="object-cover"
 					fill
 					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 1200px"
 				/>
@@ -81,7 +81,7 @@
 						<DirectusImage
 							uuid={author.avatar as string}
 							alt={authorName || 'author avatar'}
-							className="rounded-full object-cover size-[48px]"
+							class="size-[48px] rounded-full object-cover"
 							width={48}
 							height={48}
 						/>
@@ -135,7 +135,7 @@
 									<DirectusImage
 										uuid={relatedPost.image as string}
 										alt={relatedPost.title || 'related posts'}
-										className="object-cover transition-transform duration-300 group-hover:scale-110"
+										class="object-cover transition-transform duration-300 group-hover:scale-110"
 										fill
 										sizes="(max-width: 768px) 100px, (max-width: 1024px) 150px, 150px"
 									/>

@@ -2,6 +2,7 @@
 	import DirectusImage from '../shared/DirectusImage.svelte';
 	import {
 		Dialog,
+		DialogClose,
 		DialogContent,
 		DialogDescription,
 		DialogOverlay,
@@ -109,7 +110,7 @@
 					<div
 						class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-60 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 					>
-						<ZoomIn className="size-10 text-gray-800" />
+						<ZoomIn class="size-10 text-gray-800" />
 					</div>
 				</button>
 			{/each}
@@ -121,38 +122,49 @@
 		<Dialog open={isLightboxOpen} onOpenChange={() => (isLightboxOpen = false)}>
 			<DialogOverlay class="fixed inset-0 z-50 bg-black bg-opacity-30" />
 			<DialogContent
-				class="flex items-center justify-center border-none bg-transparent p-2"
-				style={{ maxHeight: '90vh' }}
+				class="z-50 flex max-h-full max-w-full items-center  justify-center border-none bg-transparent p-2"
 			>
 				<DialogTitle class="sr-only">Gallery Image</DialogTitle>
 				<DialogDescription class="sr-only">
 					Viewing image {currentIndex + 1} of {sortedItems.length}.
 				</DialogDescription>
 
-				<div class="relative w-full max-w-4xl">
+				<div class="relative flex h-[90vh] w-[90vw] items-center justify-center">
 					<DirectusImage
 						uuid={sortedItems[currentIndex].directus_file}
 						alt={`Gallery item ${sortedItems[currentIndex].id}`}
 						width={1200}
 						height={800}
-						className="w-full h-auto max-h-full object-contain"
+						class="h-auto max-h-full w-full object-contain"
 					/>
 				</div>
 
-				<button
-					class="absolute -left-16 top-1/2 -translate-y-1/2 transform rounded-full bg-black bg-opacity-70 p-3 text-white hover:bg-opacity-90"
-					onclick={handlePrev}
-					aria-label="Previous"
-				>
-					<ArrowLeft className="size-8" />
-				</button>
-				<button
-					class="absolute -right-16 top-1/2 -translate-y-1/2 transform rounded-full bg-black bg-opacity-70 p-3 text-white hover:bg-opacity-90"
-					onclick={handleNext}
-					aria-label="Next"
-				>
-					<ArrowRight className="size-8" />
-				</button>
+				<div class="absolute inset-x-0 bottom-4 flex items-center justify-between px-4">
+					<button
+						class="flex items-center gap-2 rounded-full bg-black bg-opacity-70 px-4 py-2 text-white hover:bg-opacity-90"
+						onclick={handlePrev}
+						aria-label="Previous"
+					>
+						<ArrowLeft class="size-8" />
+						<span>Prev</span>
+					</button>
+					<button
+						class="flex items-center gap-2 rounded-full bg-black bg-opacity-70 px-4 py-2 text-white hover:bg-opacity-90"
+						onclick={handleNext}
+						aria-label="Next"
+					>
+						<span>Next</span>
+						<ArrowRight class="size-8" />
+					</button>
+				</div>
+				<DialogClose>
+					<button
+						class="absolute right-4 top-4 rounded-full bg-black bg-opacity-70 p-2 text-white hover:bg-opacity-90"
+						aria-label="Close"
+					>
+						<X class="size-8" />
+					</button>
+				</DialogClose>
 			</DialogContent>
 		</Dialog>
 	{/if}

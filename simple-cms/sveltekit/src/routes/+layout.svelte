@@ -8,7 +8,6 @@
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
-	import { invalidateAll } from '$app/navigation';
 
 	let { children, data } = $props();
 
@@ -19,7 +18,6 @@
 	const faviconURL = $derived(
 		data.globals?.favicon ? getDirectusAssetURL(data.globals.favicon) : '/favicon.ico'
 	);
-
 	const accentColor = $derived(data.globals?.accent_color || '#6644ff');
 
 	onMount(async () => {
@@ -39,12 +37,10 @@
 	<title>{siteTitle}</title>
 	<meta name="description" content={siteDescription} />
 	<link rel="icon" href={faviconURL} />
+	{@html `<style>:root{ --accent-color: ${accentColor} !important }</style>`}
 </svelte:head>
 
-<div style="--accent-color: {accentColor}">
-	<ModeWatcher />
-
-	<NavigationBar />
-	<main class="flex-grow">{@render children()}</main>
-	<Footer />
-</div>
+<ModeWatcher />
+<NavigationBar />
+<main class="flex-grow">{@render children()}</main>
+<Footer />

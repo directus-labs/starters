@@ -83,7 +83,6 @@
 								</li>
 							{/each}
 						{/if}
-						<!-- <ThemeToggle className="dark:text-white" /> -->
 						<li>
 							<LightSwitch />
 						</li>

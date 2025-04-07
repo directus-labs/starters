@@ -136,9 +136,9 @@
 		<Pagination.Root count={totalCount} perPage={limit} onPageChange={handlePageChange}>
 			{#snippet children({ pages, currentPage })}
 				<Pagination.Content>
-					<Pagination.Item>
+					<!-- <Pagination.Item>
 						<Pagination.PrevButton />
-					</Pagination.Item>
+					</Pagination.Item> -->
 					{#each pages as page (page.key)}
 						{#if page.type === 'ellipsis'}
 							<Pagination.Item>
@@ -152,9 +152,9 @@
 							</Pagination.Item>
 						{/if}
 					{/each}
-					<Pagination.Item>
+					<!-- <Pagination.Item>
 						<Pagination.NextButton />
-					</Pagination.Item>
+					</Pagination.Item> -->
 				</Pagination.Content>
 			{/snippet}
 		</Pagination.Root>

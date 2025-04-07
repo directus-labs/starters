@@ -23,7 +23,7 @@
 	);
 </script>
 
-<header class="sticky top-0 z-50 w-full bg-background text-foreground">
+<header class="sticky top-0 z-50 w-full bg-background font-heading text-foreground">
 	<Container class="flex items-center justify-between p-4">
 		<a href="/" class="flex-shrink-0">
 			<img
@@ -45,7 +45,7 @@
 			<SearchModal />
 			<!-- <NavigationMenuItems /> -->
 			<div
-				class="hidden gap-2 md:flex"
+				class=" hidden gap-2 md:flex"
 				data-directus={navigation
 					? setAttr({
 							collection: 'navigation',
@@ -57,24 +57,29 @@
 			>
 				{#each navigation?.items as item (item.id)}
 					{#if item.children.length === 0}
-						<Button href={item.page.permalink} variant="ghost">{item.title}</Button>
+						<Button
+							href={item.page.permalink}
+							variant="ghost"
+							class="!font-heading !text-nav !text-inherit
+">{item.title}</Button
+						>
 					{:else}
 						<DropdownMenu.Root>
-							<DropdownMenu.Trigger class={buttonVariants({ variant: 'outline' })}
-								>{item.title}</DropdownMenu.Trigger
-							>
+							<DropdownMenu.Trigger
+								class="data-[active]:text-accent/50 data-[state=open]:text-accent/50 group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2  font-medium transition-colors hover:text-accent focus:text-accent focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+								>{item.title}
+								<ChevronDown
+									class="relative top-[1px] ml-1 size-3 transition duration-200 group-data-[state=open]:rotate-180"
+								/>
+							</DropdownMenu.Trigger>
 							<DropdownMenu.Content
 								class="top-full z-50 w-56 max-w-full overflow-hidden  rounded-xl bg-background  shadow-md   data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant"
 							>
 								{#each item.children as child}
-									<DropdownMenu.Item
-										onSelect={() => {
-											goto(child.page.permalink);
-										}}
-									>
-										<!-- <Button href={child.page.permalink} variant="ghost">{child.title}</Button> -->
-										<!-- Is there a way to do this without using goto? -->
-										{child.title}
+									<DropdownMenu.Item class="!bg-transparent">
+										<a class="hover:text-primary-500 w-full text-nav" href={child.page.permalink}
+											>{child.title}</a
+										>
 									</DropdownMenu.Item>
 								{/each}
 							</DropdownMenu.Content>
@@ -91,7 +96,7 @@
 					<DropdownMenu.Content
 						forceMount
 						align="start"
-						class="top-full z-50 w-screen min-w-[8rem] max-w-full overflow-hidden  rounded bg-background p-6 shadow-md   data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant"
+						class="top-full z-50 w-screen min-w-[8rem] max-w-full overflow-hidden rounded bg-background-muted p-6 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant"
 					>
 						{#snippet child({ wrapperProps, props, open })}
 							{#if open}
@@ -100,20 +105,23 @@
 										<div class="flex flex-col gap-4">
 											{#each navigation?.items as item (item.id)}
 												{#if item.children.length === 0}
-													<DropdownMenu.Item class="p-0"
-														><span class=" font-heading text-nav">
-															{item.title}</span
+													<DropdownMenu.Item class="!bg-transparent p-0 "
+														><a
+															href={item.page?.permalink || item.url || '#'}
+															class="w-full font-heading text-nav"
+														>
+															{item.title}</a
 														></DropdownMenu.Item
 													>
 												{:else}
 													<Collapsible.Root>
-														<Collapsible.Trigger>
-															<div class="flex items-center justify-between font-heading text-nav">
-																{item.title}
-																<ChevronDown
-																	class="ml-1 size-4 transition-transform duration-200 hover:rotate-180 focus:rotate-180 active:rotate-180"
-																/>
-															</div>
+														<Collapsible.Trigger
+															class="group flex w-full items-center text-left font-heading text-nav hover:text-accent focus:outline-none"
+														>
+															{item.title}
+															<ChevronDown
+																class="ml-1 size-4 transition-transform duration-200 group-data-[state=open]:rotate-180"
+															/>
 														</Collapsible.Trigger>
 														<Collapsible.Content>
 															{#each item.children as child (child.id)}

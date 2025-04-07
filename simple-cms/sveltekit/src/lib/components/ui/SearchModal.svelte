@@ -75,7 +75,7 @@
 
 <div class="max-w-full sm:max-w-[540px]">
 	<Button variant="ghost" size="icon" aria-label="Search" onclick={() => (open = true)}>
-		<Search className="size-5" />
+		<Search class="size-5" />
 	</Button>
 
 	<Command.Dialog bind:open shouldFilter={false}>

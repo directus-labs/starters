@@ -54,7 +54,7 @@
 {#if form.is_active}
 	{#if isSubmitted}
 		<div class="flex flex-col items-center justify-center space-y-4 p-6 text-center">
-			<CheckCircle className="size-12 text-green-500" />
+			<CheckCircle class="size-12 text-green-500" />
 			<p class="text-gray-600">
 				{form.success_message || 'Your form has been submitted successfully.'}
 			</p>
