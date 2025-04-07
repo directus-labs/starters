@@ -116,7 +116,7 @@
 												{:else}
 													<Collapsible.Root>
 														<Collapsible.Trigger
-															class="group flex w-full items-center text-left font-heading text-nav hover:text-accent focus:outline-none"
+															class="group flex w-full items-center text-left font-heading text-nav hover:text-accent"
 														>
 															{item.title}
 															<ChevronDown
@@ -124,11 +124,14 @@
 															/>
 														</Collapsible.Trigger>
 														<Collapsible.Content>
-															{#each item.children as child (child.id)}
-																<div class="ml-4 mt-2 flex flex-col gap-2">
-																	<a href={child.page?.permalink || child.url}>{child.title}</a>
-																</div>
-															{/each}
+															<div class="ml-4 mt-2 flex flex-col gap-2">
+																{#each item.children as child (child.id)}
+																	<a
+																		class="w-full font-heading text-nav"
+																		href={child.page?.permalink || child.url}>{child.title}</a
+																	>
+																{/each}
+															</div>
 														</Collapsible.Content>
 													</Collapsible.Root>
 												{/if}

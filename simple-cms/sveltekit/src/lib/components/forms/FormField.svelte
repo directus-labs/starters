@@ -12,6 +12,7 @@
 	import { cn } from '$lib/utils';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 	import { Info } from 'lucide-svelte';
+	import { Label } from '$lib/components/ui/label/index.js';
 
 	interface FieldProps {
 		field: FormFieldType;
@@ -35,9 +36,8 @@
 		: 'flex-[100%]';
 </script>
 
-<!-- bind:value={formData[field.name]} -->
 {#if field.type !== 'hidden'}
-	<div class={`flex-shrink-0 ${widthClass}`}>
+	<div class={`flex flex-shrink-0 flex-col justify-center ${widthClass}`}>
 		<Form.Field {form} name={field.name!}>
 			<Form.Control>
 				<Form.Label
@@ -83,11 +83,14 @@
 						required={field.required}
 					/>
 				{:else if field.type === 'checkbox'}
-					<Checkbox
-						name={field.name}
-						bind:checked={$formData[field.name!]}
-						required={!!field.required}
-					/>
+					<div class="flex items-center space-x-3">
+						<Checkbox
+							name={field.name}
+							bind:checked={$formData[field.name!]}
+							required={!!field.required}
+						/>
+						<Label for={field.name}>{field.label}</Label>
+					</div>
 				{:else if field.type === 'checkbox_group'}
 					<CheckBoxGroup name={field.name || ''} options={field.choices || []} {form} />
 				{:else if field.type === 'select'}
