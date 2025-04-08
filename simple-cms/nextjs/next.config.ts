@@ -20,6 +20,7 @@ const ContentSecurityPolicy = `
 const nextConfig: NextConfig = {
 	webpack: (config) => {
 		config.cache = false;
+
 		return config;
 	},
 	images: {
@@ -27,7 +28,7 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: 'https',
-				hostname: 'simple-cms-starter.directus.app',
+				hostname: process.env.NEXT_PUBLIC_DIRECTUS_URL?.split('//')[1] || '',
 				pathname: '/assets/**',
 			},
 			{
