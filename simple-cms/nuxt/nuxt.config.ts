@@ -52,8 +52,8 @@ export default defineNuxtConfig({
 			contentSecurityPolicy: {
 				'img-src': ["'self'", 'data:', '*'],
 				'script-src': ["'self'", "'unsafe-inline'", '*'],
-				'connect-src': ["'self'", process.env.DIRECTUS_URL!],
-				'frame-ancestors': ["'self'", process.env.DIRECTUS_URL!],
+				'connect-src': ["'self'", process.env.DIRECTUS_URL || ''],
+				'frame-ancestors': ["'self'", process.env.DIRECTUS_URL || ''],
 			},
 		},
 	},
