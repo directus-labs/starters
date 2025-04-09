@@ -51,7 +51,7 @@
 			mode: 'popover'
 		})}
 	/>
-	<Separator class="mb-8 border" />
+	<Separator class="mb-8" />
 
 	<div class="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,_2fr)_400px]">
 		<main class="text-left">

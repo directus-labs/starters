@@ -20,11 +20,10 @@ export const GET: RequestHandler = async ({ request, fetch }) => {
 					filter: {
 						_or: [
 							{ title: { _contains: search } },
-							{ description: { _contains: search } },
 							{ permalink: { _contains: search } }
 						]
 					},
-					fields: ['id', 'title', 'description', 'permalink']
+					fields: ['id', 'title', 'permalink']
 				})
 			),
 
@@ -52,7 +51,6 @@ export const GET: RequestHandler = async ({ request, fetch }) => {
 			...pages.map((page: any) => ({
 				id: page.id,
 				title: page.title,
-				description: page.description,
 				type: 'Page',
 				link: `/${page.permalink.replace(/^\/+/, '')}`
 			})),

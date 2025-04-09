@@ -28,8 +28,8 @@
 </script>
 
 <div
-	class={`flex max-w-[600px] flex-col rounded-lg border p-6 md:min-h-[424px] ${
-		card.is_highlighted ? 'border-accent' : 'border-gray-300'
+	class={`flex max-w-[600px] flex-col rounded-lg border  p-6 md:min-h-[424px] ${
+		card.is_highlighted ? 'border-accent' : 'border-input'
 	}`}
 >
 	<!-- {/* Title and Badge */} -->

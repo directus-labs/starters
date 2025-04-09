@@ -100,9 +100,12 @@
 			{#if results.length > 0}
 				<Command.Group heading="Search Results">
 					{#each results as result}
-						<Command.Item class="flex gap-2" onSelect={() => handleSelect(result)}>
+						<Command.Item class="flex items-start gap-4 px-2 py-3" onSelect={() => handleSelect(result)}>
 							<Badge variant="default">{result.type}</Badge>
-							<span>{result.title}</span>
+							<div class="ml-2 w-full">
+                                <p class="font-medium text-base">{result.title}</p>
+                                <p class="text-sm mt-1 line-clamp-2">{result.description}</p>
+                            </div>
 						</Command.Item>
 					{/each}
 				</Command.Group>
@@ -110,15 +113,3 @@
 		</Command.List>
 	</Command.Dialog>
 </div>
-
-<!-- <Command.Dialog bind:open>
-  <Command.Input placeholder="Type a command or search..." />
-  <Command.List>
-    <Command.Empty>No results found.</Command.Empty>
-    <Command.Group heading="Suggestions">
-      <Command.Item>Calendar</Command.Item>
-      <Command.Item>Search Emoji</Command.Item>
-      <Command.Item>Calculator</Command.Item>
-    </Command.Group>
-  </Command.List>
-</Command.Dialog> -->
