@@ -1,0 +1,8 @@
+/data
+/uploads
+.env
+.DS_Store
+./**/.DS_Store
+node_modules
+dist
+.env

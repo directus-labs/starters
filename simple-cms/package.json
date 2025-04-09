@@ -1,0 +1,30 @@
+{
+  "name": "cms",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "directus:template": {
+    "name": "CMS",
+    "description": "The official CMS starter template for Directus",
+    "template": "./directus/template",
+    "frontends": {
+        "nextjs": {
+            "name": "Next.js",
+            "path": "./nextjs"
+        },
+        "nuxt": {
+            "name": "Nuxt.js",
+            "path": "./nuxt"
+        },
+        "astro": {
+            "name": "Astro",
+            "path": "./astro"
+        }
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

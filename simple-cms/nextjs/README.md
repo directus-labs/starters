@@ -1,9 +1,9 @@
 # Next.js Simple CMS Template with Directus Integration
 
 This is a **Next.js-based Simple CMS Template** that is fully integrated with [Directus](https://directus.io/), offering
-a headless CMS solution for managing and delivering content seamlessly. The template leverages modern technologies like
-the **Next.js App Router**, **Tailwind CSS**, and **Shadcn components**, providing a complete and scalable starting
-point for building CMS-powered web applications.
+a CMS solution for managing and delivering content seamlessly. The template leverages modern technologies like the
+**Next.js App Router**, **Tailwind CSS**, and **Shadcn components**, providing a complete and scalable starting point
+for building CMS-powered web applications.
 
 ## **Features**
 
@@ -83,6 +83,7 @@ To get started, you need to configure environment variables. Follow these steps:
    - **`NEXT_PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
    - **`DRAFT_MODE_SECRET`**: The secret you generate for live preview. This is used to view draft posts in directus and
      live edits.
+   - **`NEXT_PUBLIC_ENABLE_VISUAL_EDITING`**: Enable or disable visual editing in Directus
 
 ## **Running the Application**
 

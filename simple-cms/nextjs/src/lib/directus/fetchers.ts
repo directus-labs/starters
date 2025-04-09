@@ -1,6 +1,6 @@
 import { BlockPost, PageBlock, Post, Schema } from '@/types/directus-schema';
 import { useDirectus } from './directus';
-import { QueryFilter, readItems, aggregate, readItem, readSingleton } from '@directus/sdk';
+import { readItems, aggregate, readItem, readSingleton, withToken, QueryFilter } from '@directus/sdk';
 
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
@@ -16,6 +16,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 				fields: [
 					'title',
 					'seo',
+					'id',
 					{
 						blocks: [
 							'id',
@@ -26,9 +27,10 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 							'hide_block',
 							{
 								item: {
-									block_richtext: ['tagline', 'headline', 'content', 'alignment'],
-									block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] }],
+									block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
+									block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] as any }],
 									block_pricing: [
+										'id',
 										'tagline',
 										'headline',
 										{
@@ -55,6 +57,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 										},
 									],
 									block_hero: [
+										'id',
 										'tagline',
 										'headline',
 										'description',
@@ -77,7 +80,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 											],
 										},
 									],
-									block_posts: ['tagline', 'headline', 'collection', 'limit'],
+									block_posts: ['id', 'tagline', 'headline', 'collection', 'limit'],
 									block_form: [
 										'id',
 										'tagline',
@@ -166,12 +169,14 @@ export const fetchSiteData = async () => {
 		const [globals, headerNavigation, footerNavigation] = await Promise.all([
 			directus.request(
 				readSingleton('globals', {
-					fields: ['title', 'description', 'logo', 'logo_dark_mode', 'social_links', 'accent_color', 'favicon'],
+					fields: ['id', 'title', 'description', 'logo', 'logo_dark_mode', 'social_links', 'accent_color', 'favicon'],
 				}),
 			),
 			directus.request(
 				readItem('navigation', 'main', {
 					fields: [
+						'id',
+						'title',
 						{
 							items: [
 								'id',
@@ -189,6 +194,8 @@ export const fetchSiteData = async () => {
 			directus.request(
 				readItem('navigation', 'footer', {
 					fields: [
+						'id',
+						'title',
 						{
 							items: [
 								'id',
@@ -212,78 +219,62 @@ export const fetchSiteData = async () => {
 };
 
 /**
- * Fetches a single blog post by slug. Handles live preview mode
+ * Fetches a single blog post by slug and related blog posts excluding the given ID. Handles live preview mode.
  */
-export const fetchPostBySlug = async (slug: string, options?: { draft?: boolean }) => {
-	const { directus, readItems } = useDirectus();
+
+export const fetchPostBySlug = async (
+	slug: string,
+	options?: { draft?: boolean; token?: string },
+): Promise<{ post: Post | null; relatedPosts: Post[] }> => {
+	const { directus } = useDirectus();
+	const { draft, token } = options || {};
 
 	try {
 		const filter: QueryFilter<Schema, Post> = options?.draft
 			? { slug: { _eq: slug } }
 			: { slug: { _eq: slug }, status: { _eq: 'published' } };
+		let postRequest = readItems<Schema, 'posts', any>('posts', {
+			filter,
+			limit: 1,
+			fields: [
+				'id',
+				'title',
+				'content',
+				'status',
+				'published_at',
+				'image',
+				'description',
+				'slug',
+				'seo',
+				{
+					author: ['id', 'first_name', 'last_name', 'avatar'],
+				},
+			],
+		});
 
-		const posts = await directus.request(
-			readItems('posts', {
-				filter,
-				limit: 1,
-				fields: ['id', 'title', 'content', 'status', 'image', 'description', 'author', 'seo'],
-			}),
-		);
+		// This is a really naive implementation of related posts. Just a basic check to ensure we don't return the same post. You might want to do something more sophisticated.
+		let relatedRequest = readItems<Schema, 'posts', any>('posts', {
+			filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
+			limit: 2,
+			fields: ['id', 'title', 'slug', 'image'],
+		});
 
-		const post = posts[0];
-
-		if (!post) {
-			console.error(`No post found with slug: ${slug}`);
-
-			return null;
+		if (draft && token) {
+			postRequest = withToken(token, postRequest);
+			relatedRequest = withToken(token, relatedRequest);
 		}
 
-		return post;
+		const [posts, relatedPosts] = await Promise.all([
+			directus.request<Post[]>(postRequest),
+			directus.request<Post[]>(relatedRequest),
+		]);
+
+		const post: Post | null = posts.length > 0 ? (posts[0] as Post) : null;
+
+		return { post, relatedPosts };
 	} catch (error) {
-		console.error(`Error fetching post with slug "${slug}":`, error);
-		throw new Error(`Failed to fetch post with slug "${slug}"`);
-	}
-};
-
-/**
- * Fetches related blog posts excluding the given ID.
- */
-export const fetchRelatedPosts = async (excludeId: string) => {
-	const { directus, readItems } = useDirectus();
-
-	try {
-		const relatedPosts = await directus.request(
-			readItems('posts', {
-				filter: { status: { _eq: 'published' }, id: { _neq: excludeId } },
-				fields: ['id', 'title', 'image', 'slug', 'seo'],
-				limit: 2,
-			}),
-		);
-
-		return relatedPosts;
-	} catch (error) {
-		console.error('Error fetching related posts:', error);
-		throw new Error('Failed to fetch related posts');
-	}
-};
-
-/**
- * Fetches author details by ID.
- */
-export const fetchAuthorById = async (authorId: string) => {
-	const { directus, readUser } = useDirectus();
-
-	try {
-		const author = await directus.request(
-			readUser(authorId, {
-				fields: ['first_name', 'last_name', 'avatar'],
-			}),
-		);
-
-		return author;
-	} catch (error) {
-		console.error(`Error fetching author with ID "${authorId}":`, error);
-		throw new Error(`Failed to fetch author with ID "${authorId}"`);
+		console.error('Error in fetchPostBySlug:', error);
+		throw new Error('Failed to fetch blog post and related posts');
 	}
 };
 

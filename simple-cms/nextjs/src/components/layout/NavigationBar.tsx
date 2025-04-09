@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -18,8 +18,14 @@ import { ChevronDown, Menu } from 'lucide-react';
 import ThemeToggle from '../ui/ThemeToggle';
 import SearchModal from '@/components/ui/SearchModal';
 import Container from '@/components/ui/container';
+import { setAttr } from '@directus/visual-editing';
 
-export default function NavigationBar({ navigation, globals }: { navigation: any; globals: any }) {
+interface NavigationBarProps {
+	navigation: any;
+	globals: any;
+}
+
+const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation, globals }, ref) => {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_URL;
@@ -31,7 +37,7 @@ export default function NavigationBar({ navigation, globals }: { navigation: any
 	};
 
 	return (
-		<header className="sticky top-0 z-50 w-full bg-background text-foreground">
+		<header ref={ref} className="sticky top-0 z-50 w-full bg-background text-foreground">
 			<Container className="flex items-center justify-between p-4">
 				<Link href="/" className="flex-shrink-0">
 					<Image
@@ -56,7 +62,19 @@ export default function NavigationBar({ navigation, globals }: { navigation: any
 
 				<nav className="flex items-center gap-4">
 					<SearchModal />
-					<NavigationMenu className="hidden md:flex">
+					<NavigationMenu
+						className="hidden md:flex"
+						data-directus={
+							navigation
+								? setAttr({
+										collection: 'navigation',
+										item: navigation.id,
+										fields: ['items'],
+										mode: 'modal',
+									})
+								: undefined
+						}
+					>
 						<NavigationMenuList className="flex gap-6">
 							{navigation?.items?.map((section: any) => (
 								<NavigationMenuItem key={section.id}>
@@ -148,4 +166,6 @@ export default function NavigationBar({ navigation, globals }: { navigation: any
 			</Container>
 		</header>
 	);
-}
+});
+NavigationBar.displayName = 'NavigationBar';
+export default NavigationBar;
