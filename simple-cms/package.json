@@ -15,12 +15,16 @@
             "path": "./nextjs"
         },
         "nuxt": {
-            "name": "Nuxt.js",
+            "name": "Nuxt",
             "path": "./nuxt"
         },
         "astro": {
             "name": "Astro",
             "path": "./astro"
+        },
+        "svelte": {
+            "name": "Svelte",
+            "path": "./sveltekit"
         }
     }
   },
