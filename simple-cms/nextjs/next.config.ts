@@ -37,11 +37,7 @@ const nextConfig: NextConfig = {
 				port: '8055',
 				pathname: '/assets/**',
 			},
-			{
-				protocol: 'https',
-				hostname: 'simple-cms-starter.directus.app',
-				pathname: '/assets/**',
-			},
+
 		],
 	},
 	env: {
