@@ -9,12 +9,12 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE}
     healthcheck:
-      test: ["CMD", "pg_isready", "--host=localhost", "--username=${DB_USER}"]
+      test: ["CMD", "pg_isready", "-U", "${DB_USER}", "-d", "${DB_DATABASE}", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_interval: 5s
-      start_period: 15s
+      start_period: 30s
 
   cache:
     image: redis:6
@@ -24,7 +24,7 @@ services:
       timeout: 5s
       retries: 5
       start_interval: 5s
-      start_period: 15s
+      start_period: 30s
 
   directus:
     image: directus/directus:11.6.1
