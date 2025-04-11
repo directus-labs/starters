@@ -16,9 +16,14 @@ export default defineEventHandler(async (event) => {
 								'id',
 								'title',
 								'url',
-								{ page: ['permalink'] },
+								'type',
 								{
-									children: ['id', 'title', 'url', { page: ['permalink'] }],
+									page: ['id', 'permalink'],
+									post: ['id', 'slug'],
+									children: ['id', 'title', 'url', 'type', {
+										page: ['id', 'permalink'],
+										post: ['id', 'slug']
+									}],
 								},
 							],
 						},
@@ -44,9 +49,14 @@ export default defineEventHandler(async (event) => {
 								'id',
 								'title',
 								'url',
-								{ page: ['permalink'] },
+								'type',
 								{
-									children: ['id', 'title', 'url', { page: ['permalink'] }],
+									page: ['id', 'permalink'],
+									post: ['id', 'slug'],
+									children: ['id', 'title', 'url', 'type', {
+										page: ['id', 'permalink'],
+										post: ['id', 'slug']
+									}],
 								},
 							],
 						},
