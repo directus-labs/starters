@@ -1,46 +1,6 @@
-# Dependencies
-node_modules/
-
-# Build output
-.nuxt
-.nitro
-.cache
-.output
-dist
-
-# Logs
-*.log*
-npm-debug.log*
-pnpm-debug.log*
-yarn-debug.log*
-
-# Environment variables
-.env
-.env.*.local
-
-# System files
-.DS_Store
-Thumbs.db
-
-# IDE/Editor
-.vscode/
-.idea/
-.eslintcache
-
-# Netlify
-.netlify
-
-# Directus
-directus/data
-directus/uploads
-directus/dbs
-directus/extensions/.registry
-
-# Testing
-coverage/
-
-# Tailwind CSS Cache
-.stylelintcache
-
-# Certificates
-certificates
+# Nuxt Build Output
+.nuxt/
+.nitro/
+.cache/
+.output/
+dist/
