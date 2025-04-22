@@ -2,6 +2,7 @@ name: directus-cms-template
 services:
   database:
     image: postgis/postgis:13-master
+    platform: linux/amd64
     volumes:
       - ./data/database:/var/lib/postgresql/data
     environment:
