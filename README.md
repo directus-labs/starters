@@ -1,6 +1,6 @@
-# Starter Templates with Directus Integration
+# Directus Starter Templates
 
-This repo provides a collection of starter templates for building web applications with Directus integration. Initially, this includes a **Simple CMS**, but upcoming templates will also include **Simple CRM** and **Simple eCommerce** solutions.
+This repo provides a collection of starter templates for building web applications with Directus integration.
 
 Each template is designed to be:
 
@@ -14,9 +14,8 @@ Each template is designed to be:
 
 | Template             | Status         | Description                                  |
 | -------------------- | -------------- | -------------------------------------------- |
-| **Simple CMS**       | 🚧 In Progress | A starter CMS template for managing content. |
-| **Simple CRM**       | 🕒 Upcoming    | A CRM template for managing customer data.   |
-| **Simple eCommerce** | 🕒 Upcoming    | A template for building eCommerce solutions. |
+| **CMS**       | 🚧 In Progress | A starter CMS template for managing content. |
+| **Headless eCommerce** | 🕒 Upcoming    | A template for building eCommerce solutions. |
 
 ---
 
@@ -27,7 +26,7 @@ Each template is designed to be:
 1. **Create a New Project**:
 
    - Visit [Directus Cloud](https://directus.io/cloud/) and create a new project.
-   - During the setup process, be sure to select the appropriate template for your project (**Simple CMS**, **Simple CRM**, or **Simple eCommerce**).
+   - During the setup process, be sure to select the appropriate template for your project (**CMS**, **Simple CRM**, or **Simple eCommerce**).
    - Once started, it will take around 90 seconds for the Cloud Project to be created.
    - You will receive an email with your project URL, email, and password for logging in.
    - If you used GitHub to create your account, this will be your GitHub email.
