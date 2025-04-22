@@ -7,9 +7,9 @@
   },
   "directus:template": {
     "name": "Blank",
-    "description": "Blank starter template for Directus",
+    "description": "Start with a blank slate.",
     "template": null,
-    "frontends": null
+    "frontends": {}
   },
   "keywords": [],
   "author": ""

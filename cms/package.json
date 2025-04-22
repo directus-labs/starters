@@ -7,7 +7,7 @@
   },
   "directus:template": {
     "name": "CMS",
-    "description": "The official CMS starter template for Directus",
+    "description": "A ready-to-use CMS with block builder and visual editing.",
     "template": "./directus/template",
     "frontends": {
         "nextjs": {
