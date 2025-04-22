@@ -9,7 +9,7 @@
     "name": "Blank",
     "description": "Start with a blank slate.",
     "template": null,
-    "frontends": {}
+    "frontends": null
   },
   "keywords": [],
   "author": ""

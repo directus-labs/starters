@@ -7,7 +7,7 @@
   },
   "directus:template": {
     "name": "CMS",
-    "description": "A ready-to-use CMS with block builder and visual editing.",
+    "description": "A ready-to-use CMS with block builder, visual editing, and integration with your favorite framework. ",
     "template": "./directus/template",
     "frontends": {
         "nextjs": {
