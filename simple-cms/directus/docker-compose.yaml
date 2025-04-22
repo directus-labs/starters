@@ -39,7 +39,6 @@ services:
       cache:
         condition: service_healthy
     environment:
-      KEY: ${DIRECTUS_KEY}
       SECRET: ${DIRECTUS_SECRET}
 
       DB_CLIENT: "pg"
