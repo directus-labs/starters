@@ -60,7 +60,12 @@ const metadata = page
 
 <Layout metadata={metadata}>
   {page ? (
-    <PageClient client:load permalink={resolvedPermalink} initialSections={blocks} />
+    <PageClient
+      client:load
+      permalink={resolvedPermalink}
+      initialSections={blocks}
+      pageId={page.id}
+    />
   ) : (
     <div class="text-center text-xl mt-20">404 - Page Not Found</div>
   )}

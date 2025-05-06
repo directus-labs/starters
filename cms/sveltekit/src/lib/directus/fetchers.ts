@@ -7,16 +7,20 @@ import { type QueryFilter, aggregate, readItem, readSingleton } from '@directus/
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
  */
-export const fetchPageData = async (permalink: string, postPage = 1, fetch: RequestEvent['fetch']) => {
+export const fetchPageData = async (
+	permalink: string,
+	postPage = 1,
+	fetch: RequestEvent['fetch']
+) => {
 	const { getDirectus, readItems } = useDirectus();
 	const directus = getDirectus(fetch);
-
 
 	const pageData = await directus.request(
 		readItems('pages', {
 			filter: { permalink: { _eq: permalink } },
 			limit: 1,
 			fields: [
+				'id',
 				'title',
 				{
 					blocks: [
@@ -63,7 +67,7 @@ export const fetchPageData = async (permalink: string, postPage = 1, fetch: Requ
 									}
 								],
 								block_hero: [
-									"id",
+									'id',
 									'tagline',
 									'headline',
 									'description',
@@ -129,7 +133,6 @@ export const fetchPageData = async (permalink: string, postPage = 1, fetch: Requ
 		})
 	);
 
-
 	if (pageData.length === 0) {
 		error(404, {
 			message: 'Not found'
@@ -162,7 +165,6 @@ export const fetchPageData = async (permalink: string, postPage = 1, fetch: Requ
 	}
 
 	return page;
-
 };
 
 /**
@@ -177,7 +179,7 @@ export const fetchSiteData = async (fetch: RequestEvent['fetch']) => {
 			directus.request(
 				readSingleton('globals', {
 					fields: [
-						"id",
+						'id',
 						'title',
 						'description',
 						'logo',
@@ -237,7 +239,11 @@ export const fetchSiteData = async (fetch: RequestEvent['fetch']) => {
 /**
  * Fetches a single blog post by slug. Handles live preview mode
  */
-export const fetchPostBySlug = async (slug: string, options: { draft?: boolean }, fetch: RequestEvent['fetch']) => {
+export const fetchPostBySlug = async (
+	slug: string,
+	options: { draft?: boolean },
+	fetch: RequestEvent['fetch']
+) => {
 	const { getDirectus, readItems } = useDirectus();
 	const directus = getDirectus(fetch);
 
