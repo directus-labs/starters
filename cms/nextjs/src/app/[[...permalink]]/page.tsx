@@ -50,5 +50,5 @@ export default async function Page({ params }: { params: Promise<{ permalink?: s
 		(block: any): block is PageBlock => typeof block === 'object' && block.collection,
 	);
 
-	return <PageClient sections={blocks} />;
+	return <PageClient sections={blocks} pageId={page.id} />;
 }
