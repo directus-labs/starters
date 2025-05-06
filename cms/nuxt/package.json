@@ -18,7 +18,7 @@
 		"generate:types": "node ./scripts/generate-types.js"
 	},
 	"devDependencies": {
-		"@directus/types": "13.1.0",
+		"@directus/types": "13.1.1",
 		"@nuxt/devtools": "2.3.2",
 		"@nuxtjs/eslint-config-typescript": "12.1.0",
 		"@nuxtjs/eslint-module": "4.1.0",
@@ -27,7 +27,7 @@
 		"@typescript-eslint/parser": "^8.29.1",
 		"defu": "^6.1.4",
 		"destr": "^2.0.5",
-		"directus-sdk-typegen": "^0.1.11",
+		"directus-sdk-typegen": "^0.2.0",
 		"dotenv": "^16.4.7",
 		"eslint": "9.24.0",
 		"eslint-config-prettier": "10.1.1",
@@ -39,7 +39,7 @@
 	},
 	"dependencies": {
 		"@directus/sdk": "19.1.0",
-		"@directus/visual-editing": "^1.0.1",
+		"@directus/visual-editing": "^1.1.0",
 		"@formkit/auto-animate": "0.8.2",
 		"@hookform/resolvers": "^5.0.1",
 		"@nuxt/icon": "1.11.0",
