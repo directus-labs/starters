@@ -1,7 +1,7 @@
 name: directus-cms-template
 services:
   database:
-    image: postgis/postgis:13-master
+    image: postgis/postgis:16-master
     platform: linux/amd64
     volumes:
       - ./data/database:/var/lib/postgresql/data
@@ -28,7 +28,7 @@ services:
       start_period: 30s
 
   directus:
-    image: directus/directus:11.6.1
+    image: directus/directus:11.7.2
     ports:
       - ${DIRECTUS_PORT}:8055
     volumes:
