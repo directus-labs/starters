@@ -85,8 +85,8 @@ importers:
         specifier: ^0.0.19
         version: 0.0.19(svelte@5.25.3)
       directus-sdk-typegen:
-        specifier: ^0.1.11
-        version: 0.1.11
+        specifier: ^0.2.0
+        version: 0.2.0
       eslint:
         specifier: ^9.23.0
         version: 9.23.0(jiti@1.21.7)
@@ -1262,8 +1262,8 @@ packages:
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
 
-  directus-sdk-typegen@0.1.11:
-    resolution: {integrity: sha512-GC9LEjZe+kfEi6iUDypdhcg9F0QDeXRkSnUZrFdq8F8WzgQJeVnjnWto4ESFwnuPiwOu7tekkm44nR625JGGtQ==}
+  directus-sdk-typegen@0.2.0:
+    resolution: {integrity: sha512-H9A3EaKSPbhL2vLslSrVq3xw5IHWLGM64vmT/wMtsb5DgSNVEYipFb7skuB2nKhP39Md2zYGTNHzjnwqydUI5A==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -3357,7 +3357,7 @@ snapshots:
 
   didyoumean@1.2.2: {}
 
-  directus-sdk-typegen@0.1.11:
+  directus-sdk-typegen@0.2.0:
     dependencies:
       commander: 8.3.0
 
