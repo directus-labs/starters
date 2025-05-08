@@ -50,6 +50,8 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.1",
     "autoprefixer": "^10.4.21",
+    "directus-sdk-typegen": "^0.2.0",
+    "dotenv": "^16.5.0",
     "postcss": "^8.5.3",
     "postcss-nesting": "^13.0.1",
     "tailwindcss": "^3.4.1",
