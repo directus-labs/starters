@@ -51,7 +51,7 @@
 		"@next/eslint-plugin-next": "15.2.4",
 		"@trivago/prettier-plugin-sort-imports": "^5.2.2",
 		"@types/node": "^22.14.0",
-		"directus-sdk-typegen": "^0.1.11",
+		"directus-sdk-typegen": "^0.2.0",
 		"eslint": "^9.24.0",
 		"eslint-config-next": "15.2.4",
 		"eslint-config-prettier": "^10.1.1",
