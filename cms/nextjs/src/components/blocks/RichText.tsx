@@ -90,7 +90,7 @@ const RichText = ({ data, className }: RichTextProps) => {
 						collection: 'block_richtext',
 						item: id,
 						fields: 'content',
-						mode: 'popover',
+						mode: 'drawer',
 					})}
 				/>
 			)}
