@@ -57,7 +57,7 @@
 				collection: 'block_richtext',
 				item: id,
 				fields: 'content',
-				mode: 'popover'
+				mode: 'drawer'
 			})}
 		/>
 	{/if}
