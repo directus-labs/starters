@@ -72,7 +72,7 @@ export default function BlogPostClient({
 				<Headline
 					as="h2"
 					headline={post.title}
-					className="!text-accent mb-4"
+					className="text-accent! mb-4"
 					data-directus={setAttr({
 						collection: 'posts',
 						item: post.id,
@@ -82,7 +82,7 @@ export default function BlogPostClient({
 				/>
 				<Separator className="mb-8" />
 
-				<div className="grid grid-cols-1 lg:grid-cols-[minmax(0,_2fr)_400px] gap-12">
+				<div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2fr)_400px] gap-12">
 					<main className="text-left">
 						<BaseText
 							content={post.content || ''}

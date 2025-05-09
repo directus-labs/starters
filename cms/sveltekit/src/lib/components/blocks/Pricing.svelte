@@ -43,7 +43,7 @@
 
 	const containerStyles = $derived(() => {
 		pricing_cards.length === 1 || pricing_cards.length === 2
-			? 'mx-auto max-w-screen-md'
+			? 'mx-auto max-w-(--breakpoint-md)'
 			: 'max-w-full';
 	});
 </script>

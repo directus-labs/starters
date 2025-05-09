@@ -50,7 +50,7 @@
 					href={social.url}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-flex items-center justify-center rounded bg-transparent transition-colors hover:opacity-70"
+					class="inline-flex items-center justify-center rounded-sm bg-transparent transition-colors hover:opacity-70"
 				>
 					<img
 						src={social.icon}

@@ -48,7 +48,7 @@
 			</h3>
 		{/if}
 		{#if card.badge}
-			<div class="flex-shrink-0">
+			<div class="shrink-0">
 				<Badge
 					variant={card.is_highlighted ? 'secondary' : 'default'}
 					class="text-xs font-medium uppercase"
@@ -95,7 +95,7 @@
 	<Separator class="my-4" />
 
 	{#if card.features && Array.isArray(card.features)}
-		<div class="flex-grow">
+		<div class="grow">
 			<ul
 				class="space-y-4"
 				data-directus={setAttr({

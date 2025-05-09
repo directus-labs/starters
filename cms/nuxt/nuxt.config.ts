@@ -17,7 +17,6 @@ export default defineNuxtConfig({
 		'@nuxt/scripts',
 		'@vueuse/nuxt',
 		'nuxt-security',
-		'@nuxtjs/tailwindcss',
 		'shadcn-nuxt',
 		'@nuxt/icon',
 		'@nuxtjs/color-mode',
@@ -25,6 +24,12 @@ export default defineNuxtConfig({
 	],
 
 	css: ['~/assets/css/tailwind.css'],
+
+	postcss: {
+		plugins: {
+			'@tailwindcss/postcss': {},
+		},
+	},
 
 	runtimeConfig: {
 		public: {

@@ -17,7 +17,7 @@
 	);
 </script>
 
-<footer class="bg-gray py-16 dark:bg-[var(--background-variant-color)]">
+<footer class="bg-gray py-16 dark:bg-(--background-variant-color)">
 	<Container class="text-foreground dark:text-white">
 		<div class="flex flex-col items-start justify-between gap-8 pt-8 md:flex-row">
 			<div class="flex-1">

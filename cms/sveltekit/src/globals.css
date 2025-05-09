@@ -1,37 +1,61 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-:root {
-	--background-color: #ffffff; /* Light background */
-	--foreground-color: #42566e; /* Light text */
-	--background-color-muted: color-mix(
-		in srgb,
-		var(--background-color),
-		var(--foreground-color) 10%
-	);
-	--accent-color: #6644ff; /* Accent color */
-	--background-variant-color: #172940;
-	--accent-color-dark: color-mix(in srgb, var(--accent-color), black 40%);
-	--accent-color-soft: color-mix(in srgb, var(--accent-color), white 20%);
-	--accent-color-light: color-mix(in srgb, var(--accent-color), white 90%);
-	--input-color: color-mix(in srgb, var(--background-color), var(--foreground-color) 30%);
+@config '../tailwind.config.ts';
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
 }
 
-.dark {
-	--background-color: #0e1a2b; /* Default dark background */
-	--background-color-muted: color-mix(
-		in srgb,
-		var(--background-color),
-		var(--foreground-color) 10%
-	);
-	--background-variant-color: #172940;
-	--foreground-color: #ffffff; /* Default dark text */
+@layer utilities {
+  :root {
+    --background-color: #ffffff; /* Light background */
+    --foreground-color: #42566e; /* Light text */
+    --background-color-muted: color-mix(
+      in srgb,
+      var(--background-color),
+      var(--foreground-color) 10%
+    );
+    --accent-color: #6644ff; /* Accent color */
+    --background-variant-color: #172940;
+    --accent-color-dark: color-mix(in srgb, var(--accent-color), black 40%);
+    --accent-color-soft: color-mix(in srgb, var(--accent-color), white 20%);
+    --accent-color-light: color-mix(in srgb, var(--accent-color), white 90%);
+    --input-color: color-mix(
+      in srgb,
+      var(--background-color),
+      var(--foreground-color) 30%
+    );
+  }
+
+  .dark {
+    --background-color: #0e1a2b; /* Default dark background */
+    --background-color-muted: color-mix(
+      in srgb,
+      var(--background-color),
+      var(--foreground-color) 10%
+    );
+    --background-variant-color: #172940;
+    --foreground-color: #ffffff; /* Default dark text */
+  }
 }
 
 @layer base {
 	html {
-		@apply bg-[var(--background-color)] text-[var(--foreground-color)];
+		@apply bg-(--background-color) text-(--foreground-color);
 	}
 }
 
@@ -42,11 +66,11 @@
 	button:focus,
 	a:focus,
 	[role='button']:focus {
-		@apply outline-none ring-2 ring-[var(--accent-color)] ring-offset-2 ring-offset-background;
+		@apply outline-hidden ring-2 ring-(--accent-color) ring-offset-2 ring-offset-background;
 	}
 
 	[data-background='dark'] {
-		@apply bg-gray dark:bg-[var(--background-variant-color)];
+		@apply bg-gray dark:bg-(--background-variant-color);
 	}
 
 	:root:not(.dark) [data-background='dark'] {

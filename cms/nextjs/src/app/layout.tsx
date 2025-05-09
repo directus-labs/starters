@@ -40,7 +40,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 						footerNavigation={footerNavigation}
 						globals={globals}
 					>
-						<main className="flex-grow">{children}</main>
+						<main className="grow">{children}</main>
 					</VisualEditingLayout>
 				</ThemeProvider>
 			</body>

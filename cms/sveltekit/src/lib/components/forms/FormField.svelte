@@ -37,7 +37,7 @@
 </script>
 
 {#if field.type !== 'hidden'}
-	<div class={`flex flex-shrink-0 flex-col justify-center ${widthClass}`}>
+	<div class={`flex shrink-0 flex-col justify-center ${widthClass}`}>
 		<Form.Field {form} name={field.name!}>
 			<Form.Control>
 				<Form.Label

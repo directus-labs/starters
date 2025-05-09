@@ -42,7 +42,7 @@ const darkLogoUrl = computed(() =>
 </script>
 
 <template>
-	<footer v-if="globals" ref="footerRef" class="bg-gray dark:bg-[var(--background-variant-color)] py-16">
+	<footer v-if="globals" ref="footerRef" class="bg-gray dark:bg-(--background-variant-color) py-16">
 		<Container class="text-foreground dark:text-white">
 			<div class="flex flex-col md:flex-row justify-between items-start gap-8 pt-8">
 				<div class="flex-1">
@@ -73,7 +73,7 @@ const darkLogoUrl = computed(() =>
 							:href="social.url"
 							target="_blank"
 							rel="noopener noreferrer"
-							class="size-8 rounded bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
+							class="size-8 rounded-sm bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
 						>
 							<img
 								:src="`/icons/social/${social.service}.svg`"

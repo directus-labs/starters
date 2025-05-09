@@ -79,7 +79,7 @@ watch(open, (isOpen) => {
 
 				<CommandInput
 					placeholder="Search for pages or posts"
-					class="m-2 p-4 focus:outline-none text-base leading-normal"
+					class="m-2 p-4 focus:outline-hidden text-base leading-normal"
 					@input="(e) => debouncedFetchResults(e.target.value)"
 				/>
 

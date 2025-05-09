@@ -39,7 +39,7 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation,
 	return (
 		<header ref={ref} className="sticky top-0 z-50 w-full bg-background text-foreground">
 			<Container className="flex items-center justify-between p-4">
-				<Link href="/" className="flex-shrink-0">
+				<Link href="/" className="shrink-0">
 					<Image
 						src={lightLogoUrl}
 						alt="Logo"
