@@ -1,4 +1,4 @@
-import { BlockPost, PageBlock, Post, Schema } from '@/types/directus-schema';
+import { BlockPost, PageBlock, Post, Redirect, Schema } from '@/types/directus-schema';
 import { useDirectus } from './directus';
 import { readItems, aggregate, readItem, readSingleton, withToken, QueryFilter } from '@directus/sdk';
 
@@ -7,8 +7,35 @@ import { readItems, aggregate, readItem, readSingleton, withToken, QueryFilter }
  */
 export const fetchPageData = async (permalink: string, postPage = 1) => {
 	const { directus, readItems } = useDirectus();
-
 	try {
+		// First check for redirects
+		const redirects = await directus.request(
+			readItems('redirects', {
+				filter: {
+					_and: [
+						{
+							url_from: { _eq: permalink },
+						},
+						{
+							url_to: { _nnull: true },
+						},
+					],
+				},
+				fields: ['url_to', 'response_code'],
+			}),
+		);
+
+		// If we have a redirect, throw a special error that we can catch in the page component
+		if (redirects?.[0]) {
+			const redirect = redirects[0];
+			throw {
+				type: 'redirect',
+				destination: redirect.url_to,
+				status: redirect.response_code || '301',
+			};
+		}
+
+		// If no redirect, proceed with normal page fetch
 		const pageData = await directus.request(
 			readItems('pages', {
 				filter: { permalink: { _eq: permalink } },
@@ -154,6 +181,11 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 
 		return page;
 	} catch (error) {
+		// If it's our redirect error, rethrow it
+		if (error && typeof error === 'object' && 'type' in error && error.type === 'redirect') {
+			throw error;
+		}
+		// Otherwise handle as a normal error
 		console.error('Error fetching page data:', error);
 		throw new Error('Failed to fetch page data');
 	}
@@ -322,3 +354,24 @@ export const fetchTotalPostCount = async (): Promise<number> => {
 		return 0;
 	}
 };
+
+export async function fetchRedirects(): Promise<Pick<Redirect, 'url_from' | 'url_to' | 'response_code'>[]> {
+	const { directus } = useDirectus();
+	const response = await directus.request(
+		readItems('redirects', {
+			filter: {
+				_and: [
+					{
+						url_from: { _nnull: true },
+					},
+					{
+						url_to: { _nnull: true },
+					},
+				],
+			},
+			fields: ['url_from', 'url_to', 'response_code'],
+		}),
+	);
+
+	return response || [];
+}
