@@ -1,6 +1,7 @@
 import { BlockPost, PageBlock, Post, Redirect, Schema } from '@/types/directus-schema';
 import { useDirectus } from './directus';
 import { readItems, aggregate, readItem, readSingleton, withToken, QueryFilter } from '@directus/sdk';
+import { RedirectError } from '../redirects';
 
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
@@ -32,7 +33,7 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 				type: 'redirect',
 				destination: redirect.url_to,
 				status: redirect.response_code || '301',
-			};
+			} as RedirectError;
 		}
 
 		// If no redirect, proceed with normal page fetch
@@ -260,8 +261,36 @@ export const fetchPostBySlug = async (
 ): Promise<{ post: Post | null; relatedPosts: Post[] }> => {
 	const { directus } = useDirectus();
 	const { draft, token } = options || {};
+	const blogPath = `/blog/${slug}`;
 
 	try {
+		// First check for redirects
+		const redirects = await directus.request(
+			readItems('redirects', {
+				filter: {
+					_and: [
+						{
+							url_from: { _eq: blogPath },
+						},
+						{
+							url_to: { _nnull: true },
+						},
+					],
+				},
+				fields: ['url_to', 'response_code'],
+			}),
+		);
+
+		// If we have a redirect, throw a special error that we can catch in the page component
+		if (redirects?.[0]) {
+			const redirect = redirects[0];
+			throw {
+				type: 'redirect',
+				destination: redirect.url_to,
+				status: redirect.response_code || '301',
+			} as RedirectError;
+		}
+
 		const filter: QueryFilter<Schema, Post> = options?.draft
 			? { slug: { _eq: slug } }
 			: { slug: { _eq: slug }, status: { _eq: 'published' } };
@@ -305,6 +334,11 @@ export const fetchPostBySlug = async (
 
 		return { post, relatedPosts };
 	} catch (error) {
+		// If it's our redirect error, rethrow it
+		if (error && typeof error === 'object' && 'type' in error && error.type === 'redirect') {
+			throw error;
+		}
+		// Otherwise handle as a normal error
 		console.error('Error in fetchPostBySlug:', error);
 		throw new Error('Failed to fetch blog post and related posts');
 	}
