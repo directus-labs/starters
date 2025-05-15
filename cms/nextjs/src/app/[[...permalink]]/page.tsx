@@ -1,7 +1,8 @@
 import { fetchPageData } from '@/lib/directus/fetchers';
 import { PageBlock } from '@/types/directus-schema';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import PageClient from './PageClient';
+import { isRedirectError } from '@/lib/redirects';
 
 export async function generateMetadata({ params }: { params: Promise<{ permalink?: string[] }> }) {
 	const { permalink } = await params;
@@ -24,6 +25,10 @@ export async function generateMetadata({ params }: { params: Promise<{ permalink
 			},
 		};
 	} catch (error) {
+		if (isRedirectError(error)) {
+			redirect(error.destination);
+		}
+
 		console.error('Error loading page metadata:', error);
 
 		return;
@@ -35,20 +40,24 @@ export default async function Page({ params }: { params: Promise<{ permalink?: s
 	const permalinkSegments = permalink || [];
 	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
 
-	let page;
 	try {
-		page = await fetchPageData(resolvedPermalink);
-	} catch (error) {
-		console.error('Error loading page:', error);
-	}
+		const page = await fetchPageData(resolvedPermalink);
 
-	if (!page || !page.blocks) {
+		if (!page || !page.blocks) {
+			notFound();
+		}
+
+		const blocks: PageBlock[] = page.blocks.filter(
+			(block: any): block is PageBlock => typeof block === 'object' && block.collection,
+		);
+
+		return <PageClient sections={blocks} pageId={page.id} />;
+	} catch (error) {
+		if (isRedirectError(error)) {
+			redirect(error.destination);
+		}
+
+		console.error('Error loading page:', error);
 		notFound();
 	}
-
-	const blocks: PageBlock[] = page.blocks.filter(
-		(block: any): block is PageBlock => typeof block === 'object' && block.collection,
-	);
-
-	return <PageClient sections={blocks} pageId={page.id} />;
 }
