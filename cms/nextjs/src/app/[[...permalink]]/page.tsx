@@ -35,20 +35,20 @@ export default async function Page({ params }: { params: Promise<{ permalink?: s
 	const permalinkSegments = permalink || [];
 	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
 
-	let page;
 	try {
-		page = await fetchPageData(resolvedPermalink);
+		const page = await fetchPageData(resolvedPermalink);
+
+		if (!page || !page.blocks) {
+			notFound();
+		}
+
+		const blocks: PageBlock[] = page.blocks.filter(
+			(block: any): block is PageBlock => typeof block === 'object' && block.collection,
+		);
+
+		return <PageClient sections={blocks} pageId={page.id} />;
 	} catch (error) {
 		console.error('Error loading page:', error);
-	}
-
-	if (!page || !page.blocks) {
 		notFound();
 	}
-
-	const blocks: PageBlock[] = page.blocks.filter(
-		(block: any): block is PageBlock => typeof block === 'object' && block.collection,
-	);
-
-	return <PageClient sections={blocks} pageId={page.id} />;
 }
