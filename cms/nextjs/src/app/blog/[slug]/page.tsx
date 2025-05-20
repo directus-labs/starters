@@ -2,8 +2,6 @@ import { draftMode } from 'next/headers';
 import { fetchPostBySlug } from '@/lib/directus/fetchers';
 import BlogPostClient from './BlogPostClient';
 import type { DirectusUser } from '@/types/directus-schema';
-import { redirect } from 'next/navigation';
-import { isRedirectError } from '@/lib/redirects';
 
 export default async function BlogPostPage({
 	params,
@@ -42,10 +40,6 @@ export default async function BlogPostPage({
 			/>
 		);
 	} catch (error) {
-		if (isRedirectError(error)) {
-			redirect(error.destination);
-		}
-
 		console.error('Error loading blog post:', error);
 
 		return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;

@@ -1,8 +1,7 @@
 import { fetchPageData } from '@/lib/directus/fetchers';
 import { PageBlock } from '@/types/directus-schema';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import PageClient from './PageClient';
-import { isRedirectError } from '@/lib/redirects';
 
 export async function generateMetadata({ params }: { params: Promise<{ permalink?: string[] }> }) {
 	const { permalink } = await params;
@@ -25,10 +24,6 @@ export async function generateMetadata({ params }: { params: Promise<{ permalink
 			},
 		};
 	} catch (error) {
-		if (isRedirectError(error)) {
-			redirect(error.destination);
-		}
-
 		console.error('Error loading page metadata:', error);
 
 		return;
@@ -53,10 +48,6 @@ export default async function Page({ params }: { params: Promise<{ permalink?: s
 
 		return <PageClient sections={blocks} pageId={page.id} />;
 	} catch (error) {
-		if (isRedirectError(error)) {
-			redirect(error.destination);
-		}
-
 		console.error('Error loading page:', error);
 		notFound();
 	}
