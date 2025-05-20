@@ -277,7 +277,7 @@ export interface FormSubmission {
 
 export interface FormSubmissionValue {
 	/** @primaryKey */
-	id: string;
+	id?: string;
 	/** @description Parent form submission for this value. */
 	form_submission?: FormSubmission | string | null;
 	field?: FormField | string | null;
