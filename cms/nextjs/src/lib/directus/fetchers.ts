@@ -1,13 +1,13 @@
-import { BlockPost, PageBlock, Post, Schema } from '@/types/directus-schema';
+import { BlockPost, PageBlock, Post, Redirect, Schema } from '@/types/directus-schema';
 import { useDirectus } from './directus';
 import { readItems, aggregate, readItem, readSingleton, withToken, QueryFilter } from '@directus/sdk';
+import { RedirectError } from '../redirects';
 
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
  */
 export const fetchPageData = async (permalink: string, postPage = 1) => {
 	const { directus, readItems } = useDirectus();
-
 	try {
 		const pageData = await directus.request(
 			readItems('pages', {
@@ -221,7 +221,6 @@ export const fetchSiteData = async () => {
 /**
  * Fetches a single blog post by slug and related blog posts excluding the given ID. Handles live preview mode.
  */
-
 export const fetchPostBySlug = async (
 	slug: string,
 	options?: { draft?: boolean; token?: string },
@@ -322,3 +321,24 @@ export const fetchTotalPostCount = async (): Promise<number> => {
 		return 0;
 	}
 };
+
+export async function fetchRedirects(): Promise<Pick<Redirect, 'url_from' | 'url_to' | 'response_code'>[]> {
+	const { directus } = useDirectus();
+	const response = await directus.request(
+		readItems('redirects', {
+			filter: {
+				_and: [
+					{
+						url_from: { _nnull: true },
+					},
+					{
+						url_to: { _nnull: true },
+					},
+				],
+			},
+			fields: ['url_from', 'url_to', 'response_code'],
+		}),
+	);
+
+	return response || [];
+}
