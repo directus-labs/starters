@@ -33,7 +33,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ navigation, globals }, re
   const darkLogoUrl = globals?.logo_dark_mode ? `${directusURL}/assets/${globals.logo_dark_mode}` : '';
 
   return (
-    <footer ref={ref} className="bg-gray dark:bg-[var(--background-variant-color)] py-16">
+    <footer ref={ref} className="bg-gray dark:bg-(--background-variant-color) py-16">
       <Container className="text-foreground dark:text-white">
         <div className="flex flex-col md:flex-row justify-between items-start gap-8 pt-8">
           <div className="flex-1">
@@ -56,7 +56,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ navigation, globals }, re
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="size-8 rounded bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
+                    className="size-8 rounded-sm bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
                   >
                     <SocialIcon service={social.service} size={24} className="size-6" />
                   </a>

@@ -25,7 +25,7 @@
 
 <header class="sticky top-0 z-50 w-full bg-background font-heading text-foreground">
 	<Container class="flex items-center justify-between p-4">
-		<a href="/" class="flex-shrink-0">
+		<a href="/" class="shrink-0">
 			<img
 				src={lightLogoUrl}
 				alt="Logo"
@@ -60,13 +60,13 @@
 						<Button
 							href={item.page.permalink}
 							variant="ghost"
-							class="!font-heading !text-nav !text-inherit
+							class="font-heading! text-nav! text-inherit!
 ">{item.title}</Button
 						>
 					{:else}
 						<DropdownMenu.Root>
 							<DropdownMenu.Trigger
-								class="data-[active]:text-accent/50 data-[state=open]:text-accent/50 group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2  font-medium transition-colors hover:text-accent focus:text-accent focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+								class="data-active:text-accent/50 data-[state=open]:text-accent/50 group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2  font-medium transition-colors hover:text-accent focus:text-accent focus:outline-hidden disabled:pointer-events-none disabled:opacity-50"
 								>{item.title}
 								<ChevronDown
 									class="relative top-[1px] ml-1 size-3 transition duration-200 group-data-[state=open]:rotate-180"
@@ -76,7 +76,7 @@
 								class="top-full z-50 w-56 max-w-full overflow-hidden  rounded-xl bg-background  shadow-md   data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant"
 							>
 								{#each item.children as child}
-									<DropdownMenu.Item class="!bg-transparent">
+									<DropdownMenu.Item class="bg-transparent!">
 										<a class="hover:text-primary-500 w-full text-nav" href={child.page.permalink}
 											>{child.title}</a
 										>
@@ -96,7 +96,7 @@
 					<DropdownMenu.Content
 						forceMount
 						align="start"
-						class="top-full z-50 w-screen min-w-[8rem] max-w-full overflow-hidden rounded bg-background-muted p-6 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant"
+						class="top-full z-50 w-screen min-w-[8rem] max-w-full overflow-hidden rounded-sm bg-background-muted p-6 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant"
 					>
 						{#snippet child({ wrapperProps, props, open })}
 							{#if open}
@@ -105,7 +105,7 @@
 										<div class="flex flex-col gap-4">
 											{#each navigation?.items as item (item.id)}
 												{#if item.children.length === 0}
-													<DropdownMenu.Item class="!bg-transparent p-0 "
+													<DropdownMenu.Item class="bg-transparent! p-0 "
 														><a
 															href={item.page?.permalink || item.url || '#'}
 															class="w-full font-heading text-nav"

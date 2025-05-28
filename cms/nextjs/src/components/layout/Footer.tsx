@@ -33,7 +33,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ navigation, globals }, re
 	const darkLogoUrl = globals?.logo_dark_mode ? `${directusURL}/assets/${globals.logo_dark_mode}` : '';
 
 	return (
-		<footer ref={ref} className="bg-gray dark:bg-[var(--background-variant-color)] py-16">
+		<footer ref={ref} className="bg-gray dark:bg-(--background-variant-color) py-16">
 			<Container className="text-foreground dark:text-white">
 				<div className="flex flex-col md:flex-row justify-between items-start gap-8 pt-8">
 					<div className="flex-1">

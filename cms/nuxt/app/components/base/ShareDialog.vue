@@ -55,7 +55,7 @@ const socialLinks = [
 					:href="social.getUrl()"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="rounded bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
+					class="rounded-sm bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
 				>
 					<img :src="social.icon" :alt="`${social.service} icon`" width="32" height="32" class="size-8 dark:invert" />
 				</a>

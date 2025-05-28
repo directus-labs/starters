@@ -43,7 +43,7 @@ const PricingCard = ({ card }: PricingCardProps) => {
         >
           {card.title}
         </h3>
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           {card.badge && (
             <Badge
               variant={card.is_highlighted ? 'secondary' : 'default'}
@@ -89,7 +89,7 @@ const PricingCard = ({ card }: PricingCardProps) => {
 
       <Separator className="my-4" />
 
-      <div className="flex-grow">
+      <div className="grow">
         {card.features && Array.isArray(card.features) && (
           <ul
             className="space-y-4"

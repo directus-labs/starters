@@ -56,7 +56,7 @@ const Field = ({ field, form }: FieldProps) => {
 		: 'flex-[100%]';
 
 	return (
-		<div className={`flex-shrink-0 ${widthClass}`}>
+		<div className={`shrink-0 ${widthClass}`}>
 			<ShadcnFormField
 				control={form.control}
 				name={field.name!}

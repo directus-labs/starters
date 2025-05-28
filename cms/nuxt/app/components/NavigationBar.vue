@@ -48,7 +48,7 @@ const handleLinkClick = () => {
 <template>
 	<header ref="navigationRef" class="sticky top-0 z-50 w-full bg-background text-foreground">
 		<Container class="flex items-center justify-between p-4">
-			<NuxtLink to="/" class="flex-shrink-0">
+			<NuxtLink to="/" class="shrink-0">
 				<img :src="lightLogoUrl" alt="Logo" class="w-[120px] h-auto dark:hidden" width="150" height="100" />
 				<img
 					v-if="darkLogoUrl"
@@ -72,7 +72,7 @@ const handleLinkClick = () => {
 						<NavigationMenuItem v-for="section in props.navigation.items" :key="section.id">
 							<template v-if="section.children?.length">
 								<NavigationMenuTrigger
-									class="focus:outline-none font-heading !text-nav hover:bg-background hover:text-accent"
+									class="focus:outline-hidden font-heading text-nav! hover:bg-background hover:text-accent"
 								>
 									{{ section.title }}
 								</NavigationMenuTrigger>
@@ -119,7 +119,7 @@ const handleLinkClick = () => {
 								<div v-for="section in props.navigation.items" :key="section.id">
 									<Collapsible v-if="section.children?.length">
 										<CollapsibleTrigger
-											class="font-heading text-nav hover:text-accent w-full text-left flex items-center focus:outline-none"
+											class="font-heading text-nav hover:text-accent w-full text-left flex items-center focus:outline-hidden"
 										>
 											<span>{{ section.title }}</span>
 											<ChevronDown class="size-4 ml-1 hover:rotate-180 active:rotate-180 focus:rotate-180" />

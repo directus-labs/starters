@@ -41,7 +41,7 @@ defineProps<PricingCardProps>();
 			>
 				{{ card.title }}
 			</h3>
-			<div class="flex-shrink-0">
+			<div class="shrink-0">
 				<Badge
 					v-if="card.badge"
 					:variant="card.is_highlighted ? 'secondary' : 'default'"
@@ -80,7 +80,7 @@ defineProps<PricingCardProps>();
 
 		<hr class="my-4" />
 
-		<div class="flex-grow">
+		<div class="grow">
 			<ul
 				v-if="card.features"
 				class="space-y-4"

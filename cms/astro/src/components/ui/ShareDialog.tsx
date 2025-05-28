@@ -66,7 +66,7 @@ const ShareDialog = ({ postUrl, postTitle }: ShareDialogProps) => {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
+              className="rounded-sm bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
             >
               <SocialIcon service={social.service} size={32} className="size-8" />
             </a>

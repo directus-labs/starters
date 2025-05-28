@@ -77,7 +77,7 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation,
   return (
     <header ref={ref} className="sticky top-0 z-50 w-full bg-background text-foreground">
       <Container className="flex items-center justify-between p-4">
-        <a href="/" className="flex-shrink-0">
+        <a href="/" className="shrink-0">
           <img src={lightLogoUrl} alt="Logo" className="w-[120px] h-auto dark:hidden" />
           {darkLogoUrl && <img src={darkLogoUrl} alt="Dark Logo" className="w-[120px] h-auto hidden dark:block" />}
         </a>
@@ -101,7 +101,7 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation,
                 <NavigationMenuItem key={section.id}>
                   {section.children?.length ? (
                     <>
-                      <NavigationMenuTrigger className="font-heading text-nav focus:outline-none">
+                      <NavigationMenuTrigger className="font-heading text-nav focus:outline-hidden">
                         <span className="font-heading text-nav">{section.title}</span>
                       </NavigationMenuTrigger>
                       <NavigationMenuContent className="bg-background">
