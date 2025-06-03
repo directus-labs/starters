@@ -10,7 +10,7 @@ easy-to-implement CMS solutions.
 | ----------------- | -------------- | --------------------------------------------- |
 | **Next.js**       | ✅ Released    | A CMS built using Next.js and its App Router. |
 | **Nuxt.js**       | ✅ Released    | A CMS template leveraging Nuxt.js features.   |
-| **Svelte**        | 🚧 In Progress | A CMS template using the Svelte framework.    |
+| **Svelte**        | ✅ Released  	| A CMS template using the Svelte framework.    |
 | **Astro**         | ✅ Released    | A CMS optimized for performance with Astro.   |
 
 ## **Folder Structure**
