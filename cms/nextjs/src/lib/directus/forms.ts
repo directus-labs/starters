@@ -1,10 +1,6 @@
 import { useDirectus } from './directus';
+import type { FormSubmission, FormSubmissionValue } from '@/types/directus-schema';
 
-interface SubmissionValue {
-	field: string;
-	value?: string;
-	file?: string;
-}
 
 export const submitForm = async (
 	formId: string,
@@ -19,7 +15,7 @@ export const submitForm = async (
 	}
 
 	try {
-		const submissionValues: SubmissionValue[] = [];
+		const submissionValues: Omit<FormSubmissionValue, 'id'>[] = [];
 
 		for (const field of fields) {
 			const value = data[field.name];
@@ -51,7 +47,7 @@ export const submitForm = async (
 			values: submissionValues,
 		};
 
-		await directus.request(withToken(TOKEN, createItem('form_submissions', payload)));
+		await directus.request(withToken(TOKEN, createItem('form_submissions', payload as Omit<FormSubmission, 'id'>)));
 	} catch (error) {
 		console.error('Error submitting form:', error);
 		throw new Error('Failed to submit form');

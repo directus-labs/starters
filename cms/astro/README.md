@@ -39,8 +39,7 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 [Directus Live Preview](https://docs.directus.io/guides/headless-cms/live-preview/nextjs.html)
 
 - The live preview feature works seamlessly on deployed environments.
-- To preview content on **localhost**, use your browser's preview mode or deploy your application to a staging
-  environment.
+- To preview content on **localhost**, deploy your application to a staging environment.
 - **Important Note**: Directus employs Content Security Policies (CSPs) that block live previews on `localhost` for
   security reasons. For a smooth preview experience, deploy the application to a cloud environment and use the
   deployment URL for Directus previews.
