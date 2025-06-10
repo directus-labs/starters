@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { config } from "dotenv";
 import { generateDirectusTypes } from "directus-sdk-typegen";
 
@@ -11,14 +12,17 @@ async function generateTypes() {
     console.error(
       "Error: NEXT_PUBLIC_DIRECTUS_URL or DIRECTUS_PUBLIC_TOKEN is missing in the .env file."
     );
+
     process.exit(1);
   }
+
   try {
     await generateDirectusTypes({
       outputPath: "./src/types/directus-schema.ts",
       directusUrl,
       directusToken,
     });
+
     console.log("Types successfully generated!");
   } catch (error) {
     console.error("Failed to generate types:", error);
