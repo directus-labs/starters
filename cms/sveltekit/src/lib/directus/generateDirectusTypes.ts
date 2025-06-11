@@ -8,12 +8,14 @@ async function generateTypes() {
 	const directusToken = process.env.PUBLIC_DIRECTUS_TOKEN;
 
 	if (!directusUrl || !directusToken) {
-		console.error('Error: PUBLIC_DIRECTUS_URL or PUBLIC_DIRECTUS_TOKEN is missing in the .env file.');
+		console.error(
+			'Error: PUBLIC_DIRECTUS_URL or PUBLIC_DIRECTUS_TOKEN is missing in the .env file.'
+		);
 		process.exit(1);
 	}
 	try {
 		await generateDirectusTypes({
-			outputPath: './src/types/directus-schema.ts',
+			outputPath: './src/lib/types/directus-schema.ts',
 			directusUrl,
 			directusToken
 		});
