@@ -21,7 +21,9 @@ export default defineNuxtModule({
 				filter: {
 					url_from: { _nnull: true },
 					url_to: { _nnull: true }
-				}
+				},
+				// Get all redirects (Directus defaults to 100 for limit)
+				limit: -1,
 			}));
 
 			for (const redirect of redirects) {
