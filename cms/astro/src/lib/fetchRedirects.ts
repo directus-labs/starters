@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import type { Schema, Redirect } from '@/types/directus-schema';
+import type { Schema } from '@/types/directus-schema';
 import { createDirectus, readItems, rest } from '@directus/sdk';
 
 export interface AstroRedirect {
@@ -8,46 +8,56 @@ export interface AstroRedirect {
   permanent: boolean;
 }
 
-
-type RawRedirect = Pick<Redirect, 'url_from' | 'url_to' | 'response_code'>;
-type ValidRawRedirect = {
-  url_from: string;
-  url_to: string;
-  response_code: '301' | '302';
-};
-
-export async function fetchRedirects(
-  directusUrl: string
-): Promise<AstroRedirect[]> {
+export async function fetchRedirects(directusUrl: string): Promise<AstroRedirect[]> {
   if (!directusUrl) {
-    console.error('Missing DIRECTUS_URL');
+    console.warn('Missing DIRECTUS_URL');
     return [];
   }
-
-  const directus = createDirectus<Schema>(directusUrl).with(rest());
-  let items: RawRedirect[] = [];
 
   try {
-    items = await directus.request(
+    const directus = createDirectus<Schema>(directusUrl).with(rest());
+
+    const redirects = await directus.request(
       readItems('redirects', {
-        fields: ['url_from', 'url_to', 'response_code'],
-      })
+        filter: {
+          url_from: { _nnull: true },
+          url_to: { _nnull: true },
+        },
+        // Get all redirects (Directus defaults to 100 for limit)
+        limit: -1,
+      }),
     );
-  } catch (err) {
-    console.error('Error fetching redirects:', err);
+
+    const processedRedirects: AstroRedirect[] = [];
+
+    for (const redirect of redirects) {
+      if (!redirect.url_from || !redirect.url_to) {
+        continue;
+      }
+
+      // If response code is not set, default to 301
+      let responseCode = redirect.response_code ? parseInt(redirect.response_code) : 301;
+
+      if (responseCode !== 301 && responseCode !== 302) {
+        responseCode = 301;
+      }
+
+      processedRedirects.push({
+        source: redirect.url_from,
+        destination: redirect.url_to,
+        permanent: responseCode === 301,
+      });
+    }
+
+    console.info(`${redirects.length} redirects loaded`);
+
+    for (const redirect of redirects) {
+      console.info(`${redirect.response_code} - From: ${redirect.url_from} To:${redirect.url_to}`);
+    }
+
+    return processedRedirects;
+  } catch (error) {
+    console.error('Error loading redirects', error);
     return [];
   }
-
-  const valids = items.filter(
-    (r): r is ValidRawRedirect =>
-      typeof r.url_from === 'string' &&
-      typeof r.url_to === 'string' &&
-      (r.response_code === '301' || r.response_code === '302')
-  );
-
-  return valids.map((r) => ({
-    source: r.url_from,
-    destination: r.url_to,
-    permanent: r.response_code === '301',
-  }));
 }
