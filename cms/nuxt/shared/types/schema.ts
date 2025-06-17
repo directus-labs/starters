@@ -1,6 +1,39 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
+export interface ExtensionSeoMetadata {
+    title?: string;
+    meta_description?: string;
+    og_image?: string;
+    additional_fields?: Record<string, unknown>;
+    sitemap?: {
+        change_frequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+        priority: string;
+    };
+    no_index?: boolean;
+    no_follow?: boolean;
+}
+
+export interface AiPrompt {
+	/** @primaryKey */
+	id: string;
+	/** @description Unique name for the prompt. Use names like "create-article" or "generate-product-description". @required */
+	name: string;
+	/** @description Briefly explain what this prompt does in 1-2 sentences. */
+	description?: string | null;
+	/** @description Instructions that shape how the AI responds. */
+	system_prompt?: string | null;
+	/** @description Optional: Define the conversation structure between users and AI. Used to add context and improve outputs. */
+	messages?: Array<{ role: 'user' | 'assistant'; text: string }> | null;
+	sort?: number | null;
+	/** @description Is this prompt published and available to use? */
+	status?: 'draft' | 'in_review' | 'published';
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
+}
+
 export interface BlockButton {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	sort?: number | null;
 	/** @description What type of link is this? Page and Post allow you to link to internal content. URL is for external content. Group can contain other menu items. */
@@ -17,18 +50,26 @@ export interface BlockButton {
 	button_group?: BlockButtonGroup | string | null;
 	/** @description The URL to link to. Could be relative (ie `/my-page`) or a full external URL (ie `https://docs.directus.io`) */
 	url?: string | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 }
 
 export interface BlockButtonGroup {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	sort?: number | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 	/** @description Add individual buttons to the button group. */
 	buttons?: BlockButton[] | string[];
 }
 
 export interface BlockForm {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description Form to show within block */
 	form?: Form | string | null;
@@ -36,33 +77,45 @@ export interface BlockForm {
 	headline?: string | null;
 	/** @description Smaller copy shown above the headline to label a section or add extra context. */
 	tagline?: string | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 }
 
 export interface BlockGallery {
 	/** @description Larger main headline for this page section. */
 	headline?: string | null;
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description Smaller copy shown above the headline to label a section or add extra context. */
 	tagline?: string | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 	/** @description Images to include in the image gallery. */
-	items?: BlockGalleryItem[] | string[] | null;
+	items?: DirectusFile[] | string[] | null;
 }
 
 export interface BlockGalleryItem {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description The id of the gallery block this item belongs to. */
 	block_gallery?: BlockGallery | string | null;
 	/** @description The id of the file included in the gallery. */
 	directus_file?: DirectusFile | string | null;
 	sort?: number | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 }
 
 export interface BlockHero {
 	/** @description Larger main headline for this page section. */
 	headline?: string | null;
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description Featured image in the hero. */
 	image?: DirectusFile | string | null;
@@ -73,11 +126,15 @@ export interface BlockHero {
 	/** @description Smaller copy shown above the headline to label a section or add extra context. */
 	tagline?: string | null;
 	/** @description The layout for the component. You can set the image to display left, right, or in the center of page.. */
-	layout?: string | null;
+	layout?: 'image_left' | 'image_center' | 'image_right' | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 }
 
 export interface BlockPost {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description Larger main headline for this page section. */
 	headline?: string | null;
@@ -86,21 +143,29 @@ export interface BlockPost {
 	/** @description Smaller copy shown above the headline to label a section or add extra context. */
 	tagline?: string | null;
 	limit?: number | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 }
 
 export interface BlockPricing {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description Larger main headline for this page section. */
 	headline?: string | null;
 	/** @description Smaller copy shown above the headline to label a section or add extra context. */
 	tagline?: string | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 	/** @description The individual pricing cards to display. */
 	pricing_cards?: BlockPricingCard[] | string[];
 }
 
 export interface BlockPricingCard {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description Name of the pricing plan. Shown at the top of the card. */
 	title?: string | null;
@@ -111,7 +176,7 @@ export interface BlockPricingCard {
 	/** @description Badge that displays at the top of the pricing plan card to add helpful context. */
 	badge?: string | null;
 	/** @description Short list of features included in this plan. Press `Enter` to add another item to the list. */
-	features?: any | null;
+	features?: 'json' | null;
 	/** @description The action button / link shown at the bottom of the pricing card. */
 	button?: BlockButton | string | null;
 	/** @description The id of the pricing block this card belongs to. */
@@ -119,6 +184,10 @@ export interface BlockPricingCard {
 	/** @description Add highlighted border around the pricing plan to make it stand out. */
 	is_highlighted?: boolean | null;
 	sort?: number | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 }
 
 export interface BlockRichtext {
@@ -126,21 +195,25 @@ export interface BlockRichtext {
 	content?: string | null;
 	/** @description Larger main headline for this page section. */
 	headline?: string | null;
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description Controls how the content block is positioned on the page. Choose "Left" to align the block against the left margin or "Center" to position the block in the middle of the page. This setting affects the entire content block's placement, not the text alignment within it. */
 	alignment?: 'left' | 'center' | null;
 	/** @description Smaller copy shown above the headline to label a section or add extra context. */
 	tagline?: string | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 }
 
 export interface FormField {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description Unique field identifier, not shown to users (lowercase, hyphenated) */
 	name?: string | null;
 	/** @description Input type for the field */
-	type?: string | null;
+	type?: 'text' | 'textarea' | 'checkbox' | 'checkbox_group' | 'radio' | 'file' | 'select' | 'hidden' | null;
 	/** @description Text label shown to form users. */
 	label?: string | null;
 	/** @description Default text shown in empty input. */
@@ -158,10 +231,14 @@ export interface FormField {
 	sort?: number | null;
 	/** @description Make this field mandatory to complete. */
 	required?: boolean | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 }
 
 export interface Form {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description Action after successful submission. */
 	on_success?: 'redirect' | 'message' | null;
@@ -178,6 +255,10 @@ export interface Form {
 	is_active?: boolean | null;
 	/** @description Setup email notifications when forms are submitted. */
 	emails?: Array<{ to: string[]; subject: string; message: string }> | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 	/** @description Form structure and input fields */
 	fields?: FormField[] | string[];
 	/** @description Received form responses. */
@@ -185,7 +266,7 @@ export interface Form {
 }
 
 export interface FormSubmission {
-	/** @description Unique ID for this specific form submission @required */
+	/** @description Unique ID for this specific form submission @primaryKey */
 	id: string;
 	/** @description Form submission date and time. */
 	timestamp?: string | null;
@@ -196,7 +277,8 @@ export interface FormSubmission {
 }
 
 export interface FormSubmissionValue {
-	id?: string;
+	/** @primaryKey */
+	id: string;
 	/** @description Parent form submission for this value. */
 	form_submission?: FormSubmission | string | null;
 	field?: FormField | string | null;
@@ -204,15 +286,17 @@ export interface FormSubmissionValue {
 	value?: string | null;
 	sort?: number | null;
 	file?: DirectusFile | string | null;
+	/** @description Form submission date and time. */
+	timestamp?: string | null;
 }
 
 export interface Globals {
 	/** @description Site summary for search results. */
 	description?: string | null;
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description Social media profile URLs */
-	social_links?: any | null;
+	social_links?: Array<{ url: string; service: 'facebook' | 'instagram' | 'linkedin' | 'x' | 'vimeo' | 'youtube' | 'github' | 'discord' | 'docker' }> | null;
 	/** @description Short phrase describing the site. */
 	tagline?: string | null;
 	/** @description Main site title */
@@ -231,21 +315,29 @@ export interface Globals {
 	accent_color?: string | null;
 	/** @description Main logo shown on the site (for dark mode). */
 	logo_dark_mode?: DirectusFile | string | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 }
 
 export interface Navigation {
-	/** @description Unique identifier for this menu. Can't be edited after creation. @required */
+	/** @description Unique identifier for this menu. Can't be edited after creation. @primaryKey */
 	id: string;
 	/** @description What is the name of this menu? Only used internally. */
 	title?: string | null;
 	/** @description Show or hide this menu from the site. */
 	is_active?: boolean | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 	/** @description Links within the menu. */
 	items?: NavigationItem[] | string[];
 }
 
 export interface NavigationItem {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description Navigation menu that the individual links belong to. */
 	navigation?: Navigation | string | null;
@@ -262,12 +354,16 @@ export interface NavigationItem {
 	url?: string | null;
 	/** @description The internal post to link to. */
 	post?: Post | string | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 	/** @description Add child menu items within the group. */
 	children?: NavigationItem[] | string[];
 }
 
 export interface PageBlock {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	sort?: number | null;
 	/** @description The id of the page that this block belongs to. */
@@ -280,10 +376,14 @@ export interface PageBlock {
 	hide_block?: boolean | null;
 	/** @description Background color for the block to create contrast. Does not control dark or light mode for the entire site. */
 	background?: 'light' | 'dark' | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 }
 
 export interface Page {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	sort?: number | null;
 	/** @description The title of this page. @required */
@@ -294,8 +394,11 @@ export interface Page {
 	status?: 'draft' | 'in_review' | 'published';
 	/** @description Publish now or schedule for later. */
 	published_at?: string | null;
-	seo?: any | null;
-	description?: string | null;
+	seo?: ExtensionSeoMetadata | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 	/** @description Create and arrange different content blocks (like text, images, or videos) to build your page. */
 	blocks?: PageBlock[] | string[];
 }
@@ -303,7 +406,7 @@ export interface Page {
 export interface Post {
 	/** @description Rich text content of your blog post. */
 	content?: string | null;
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @description Featured image for this post. Used in cards linking to the post and in the post detail page. */
 	image?: DirectusFile | string | null;
@@ -320,11 +423,31 @@ export interface Post {
 	author?: DirectusUser | string | null;
 	/** @description Publish now or schedule for later. */
 	published_at?: string | null;
-	seo?: any | null;
+	seo?: ExtensionSeoMetadata | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
+}
+
+export interface Redirect {
+	/** @primaryKey */
+	id: string;
+	response_code?: '301' | '302' | null;
+	/** @description Old URL has to be relative to the site (ie `/blog` or `/news`). It cannot be a full url like (https://example.com/blog) */
+	url_from?: string | null;
+	/** @description The URL you're redirecting to. This can be a relative url (/resources/matt-is-cool) or a full url (https://example.com/blog). */
+	url_to?: string | null;
+	/** @description Short explanation of why the redirect was created. */
+	note?: string | null;
+	date_created?: string | null;
+	user_created?: DirectusUser | string | null;
+	date_updated?: string | null;
+	user_updated?: DirectusUser | string | null;
 }
 
 export interface DirectusAccess {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	role?: DirectusRole | string | null;
 	user?: DirectusUser | string | null;
@@ -333,7 +456,7 @@ export interface DirectusAccess {
 }
 
 export interface DirectusActivity {
-	/** @required */
+	/** @primaryKey */
 	id: number;
 	action?: string;
 	user?: DirectusUser | string | null;
@@ -347,7 +470,7 @@ export interface DirectusActivity {
 }
 
 export interface DirectusCollection {
-	/** @required */
+	/** @primaryKey */
 	collection: string;
 	icon?: string | null;
 	note?: string | null;
@@ -362,7 +485,7 @@ export interface DirectusCollection {
 	sort_field?: string | null;
 	accountability?: 'all' | 'activity' | null | null;
 	color?: string | null;
-	item_duplication_fields?: any | null;
+	item_duplication_fields?: 'json' | null;
 	sort?: number | null;
 	group?: DirectusCollection | string | null;
 	collapse?: string;
@@ -371,7 +494,7 @@ export interface DirectusCollection {
 }
 
 export interface DirectusComment {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	collection?: DirectusCollection | string;
 	item?: string;
@@ -383,30 +506,30 @@ export interface DirectusComment {
 }
 
 export interface DirectusField {
-	/** @required */
+	/** @primaryKey */
 	id: number;
 	collection?: DirectusCollection | string;
 	field?: string;
 	special?: string[] | null;
 	interface?: string | null;
-	options?: any | null;
+	options?: 'json' | null;
 	display?: string | null;
-	display_options?: any | null;
+	display_options?: 'json' | null;
 	readonly?: boolean;
 	hidden?: boolean;
 	sort?: number | null;
 	width?: string | null;
-	translations?: any | null;
+	translations?: 'json' | null;
 	note?: string | null;
-	conditions?: any | null;
+	conditions?: 'json' | null;
 	required?: boolean | null;
 	group?: DirectusField | string | null;
-	validation?: any | null;
+	validation?: 'json' | null;
 	validation_message?: string | null;
 }
 
 export interface DirectusFile {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	storage?: string;
 	filename_disk?: string | null;
@@ -427,42 +550,42 @@ export interface DirectusFile {
 	description?: string | null;
 	location?: string | null;
 	tags?: string[] | null;
-	metadata?: any | null;
+	metadata?: 'json' | null;
 	focal_point_x?: number | null;
 	focal_point_y?: number | null;
 	tus_id?: string | null;
-	tus_data?: any | null;
+	tus_data?: 'json' | null;
 	uploaded_on?: string | null;
 }
 
 export interface DirectusFolder {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	name?: string;
 	parent?: DirectusFolder | string | null;
 }
 
 export interface DirectusMigration {
-	/** @required */
+	/** @primaryKey */
 	version: string;
 	name?: string;
 	timestamp?: string | null;
 }
 
 export interface DirectusPermission {
-	/** @required */
+	/** @primaryKey */
 	id: number;
 	collection?: string;
 	action?: string;
-	permissions?: any | null;
-	validation?: any | null;
-	presets?: any | null;
+	permissions?: 'json' | null;
+	validation?: 'json' | null;
+	presets?: 'json' | null;
 	fields?: string[] | null;
 	policy?: DirectusPolicy | string;
 }
 
 export interface DirectusPolicy {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @required */
 	name: string;
@@ -478,7 +601,7 @@ export interface DirectusPolicy {
 }
 
 export interface DirectusPreset {
-	/** @required */
+	/** @primaryKey */
 	id: number;
 	bookmark?: string | null;
 	user?: DirectusUser | string | null;
@@ -486,16 +609,16 @@ export interface DirectusPreset {
 	collection?: string | null;
 	search?: string | null;
 	layout?: string | null;
-	layout_query?: any | null;
-	layout_options?: any | null;
+	layout_query?: 'json' | null;
+	layout_options?: 'json' | null;
 	refresh_interval?: number | null;
-	filter?: any | null;
+	filter?: 'json' | null;
 	icon?: string | null;
 	color?: string | null;
 }
 
 export interface DirectusRelation {
-	/** @required */
+	/** @primaryKey */
 	id: number;
 	many_collection?: string;
 	many_field?: string;
@@ -509,19 +632,19 @@ export interface DirectusRelation {
 }
 
 export interface DirectusRevision {
-	/** @required */
+	/** @primaryKey */
 	id: number;
 	activity?: DirectusActivity | string;
 	collection?: string;
 	item?: string;
-	data?: any | null;
-	delta?: any | null;
+	data?: 'json' | null;
+	delta?: 'json' | null;
 	parent?: DirectusRevision | string | null;
 	version?: DirectusVersion | string | null;
 }
 
 export interface DirectusRole {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @required */
 	name: string;
@@ -534,7 +657,7 @@ export interface DirectusRole {
 }
 
 export interface DirectusSession {
-	/** @required */
+	/** @primaryKey */
 	token: string;
 	user?: DirectusUser | string | null;
 	expires?: string;
@@ -546,7 +669,7 @@ export interface DirectusSession {
 }
 
 export interface DirectusSettings {
-	/** @required */
+	/** @primaryKey */
 	id: number;
 	project_name?: string;
 	project_url?: string | null;
@@ -556,55 +679,37 @@ export interface DirectusSettings {
 	public_background?: DirectusFile | string | null;
 	public_note?: string | null;
 	auth_login_attempts?: number | null;
-	auth_password_policy?:
-		| null
-		| `/^.{8,}$/`
-		| `/(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{\';\'?>.<,])(?!.*\\s).*$/`
-		| null;
+	auth_password_policy?: null | `/^.{8,}$/` | `/(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{';'?>.<,])(?!.*\\s).*$/` | null;
 	storage_asset_transform?: 'all' | 'none' | 'presets' | null;
-	storage_asset_presets?: Array<{
-		key: string;
-		fit: 'contain' | 'cover' | 'inside' | 'outside';
-		width: number;
-		height: number;
-		quality: number;
-		withoutEnlargement: boolean;
-		format: 'auto' | 'jpeg' | 'png' | 'webp' | 'tiff' | 'avif';
-		transforms: any;
-	}> | null;
+	storage_asset_presets?: Array<{ key: string; fit: 'contain' | 'cover' | 'inside' | 'outside'; width: number; height: number; quality: number; withoutEnlargement: boolean; format: 'auto' | 'jpeg' | 'png' | 'webp' | 'tiff' | 'avif'; transforms: 'json' }> | null;
 	custom_css?: string | null;
 	storage_default_folder?: DirectusFolder | string | null;
-	basemaps?: Array<{
-		name: string;
-		type: 'raster' | 'tile' | 'style';
-		url: string;
-		tileSize: number;
-		attribution: string;
-	}> | null;
+	basemaps?: Array<{ name: string; type: 'raster' | 'tile' | 'style'; url: string; tileSize: number; attribution: string }> | null;
 	mapbox_key?: string | null;
-	module_bar?: any | null;
+	module_bar?: 'json' | null;
 	project_descriptor?: string | null;
 	default_language?: string;
 	custom_aspect_ratios?: Array<{ text: string; value: number }> | null;
 	public_favicon?: DirectusFile | string | null;
 	default_appearance?: 'auto' | 'light' | 'dark';
 	default_theme_light?: string | null;
-	theme_light_overrides?: any | null;
+	theme_light_overrides?: 'json' | null;
 	default_theme_dark?: string | null;
-	theme_dark_overrides?: any | null;
+	theme_dark_overrides?: 'json' | null;
 	report_error_url?: string | null;
 	report_bug_url?: string | null;
 	report_feature_url?: string | null;
 	public_registration?: boolean;
 	public_registration_verify_email?: boolean;
 	public_registration_role?: DirectusRole | string | null;
-	public_registration_email_filter?: any | null;
+	public_registration_email_filter?: 'json' | null;
 	/** @description Settings for the Command Palette Module. */
 	command_palette_settings?: Record<string, any> | null;
+	visual_editor_urls?: Array<{ url: string }> | null;
 }
 
 export interface DirectusUser {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	first_name?: string | null;
 	last_name?: string | null;
@@ -624,27 +729,27 @@ export interface DirectusUser {
 	last_page?: string | null;
 	provider?: string;
 	external_identifier?: string | null;
-	auth_data?: any | null;
+	auth_data?: 'json' | null;
 	email_notifications?: boolean | null;
 	appearance?: null | 'auto' | 'light' | 'dark' | null;
 	theme_dark?: string | null;
 	theme_light?: string | null;
-	theme_light_overrides?: any | null;
-	theme_dark_overrides?: any | null;
+	theme_light_overrides?: 'json' | null;
+	theme_dark_overrides?: 'json' | null;
 	/** @description Blog posts this user has authored. */
 	posts?: Post[] | string[];
 	policies?: DirectusAccess[] | string[];
 }
 
 export interface DirectusWebhook {
-	/** @required */
+	/** @primaryKey */
 	id: number;
 	name?: string;
 	method?: null;
 	url?: string;
 	status?: 'active' | 'inactive';
 	data?: boolean;
-	actions?: string[];
+	actions?: 'create' | 'update' | 'delete';
 	collections?: string[];
 	headers?: Array<{ header: string; value: string }> | null;
 	was_active_before_deprecation?: boolean;
@@ -652,7 +757,7 @@ export interface DirectusWebhook {
 }
 
 export interface DirectusDashboard {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	name?: string;
 	icon?: string;
@@ -664,7 +769,7 @@ export interface DirectusDashboard {
 }
 
 export interface DirectusPanel {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	dashboard?: DirectusDashboard | string;
 	name?: string | null;
@@ -677,13 +782,13 @@ export interface DirectusPanel {
 	position_y?: number;
 	width?: number;
 	height?: number;
-	options?: any | null;
+	options?: 'json' | null;
 	date_created?: string | null;
 	user_created?: DirectusUser | string | null;
 }
 
 export interface DirectusNotification {
-	/** @required */
+	/** @primaryKey */
 	id: number;
 	timestamp?: string | null;
 	status?: string | null;
@@ -696,7 +801,7 @@ export interface DirectusNotification {
 }
 
 export interface DirectusShare {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	name?: string | null;
 	collection?: DirectusCollection | string;
@@ -712,7 +817,7 @@ export interface DirectusShare {
 }
 
 export interface DirectusFlow {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	name?: string;
 	icon?: string | null;
@@ -721,7 +826,7 @@ export interface DirectusFlow {
 	status?: string;
 	trigger?: string | null;
 	accountability?: string | null;
-	options?: any | null;
+	options?: 'json' | null;
 	operation?: DirectusOperation | string | null;
 	date_created?: string | null;
 	user_created?: DirectusUser | string | null;
@@ -729,14 +834,14 @@ export interface DirectusFlow {
 }
 
 export interface DirectusOperation {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	name?: string | null;
 	key?: string;
 	type?: string;
 	position_x?: number;
 	position_y?: number;
-	options?: any | null;
+	options?: 'json' | null;
 	resolve?: DirectusOperation | string | null;
 	reject?: DirectusOperation | string | null;
 	flow?: DirectusFlow | string;
@@ -745,7 +850,7 @@ export interface DirectusOperation {
 }
 
 export interface DirectusTranslation {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	/** @required */
 	language: string;
@@ -756,7 +861,7 @@ export interface DirectusTranslation {
 }
 
 export interface DirectusVersion {
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	key?: string;
 	name?: string | null;
@@ -767,12 +872,12 @@ export interface DirectusVersion {
 	date_updated?: string | null;
 	user_created?: DirectusUser | string | null;
 	user_updated?: DirectusUser | string | null;
-	delta?: any | null;
+	delta?: 'json' | null;
 }
 
 export interface DirectusExtension {
 	enabled?: boolean;
-	/** @required */
+	/** @primaryKey */
 	id: string;
 	folder?: string;
 	source?: string;
@@ -780,6 +885,7 @@ export interface DirectusExtension {
 }
 
 export interface Schema {
+	ai_prompts: AiPrompt[];
 	block_button: BlockButton[];
 	block_button_group: BlockButtonGroup[];
 	block_form: BlockForm[];
@@ -800,6 +906,7 @@ export interface Schema {
 	page_blocks: PageBlock[];
 	pages: Page[];
 	posts: Post[];
+	redirects: Redirect[];
 	directus_access: DirectusAccess[];
 	directus_activity: DirectusActivity[];
 	directus_collections: DirectusCollection[];
@@ -827,4 +934,56 @@ export interface Schema {
 	directus_translations: DirectusTranslation[];
 	directus_versions: DirectusVersion[];
 	directus_extensions: DirectusExtension[];
+}
+
+export enum CollectionNames {
+	ai_prompts = 'ai_prompts',
+	block_button = 'block_button',
+	block_button_group = 'block_button_group',
+	block_form = 'block_form',
+	block_gallery = 'block_gallery',
+	block_gallery_items = 'block_gallery_items',
+	block_hero = 'block_hero',
+	block_posts = 'block_posts',
+	block_pricing = 'block_pricing',
+	block_pricing_cards = 'block_pricing_cards',
+	block_richtext = 'block_richtext',
+	form_fields = 'form_fields',
+	forms = 'forms',
+	form_submissions = 'form_submissions',
+	form_submission_values = 'form_submission_values',
+	globals = 'globals',
+	navigation = 'navigation',
+	navigation_items = 'navigation_items',
+	page_blocks = 'page_blocks',
+	pages = 'pages',
+	posts = 'posts',
+	redirects = 'redirects',
+	directus_access = 'directus_access',
+	directus_activity = 'directus_activity',
+	directus_collections = 'directus_collections',
+	directus_comments = 'directus_comments',
+	directus_fields = 'directus_fields',
+	directus_files = 'directus_files',
+	directus_folders = 'directus_folders',
+	directus_migrations = 'directus_migrations',
+	directus_permissions = 'directus_permissions',
+	directus_policies = 'directus_policies',
+	directus_presets = 'directus_presets',
+	directus_relations = 'directus_relations',
+	directus_revisions = 'directus_revisions',
+	directus_roles = 'directus_roles',
+	directus_sessions = 'directus_sessions',
+	directus_settings = 'directus_settings',
+	directus_users = 'directus_users',
+	directus_webhooks = 'directus_webhooks',
+	directus_dashboards = 'directus_dashboards',
+	directus_panels = 'directus_panels',
+	directus_notifications = 'directus_notifications',
+	directus_shares = 'directus_shares',
+	directus_flows = 'directus_flows',
+	directus_operations = 'directus_operations',
+	directus_translations = 'directus_translations',
+	directus_versions = 'directus_versions',
+	directus_extensions = 'directus_extensions'
 }
