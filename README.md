@@ -54,7 +54,7 @@ Each template is designed to be:
 
 	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/next)
 
-	### Nuxt.js
+	### Nuxt
 
 	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nuxt&env=DIRECTUS_URL,DIRECTUS_SERVER_TOKEN)
 
