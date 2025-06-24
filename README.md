@@ -35,74 +35,111 @@ Each template is designed to be:
 
    - Log in to your project using the URL provided in your email or from the Directus Cloud Dashboard.
 
-3. **Select a Template**:
-   - Navigate to the folder for the framework you want to use in this repo.
-   - Follow the instructions in that template's README to set up your application and connect it to your cloud instance.
+3. **Generate a static token for the admin user**:
+   
+   - Go to the **Users Directory**
+   - Choose the Administrative User
+   - Scroll down to the **Token** field and generate a static token.
+   - Copy the token and save it. **Do not forget to save the user**, or you will encounter an "Invalid token" error.
+
+4. **Connect to Frontend Template**:
+
+	### 🚀 One-Click Deploy (Recommended for Beginners)
+
+	Want to use **Directus Cloud** and deploy a frontend instantly? Choose your framework below:
+
+	### Next.js
+
+	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/next&env=NEXT_PUBLIC_DIRECTUS_URL,DIRECTUS_PUBLIC_TOKEN)
+
+	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/next)
+
+	### Nuxt.js
+
+	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nuxt&env=DIRECTUS_URL,DIRECTUS_SERVER_TOKEN)
+
+	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/nuxt)
+
+	### Astro
+
+	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/astro&env=PUBLIC_DIRECTUS_URL,DIRECTUS_PUBLIC_TOKEN)
+
+	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/astro)
+
+	### SvelteKit
+
+	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/svelte&env=PUBLIC_DIRECTUS_URL,PUBLIC_DIRECTUS_TOKEN)
+
+	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/svelte)
+
+---
+
+## Required Environment Variables
+
+Each framework requires the following environment variables, the URL of your directus project and the static token you set up in step 3:
+
+### Astro
+```
+PUBLIC_DIRECTUS_URL=https://your-project.directus.app
+DIRECTUS_PUBLIC_TOKEN=your-access-token
+```
+
+### Next.js
+```
+NEXT_PUBLIC_DIRECTUS_URL=https://your-project.directus.app
+DIRECTUS_PUBLIC_TOKEN=your-access-token
+```
+
+### Nuxt.js
+```
+DIRECTUS_URL=https://your-project.directus.app
+DIRECTUS_SERVER_TOKEN=your-access-token
+```
+
+### SvelteKit
+```
+PUBLIC_DIRECTUS_URL=https://your-project.directus.app
+PUBLIC_DIRECTUS_TOKEN=your-access-token
+```
 
 ---
 
 ### **Using Directus Locally**
 
-For local development, follow these steps:
+## Local Development with CLI
 
-1. **Install Docker**:
+Prefer to run everything locally? You can use Docker and our CLI tool to scaffold and launch a full Directus + frontend setup.
 
-   - Ensure Docker is installed and running on your machine: [Download Docker](https://www.docker.com/products/docker-desktop).
+### 1. Install Docker
 
-2. **Clone the Template You Want**:
+Download and install Docker: [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
 
-   - Select the template folder for your chosen framework (e.g., `simple-cms`) and clone it:
-     ```bash
-     git clone https://github.com/your-org/starters.git simple-cms
-     cd simple-cms
-     ```
+### 2. Scaffold Your Project
 
-3. **Navigate to the `directus/` Folder**:
+Open your terminal and run:
 
-   - Inside your cloned template folder, navigate to the `directus/` folder:
-     ```bash
-     cd directus
-     ```
+```bash
+npx directus-template-cli@latest init
+```
 
-4. **Start Directus**:
+Follow the prompts to:
 
-   - Run Docker Compose to start the Directus instance:
+- Choose a project name
+- Select a backend template
+- Select a frontend framework
+- Decide whether to install dependencies automatically
 
-     ```bash
-     docker-compose up -d
-     ```
+This sets up a local project with Docker-based Directus + frontend integration.
 
+### 3. Update your .env with the url and static token
    - This will start Directus on [http://localhost:8055](http://localhost:8055). Use the following credentials to log in:
      - **Admin Email**: `admin@example.com`
      - **Admin Password**: `d1r3ctu5`
 
-5. **Apply a Template**:
-
-   - Use the [Directus Template CLI](https://github.com/directus-labs/directus-template-cli) to apply a pre-configured template for your project. Follow these steps:
-
-     1. \*\*Generate a static token for the admin user:
+   - Generate a static token for the admin user:
 
         - Go to the **Users Directory**
         - Choose the Administrative User
         - Scroll down to the **Token** field and generate a static token.
         - Copy the token and save it. **Do not forget to save the user**, or you will encounter an "Invalid token" error.
-
-     2. **Run the Template CLI Tool**:
-
-        - Open your terminal, run the following command, and follow the prompts:
-          ```bash
-          npx directus-template-cli@latest apply
-          ```
-
-     3. **Follow the Prompts**:
-
-        - Choose `Community templates`
-        - Select the template from the list to apply (**Simple Website CMS**, **Simple CRM**, or **Simple eCommerce**)
-        - Fill in your Directus URL
-          ```bash
-          http://localhost:8055
-          ```
-        - Select `Directus Access Token`
-        - Fill in the token you saved from Step 1
-
 ---

@@ -62,6 +62,14 @@ For instructions on setting up Directus, choose one of the following:
 
 - [Setting up Directus Cloud](https://github.com/directus-labs/starters?tab=readme-ov-file#using-directus-with-a-cloud-instance-recommended)
 - [Setting up Directus Self-Hosted](https://github.com/directus-labs/starters?tab=readme-ov-file#using-directus-locally)
+- 
+## 🚀 One-Click Deploy
+
+You can instantly deploy this template using one of the following platforms:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/astro&env=PUBLIC_DIRECTUS_URL,DIRECTUS_PUBLIC_TOKEN)
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/astro)
 
 ### **Environment Variables**
 
