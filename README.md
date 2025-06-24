@@ -47,30 +47,35 @@ Each template is designed to be:
 	### 🚀 One-Click Deploy (Recommended for Beginners)
 
 	Want to use **Directus Cloud** and deploy a frontend instantly? Choose your framework below:
-
 	### Next.js
 
-	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/next&env=NEXT_PUBLIC_DIRECTUS_URL,DIRECTUS_PUBLIC_TOKEN)
+	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nextjs&env=NEXT_PUBLIC_DIRECTUS_URL,DIRECTUS_PUBLIC_TOKEN)
 
-	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/next)
+	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters/tree/main/cms/nextjs)
+
+	---
 
 	### Nuxt
 
 	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nuxt&env=DIRECTUS_URL,DIRECTUS_SERVER_TOKEN)
 
-	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/nuxt)
+	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters/tree/main/cms/nuxt)
+
+	---
 
 	### Astro
 
 	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/astro&env=PUBLIC_DIRECTUS_URL,DIRECTUS_PUBLIC_TOKEN)
 
-	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/astro)
+	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters/tree/main/cms/astro)
+
+	---
 
 	### SvelteKit
 
-	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/svelte&env=PUBLIC_DIRECTUS_URL,PUBLIC_DIRECTUS_TOKEN)
+	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_DIRECTUS_TOKEN)
 
-	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/svelte)
+	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters/tree/main/cms/sveltekit)
 
 ---
 
@@ -78,11 +83,6 @@ Each template is designed to be:
 
 Each framework requires the following environment variables, the URL of your directus project and the static token you set up in step 3:
 
-### Astro
-```
-PUBLIC_DIRECTUS_URL=https://your-project.directus.app
-DIRECTUS_PUBLIC_TOKEN=your-access-token
-```
 
 ### Next.js
 ```
@@ -94,6 +94,11 @@ DIRECTUS_PUBLIC_TOKEN=your-access-token
 ```
 DIRECTUS_URL=https://your-project.directus.app
 DIRECTUS_SERVER_TOKEN=your-access-token
+```
+### Astro
+```
+PUBLIC_DIRECTUS_URL=https://your-project.directus.app
+DIRECTUS_PUBLIC_TOKEN=your-access-token
 ```
 
 ### SvelteKit
