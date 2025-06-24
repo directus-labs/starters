@@ -67,9 +67,9 @@ For instructions on setting up Directus, choose one of the following:
 
 You can instantly deploy this template using one of the following platforms:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/svelte&env=PUBLIC_DIRECTUS_URL,PUBLIC_DIRECTUS_TOKEN)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,PUBLIC_DIRECTUS_TOKEN)
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/svelte)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/sveltekit&branch=main)
 
 ### **Environment Variables**
 
