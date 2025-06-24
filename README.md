@@ -90,7 +90,7 @@ NEXT_PUBLIC_DIRECTUS_URL=https://your-project.directus.app
 DIRECTUS_PUBLIC_TOKEN=your-access-token
 ```
 
-### Nuxt.js
+### Nuxt
 ```
 DIRECTUS_URL=https://your-project.directus.app
 DIRECTUS_SERVER_TOKEN=your-access-token
