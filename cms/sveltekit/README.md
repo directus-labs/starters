@@ -65,11 +65,32 @@ For instructions on setting up Directus, choose one of the following:
 
 ## 🚀 One-Click Deploy
 
-You can instantly deploy this template using one of the following platforms:
+You can instantly deploy this template using Vercel:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,PUBLIC_DIRECTUS_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/sveltekit)  
+> **Note:**  
+> SvelteKit requires a few extra environment variables at deploy time:  
+> - `PUBLIC_DIRECTUS_FORM_TOKEN`
+> - `DRAFT_MODE_SECRET`
+>
+> When getting started, you can use the same static token for  
+> `PUBLIC_DIRECTUS_FORM_TOKEN`, `DRAFT_MODE_SECRET`, and `PUBLIC_DIRECTUS_TOKEN`.  
+> For better security, **configure separate tokens with only the required permissions** for each variable after setup.
+
+---
+
+> ⚡️ **This SvelteKit starter is pre-configured for Vercel.**
+>
+> To deploy on Netlify:
+> 1. Run: `pnpm add -D @sveltejs/adapter-netlify`
+> 2. In `svelte.config.js`, swap the adapter line:
+>    ```js
+>    import adapter from '@sveltejs/adapter-netlify';
+>    // import adapter from '@sveltejs/adapter-vercel';
+>    ```
+> 3. Commit and redeploy manually.
+---
 
 ### **Environment Variables**
 

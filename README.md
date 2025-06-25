@@ -69,15 +69,35 @@ Each template is designed to be:
 
 	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/astro&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,DIRECTUS_PUBLIC_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
 
-	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/astro)  
+
+	**Adapter info:**  
+	Astro only supports one adapter at a time.  
+	This starter is set up for Vercel by default.  
+	See the [framework’s repo](https://github.com/directus-labs/starters/tree/main/cms/astro) for instructions on switching adapters.
+
 
 	---
 
 	### SvelteKit
 
-	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,PUBLIC_DIRECTUS_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
+	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,PUBLIC_DIRECTUS_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING,PUBLIC_DIRECTUS_FORM_TOKEN,DRAFT_MODE_SECRET)
 
-	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/sveltekit)  
+	> **Note:**  
+	> SvelteKit requires a few extra environment variables at deploy time:  
+	> - `PUBLIC_DIRECTUS_FORM_TOKEN`
+	> - `DRAFT_MODE_SECRET`
+	>
+	> When getting started, you can use the same static token for  
+	> `PUBLIC_DIRECTUS_FORM_TOKEN`, `DRAFT_MODE_SECRET`, and `PUBLIC_DIRECTUS_TOKEN`.  
+	> For better security, **configure separate tokens with only the required permissions** for each variable after setup.
+
+	---
+
+	**Adapter info:**  
+	SvelteKit only supports one adapter at a time.  
+	This starter is set up for Vercel by default.  
+	See the [framework’s repo](https://github.com/directus-labs/starters/tree/main/cms/sveltekit) for instructions on switching adapters.
+
 
 
 ---
@@ -117,6 +137,8 @@ PUBLIC_DIRECTUS_URL=https://your-project.directus.app
 PUBLIC_SITE_URL=http://localhost:3000
 PUBLIC_DIRECTUS_TOKEN=your-access-token
 PUBLIC_ENABLE_VISUAL_EDITING=true
+PUBLIC_DIRECTUS_FORM_TOKEN=user-with-form-permissions
+DRAFT_MODE_SECRET=live-preview-token
 ```
 
 ---

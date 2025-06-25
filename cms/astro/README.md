@@ -65,11 +65,26 @@ For instructions on setting up Directus, choose one of the following:
 - 
 ## 🚀 One-Click Deploy
 
-You can instantly deploy this template using one of the following platforms:
+You can instantly deploy this template using Vercel:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/astro&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,DIRECTUS_PUBLIC_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/astro)  
+> ⚡️ **This Astro starter is pre-configured for Vercel.**
+>
+> To deploy on Netlify:
+> 1. Run: `pnpm add -D @astrojs/netlify`
+> 2. In `astro.config.mjs`, swap the adapter lines:
+>    ```js
+>    import netlify from '@astrojs/netlify';
+>    // import vercel from '@astrojs/vercel/serverless';
+>
+>    export default defineConfig({
+>      output: "static",
+>      adapter: netlify(),
+>    });
+>    ```
+> 3. Commit and redeploy manually.
+
 
 ### **Environment Variables**
 
