@@ -47,37 +47,38 @@ Each template is designed to be:
 	### 🚀 One-Click Deploy (Recommended for Beginners)
 
 	Want to use **Directus Cloud** and deploy a frontend instantly? Choose your framework below:
-	
+
 	### Next.js
 
-	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nextjs&env=NEXT_PUBLIC_DIRECTUS_URL,NEXT_PUBLIC_SITE_URL,DIRECTUS_PUBLIC_TOKEN)
+	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nextjs&env=NEXT_PUBLIC_DIRECTUS_URL,NEXT_PUBLIC_SITE_URL,DIRECTUS_PUBLIC_TOKEN,NEXT_PUBLIC_ENABLE_VISUAL_EDITING)
 
-	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/nextjs&branch=main)
+	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/nextjs)  
 
 	---
 
 	### Nuxt
 
-	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nuxt&env=DIRECTUS_URL,NUXT_PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN)
+	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nuxt&env=DIRECTUS_URL,NUXT_PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,NUXT_PUBLIC_ENABLE_VISUAL_EDITING)
 
-	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/nuxt&branch=main)
+	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/nuxt)  
 
 	---
 
 	### Astro
 
 
-	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/astro&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,DIRECTUS_PUBLIC_TOKEN)
+	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/astro&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,DIRECTUS_PUBLIC_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
 
-	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/astro&branch=main)
+	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/astro)  
 
 	---
 
 	### SvelteKit
 
-	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,PUBLIC_DIRECTUS_TOKEN)
+	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,PUBLIC_DIRECTUS_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
 
-	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&base=cms/sveltekit&branch=main)
+	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/sveltekit)  
+
 
 ---
 
@@ -92,6 +93,7 @@ Each framework requires your Directus endpoint, static token, and a `SITE_URL` t
 NEXT_PUBLIC_DIRECTUS_URL=https://your-project.directus.app
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 DIRECTUS_PUBLIC_TOKEN=your-access-token
+NEXT_PUBLIC_ENABLE_VISUAL_EDITING=true
 ```
 
 ### Nuxt
@@ -99,12 +101,14 @@ DIRECTUS_PUBLIC_TOKEN=your-access-token
 DIRECTUS_URL=https://your-project.directus.app
 NUXT_PUBLIC_SITE_URL=http://localhost:3000
 DIRECTUS_SERVER_TOKEN=your-access-token
+NUXT_PUBLIC_ENABLE_VISUAL_EDITING=true
 ```
 ### Astro
 ```
 PUBLIC_DIRECTUS_URL=https://your-project.directus.app
 PUBLIC_SITE_URL=http://localhost:3000
 DIRECTUS_PUBLIC_TOKEN=your-access-token
+PUBLIC_ENABLE_VISUAL_EDITING=true
 ```
 
 ### SvelteKit
@@ -112,6 +116,7 @@ DIRECTUS_PUBLIC_TOKEN=your-access-token
 PUBLIC_DIRECTUS_URL=https://your-project.directus.app
 PUBLIC_SITE_URL=http://localhost:3000
 PUBLIC_DIRECTUS_TOKEN=your-access-token
+PUBLIC_ENABLE_VISUAL_EDITING=true
 ```
 
 ---
