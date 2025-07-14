@@ -8,7 +8,7 @@
 	import LightSwitch from './LightSwitch.svelte';
 	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 	import { goto } from '$app/navigation';
-	import { ChevronDown, Menu } from 'lucide-svelte';
+	import { ChevronDown, Menu } from '@lucide/svelte';
 	import * as Collapsible from '$lib/components/ui/collapsible';
 	import setAttr from '$lib/directus/visualEditing';
 
@@ -23,7 +23,7 @@
 	);
 </script>
 
-<header class="sticky top-0 z-50 w-full bg-background font-heading text-foreground">
+<header class="bg-background font-heading text-foreground sticky top-0 z-50 w-full">
 	<Container class="flex items-center justify-between p-4">
 		<a href="/" class="flex-shrink-0">
 			<img
@@ -66,18 +66,18 @@
 					{:else}
 						<DropdownMenu.Root>
 							<DropdownMenu.Trigger
-								class="data-[active]:text-accent/50 data-[state=open]:text-accent/50 group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2  font-medium transition-colors hover:text-accent focus:text-accent focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+								class="data-[active]:text-accent/50 data-[state=open]:text-accent/50 bg-background hover:text-accent focus:text-accent group inline-flex h-10 w-max items-center justify-center rounded-md  px-4 py-2 font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50"
 								>{item.title}
 								<ChevronDown
 									class="relative top-[1px] ml-1 size-3 transition duration-200 group-data-[state=open]:rotate-180"
 								/>
 							</DropdownMenu.Trigger>
 							<DropdownMenu.Content
-								class="top-full z-50 w-56 max-w-full overflow-hidden  rounded-xl bg-background  shadow-md   data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant"
+								class="bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0  data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95  data-[side=bottom]:slide-in-from-top-2   data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant top-full z-50 w-56 max-w-full overflow-hidden rounded-xl shadow-md"
 							>
 								{#each item.children as child}
 									<DropdownMenu.Item class="!bg-transparent">
-										<a class="hover:text-primary-500 w-full text-nav" href={child.page.permalink}
+										<a class="hover:text-primary-500 text-nav w-full" href={child.page.permalink}
 											>{child.title}</a
 										>
 									</DropdownMenu.Item>
@@ -90,13 +90,16 @@
 
 			<div class="flex md:hidden">
 				<DropdownMenu.Root>
-					<DropdownMenu.Trigger class={buttonVariants({ variant: 'outline' })}>
+					<DropdownMenu.Trigger
+						aria-label="Navigation Menu"
+						class={buttonVariants({ variant: 'outline' })}
+					>
 						<Menu />
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content
 						forceMount
 						align="start"
-						class="top-full z-50 w-screen min-w-[8rem] max-w-full overflow-hidden rounded bg-background-muted p-6 shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant"
+						class="bg-background-muted data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant top-full z-50 w-screen min-w-[8rem] max-w-full overflow-hidden rounded p-6 shadow-md"
 					>
 						{#snippet child({ wrapperProps, props, open })}
 							{#if open}
@@ -108,7 +111,7 @@
 													<DropdownMenu.Item class="!bg-transparent p-0 "
 														><a
 															href={item.page?.permalink || item.url || '#'}
-															class="w-full font-heading text-nav"
+															class="font-heading text-nav w-full"
 														>
 															{item.title}</a
 														></DropdownMenu.Item
@@ -116,7 +119,7 @@
 												{:else}
 													<Collapsible.Root>
 														<Collapsible.Trigger
-															class="group flex w-full items-center text-left font-heading text-nav hover:text-accent"
+															class="font-heading text-nav hover:text-accent group flex w-full items-center text-left"
 														>
 															{item.title}
 															<ChevronDown
@@ -127,7 +130,7 @@
 															<div class="ml-4 mt-2 flex flex-col gap-2">
 																{#each item.children as child (child.id)}
 																	<a
-																		class="w-full font-heading text-nav"
+																		class="font-heading text-nav w-full"
 																		href={child.page?.permalink || child.url}>{child.title}</a
 																	>
 																{/each}

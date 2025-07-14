@@ -18,7 +18,7 @@
 		className
 	)}
 >
-	{#if $mode === 'dark'}
+	{#if mode.current === 'dark'}
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			class="size-5"

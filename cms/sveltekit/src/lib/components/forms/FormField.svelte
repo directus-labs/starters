@@ -11,7 +11,7 @@
 	import FileUploadField from './fields/FileUploadField.svelte';
 	import { cn } from '$lib/utils';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
-	import { Info } from 'lucide-svelte';
+	import { Info } from '@lucide/svelte';
 	import { Label } from '$lib/components/ui/label/index.js';
 
 	interface FieldProps {
@@ -40,68 +40,74 @@
 	<div class={`flex flex-shrink-0 flex-col justify-center ${widthClass}`}>
 		<Form.Field {form} name={field.name!}>
 			<Form.Control>
-				<Form.Label
-					class={cn(
-						'flex items-center justify-between text-sm font-medium',
-						field.type === 'checkbox' || field.type === 'radio' ? 'space-x-2' : ''
-					)}
-				>
-					<div class="flex items-center space-x-1">
-						{#if field.type !== 'checkbox'}
-							{field.label}
+				{#snippet children({ props })}
+					<Form.Label
+						for={field.name}
+						class={cn(
+							'flex items-center justify-between text-sm font-medium',
+							field.type === 'checkbox' || field.type === 'radio' ? 'space-x-2' : ''
+						)}
+					>
+						<div class="flex items-center space-x-1">
+							{#if field.type !== 'checkbox'}
+								{field.label}
+							{/if}
+							{#if field.help}
+								<Tooltip.Provider>
+									<Tooltip.Root>
+										<Tooltip.Trigger>
+											<Info class="ml-1 size-4 cursor-pointer text-gray-500" />
+										</Tooltip.Trigger>
+										<Tooltip.Content class="bg-background">
+											{field.help}
+										</Tooltip.Content>
+									</Tooltip.Root>
+								</Tooltip.Provider>
+							{/if}
+						</div>
+						{#if field.required}
+							<span class="text-sm text-gray-400">*Required</span>
 						{/if}
-						{#if field.help}
-							<Tooltip.Provider>
-								<Tooltip.Root>
-									<Tooltip.Trigger>
-										<Info class="ml-1 size-4 cursor-pointer text-gray-500" />
-									</Tooltip.Trigger>
-									<Tooltip.Content class="bg-background">
-										{field.help}
-									</Tooltip.Content>
-								</Tooltip.Root>
-							</Tooltip.Provider>
-						{/if}
-					</div>
-					{#if field.required}
-						<span class="text-sm text-gray-400">*Required</span>
-					{/if}
-				</Form.Label>
+					</Form.Label>
 
-				{#if field.type === 'text'}
-					<Input
-						placeholder={field.placeholder || ''}
-						name={field.name || ''}
-						bind:value={$formData[field.name!]}
-						type={field.validation?.includes('email') ? 'email' : 'text'}
-					/>
-				{:else if field.type === 'textarea'}
-					<Textarea
-						placeholder={field.placeholder || ''}
-						name={field.name || ''}
-						bind:value={$formData[field.name!]}
-						required={field.required}
-					/>
-				{:else if field.type === 'checkbox'}
-					<div class="flex items-center space-x-3">
-						<Checkbox
-							name={field.name}
-							bind:checked={$formData[field.name!]}
-							required={!!field.required}
+					{#if field.type === 'text'}
+						<Input
+							{...props}
+							placeholder={field.placeholder || ''}
+							name={field.name || ''}
+							bind:value={$formData[field.name!]}
+							type={field.validation?.includes('email') ? 'email' : 'text'}
 						/>
-						<Label for={field.name}>{field.label}</Label>
-					</div>
-				{:else if field.type === 'checkbox_group'}
-					<CheckBoxGroup name={field.name || ''} options={field.choices || []} {form} />
-				{:else if field.type === 'select'}
-					<SelectField name={field.name || ''} options={field.choices || []} {form} />
-				{:else if field.type === 'radio'}
-					<RadioGroup name={field.name || ''} options={field.choices || []} {form} />
-				{:else if field.type === 'file'}
-					<FileUploadField name={field.name || ''} {form} />
-				{:else}
-					<p>Unknown field type: {field.type}</p>
-				{/if}
+					{:else if field.type === 'textarea'}
+						<Textarea
+							{...props}
+							placeholder={field.placeholder || ''}
+							name={field.name || ''}
+							bind:value={$formData[field.name!]}
+							required={field.required}
+						/>
+					{:else if field.type === 'checkbox'}
+						<div class="flex items-center space-x-3">
+							<Checkbox
+								{...props}
+								name={field.name}
+								bind:checked={$formData[field.name!]}
+								required={!!field.required}
+							/>
+							<Label for={field.name}>{field.label}</Label>
+						</div>
+					{:else if field.type === 'checkbox_group'}
+						<CheckBoxGroup name={field.name || ''} options={field.choices || []} {form} />
+					{:else if field.type === 'select'}
+						<SelectField name={field.name || ''} options={field.choices || []} {form} />
+					{:else if field.type === 'radio'}
+						<RadioGroup name={field.name || ''} options={field.choices || []} {form} />
+					{:else if field.type === 'file'}
+						<FileUploadField name={field.name || ''} {form} />
+					{:else}
+						<p>Unknown field type: {field.type}</p>
+					{/if}
+				{/snippet}
 			</Form.Control>
 			<Form.Description>{field.help}</Form.Description>
 			{#if $errors[fieldName]}

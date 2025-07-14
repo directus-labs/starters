@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
-	import { Copy, Share } from 'lucide-svelte';
+	import { Copy, Share } from '@lucide/svelte';
 	import Button from './button/button.svelte';
 	import { Label } from './label';
 	import { Input } from './input';

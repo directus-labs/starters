@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { fetchPaginatedPosts, fetchTotalPostCount } from '$lib/directus/fetchers';
 	import * as Pagination from '$lib/components/ui/pagination/index.js';
@@ -122,10 +121,10 @@
 				</div>
 
 				<div class="p-4">
-					<h3 class="font-heading text-xl transition-colors duration-300 group-hover:text-accent">
+					<h3 class="font-heading group-hover:text-accent text-xl transition-colors duration-300">
 						{post.title}
 					</h3>
-					<p class="mt-2 text-sm text-foreground">{post.description}</p>
+					<p class="text-foreground mt-2 text-sm">{post.description}</p>
 				</div>
 			</a>
 		{/each}

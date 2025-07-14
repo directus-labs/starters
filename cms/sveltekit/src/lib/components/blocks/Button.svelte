@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button as ShadcnButton, buttonVariants } from '../ui/button';
 
-	import { Icon as Icontype, ArrowRight, Plus } from 'lucide-svelte';
+	import { Icon as Icontype, ArrowRight, Plus } from '@lucide/svelte';
 	import { cn } from '../../utils';
 
 	export interface ButtonProps {
