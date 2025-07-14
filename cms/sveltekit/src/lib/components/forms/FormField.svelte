@@ -11,7 +11,7 @@
 	import FileUploadField from './fields/FileUploadField.svelte';
 	import { cn } from '$lib/utils';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
-	import { Info } from 'lucide-svelte';
+	import { Info } from '@lucide/svelte';
 	import { Label } from '$lib/components/ui/label/index.js';
 
 	interface FieldProps {

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { Pagination as PaginationPrimitive } from "bits-ui";
-	import { buttonVariants } from "$lib/components/ui/button/index.js";
-	import { cn } from "$lib/utils.js";
-	import { ChevronRight } from "lucide-svelte";
+	import { Pagination as PaginationPrimitive } from 'bits-ui';
+	import { buttonVariants } from '$lib/components/ui/button/index.js';
+	import { cn } from '$lib/utils.js';
+	import { ChevronRight } from '@lucide/svelte';
 	let {
 		ref = $bindable(null),
 		class: className,
@@ -20,8 +20,8 @@
 	bind:ref
 	class={cn(
 		buttonVariants({
-			variant: "ghost",
-			class: "gap-1 pr-2.5",
+			variant: 'ghost',
+			class: 'gap-1 pr-2.5'
 		}),
 		className
 	)}

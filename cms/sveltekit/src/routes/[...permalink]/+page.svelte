@@ -5,7 +5,7 @@
 	import PageBuilder from '$lib/components/layout/PageBuilder.svelte';
 	import type { PageBlock } from '$lib/types/directus-schema.js';
 	import { Button } from '$lib/components/ui/button';
-	import { Pencil } from 'lucide-svelte';
+	import { Pencil } from '@lucide/svelte';
 	import { setAttr } from '$lib/directus/visualEditing';
 
 	let { data } = $props();

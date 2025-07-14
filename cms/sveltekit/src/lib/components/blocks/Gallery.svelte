@@ -9,7 +9,7 @@
 		DialogTitle
 	} from '../ui/dialog';
 
-	import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-svelte';
+	import { ArrowLeft, ArrowRight, ZoomIn, X } from '@lucide/svelte';
 	import Headline from '../ui/Headline.svelte';
 	import Title from '../ui/Title.svelte';
 	import Tagline from '../ui/Tagline.svelte';
