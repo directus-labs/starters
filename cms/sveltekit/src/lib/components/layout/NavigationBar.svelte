@@ -90,7 +90,10 @@
 
 			<div class="flex md:hidden">
 				<DropdownMenu.Root>
-					<DropdownMenu.Trigger class={buttonVariants({ variant: 'outline' })}>
+					<DropdownMenu.Trigger
+						aria-label="Navigation Menu"
+						class={buttonVariants({ variant: 'outline' })}
+					>
 						<Menu />
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content
