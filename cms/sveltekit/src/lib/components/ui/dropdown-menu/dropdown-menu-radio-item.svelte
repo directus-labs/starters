@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
-	import Circle from 'lucide-svelte/icons/circle';
+	import Circle from '@lucide/svelte/icons/circle';
 	import { cn } from '$lib/utils.js';
 
 	type $$Props = DropdownMenuPrimitive.RadioItemProps;
@@ -13,7 +13,7 @@
 
 <DropdownMenuPrimitive.RadioItem
 	class={cn(
-		'data-[highlighted]:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[highlighted]:bg-accent data-[disabled]:opacity-50',
+		'data-[highlighted]:text-accent-foreground data-[highlighted]:bg-accent relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
 		className
 	)}
 	{value}

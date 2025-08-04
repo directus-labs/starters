@@ -92,12 +92,14 @@
 			></Button>
 		</div>
 	</div>
-	{#if dev}
+
+	<!-- HIDE FORM DEBUGGER -->
+	<!-- {#if dev}
 		<div class="flex w-full flex-col gap-2 rounded-xl bg-red-200 p-2">
 			<p class="text-center text-red-500">Form Debugger. This is not displayed in production</p>
 			{#await superValidate($formData, zod(formSchema)) then r}
 				<SuperDebug data={r} />
 			{/await}
 		</div>
-	{/if}
+	{/if} -->
 </form>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 
-	import { Search } from 'lucide-svelte';
+	import { Search } from '@lucide/svelte';
 	import * as Command from '$lib/components/ui/command/index.js';
 
 	import { debounce } from '$lib/utils';
@@ -100,12 +100,15 @@
 			{#if results.length > 0}
 				<Command.Group heading="Search Results">
 					{#each results as result}
-						<Command.Item class="flex items-start gap-4 px-2 py-3" onSelect={() => handleSelect(result)}>
+						<Command.Item
+							class="flex items-start gap-4 px-2 py-3"
+							onSelect={() => handleSelect(result)}
+						>
 							<Badge variant="default">{result.type}</Badge>
 							<div class="ml-2 w-full">
-                                <p class="font-medium text-base">{result.title}</p>
-                                <p class="text-sm mt-1 line-clamp-2">{result.description}</p>
-                            </div>
+								<p class="text-base font-medium">{result.title}</p>
+								<p class="mt-1 line-clamp-2 text-sm">{result.description}</p>
+							</div>
 						</Command.Item>
 					{/each}
 				</Command.Group>

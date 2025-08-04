@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CheckCircle2 } from 'lucide-svelte';
+	import { CheckCircle2 } from '@lucide/svelte';
 	import { Badge } from '../ui/badge';
 	import { Separator } from '../ui/separator';
 	import setAttr from '$lib/directus/visualEditing';
@@ -36,7 +36,7 @@
 	<div class="mb-4 flex items-start justify-between gap-2">
 		{#if card.title}
 			<h3
-				class="font-heading text-xl text-foreground"
+				class="font-heading text-foreground text-xl"
 				data-directus={setAttr({
 					collection: 'block_pricing_cards',
 					item: card.id,
@@ -73,7 +73,7 @@
 				fields: ['price'],
 				mode: 'popover'
 			})}
-			class="mt-2 text-h2 font-semibold"
+			class="text-h2 mt-2 font-semibold"
 		>
 			{card.price}
 		</p>
@@ -86,7 +86,7 @@
 				fields: ['description'],
 				mode: 'popover'
 			})}
-			class="mt-2 line-clamp-2 text-description"
+			class="text-description mt-2 line-clamp-2"
 		>
 			{card.description}
 		</p>
@@ -106,9 +106,9 @@
 				})}
 			>
 				{#each card.features as feature}
-					<li class="flex items-center gap-3 text-regular">
+					<li class="text-regular flex items-center gap-3">
 						<div class="mt-1">
-							<CheckCircle2 class="size-4 text-gray-muted" />
+							<CheckCircle2 class="text-gray-muted size-4" />
 						</div>
 						<p class="leading-relaxed">{feature}</p>
 					</li>
