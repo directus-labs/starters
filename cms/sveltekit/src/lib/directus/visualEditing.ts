@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { page } from '$app/state';
 import { setAttr as basesetAttr } from '@directus/visual-editing';
 
@@ -9,12 +10,19 @@ interface ApplyOptions {
 }
 
 export const setAttr = (options: ApplyOptions) => {
-
-    if (page.data.visualEditingEnabled) {
+    if (browser && sessionStorage.getItem('visual-editing') === 'true') {
         return basesetAttr({
             ...options,
         });
     }
-    return undefined;
+
 };
+
+export const enableVisualEditing = () => {
+    if (browser && page.data.visualEditingEnabled) {
+        sessionStorage.setItem('visual-editing', 'true');
+    }
+}
+
+
 export default setAttr;

@@ -45,6 +45,8 @@ export const submitForm = form(async (data) => {
         if (!directusField) continue; // Field not found in form
 
 
+
+        // Should also add field validation here
         if (directusField.type === 'file' && value && value instanceof File && value.size > 0) {
             const blob = new Blob([value], { type: value.type });
             const formData = new FormData();
