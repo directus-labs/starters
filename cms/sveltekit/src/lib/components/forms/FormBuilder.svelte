@@ -3,6 +3,7 @@
 	import { cn } from '$lib/utils';
 	import { CheckCircle } from '@lucide/svelte';
 	import DynamicForm from './DynamicForm.svelte';
+	import { submitForm } from './forms.remote';
 
 	interface FormBuilderProps {
 		class?: string;
@@ -31,7 +32,7 @@
 </script>
 
 {#if form.is_active}
-	{#if onSuccessMessage}
+	{#if submitForm.result?.success}
 		<div class="flex flex-col items-center justify-center space-y-4 p-6 text-center">
 			<CheckCircle class="size-12 text-green-500" />
 			<p class="text-gray-600">
@@ -46,12 +47,7 @@
 					{error}
 				</div>
 			{/if}
-			<DynamicForm
-				fields={form.fields}
-				submitLabel={form.submit_label || 'Submit'}
-				id={form.id}
-				onSuccess={onFormSuccess}
-			/>
+			<DynamicForm fields={form.fields} submitLabel={form.submit_label || 'Submit'} id={form.id} />
 		</div>
 	{/if}
 {/if}

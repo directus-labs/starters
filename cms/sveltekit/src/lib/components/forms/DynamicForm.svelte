@@ -13,10 +13,9 @@
 		fields: FormFieldType[];
 		submitLabel: string;
 		id: string;
-		onSuccess?: (message: string) => void;
 	}
 
-	const { fields, submitLabel, id, onSuccess }: DynamicFormProps = $props();
+	const { fields, submitLabel, id }: DynamicFormProps = $props();
 
 	const sortedFields = [...fields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
 	const formSchema = buildZodSchema(fields);
@@ -55,9 +54,6 @@
 			await submit();
 			form.reset();
 			console.log('result', submitForm.result);
-			if (submitForm.result?.message && onSuccess) {
-				onSuccess(submitForm.result.message);
-			}
 		} catch (error) {
 			console.log('something went wrong', error);
 		}
