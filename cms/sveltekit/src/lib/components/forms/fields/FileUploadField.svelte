@@ -16,4 +16,4 @@
 	};
 </script>
 
-<Input type="file" id={name} onchange={onFileChange} />
+<Input type="file" id={name} onchange={onFileChange} {name} />

@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { submitForm } from '$lib/directus/forms';
 	import type { FormField } from '$lib/types/directus-schema';
 	import { cn } from '$lib/utils';
 	import { CheckCircle } from '@lucide/svelte';
 	import DynamicForm from './DynamicForm.svelte';
-	import { goto } from '$app/navigation';
 
 	interface FormBuilderProps {
 		class?: string;
@@ -23,36 +21,17 @@
 
 	const { form, class: className }: FormBuilderProps = $props();
 
-	let isSubmitted = $state(false);
 	let error = $state<string | null>(null);
 
-	const handleSubmit = async (data: Record<string, any>) => {
-		try {
-			const fieldsWithNames = form.fields.map((field) => ({
-				id: field.id,
-				name: field.name || '',
-				type: field.type || ''
-			}));
-			await submitForm(form.id, fieldsWithNames, data);
+	let onSuccessMessage = $state<string | null>(null);
 
-			if (form.on_success === 'redirect' && form.success_redirect_url) {
-				if (form.success_redirect_url.startsWith('/')) {
-					goto(form.success_redirect_url);
-				} else {
-					window.location.href = form.success_redirect_url; // TODO check if internal or external
-				}
-			} else {
-				isSubmitted = true;
-			}
-		} catch (err) {
-			console.error('Error submitting form:', err);
-			error = 'Failed to submit the form. Please try again later.';
-		}
+	const onFormSuccess = (message: string) => {
+		onSuccessMessage = message;
 	};
 </script>
 
 {#if form.is_active}
-	{#if isSubmitted}
+	{#if onSuccessMessage}
 		<div class="flex flex-col items-center justify-center space-y-4 p-6 text-center">
 			<CheckCircle class="size-12 text-green-500" />
 			<p class="text-gray-600">
@@ -69,9 +48,9 @@
 			{/if}
 			<DynamicForm
 				fields={form.fields}
-				onSubmit={handleSubmit}
 				submitLabel={form.submit_label || 'Submit'}
 				id={form.id}
+				onSuccess={onFormSuccess}
 			/>
 		</div>
 	{/if}

@@ -1,23 +1,22 @@
 <script lang="ts">
-	import { dev } from '$app/environment';
 	import setAttr from '$lib/directus/visualEditing';
 	import type { FormField as FormFieldType } from '$lib/types/directus-schema';
 	import { buildZodSchema } from '$lib/zodSchemaBuilder';
 	import Button from '../blocks/Button.svelte';
 	import Field from './FormField.svelte';
 	import { superForm, superValidate } from 'sveltekit-superforms';
-	import SuperDebug from 'sveltekit-superforms';
+	import { submitForm } from './forms.remote';
 
 	import { zodClient, zod } from 'sveltekit-superforms/adapters';
 
 	interface DynamicFormProps {
 		fields: FormFieldType[];
-		onSubmit: (data: Record<string, any>) => void;
 		submitLabel: string;
 		id: string;
+		onSuccess?: (message: string) => void;
 	}
 
-	const { fields, onSubmit, submitLabel, id }: DynamicFormProps = $props();
+	const { fields, submitLabel, id, onSuccess }: DynamicFormProps = $props();
 
 	const sortedFields = [...fields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
 	const formSchema = buildZodSchema(fields);
@@ -46,23 +45,23 @@
 		validators: zodClient(formSchema),
 		SPA: true
 	});
-
-	const { enhance, submit, form: formData, errors, validateForm } = $derived(form);
-
-	const onsubmit = async (e: Event) => {
-		e.preventDefault();
-		// const f = await superValidate($formData, zod(formSchema));
-		const f = await validateForm();
-		$errors = f.errors;
-		if (f.valid) {
-			onSubmit($formData);
-		}
-	};
 </script>
 
 <form
 	class="flex flex-wrap gap-4"
-	{onsubmit}
+	enctype="multipart/form-data"
+	{...submitForm.enhance(async ({ form, data, submit }) => {
+		try {
+			await submit();
+			form.reset();
+			console.log('result', submitForm.result);
+			if (submitForm.result?.message && onSuccess) {
+				onSuccess(submitForm.result.message);
+			}
+		} catch (error) {
+			console.log('something went wrong', error);
+		}
+	})}
 	data-directus={setAttr({
 		collection: 'forms',
 		item: id,
@@ -70,6 +69,8 @@
 		mode: 'popover'
 	})}
 >
+	<input type="hidden" name="formId" value={id} />
+
 	{#each sortedFields as field (field.id)}
 		<Field {field} {form} />
 	{/each}
@@ -92,14 +93,4 @@
 			></Button>
 		</div>
 	</div>
-
-	<!-- HIDE FORM DEBUGGER -->
-	<!-- {#if dev}
-		<div class="flex w-full flex-col gap-2 rounded-xl bg-red-200 p-2">
-			<p class="text-center text-red-500">Form Debugger. This is not displayed in production</p>
-			{#await superValidate($formData, zod(formSchema)) then r}
-				<SuperDebug data={r} />
-			{/await}
-		</div>
-	{/if} -->
 </form>
