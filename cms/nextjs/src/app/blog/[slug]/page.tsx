@@ -8,10 +8,10 @@ export default async function BlogPostPage({
 	searchParams,
 }: {
 	params: Promise<{ slug: string }>;
-	searchParams: Promise<{ preview?: string; token?: string }>;
+	searchParams: Promise<{ id?: string, version?: string, preview?: string; token?: string }>;
 }) {
 	const { slug } = await params;
-	const { preview, token } = await searchParams;
+	const { id, version, preview, token } = await searchParams;
 
 	const isDraft = preview === 'true' && !!token;
 

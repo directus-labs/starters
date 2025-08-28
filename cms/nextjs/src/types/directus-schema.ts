@@ -14,21 +14,52 @@ export interface ExtensionSeoMetadata {
 export interface AiPrompt {
 	/** @primaryKey */
 	id: string;
+	sort?: number | null;
 	/** @description Unique name for the prompt. Use names like "create-article" or "generate-product-description". @required */
 	name: string;
-	/** @description Briefly explain what this prompt does in 1-2 sentences. */
-	description?: string | null;
-	/** @description Instructions that shape how the AI responds. */
-	system_prompt?: string | null;
-	/** @description Optional: Define the conversation structure between users and AI. Used to add context and improve outputs. */
-	messages?: Array<{ role: 'user' | 'assistant'; text: string }> | null;
-	sort?: number | null;
 	/** @description Is this prompt published and available to use? */
 	status?: 'draft' | 'in_review' | 'published';
+	/** @description Briefly explain what this prompt does in 1-2 sentences. */
+	description?: string | null;
+	/** @description Optional: Define the conversation structure between users and AI. Used to add context and improve outputs. */
+	messages?: Array<{ role: 'user' | 'assistant'; text: string }> | null;
+	/** @description Instructions that shape how the AI responds. */
+	system_prompt?: string | null;
 	date_created?: string | null;
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+}
+
+export interface Airport {
+	/** @primaryKey */
+	id: number;
+	status?: 'published' | 'draft' | 'archived';
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	/** @description 3 character airport IATA code @required */
+	IATA_Code: string;
+	/** @required */
+	Airport_Name: string;
+	/** @required */
+	Display_Names: 'json';
+	/** @description Name to be used on interactive route map @required */
+	Route_Map_Name: string;
+	Airport_Details?: string | null;
+	/** @required */
+	Airport_Website: string;
+	/** @required */
+	Airport_Location: string;
+	Airport_Destinations?: AirportsAirports1[] | string[];
+}
+
+export interface AirportsAirports1 {
+	/** @primaryKey */
+	id: number;
+	Airports_id?: Airport | string | null;
+	related_Airports_id?: Airport | string | null;
 }
 
 export interface BlockButton {
@@ -132,6 +163,19 @@ export interface BlockHero {
 	user_updated?: DirectusUser | string | null;
 }
 
+export interface BlockHowToSection {
+	/** @primaryKey */
+	id: number;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	icon?: DirectusFile | string | null;
+	headline?: string | null;
+	content?: string | null;
+	status?: 'draft' | 'in_review' | 'published' | null;
+}
+
 export interface BlockPost {
 	/** @primaryKey */
 	id: string;
@@ -206,6 +250,41 @@ export interface BlockRichtext {
 	user_updated?: DirectusUser | string | null;
 }
 
+export interface FAQCategory {
+	/** @primaryKey */
+	id: number;
+	status?: 'published' | 'draft' | 'archived';
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	/** @required */
+	Name: string;
+	Description?: string | null;
+}
+
+export interface FAQ {
+	/** @primaryKey */
+	id: number;
+	status?: 'published' | 'draft' | 'archived';
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	/** @required */
+	Question: string;
+	/** @required */
+	Answer: string;
+	Category?: FAQsFAQCategories1[] | string[];
+}
+
+export interface FAQsFAQCategories1 {
+	/** @primaryKey */
+	id: number;
+	FAQs_id?: FAQ | string | null;
+	FAQ_Categories_id?: FAQCategory | string | null;
+}
+
 export interface FormField {
 	/** @primaryKey */
 	id: string;
@@ -277,7 +356,7 @@ export interface FormSubmission {
 
 export interface FormSubmissionValue {
 	/** @primaryKey */
-	id?: string;
+	id: string;
 	/** @description Parent form submission for this value. */
 	form_submission?: FormSubmission | string | null;
 	field?: FormField | string | null;
@@ -313,10 +392,10 @@ export interface Globals {
 	openai_api_key?: string | null;
 	/** @description The public URL for this Directus instance. Used in Flows. */
 	directus_url?: string | null;
-	/** @description Accent color for the website (used on buttons, links, etc). */
-	accent_color?: string | null;
 	/** @description Main logo shown on the site (for dark mode). */
 	logo_dark_mode?: DirectusFile | string | null;
+	/** @description Accent color for the website (used on buttons, links, etc). */
+	accent_color?: string | null;
 	date_created?: string | null;
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
@@ -371,7 +450,17 @@ export interface PageBlock {
 	/** @description The id of the page that this block belongs to. */
 	page?: Page | string | null;
 	/** @description The data for the block. */
-	item?: BlockHero | BlockRichtext | BlockForm | BlockPost | BlockGallery | BlockPricing | string | null;
+	item?:
+		| BlockHero
+		| BlockRichtext
+		| BlockForm
+		| BlockPost
+		| BlockGallery
+		| BlockPricing
+		| BlockButton
+		| BlockHowToSection
+		| string
+		| null;
 	/** @description The collection (type of block). */
 	collection?: string | null;
 	/** @description Temporarily hide this block on the website without having to remove it from your page. */
@@ -388,6 +477,7 @@ export interface Page {
 	/** @primaryKey */
 	id: string;
 	sort?: number | null;
+	version?: string | '';
 	/** @description The title of this page. @required */
 	title: string;
 	/** @description Unique URL for this page (start with `/`, can have multiple segments `/about/me`)). @required */
@@ -401,7 +491,10 @@ export interface Page {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
-	/** @description Create and arrange different content blocks (like text, images, or videos) to build your page. */
+	slug?: string | null;
+	/** @required */
+	type: string;
+	description?: string | null;
 	blocks?: PageBlock[] | string[];
 }
 
@@ -446,6 +539,21 @@ export interface Redirect {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+}
+
+export interface VehicleType {
+	/** @primaryKey */
+	id: number;
+	status?: 'published' | 'draft' | 'archived';
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	/** @required */
+	Name: string;
+	/** @required */
+	Class: string;
+	Image?: DirectusFile | string | null;
 }
 
 export interface DirectusAccess {
@@ -724,9 +832,11 @@ export interface DirectusSettings {
 	public_registration_verify_email?: boolean;
 	public_registration_role?: DirectusRole | string | null;
 	public_registration_email_filter?: 'json' | null;
+	visual_editor_urls?: Array<{ url: string }> | null;
 	/** @description Settings for the Command Palette Module. */
 	command_palette_settings?: Record<string, any> | null;
-	visual_editor_urls?: Array<{ url: string }> | null;
+	accepted_terms?: boolean | null;
+	project_id?: string | null;
 }
 
 export interface DirectusUser {
@@ -757,6 +867,7 @@ export interface DirectusUser {
 	theme_light?: string | null;
 	theme_light_overrides?: 'json' | null;
 	theme_dark_overrides?: 'json' | null;
+	text_direction?: 'auto' | 'ltr' | 'rtl';
 	/** @description Blog posts this user has authored. */
 	posts?: Post[] | string[];
 	policies?: DirectusAccess[] | string[];
@@ -907,16 +1018,22 @@ export interface DirectusExtension {
 
 export interface Schema {
 	ai_prompts: AiPrompt[];
+	Airports: Airport[];
+	Airports_Airports_1: AirportsAirports1[];
 	block_button: BlockButton[];
 	block_button_group: BlockButtonGroup[];
 	block_form: BlockForm[];
 	block_gallery: BlockGallery[];
 	block_gallery_items: BlockGalleryItem[];
 	block_hero: BlockHero[];
+	block_how_to_section: BlockHowToSection[];
 	block_posts: BlockPost[];
 	block_pricing: BlockPricing[];
 	block_pricing_cards: BlockPricingCard[];
 	block_richtext: BlockRichtext[];
+	FAQ_Categories: FAQCategory[];
+	FAQs: FAQ[];
+	FAQs_FAQ_Categories_1: FAQsFAQCategories1[];
 	form_fields: FormField[];
 	forms: Form[];
 	form_submissions: FormSubmission[];
@@ -928,6 +1045,7 @@ export interface Schema {
 	pages: Page[];
 	posts: Post[];
 	redirects: Redirect[];
+	Vehicle_Types: VehicleType[];
 	directus_access: DirectusAccess[];
 	directus_activity: DirectusActivity[];
 	directus_collections: DirectusCollection[];
@@ -959,16 +1077,22 @@ export interface Schema {
 
 export enum CollectionNames {
 	ai_prompts = 'ai_prompts',
+	Airports = 'Airports',
+	Airports_Airports_1 = 'Airports_Airports_1',
 	block_button = 'block_button',
 	block_button_group = 'block_button_group',
 	block_form = 'block_form',
 	block_gallery = 'block_gallery',
 	block_gallery_items = 'block_gallery_items',
 	block_hero = 'block_hero',
+	block_how_to_section = 'block_how_to_section',
 	block_posts = 'block_posts',
 	block_pricing = 'block_pricing',
 	block_pricing_cards = 'block_pricing_cards',
 	block_richtext = 'block_richtext',
+	FAQ_Categories = 'FAQ_Categories',
+	FAQs = 'FAQs',
+	FAQs_FAQ_Categories_1 = 'FAQs_FAQ_Categories_1',
 	form_fields = 'form_fields',
 	forms = 'forms',
 	form_submissions = 'form_submissions',
@@ -980,6 +1104,7 @@ export enum CollectionNames {
 	pages = 'pages',
 	posts = 'posts',
 	redirects = 'redirects',
+	Vehicle_Types = 'Vehicle_Types',
 	directus_access = 'directus_access',
 	directus_activity = 'directus_activity',
 	directus_collections = 'directus_collections',

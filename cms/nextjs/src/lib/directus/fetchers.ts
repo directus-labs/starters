@@ -8,6 +8,7 @@ import { RedirectError } from '../redirects';
  */
 export const fetchPageData = async (permalink: string, postPage = 1) => {
 	const { directus, readItems } = useDirectus();
+
 	try {
 		const pageData = await directus.request(
 			readItems('pages', {
@@ -129,6 +130,160 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 
 		const page = pageData[0];
 
+		if (Array.isArray(page.blocks)) {
+			for (const block of page.blocks as PageBlock[]) {
+				if (
+					block.collection === 'block_posts' &&
+					typeof block.item === 'object' &&
+					(block.item as BlockPost).collection === 'posts'
+				) {
+					const limit = (block.item as BlockPost).limit ?? 6;
+					const posts = await directus.request<Post[]>(
+						readItems('posts', {
+							fields: ['id', 'title', 'description', 'slug', 'image', 'status', 'published_at'],
+							filter: { status: { _eq: 'published' } },
+							sort: ['-published_at'],
+							limit,
+							page: postPage,
+						}),
+					);
+
+					(block.item as BlockPost & { posts: Post[] }).posts = posts;
+				}
+			}
+		}
+
+		return page;
+	} catch (error) {
+		console.error('Error fetching page data:', error);
+		throw new Error('Failed to fetch page data');
+	}
+};
+export const fetchPageDataById = async (id: string, v: string, permalink: string, postPage = 1) => {
+	const { directus, readItem } = useDirectus();
+	console.log('page id=', id);
+	console.log('version=', v);
+	try {
+		const pageData = await directus.request(
+			readItem('pages', id, {
+				version: v,
+				fields: [
+					'title',
+					'seo',
+					'id',
+					{
+						blocks: [
+							'id',
+							'background',
+							'collection',
+							'item',
+							'sort',
+							'hide_block',
+							{
+								item: {
+									block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
+									block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] as any }],
+									block_pricing: [
+										'id',
+										'tagline',
+										'headline',
+										{
+											pricing_cards: [
+												'id',
+												'title',
+												'description',
+												'price',
+												'badge',
+												'features',
+												'is_highlighted',
+												{
+													button: [
+														'id',
+														'label',
+														'variant',
+														'url',
+														'type',
+														{ page: ['permalink'] },
+														{ post: ['slug'] },
+													],
+												},
+											],
+										},
+									],
+									block_hero: [
+										'id',
+										'tagline',
+										'headline',
+										'description',
+										'layout',
+										'image',
+										{
+											button_group: [
+												'id',
+												{
+													buttons: [
+														'id',
+														'label',
+														'variant',
+														'url',
+														'type',
+														{ page: ['permalink'] },
+														{ post: ['slug'] },
+													],
+												},
+											],
+										},
+									],
+									block_posts: ['id', 'tagline', 'headline', 'collection', 'limit'],
+									block_form: [
+										'id',
+										'tagline',
+										'headline',
+										{
+											form: [
+												'id',
+												'title',
+												'submit_label',
+												'success_message',
+												'on_success',
+												'success_redirect_url',
+												'is_active',
+												{
+													fields: [
+														'id',
+														'name',
+														'type',
+														'label',
+														'placeholder',
+														'help',
+														'validation',
+														'width',
+														'choices',
+														'required',
+														'sort',
+													],
+												},
+											],
+										},
+									],
+								},
+							},
+						],
+					},
+				],
+				deep: {
+					blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+				},
+			}),
+		);
+
+		// if (!pageData.length) {
+		// 	throw new Error('Page not found');
+		// }
+
+		// const page = pageData[0];
+		const page = pageData;
+		console.log({ page });
 		if (Array.isArray(page.blocks)) {
 			for (const block of page.blocks as PageBlock[]) {
 				if (

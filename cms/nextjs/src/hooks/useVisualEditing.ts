@@ -23,6 +23,8 @@ export function useVisualEditing() {
 		if (typeof window === 'undefined') return;
 
 		const param = searchParams.get('visual-editing');
+		const id = searchParams.get('id');
+		const version = searchParams.get('version');
 
 		if (!enableVisualEditingEnv) {
 			if (param === 'true') {
@@ -30,6 +32,14 @@ export function useVisualEditing() {
 			}
 
 			return;
+		}
+
+		if (id) {
+			localStorage.setItem('id', id);
+		}
+
+		if (version) {
+			localStorage.setItem('version', version);
 		}
 
 		if (param === 'true') {

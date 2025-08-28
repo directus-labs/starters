@@ -1,4 +1,4 @@
-import { fetchPageData } from '@/lib/directus/fetchers';
+import { fetchPageData, fetchPageDataById } from '@/lib/directus/fetchers';
 import { PageBlock } from '@/types/directus-schema';
 import { notFound } from 'next/navigation';
 import PageClient from './PageClient';
@@ -7,7 +7,7 @@ export async function generateMetadata({ params }: { params: Promise<{ permalink
 	const { permalink } = await params;
 	const permalinkSegments = permalink || [];
 	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
-
+	
 	try {
 		const page = await fetchPageData(resolvedPermalink);
 
@@ -30,13 +30,16 @@ export async function generateMetadata({ params }: { params: Promise<{ permalink
 	}
 }
 
-export default async function Page({ params }: { params: Promise<{ permalink?: string[] }> }) {
+export default async function Page({ params, searchParams }: { params: Promise<{ permalink?: string[] }> , searchParams: Record<string, string | string[] | undefined>}) {
 	const { permalink } = await params;
 	const permalinkSegments = permalink || [];
 	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+	
+	const id = typeof searchParams.id === "string" ? searchParams.id : "";
+	const version = typeof searchParams.version === "string" ? searchParams.version : "";		
 
 	try {
-		const page = await fetchPageData(resolvedPermalink);
+		const page = await fetchPageDataById(id, version, resolvedPermalink);
 
 		if (!page || !page.blocks) {
 			notFound();
