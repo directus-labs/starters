@@ -1,5 +1,5 @@
-import { fetchPageData } from '@/lib/directus/fetchers';
-import { PageBlock } from '@/types/directus-schema';
+import { fetchPageData, fetchPageDataById, getPageIdByPermalink } from '@/lib/directus/fetchers';
+import { PageBlock, type Page } from '@/types/directus-schema';
 import { notFound } from 'next/navigation';
 import PageClient from './PageClient';
 
@@ -30,20 +30,42 @@ export async function generateMetadata({ params }: { params: Promise<{ permalink
 	}
 }
 
-export default async function Page({ params }: { params: Promise<{ permalink?: string[] }> }) {
+export default async function Page({
+	params,
+	searchParams,
+}: {
+	params: Promise<{ permalink?: string[] }>;
+	searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
 	const { permalink } = await params;
+	const searchParamsResolved = await searchParams;
 	const permalinkSegments = permalink || [];
 	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
 
+	const id = typeof searchParamsResolved.id === 'string' ? searchParamsResolved.id : '';
+	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
+	const token = typeof searchParamsResolved.token === 'string' ? searchParamsResolved.token : '';
+
 	try {
-		const page = await fetchPageData(resolvedPermalink);
+		let pageId = id;
+		if (version && !pageId) {
+			const foundPageId = await getPageIdByPermalink(resolvedPermalink);
+			pageId = foundPageId || '';
+		}
+
+		let page;
+		if (pageId && version) {
+			page = await fetchPageDataById(pageId, version, token || undefined);
+		} else {
+			page = await fetchPageData(resolvedPermalink);
+		}
 
 		if (!page || !page.blocks) {
 			notFound();
 		}
 
-		const blocks: PageBlock[] = page.blocks.filter(
-			(block: any): block is PageBlock => typeof block === 'object' && block.collection,
+		const blocks: PageBlock[] = (page.blocks as PageBlock[]).filter(
+			(block): block is PageBlock => typeof block === 'object' && !!block.collection && !block.hide_block,
 		);
 
 		return <PageClient sections={blocks} pageId={page.id} />;

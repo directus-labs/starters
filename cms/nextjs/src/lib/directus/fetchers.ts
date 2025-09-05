@@ -1,4 +1,4 @@
-import { BlockPost, PageBlock, Post, Redirect, Schema } from '@/types/directus-schema';
+import { BlockPost, Page, PageBlock, Post, Redirect, Schema } from '@/types/directus-schema';
 import { useDirectus } from './directus';
 import { readItems, aggregate, readItem, readSingleton, withToken, QueryFilter } from '@directus/sdk';
 import { RedirectError } from '../redirects';
@@ -8,6 +8,7 @@ import { RedirectError } from '../redirects';
  */
 export const fetchPageData = async (permalink: string, postPage = 1) => {
 	const { directus, readItems } = useDirectus();
+
 	try {
 		const pageData = await directus.request(
 			readItems('pages', {
@@ -160,6 +161,227 @@ export const fetchPageData = async (permalink: string, postPage = 1) => {
 };
 
 /**
+ * Fetches page data by id and version
+ */
+export const fetchPageDataById = async (id: string, version: string, token?: string): Promise<Page> => {
+	const { directus, readItem } = useDirectus();
+
+	try {
+		let request = (readItem as any)('pages', id, {
+			version,
+			fields: [
+				'title',
+				'seo',
+				'id',
+				{
+					blocks: [
+						'id',
+						'background',
+						'collection',
+						'item',
+						'sort',
+						'hide_block',
+						{
+							item: {
+								block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
+								block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] as any }],
+								block_pricing: [
+									'id',
+									'tagline',
+									'headline',
+									{
+										pricing_cards: [
+											'id',
+											'title',
+											'description',
+											'price',
+											'badge',
+											'features',
+											'is_highlighted',
+											{
+												button: ['id', 'label', 'variant', 'url', 'type', { page: ['permalink'] }, { post: ['slug'] }],
+											},
+										],
+									},
+								],
+								block_hero: [
+									'id',
+									'tagline',
+									'headline',
+									'description',
+									'layout',
+									'image',
+									{
+										button_group: [
+											'id',
+											{
+												buttons: ['id', 'label', 'variant', 'url', 'type', { page: ['permalink'] }, { post: ['slug'] }],
+											},
+										],
+									},
+								],
+								block_posts: ['id', 'tagline', 'headline', 'collection', 'limit'],
+								block_form: [
+									'id',
+									'tagline',
+									'headline',
+									{
+										form: [
+											'id',
+											'title',
+											'submit_label',
+											'success_message',
+											'on_success',
+											'success_redirect_url',
+											'is_active',
+											{
+												fields: [
+													'id',
+													'name',
+													'type',
+													'label',
+													'placeholder',
+													'help',
+													'validation',
+													'width',
+													'choices',
+													'required',
+													'sort',
+												],
+											},
+										],
+									},
+								],
+							},
+						},
+					],
+				},
+			],
+			deep: {
+				blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+			},
+		});
+
+		if (token && token.trim()) {
+			request = withToken(token, request);
+		}
+
+		return (await directus.request(request)) as Page;
+	} catch (error) {
+		console.error('Error fetching versioned page:', error);
+		throw new Error('Failed to fetch versioned page');
+	}
+};
+
+/**
+ * Helper function to get page ID by permalink
+ */
+export const getPageIdByPermalink = async (permalink: string) => {
+	const { directus, readItems } = useDirectus();
+
+	try {
+		const pageData = await directus.request(
+			readItems('pages', {
+				filter: { permalink: { _eq: permalink } },
+				limit: 1,
+				fields: ['id'],
+			}),
+		);
+
+		if (pageData.length > 0) {
+			return pageData[0].id;
+		}
+
+		return null;
+	} catch (error) {
+		console.error('Error getting page ID:', error);
+
+		return null;
+	}
+};
+
+/**
+ * Helper function to get post ID by slug
+ */
+export const getPostIdBySlug = async (slug: string, token?: string) => {
+	const { directus, readItems } = useDirectus();
+
+	try {
+		let request = (readItems as any)('posts', {
+			filter: { slug: { _eq: slug } },
+			limit: 1,
+			fields: ['id'],
+		});
+
+		if (token && token.trim()) {
+			request = withToken(token, request);
+		}
+
+		const postData = await directus.request(request);
+
+		if ((postData as any).length > 0) {
+			return (postData as any)[0].id;
+		}
+
+		return null;
+	} catch (error) {
+		console.error('Error getting post ID:', error);
+
+		return null;
+	}
+};
+
+/**
+ * Fetches a single blog post by ID and version
+ */
+export const fetchPostByIdAndVersion = async (
+	id: string,
+	version: string,
+	slug: string,
+	token?: string,
+): Promise<{ post: Post; relatedPosts: Post[] }> => {
+	const { directus, readItem, readItems } = useDirectus();
+
+	try {
+		let request = (readItem as any)('posts', id, {
+			version,
+			fields: [
+				'id',
+				'title',
+				'content',
+				'status',
+				'published_at',
+				'image',
+				'description',
+				'slug',
+				'seo',
+				{
+					author: ['id', 'first_name', 'last_name', 'avatar'],
+				},
+			],
+		});
+
+		if (token && token.trim()) {
+			request = withToken(token, request);
+		}
+
+		// Fetch related posts
+		const relatedRequest = (readItems as any)('posts', {
+			filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
+			limit: 2,
+			fields: ['id', 'title', 'slug', 'image'],
+		});
+
+		const [postData, relatedPosts] = await Promise.all([directus.request(request), directus.request(relatedRequest)]);
+
+		return { post: postData as Post, relatedPosts: relatedPosts as Post[] };
+	} catch (error) {
+		console.error('Error fetching versioned post:', error);
+		throw new Error('Failed to fetch versioned post');
+	}
+};
+
+/**
  * Fetches global site data, header navigation, and footer navigation.
  */
 export const fetchSiteData = async () => {
@@ -229,9 +451,9 @@ export const fetchPostBySlug = async (
 	const { draft, token } = options || {};
 
 	try {
-		const filter: QueryFilter<Schema, Post> = options?.draft
-			? { slug: { _eq: slug } }
-			: { slug: { _eq: slug }, status: { _eq: 'published' } };
+		const filter: QueryFilter<Schema, Post> =
+			token || draft ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } };
+
 		let postRequest = readItems<Schema, 'posts', any>('posts', {
 			filter,
 			limit: 1,
@@ -258,7 +480,7 @@ export const fetchPostBySlug = async (
 			fields: ['id', 'title', 'slug', 'image'],
 		});
 
-		if (draft && token) {
+		if (token) {
 			postRequest = withToken(token, postRequest);
 			relatedRequest = withToken(token, relatedRequest);
 		}
