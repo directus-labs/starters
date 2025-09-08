@@ -19,6 +19,8 @@ const {
 		permalink,
 		preview: enabled.value ? true : undefined,
 		token: enabled.value ? state.token : undefined,
+		id: route.query.id as string,
+		version: route.query.version as string,
 	},
 });
 

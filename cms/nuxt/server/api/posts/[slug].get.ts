@@ -1,3 +1,5 @@
+import type { Post } from '#shared/types/schema';
+
 export default defineEventHandler(async (event) => {
 	const slug = getRouterParam(event, 'slug');
 
@@ -5,56 +7,81 @@ export default defineEventHandler(async (event) => {
 		throw createError({ statusCode: 400, message: 'Slug is required' });
 	}
 
-	// Handle live preview
 	const query = getQuery(event);
-	const { preview, token: rawToken } = query;
-	const token = preview === 'true' && rawToken ? String(rawToken) : null;
+	const { preview, token: rawToken, id, version } = query;
+	const token = (preview === 'true' && rawToken) || rawToken ? String(rawToken) : null;
 
 	try {
-		const postsPromise = directusServer.request(
-			withToken(
-				token as string,
-				readItems('posts', {
-					filter: {
-						slug: { _eq: slug },
-					},
-					limit: 1,
-					fields: [
-						'id',
-						'title',
-						'content',
-						'status',
-						'published_at',
-						'image',
-						'description',
-						'seo',
-						{
-							author: ['id', 'first_name', 'last_name', 'avatar'],
-						},
-					],
-				}),
-			),
-		);
+		let post: Post;
+		let postId = id as string;
 
-		// This is a really naive implementation of related posts. Just a basic check to ensure we don't return the same post. You might want to do something more sophisticated.
-		const relatedPostsPromise = directusServer.request(
-			withToken(
-				token as string,
-				readItems('posts', {
-					filter: { slug: { _neq: slug } },
-					fields: ['id', 'title', 'image', 'slug'],
-					limit: 2,
-				}),
-			),
-		);
-
-		const [posts, relatedPosts] = await Promise.all([postsPromise, relatedPostsPromise]);
-
-		if (!posts.length) {
-			throw createError({ statusCode: 404, message: `Post not found: ${slug}` });
+		if (version && !postId) {
+			const postIdLookup = await directusServer.request(
+				withToken(
+					token as string,
+					readItems('posts', {
+						filter: { slug: { _eq: slug } },
+						limit: 1,
+						fields: ['id'],
+					}),
+				),
+			);
+			postId = postIdLookup.length > 0 ? postIdLookup[0]?.id || '' : '';
 		}
 
-		return { post: posts[0], relatedPosts: relatedPosts };
+		const postFields = [
+			'id',
+			'title',
+			'content',
+			'status',
+			'published_at',
+			'image',
+			'description',
+			'slug',
+			'seo',
+			{
+				author: ['id', 'first_name', 'last_name', 'avatar'],
+			},
+		];
+
+		if (postId && version) {
+			post = (await directusServer.request(
+				withToken(
+					token as string,
+					readItem('posts', postId, {
+						version: String(version),
+						fields: postFields as any,
+					}),
+				),
+			)) as any as Post;
+		} else {
+			const postsData = await directusServer.request(
+				withToken(
+					token as string,
+					readItems('posts', {
+						filter: token ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
+						limit: 1,
+						fields: postFields as any,
+					}),
+				),
+			);
+
+			if (!postsData.length) {
+				throw createError({ statusCode: 404, message: `Post not found: ${slug}` });
+			}
+
+			post = postsData[0] as Post;
+		}
+
+		const relatedPosts = await directusServer.request(
+			readItems('posts', {
+				filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
+				fields: ['id', 'title', 'image', 'slug'],
+				limit: 2,
+			}),
+		);
+
+		return { post, relatedPosts };
 	} catch (error) {
 		throw createError({ statusCode: 500, message: `Failed to fetch post: ${slug}`, data: error });
 	}

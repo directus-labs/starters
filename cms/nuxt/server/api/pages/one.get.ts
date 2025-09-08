@@ -1,140 +1,158 @@
 import { withoutTrailingSlash, withLeadingSlash } from 'ufo';
+import type { Page, PageBlock, BlockPost, Post } from '#shared/types/schema';
 
 export default defineEventHandler(async (event) => {
 	const query = getQuery(event);
 
-	// Handle live preview
-	const { preview, token: rawToken, permalink: rawPermalink } = query;
-
-	// Ensure the permalink is formatted correctly
+	const { preview, token: rawToken, permalink: rawPermalink, id, version } = query;
 	const permalink = withoutTrailingSlash(withLeadingSlash(String(rawPermalink)));
 
-	const token = preview === 'true' && rawToken ? String(rawToken) : null;
+	const token = (preview === 'true' && rawToken) || rawToken ? String(rawToken) : null;
 
 	try {
-		const pageData = await directusServer.request(
-			withToken(
-				token as string,
-				readItems('pages', {
-					filter: { permalink: { _eq: permalink } },
-					limit: 1,
-					fields: [
-						'title',
-						'id',
-						{
-							seo: ['title', 'meta_description', 'og_image'],
-							blocks: [
+		let page: Page;
+		let pageId = id as string;
+
+		if (version && !pageId) {
+			const pageIdLookup = await directusServer.request(
+				withToken(
+					token as string,
+					readItems('pages', {
+						filter: { permalink: { _eq: permalink } },
+						limit: 1,
+						fields: ['id'],
+					}),
+				),
+			);
+			pageId = pageIdLookup.length > 0 ? pageIdLookup[0]?.id || '' : '';
+		}
+
+		const pageFields = [
+			'title',
+			'id',
+			{
+				seo: ['title', 'meta_description', 'og_image'],
+				blocks: [
+					'id',
+					'background',
+					'collection',
+					'item',
+					'sort',
+					'hide_block',
+					{
+						item: {
+							block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
+							block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] }],
+							block_pricing: [
 								'id',
-								'background',
-								'collection',
-								'item',
-								'sort',
-								'hide_block',
+								'tagline',
+								'headline',
 								{
-									item: {
-										block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
-										block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] }],
-										block_pricing: [
-											'id',
-											'tagline',
-											'headline',
-											{
-												pricing_cards: [
-													'id',
-													'sort',
-													'title',
-													'description',
-													'price',
-													'badge',
-													'features',
-													'is_highlighted',
-													{
-														button: [
-															'id',
-															'label',
-															'variant',
-															'url',
-															'type',
-															{ page: ['permalink'] },
-															{ post: ['slug'] },
-														],
-													},
-												],
-											},
-										],
-										block_hero: [
-											'id',
-											'tagline',
-											'headline',
-											'description',
-											'layout',
-											'image',
-											{
-												button_group: [
-													'id',
-													{
-														buttons: [
-															'id',
-															'label',
-															'variant',
-															'url',
-															'type',
-															{ page: ['permalink'] },
-															{ post: ['slug'] },
-														],
-													},
-												],
-											},
-										],
-										block_posts: ['id', 'tagline', 'headline', 'collection', 'limit'],
-										block_form: [
-											'id',
-											'tagline',
-											'headline',
-											{
-												form: [
-													'id',
-													'title',
-													'submit_label',
-													'success_message',
-													'on_success',
-													'success_redirect_url',
-													'is_active',
-													{
-														fields: [
-															'id',
-															'name',
-															'type',
-															'label',
-															'placeholder',
-															'help',
-															'validation',
-															'width',
-															'choices',
-															'required',
-															'sort',
-														],
-													},
-												],
-											},
-										],
-									},
+									pricing_cards: [
+										'id',
+										'sort',
+										'title',
+										'description',
+										'price',
+										'badge',
+										'features',
+										'is_highlighted',
+										{
+											button: ['id', 'label', 'variant', 'url', 'type', { page: ['permalink'] }, { post: ['slug'] }],
+										},
+									],
+								},
+							],
+							block_hero: [
+								'id',
+								'tagline',
+								'headline',
+								'description',
+								'layout',
+								'image',
+								{
+									button_group: [
+										'id',
+										{
+											buttons: ['id', 'label', 'variant', 'url', 'type', { page: ['permalink'] }, { post: ['slug'] }],
+										},
+									],
+								},
+							],
+							block_posts: ['id', 'tagline', 'headline', 'collection', 'limit'],
+							block_form: [
+								'id',
+								'tagline',
+								'headline',
+								{
+									form: [
+										'id',
+										'title',
+										'submit_label',
+										'success_message',
+										'on_success',
+										'success_redirect_url',
+										'is_active',
+										{
+											fields: [
+												'id',
+												'name',
+												'type',
+												'label',
+												'placeholder',
+												'help',
+												'validation',
+												'width',
+												'choices',
+												'required',
+												'sort',
+											],
+										},
+									],
 								},
 							],
 						},
-					],
-					deep: {
-						blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
 					},
-				}),
-			),
-		);
+				],
+			},
+		];
 
-		if (!pageData.length) {
-			throw createError({ statusCode: 404, statusMessage: 'Page not found' });
+		if (pageId && version) {
+			page = (await directusServer.request(
+				withToken(
+					token as string,
+					readItem('pages', pageId, {
+						version: String(version),
+						fields: pageFields as any,
+						deep: {
+							blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+						},
+					}),
+				),
+			)) as Page;
+		} else {
+			const pageData = await directusServer.request(
+				withToken(
+					token as string,
+					readItems('pages', {
+						filter: token
+							? { permalink: { _eq: permalink } }
+							: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+						limit: 1,
+						fields: pageFields as any,
+						deep: {
+							blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+						},
+					}),
+				),
+			);
+
+			if (!pageData.length) {
+				throw createError({ statusCode: 404, statusMessage: 'Page not found' });
+			}
+
+			page = pageData[0] as Page;
 		}
-
-		const page = pageData[0];
 
 		if (Array.isArray(page?.blocks)) {
 			for (const block of page.blocks as PageBlock[]) {

@@ -22,6 +22,8 @@ const { data, error, refresh } = await useFetch<{
 	query: {
 		preview: enabled.value ? true : undefined,
 		token: enabled.value ? state.token : undefined,
+		id: route.query.id as string,
+		version: route.query.version as string,
 	},
 });
 
