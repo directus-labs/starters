@@ -6,129 +6,120 @@ import { RedirectError } from '../redirects';
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
  */
-export const fetchPageData = async (permalink: string, postPage = 1) => {
+export const fetchPageData = async (permalink: string, postPage = 1, token?: string, preview?: boolean) => {
 	const { directus, readItems } = useDirectus();
 
 	try {
-		const pageData = await directus.request(
-			readItems('pages', {
-				filter: { permalink: { _eq: permalink } },
-				limit: 1,
-				fields: [
-					'title',
-					'seo',
-					'id',
-					{
-						blocks: [
-							'id',
-							'background',
-							'collection',
-							'item',
-							'sort',
-							'hide_block',
-							{
-								item: {
-									block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
-									block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] as any }],
-									block_pricing: [
-										'id',
-										'tagline',
-										'headline',
-										{
-											pricing_cards: [
-												'id',
-												'title',
-												'description',
-												'price',
-												'badge',
-												'features',
-												'is_highlighted',
-												{
-													button: [
-														'id',
-														'label',
-														'variant',
-														'url',
-														'type',
-														{ page: ['permalink'] },
-														{ post: ['slug'] },
-													],
-												},
-											],
-										},
-									],
-									block_hero: [
-										'id',
-										'tagline',
-										'headline',
-										'description',
-										'layout',
-										'image',
-										{
-											button_group: [
-												'id',
-												{
-													buttons: [
-														'id',
-														'label',
-														'variant',
-														'url',
-														'type',
-														{ page: ['permalink'] },
-														{ post: ['slug'] },
-													],
-												},
-											],
-										},
-									],
-									block_posts: ['id', 'tagline', 'headline', 'collection', 'limit'],
-									block_form: [
-										'id',
-										'tagline',
-										'headline',
-										{
-											form: [
-												'id',
-												'title',
-												'submit_label',
-												'success_message',
-												'on_success',
-												'success_redirect_url',
-												'is_active',
-												{
-													fields: [
-														'id',
-														'name',
-														'type',
-														'label',
-														'placeholder',
-														'help',
-														'validation',
-														'width',
-														'choices',
-														'required',
-														'sort',
-													],
-												},
-											],
-										},
-									],
-								},
+		let request = (readItems as any)('pages', {
+			filter:
+				preview && token
+					? { permalink: { _eq: permalink } }
+					: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+			limit: 1,
+			fields: [
+				'title',
+				'seo',
+				'id',
+				{
+					blocks: [
+						'id',
+						'background',
+						'collection',
+						'item',
+						'sort',
+						'hide_block',
+						{
+							item: {
+								block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
+								block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] as any }],
+								block_pricing: [
+									'id',
+									'tagline',
+									'headline',
+									{
+										pricing_cards: [
+											'id',
+											'title',
+											'description',
+											'price',
+											'badge',
+											'features',
+											'is_highlighted',
+											{
+												button: ['id', 'label', 'variant', 'url', 'type', { page: ['permalink'] }, { post: ['slug'] }],
+											},
+										],
+									},
+								],
+								block_hero: [
+									'id',
+									'tagline',
+									'headline',
+									'description',
+									'layout',
+									'image',
+									{
+										button_group: [
+											'id',
+											{
+												buttons: ['id', 'label', 'variant', 'url', 'type', { page: ['permalink'] }, { post: ['slug'] }],
+											},
+										],
+									},
+								],
+								block_posts: ['id', 'tagline', 'headline', 'collection', 'limit'],
+								block_form: [
+									'id',
+									'tagline',
+									'headline',
+									{
+										form: [
+											'id',
+											'title',
+											'submit_label',
+											'success_message',
+											'on_success',
+											'success_redirect_url',
+											'is_active',
+											{
+												fields: [
+													'id',
+													'name',
+													'type',
+													'label',
+													'placeholder',
+													'help',
+													'validation',
+													'width',
+													'choices',
+													'required',
+													'sort',
+												],
+											},
+										],
+									},
+								],
 							},
-						],
-					},
-				],
-				deep: {
-					blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+						},
+					],
 				},
-			}),
-		);
+			],
+			deep: {
+				blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+			},
+		});
+
+		if (preview && token && token.trim()) {
+			request = withToken(token, request);
+		}
+
+		const pageData = (await directus.request(request)) as any[];
 
 		if (!pageData.length) {
 			throw new Error('Page not found');
 		}
 
-		const page = pageData[0];
+		const page = pageData[0] as any;
 
 		if (Array.isArray(page.blocks)) {
 			for (const block of page.blocks as PageBlock[]) {
