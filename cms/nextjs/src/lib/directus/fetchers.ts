@@ -267,17 +267,21 @@ export const fetchPageDataById = async (id: string, version: string, token?: str
 /**
  * Helper function to get page ID by permalink
  */
-export const getPageIdByPermalink = async (permalink: string) => {
+export const getPageIdByPermalink = async (permalink: string, token?: string) => {
 	const { directus, readItems } = useDirectus();
 
 	try {
-		const pageData = await directus.request(
-			readItems('pages', {
-				filter: { permalink: { _eq: permalink } },
-				limit: 1,
-				fields: ['id'],
-			}),
-		);
+		let request = (readItems as any)('pages', {
+			filter: { permalink: { _eq: permalink } },
+			limit: 1,
+			fields: ['id'],
+		});
+
+		if (token && token.trim()) {
+			request = withToken(token, request);
+		}
+
+		const pageData = (await directus.request(request)) as any[];
 
 		if (pageData.length > 0) {
 			return pageData[0].id;
