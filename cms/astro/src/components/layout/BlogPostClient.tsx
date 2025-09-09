@@ -43,34 +43,30 @@ export default function BlogPostClient({
   const { isVisualEditingEnabled, apply } = useVisualEditing();
 
   const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
+  const [hasVersioningParams, setHasVersioningParams] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setIsPreviewEnabled(params.get('preview') === 'true');
+    setHasVersioningParams(!!params.get('version') || !!params.get('id'));
   }, []);
 
-  const shouldFetchLive = (isVisualEditingEnabled || isPreviewEnabled) && slug;
+  const shouldFetchLive = (isVisualEditingEnabled || isPreviewEnabled || hasVersioningParams) && slug;
 
   const swrKey = shouldFetchLive
-    ? `/api/blog-post/${encodeURIComponent(slug!)}${
-        token
-          ? `?token=${token}&preview=${isPreviewEnabled}&visual-editing=${isVisualEditingEnabled}`
-          : `?preview=${isPreviewEnabled}&visual-editing=${isVisualEditingEnabled}`
-      }`
+    ? `/api/blog-post/${encodeURIComponent(slug!)}?${new URLSearchParams(window.location.search).toString()}&visual-editing=${isVisualEditingEnabled}`
     : null;
 
   const { data: swrData, mutate } = useSWR(
     swrKey,
     async (url: string) => {
       const res = await fetch(url);
-
       if (!res.ok) {
         const error = await res.json();
         throw new Error(error.error || 'Failed to fetch post');
       }
-
       const data = await res.json();
-      return data.post as Post;
+      return data;
     },
     {
       revalidateOnFocus: false,
@@ -78,7 +74,7 @@ export default function BlogPostClient({
     },
   );
 
-  const post = shouldFetchLive ? (swrData ?? initialPost) : initialPost;
+  const post = isVisualEditingEnabled ? (swrData?.post ?? initialPost) : initialPost;
 
   useEffect(() => {
     if (isVisualEditingEnabled) {
@@ -94,8 +90,6 @@ export default function BlogPostClient({
 
   return (
     <>
-      {isDraft && <p>(Draft Mode)</p>}
-
       <Container className="py-12">
         {post.image && (
           <div className="mb-8">
