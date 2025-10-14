@@ -8,21 +8,14 @@ import { Separator } from '@/components/ui/separator';
 import ShareDialog from '@/components/ui/ShareDialog';
 import Headline from '@/components/ui/Headline';
 import Container from '@/components/ui/Container';
-import type { Post } from '@/types/directus-schema';
+import type { Post, DirectusUser } from '@/types/directus-schema';
 import { setAttr } from '@directus/visual-editing';
 import { useVisualEditing } from '@/hooks/useVisualEditing';
-
-interface Author {
-  id: string;
-  first_name: string | null;
-  last_name: string | null;
-  avatar: string | { id: string } | null;
-}
 
 interface BlogPostClientProps {
   initialPost: Post;
   relatedPosts: Post[];
-  author?: Author | null;
+  author?: DirectusUser | null;
   authorName: string;
   postUrl: string;
   slug?: string;
