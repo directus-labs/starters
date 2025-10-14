@@ -60,6 +60,7 @@ const Posts = ({ data }: PostsProps) => {
 			try {
 				if (currentPage === 1) {
 					setPaginatedPosts(posts || []);
+
 					return;
 				}
 				const response = await fetchPaginatedPosts(perPage, currentPage);

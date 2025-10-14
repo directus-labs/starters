@@ -43,6 +43,7 @@ export async function generateMetadata({
 		};
 	} catch (error) {
 		console.error('Error loading page metadata:', error);
+
 		return;
 	}
 }
@@ -91,9 +92,7 @@ export default async function Page({
 			notFound();
 		}
 
-		const blocks: PageBlock[] = (page.blocks as PageBlock[]).filter(
-			(block): block is PageBlock => typeof block === 'object' && !!block.collection && !block.hide_block,
-		);
+		const blocks: PageBlock[] = (page.blocks as PageBlock[]) || [];
 
 		return <PageClient sections={blocks} pageId={page.id} />;
 	} catch (error) {
