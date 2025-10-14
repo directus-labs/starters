@@ -10,17 +10,22 @@
 	import { afterNavigate, invalidateAll } from '$app/navigation';
 	import { enableVisualEditing } from '$lib/directus/visualEditing';
 	import { apply } from '@directus/visual-editing';
+	import { getSiteData } from '$lib/directus/fetchers.remote';
 
-	let { children, data } = $props();
+	let { children } = $props();
 
-	const siteTitle = $derived(data.globals?.title || 'Simple CMS');
+	let siteData = $derived(await getSiteData());
+
+	$inspect('siteData', siteData);
+
+	const siteTitle = $derived(siteData.globals?.title || 'Simple CMS');
 	const siteDescription = $derived(
-		page.data.globals?.description || 'A starter CMS template powered by Svelte and Directus.'
+		siteData.globals?.description || 'A starter CMS template powered by Svelte and Directus.'
 	);
 	const faviconURL = $derived(
-		data.globals?.favicon ? getDirectusAssetURL(data.globals.favicon) : '/favicon.ico'
+		siteData.globals?.favicon ? getDirectusAssetURL(siteData.globals.favicon) : '/favicon.ico'
 	);
-	const accentColor = $derived(data.globals?.accent_color || '#6644ff');
+	const accentColor = $derived(siteData.globals?.accent_color || '#6644ff');
 
 	enableVisualEditing();
 
@@ -41,7 +46,10 @@
 	{@html `<style>:root{ --accent-color: ${accentColor} !important }</style>`}
 </svelte:head>
 
+<!-- <svelte:boundary> -->
 <ModeWatcher />
 <NavigationBar />
 <main class="flex-grow">{@render children()}</main>
 <Footer />
+
+<!-- </svelte:boundary> -->

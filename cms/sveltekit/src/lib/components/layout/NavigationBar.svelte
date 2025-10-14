@@ -11,9 +11,12 @@
 	import { ChevronDown, Menu } from '@lucide/svelte';
 	import * as Collapsible from '$lib/components/ui/collapsible';
 	import setAttr from '$lib/directus/visualEditing';
+	import { getSiteData } from '$lib/directus/fetchers.remote';
 
-	const globals = $derived(page.data.globals);
-	const navigation = $derived(page.data.headerNavigation);
+	const siteData = $derived(await getSiteData());
+
+	const globals = $derived(siteData.globals);
+	const navigation = $derived(siteData.headerNavigation);
 	const directusURL = PUBLIC_DIRECTUS_URL;
 	const lightLogoUrl = $derived(
 		globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg'

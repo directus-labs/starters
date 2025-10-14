@@ -5,8 +5,11 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Pencil } from '@lucide/svelte';
 	import { setAttr } from '$lib/directus/visualEditing';
+	import { getPage } from '$lib/directus/fetchers.remote';
 
-	let { data } = $props();
+	// let { data } = $props();
+
+	const data = $derived(await getPage('/' + page.params.permalink));
 
 	const blocks: PageBlock[] = $derived.by(() => {
 		if (!data.blocks) return [];
