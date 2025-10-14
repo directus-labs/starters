@@ -20,7 +20,10 @@ export default async function BlogPostPage({
 		// Content Version Fetching
 		if (version && !postId) {
 			const foundPostId = await getPostIdBySlug(slug, token || undefined);
-			postId = foundPostId || '';
+			if (!foundPostId) {
+				return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
+			}
+			postId = foundPostId;
 		}
 
 		if (postId && version) {

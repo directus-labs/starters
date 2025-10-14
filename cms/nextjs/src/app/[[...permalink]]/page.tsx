@@ -18,6 +18,7 @@ export async function generateMetadata({
 	const preview = searchParamsResolved.preview === 'true';
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
 
+	// Skip metadata generation for preview/versioned content
 	if (preview || version) {
 		return {
 			title: 'Preview Mode',
@@ -42,7 +43,6 @@ export async function generateMetadata({
 		};
 	} catch (error) {
 		console.error('Error loading page metadata:', error);
-
 		return;
 	}
 }
@@ -65,18 +65,25 @@ export default async function Page({
 	const token = typeof searchParamsResolved.token === 'string' ? searchParamsResolved.token : '';
 
 	try {
-		let pageId = id;
-		if (version && !pageId) {
-			const foundPageId = await getPageIdByPermalink(resolvedPermalink, token || undefined);
-			pageId = foundPageId || '';
-		}
+		let page: Page;
 
-		let page;
-		if (pageId && version) {
+		// Version-specific content handling:
+		// When a version is requested (e.g., "draft", "published"), we need to:
+		// 1. Look up the page ID by permalink if not provided directly
+		// 2. Fetch the specific version of that page
+		// 3. Fail gracefully if the page doesn't exist for that version
+		if (version && id) {
+			// We have both ID and version - fetch the specific version
+			page = await fetchPageDataById(id, version, token || undefined);
+		} else if (version && !id) {
+			// We have version but no ID - look up the page ID first
+			const pageId = await getPageIdByPermalink(resolvedPermalink, token || undefined);
+			if (!pageId) {
+				notFound();
+			}
 			page = await fetchPageDataById(pageId, version, token || undefined);
-		} else if (version && !pageId) {
-			page = await fetchPageData(resolvedPermalink, 1, token || undefined, preview);
 		} else {
+			// Regular page fetch (published or draft with preview)
 			page = await fetchPageData(resolvedPermalink, 1, token || undefined, preview);
 		}
 
