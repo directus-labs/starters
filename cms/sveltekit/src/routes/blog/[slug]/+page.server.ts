@@ -1,12 +1,8 @@
-import {
-	fetchPostBySlug,
-	fetchPostByIdAndVersion,
-	getPostIdBySlug,
-	fetchRelatedPosts
-} from '$lib/directus/fetchers';
+import { fetchPostBySlug, fetchPostByIdAndVersion, getPostIdBySlug } from '$lib/directus/fetchers';
 import { PUBLIC_SITE_URL } from '$env/static/public';
 import { getDirectusAssetURL } from '$lib/directus/directus-utils';
 import type { PageServerLoad } from './$types';
+import type { DirectusUser } from '$lib/types/directus-schema';
 import { error } from '@sveltejs/kit';
 import { DRAFT_MODE_SECRET } from '$env/static/private';
 
@@ -27,26 +23,32 @@ export const load = (async (event) => {
 		let postId = id;
 		if (version && !postId) {
 			const foundPostId = await getPostIdBySlug(slug, token || undefined, event.fetch);
-			postId = foundPostId || '';
+			if (!foundPostId) {
+				error(404, {
+					message: 'Post Not found'
+				});
+			}
+			postId = foundPostId;
 		}
 
-		let post;
+		let result;
 		if (postId && version) {
-			const result = await fetchPostByIdAndVersion(
+			result = await fetchPostByIdAndVersion(
 				postId,
 				version,
 				slug,
 				token || undefined,
 				event.fetch
 			);
-			post = result.post;
 		} else {
-			post = await fetchPostBySlug(
+			result = await fetchPostBySlug(
 				slug,
 				{ draft: isDraft, token: token || undefined },
 				event.fetch
 			);
 		}
+
+		const { post, relatedPosts } = result;
 
 		if (!post) {
 			error(404, {
@@ -54,10 +56,9 @@ export const load = (async (event) => {
 			});
 		}
 
-		// TODO optimize this to run in parallel
 		const ogImage = post.image ? getDirectusAssetURL(post.image) : null;
-		const relatedPosts = await fetchRelatedPosts(post.id, event.fetch);
-		const author = post.author && typeof post.author === 'object' ? (post.author as any) : null;
+		const author =
+			post.author && typeof post.author === 'object' ? (post.author as DirectusUser) : null;
 
 		return {
 			post,
