@@ -14,6 +14,9 @@ const {
 	public: { directusUrl },
 } = useRuntimeConfig();
 
+// Handle Live Preview adding version=main which is not required when fetching the main version.
+const version = route.query.version === 'main' ? undefined : (route.query.version as string);
+
 const { data, error, refresh } = await useFetch<{
 	post: Post;
 	relatedPosts: Post[];
@@ -23,7 +26,7 @@ const { data, error, refresh } = await useFetch<{
 		preview: enabled.value ? true : undefined,
 		token: enabled.value ? state.token : undefined,
 		id: route.query.id as string,
-		version: route.query.version as string,
+		version,
 	},
 });
 
