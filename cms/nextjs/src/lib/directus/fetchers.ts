@@ -176,7 +176,7 @@ export const fetchPageData = async (permalink: string, postPage = 1, token?: str
 /**
  * Fetches page data by id and version
  */
-export const fetchPageDataById = async (id: string, version: string, token?: string): Promise<Page> => {
+export const fetchPageDataById = async (id: string, version?: string, token?: string): Promise<Page> => {
 	if (!id || id.trim() === '') {
 		throw new Error('Invalid id: id must be a non-empty string');
 	}
