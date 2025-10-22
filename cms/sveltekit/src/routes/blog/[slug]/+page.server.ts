@@ -8,10 +8,13 @@ import { DRAFT_MODE_SECRET } from '$env/static/private';
 
 export const load = (async (event) => {
 	const id = event.url.searchParams.get('id') || '';
-	const version = event.url.searchParams.get('version') || '';
+	let version = event.url.searchParams.get('version') || '' || undefined;
 	const preview = event.url.searchParams.get('preview') === 'true';
 	const token = event.url.searchParams.get('token') || '';
 	const slug = event.params.slug;
+
+	// Live preview adds version = main which is not required when fetching the main version.
+	version = version != 'main' ? version : undefined;
 
 	const isDraft =
 		(preview && !!token) ||
