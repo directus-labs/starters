@@ -18,7 +18,7 @@ const slug = Array.isArray(slugParam)
 const query = Astro.url.searchParams;
 
 const id = query.get('id') || '';
-const version = query.get('version') || '';
+const version = query.get('version') === 'main' ? undefined : query.get('version') || '';
 const preview = query.get('preview') === 'true';
 const token = query.get('token') || '';
 
