@@ -1,6 +1,10 @@
-# SvelteKit Simple CMS Template with Directus Integration
+# SvelteKit CMS Template with Directus Integration
 
-This is a **Sveltekit-based Simple CMS Template** that is fully integrated with [Directus](https://directus.io/), offering
+<div align="center">
+  <img src="static/images/thumbnail.png" alt="SvelteKit CMS Template Thumbnail" width="800" height="auto" />
+</div>
+
+This is a **Sveltekit-based CMS Template** that is fully integrated with [Directus](https://directus.io/), offering
 a headless CMS solution for managing and delivering content seamlessly. The template leverages modern technologies like
 **Tailwind CSS**, and **Shadcn components**, providing a complete and scalable starting
 point for building CMS-powered web applications.
@@ -70,7 +74,8 @@ You can instantly deploy this template using Vercel:
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,PUBLIC_DIRECTUS_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
 
 > **Note:**  
-> SvelteKit requires a few extra environment variables at deploy time:  
+> SvelteKit requires a few extra environment variables at deploy time:
+>
 > - `PUBLIC_DIRECTUS_FORM_TOKEN`
 > - `DRAFT_MODE_SECRET`
 >
@@ -83,6 +88,7 @@ You can instantly deploy this template using Vercel:
 > ⚡️ **This SvelteKit starter is pre-configured for Vercel.**
 >
 > To deploy on Netlify:
+>
 > 1. Run: `pnpm add -D @sveltejs/adapter-netlify`
 > 2. In `svelte.config.js`, swap the adapter line:
 >    ```js
@@ -90,6 +96,7 @@ You can instantly deploy this template using Vercel:
 >    // import adapter from '@sveltejs/adapter-vercel';
 >    ```
 > 3. Commit and redeploy manually.
+
 ---
 
 ### **Environment Variables**
@@ -103,7 +110,6 @@ To get started, you need to configure environment variables. Follow these steps:
    ```
 
 2. **Update the following variables in your `.env` file:**
-
    - **`PUBLIC_DIRECTUS_URL`**: URL of your Directus instance.
    - **`PUBLIC_DIRECTUS_TOKEN`**: Public token for accessing public resources in Directus. Use the token from the
      **Webmaster** account.

@@ -1,9 +1,13 @@
-# Next.js Simple CMS Template with Directus Integration
+# Next.js CMS Template with Directus Integration
 
-This is a **Next.js-based Simple CMS Template** that is fully integrated with [Directus](https://directus.io/), offering
-a CMS solution for managing and delivering content seamlessly. The template leverages modern technologies like the
-**Next.js App Router**, **Tailwind CSS**, and **Shadcn components**, providing a complete and scalable starting point
-for building CMS-powered web applications.
+<div align="center">
+  <img src="public/images/thumbnail.png" alt="Next.js CMS Template Thumbnail" width="800" height="auto" />
+</div>
+
+This is a **Next.js-based CMS Template** that is fully integrated with [Directus](https://directus.io/), offering a CMS
+solution for managing and delivering content seamlessly. The template leverages modern technologies like the **Next.js
+App Router**, **Tailwind CSS**, and **Shadcn components**, providing a complete and scalable starting point for building
+CMS-powered web applications.
 
 ## **Features**
 
@@ -70,7 +74,6 @@ You can instantly deploy this template using one of the following platforms:
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nextjs&env=NEXT_PUBLIC_DIRECTUS_URL,NEXT_PUBLIC_SITE_URL,DIRECTUS_PUBLIC_TOKEN,NEXT_PUBLIC_ENABLE_VISUAL_EDITING)
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/nextjs)
-
 
 ### **Environment Variables**
 
