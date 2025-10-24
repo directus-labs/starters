@@ -1,7 +1,11 @@
-# Astro Simple CMS Template with Directus Integration
+# Astro CMS Template with Directus Integration
 
-This is an **Astro-based Simple CMS Template** that is fully integrated with [Directus](https://directus.io/), offering
-a CMS solution for managing and delivering content seamlessly. The template leverages modern technologies like **Astro’s
+<div align="center">
+  <img src="public/images/thumbnail.png" alt="Astro CMS Template Thumbnail" width="800" height="auto" />
+</div>
+
+This is an **Astro-based CMS Template** that is fully integrated with [Directus](https://directus.io/), offering a CMS
+solution for managing and delivering content seamlessly. The template leverages modern technologies like **Astro’s
 File-based Routing**, **Tailwind CSS**, and **Shadcn components**, providing a complete and scalable starting point for
 building CMS-powered web applications.
 
@@ -62,7 +66,8 @@ For instructions on setting up Directus, choose one of the following:
 
 - [Setting up Directus Cloud](https://github.com/directus-labs/starters?tab=readme-ov-file#using-directus-with-a-cloud-instance-recommended)
 - [Setting up Directus Self-Hosted](https://github.com/directus-labs/starters?tab=readme-ov-file#using-directus-locally)
-- 
+-
+
 ## 🚀 One-Click Deploy
 
 You can instantly deploy this template using Vercel:
@@ -72,19 +77,21 @@ You can instantly deploy this template using Vercel:
 > ⚡️ **This Astro starter is pre-configured for Vercel.**
 >
 > To deploy on Netlify:
+>
 > 1. Run: `pnpm add -D @astrojs/netlify`
 > 2. In `astro.config.mjs`, swap the adapter lines:
+>
 >    ```js
 >    import netlify from '@astrojs/netlify';
 >    // import vercel from '@astrojs/vercel/serverless';
 >
 >    export default defineConfig({
->      output: "static",
+>      output: 'static',
 >      adapter: netlify(),
 >    });
 >    ```
+>
 > 3. Commit and redeploy manually.
-
 
 ### **Environment Variables**
 
@@ -105,7 +112,7 @@ To get started, you need to configure environment variables. Follow these steps:
    - **`PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
    - **`DRAFT_MODE_SECRET`**: The secret you generate for live preview. This is used to view draft posts in Directus and
      live edits.
-   - **`NEXT_PUBLIC_ENABLE_VISUAL_EDITING`**: Enable or disable visual editing in Directus
+   - **`PUBLIC_ENABLE_VISUAL_EDITING`**: Enable or disable visual editing in Directus
 
 ---
 

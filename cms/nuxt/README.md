@@ -1,9 +1,13 @@
-# Nuxt 3 Simple CMS Template with Directus Integration
+# Nuxt 3 CMS Template with Directus Integration
 
-This is a **Nuxt 3-based Simple CMS Template** that is fully integrated with [Directus](https://directus.io/), offering
-a CMS solution for managing and delivering content seamlessly. The template leverages modern technologies like **Nuxt
-3's file-based routing system**, **Tailwind CSS**, and **Shadcn Vue components**, providing a complete and scalable
-starting point for building CMS-powered web applications.
+<div align="center">
+  <img src="public/images/thumbnail.png" alt="Nuxt 3 CMS Template Thumbnail" width="800" height="auto" />
+</div>
+
+This is a **Nuxt 3-based CMS Template** that is fully integrated with [Directus](https://directus.io/), offering a CMS
+solution for managing and delivering content seamlessly. The template leverages modern technologies like **Nuxt 3's
+file-based routing system**, **Tailwind CSS**, and **Shadcn Vue components**, providing a complete and scalable starting
+point for building CMS-powered web applications.
 
 ## **Features**
 
