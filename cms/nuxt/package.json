@@ -18,7 +18,7 @@
 		"generate:types": "node ./scripts/generate-types.js"
 	},
 	"devDependencies": {
-		"@directus/types": "13.1.1",
+		"@directus/types": "13.2.2",
 		"@nuxt/devtools": "2.3.2",
 		"@nuxtjs/eslint-config-typescript": "12.1.0",
 		"@nuxtjs/eslint-module": "4.1.0",
@@ -38,7 +38,7 @@
 		"vue-tsc": "2.2.8"
 	},
 	"dependencies": {
-		"@directus/sdk": "19.1.0",
+		"@directus/sdk": "20.0.3",
 		"@directus/visual-editing": "^1.1.0",
 		"@formkit/auto-animate": "0.8.2",
 		"@hookform/resolvers": "^5.0.1",

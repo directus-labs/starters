@@ -2,10 +2,11 @@
 export const prerender = false;
 
 import Layout from '@/layouts/BaseLayout.astro';
-import { fetchPostBySlug, fetchRelatedPosts, fetchAuthorById } from '@/lib/directus/fetchers';
+import { fetchPostBySlug, fetchPostByIdAndVersion, getPostIdBySlug, fetchRelatedPosts, fetchAuthorById } from '@/lib/directus/fetchers';
 import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
 import BlogPostClient from '@/components/layout/BlogPostClient';
-import type { Post } from '@/types/directus-schema';
+import type { Post, DirectusUser } from '@/types/directus-schema';
+
 
 const slugParam = Astro.params.slug;
 const slug = Array.isArray(slugParam)
@@ -16,12 +17,27 @@ const slug = Array.isArray(slugParam)
 
 const query = Astro.url.searchParams;
 
-const isPreview = query.get("preview") === "true";
-const authToken = query.get("token") || null;
+const id = query.get('id') || '';
+const version = query.get('version') === 'main' ? undefined : query.get('version') || '';
+const preview = query.get('preview') === 'true';
+const token = query.get('token') || '';
 
-let post : Post | null  = null;
+const isDraft = (preview && !!token) || (!!version && version !== 'published') || !!token;
+
+let post: Post | null = null;
 try {
-  post = await fetchPostBySlug(slug as string, isPreview, authToken);
+  let postId = id;
+  if (version && !postId) {
+    const foundPostId = await getPostIdBySlug(slug as string, token || undefined);
+    postId = foundPostId || '';
+  }
+
+  if (postId && version) {
+    const result = await fetchPostByIdAndVersion(postId, version, slug as string, token || undefined);
+    post = result.post;
+  } else {
+    post = await fetchPostBySlug(slug as string, isDraft, token || undefined);
+  }
 } catch (error) {
   console.error('Error loading post:', error);
   post = null;
@@ -32,7 +48,7 @@ if (!post) {
 }
 
 const relatedPosts = await fetchRelatedPosts(post.id);
-const author = post.author ? await fetchAuthorById(post.author as string) : null;
+const author = post.author && typeof post.author === 'object' ? post.author as DirectusUser : null;
 const authorName = [author?.first_name, author?.last_name].filter(Boolean).join(' ');
 const siteURL = import.meta.env.PUBLIC_SITE_URL || '';
 const postUrl = `${siteURL}/blog/${slug}`;
@@ -59,7 +75,7 @@ const metadata = {
     authorName={authorName}
     postUrl={postUrl}
     slug={slug}
-    token={authToken}
-    isDraft={isPreview}
+    token={token}
+    isDraft={isDraft}
   />
 </Layout>

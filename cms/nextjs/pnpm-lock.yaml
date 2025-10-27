@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@directus/sdk':
-        specifier: ^19.1.0
-        version: 19.1.0
+        specifier: ^20.0.3
+        version: 20.0.3
       '@directus/visual-editing':
         specifier: ^1.1.0
         version: 1.1.0
@@ -299,8 +299,8 @@ packages:
   '@bundled-es-modules/tough-cookie@0.1.6':
     resolution: {integrity: sha512-dvMHbL464C0zI+Yqxbz6kZ5TOEp7GLW+pry/RWndAR8MJQAXZ2rPmIs8tziTZjeIyhSNZgZbCePtfSbdWqStJw==}
 
-  '@directus/sdk@19.1.0':
-    resolution: {integrity: sha512-Nqem9BsvvGyVtAa69mGPtoMoMVkZxdIREdsWvvTzNF4/1XqaFfEiFL7PhtUNfc46/Nufus2+QUKYQbNiAWe3ZA==}
+  '@directus/sdk@20.0.3':
+    resolution: {integrity: sha512-PFTYx8QxYi36L9zjOVldwZ88Iln9pBGtEamEjLGFuYqy1jk5jKJ7qA7827KfeZJkz3EtNNZM6J605I7s/ayD2g==}
     engines: {node: '>=22'}
 
   '@directus/visual-editing@1.1.0':
@@ -3615,7 +3615,7 @@ snapshots:
       '@types/tough-cookie': 4.0.5
       tough-cookie: 4.1.4
 
-  '@directus/sdk@19.1.0': {}
+  '@directus/sdk@20.0.3': {}
 
   '@directus/visual-editing@1.1.0':
     dependencies:

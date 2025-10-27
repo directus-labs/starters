@@ -16,7 +16,7 @@ interface GalleryData {
   id: string;
   tagline?: string;
   headline?: string;
-  items: GalleryItem[];
+  items?: GalleryItem[];
 }
 
 interface GalleryProps {
@@ -29,7 +29,7 @@ const Gallery = ({ data }: GalleryProps) => {
   const [isLightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const sortedItems = [...items].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0));
+  const sortedItems = items ? [...items].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)) : [];
   const isValidIndex = sortedItems.length > 0 && currentIndex >= 0 && currentIndex < sortedItems.length;
 
   const handleOpenLightbox = (index: number) => {
