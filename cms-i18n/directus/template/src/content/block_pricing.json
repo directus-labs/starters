@@ -1,0 +1,27 @@
+[
+  {
+    "id": "48cf2543-15e0-454f-9b31-cbf3c2406712",
+    "headline": "Plans to fit every budget",
+    "tagline": "Pricing",
+    "date_created": "2025-05-07T01:25:09.836Z",
+    "user_created": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8",
+    "date_updated": "2025-10-27T19:32:05.249Z",
+    "user_updated": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8",
+    "pricing_cards": [
+      "388404db-1703-4b10-b12b-e5d4385f1530",
+      "83972d2a-742e-4a6c-8698-563d01dde54d"
+    ],
+    "translations": []
+  },
+  {
+    "id": "a15ef6f7-4f44-4705-820e-5fc76e9489f1",
+    "headline": "Plans to fit every budget",
+    "tagline": "Pricing",
+    "date_created": "2025-05-07T01:25:09.836Z",
+    "user_created": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8",
+    "date_updated": "2025-10-27T19:32:05.276Z",
+    "user_updated": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8",
+    "pricing_cards": [],
+    "translations": []
+  }
+]
