@@ -25,7 +25,7 @@
     "options": {
       "flow": "69e87d0b-df14-4779-bdc8-abc05f2f1e97"
     },
-    "resolve": "5df25cf8-b407-4fef-9d3b-c328f89f1561",
+    "resolve": "f15d1f41-8624-4f85-98c2-a16ceb862b7d",
     "reject": null,
     "flow": "d4bbac48-a444-49e0-aedb-9af5273b88df",
     "date_created": "2024-09-13T04:12:38.641Z",
@@ -99,7 +99,7 @@
     "name": "Update",
     "key": "update",
     "type": "item-update",
-    "position_x": 92,
+    "position_x": 109,
     "position_y": 1,
     "options": {
       "collection": "posts",
@@ -165,7 +165,7 @@
     "name": "Format",
     "key": "format",
     "type": "exec",
-    "position_x": 55,
+    "position_x": 73,
     "position_y": 1,
     "options": {
       "code": "module.exports = function(data) {\n    const aiResponse = JSON.parse(data.write)\n\tconst payload = {}\n    payload.title = aiResponse.title\n    payload.description = aiResponse.description\n    payload.content = aiResponse.content\n    payload.slug = aiResponse.slug\n    return payload\n}"
@@ -230,7 +230,7 @@
     "options": {
       "flow": "69e87d0b-df14-4779-bdc8-abc05f2f1e97"
     },
-    "resolve": "89125be2-8205-4ad0-a77f-bd3e984202b3",
+    "resolve": "d34463f4-419b-4665-94f4-9d6462120d55",
     "reject": null,
     "flow": "5915dd55-fff8-4d47-b48c-a0e42e5033c1",
     "date_created": "2024-09-13T02:39:32.169Z",
@@ -241,7 +241,7 @@
     "name": "Prompt",
     "key": "prompt",
     "type": "directus-labs-ai-writer-operation",
-    "position_x": 37,
+    "position_x": 55,
     "position_y": 1,
     "options": {
       "apiKey": "{{globals.openai_api_key}}",
@@ -256,6 +256,22 @@
     "reject": null,
     "flow": "d4bbac48-a444-49e0-aedb-9af5273b88df",
     "date_created": "2024-09-13T04:12:38.633Z",
+    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+  },
+  {
+    "id": "687e5faa-4707-4ec4-bbab-e8e2d1674ceb",
+    "name": "Missing Key",
+    "key": "missing_key",
+    "type": "log",
+    "position_x": 55,
+    "position_y": 17,
+    "options": {
+      "message": "Your OpenAI API key is missing from the `globals` collection."
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "5915dd55-fff8-4d47-b48c-a0e42e5033c1",
+    "date_created": "2025-05-12T13:03:42.173Z",
     "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
   },
   {
@@ -348,7 +364,7 @@
     "name": "Write",
     "key": "write",
     "type": "directus-labs-ai-writer-operation",
-    "position_x": 37,
+    "position_x": 55,
     "position_y": 1,
     "options": {
       "apiKey": "{{globals.openai_api_key}}",
@@ -437,7 +453,7 @@
     "name": "Import",
     "key": "import",
     "type": "request",
-    "position_x": 74,
+    "position_x": 91,
     "position_y": 1,
     "options": {
       "method": "POST",
@@ -499,11 +515,33 @@
     "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
   },
   {
+    "id": "d34463f4-419b-4665-94f4-9d6462120d55",
+    "name": "Check Key",
+    "key": "check_key",
+    "type": "condition",
+    "position_x": 37,
+    "position_y": 1,
+    "options": {
+      "filter": {
+        "globals": {
+          "openai_api_key": {
+            "_nnull": true
+          }
+        }
+      }
+    },
+    "resolve": "89125be2-8205-4ad0-a77f-bd3e984202b3",
+    "reject": null,
+    "flow": "5915dd55-fff8-4d47-b48c-a0e42e5033c1",
+    "date_created": "2025-05-12T13:01:51.463Z",
+    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+  },
+  {
     "id": "d6f73e98-19ef-47d6-8d1f-99d77137d36b",
     "name": "Image",
     "key": "image",
     "type": "directus-labs-ai-image-generation",
-    "position_x": 56,
+    "position_x": 73,
     "position_y": 1,
     "options": {
       "apiKey": "{{globals.openai_api_key}}",
@@ -599,7 +637,7 @@
     "name": "Update",
     "key": "update",
     "type": "item-update",
-    "position_x": 73,
+    "position_x": 91,
     "position_y": 1,
     "options": {
       "collection": "posts",
@@ -616,6 +654,22 @@
     "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
   },
   {
+    "id": "eac15cd9-82a4-4b71-9b1b-92ae7e94a46d",
+    "name": "Missing Key",
+    "key": "missing_key",
+    "type": "log",
+    "position_x": 55,
+    "position_y": 18,
+    "options": {
+      "message": "Your OpenAI API key is missing from the `globals` collection."
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "d4bbac48-a444-49e0-aedb-9af5273b88df",
+    "date_created": "2025-05-12T13:05:41.337Z",
+    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+  },
+  {
     "id": "edc5e1ae-a3ed-45af-ae77-10409a66cd03",
     "name": "Format",
     "key": "format",
@@ -629,6 +683,28 @@
     "reject": null,
     "flow": "5429ccb0-7e97-4ef5-9d65-2bbcf964f9a6",
     "date_created": "2024-09-25T13:31:35.265Z",
+    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+  },
+  {
+    "id": "f15d1f41-8624-4f85-98c2-a16ceb862b7d",
+    "name": "Check Key",
+    "key": "check_key",
+    "type": "condition",
+    "position_x": 37,
+    "position_y": 1,
+    "options": {
+      "filter": {
+        "globals": {
+          "openai_api_key": {
+            "_nnull": true
+          }
+        }
+      }
+    },
+    "resolve": "5df25cf8-b407-4fef-9d3b-c328f89f1561",
+    "reject": null,
+    "flow": "d4bbac48-a444-49e0-aedb-9af5273b88df",
+    "date_created": "2025-05-12T13:05:38.187Z",
     "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
   },
   {
