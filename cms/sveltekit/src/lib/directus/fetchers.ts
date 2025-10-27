@@ -1,8 +1,164 @@
-import { error } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit';
-import { type BlockPost, type PageBlock, type Post, type Schema } from '../types/directus-schema';
+import {
+	type BlockPost,
+	type PageBlock,
+	type Post,
+	type Schema,
+	type Page,
+	type DirectusUser
+} from '../types/directus-schema';
 import { useDirectus } from './directus';
-import { type QueryFilter, aggregate, readItem, readSingleton } from '@directus/sdk';
+import {
+	type QueryFilter,
+	aggregate,
+	readItem,
+	readSingleton,
+	withToken,
+	readItems
+} from '@directus/sdk';
+
+/**
+ * Page fields configuration for Directus queries
+ *
+ * This defines the complete field structure for pages including:
+ * - Basic page metadata (title, id)
+ * - SEO fields for search engine optimization
+ * - Complex nested content blocks (hero, gallery, pricing, forms, etc.)
+ * - All nested relationships and dynamic content fields
+ */
+const pageFields = [
+	'title',
+	'seo',
+	'id',
+	{
+		blocks: [
+			'id',
+			'background',
+			'collection',
+			'item',
+			'sort',
+			'hide_block',
+			{
+				item: {
+					block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
+					block_gallery: [
+						'id',
+						'tagline',
+						'headline',
+						{ items: ['id', 'directus_file', 'sort'] as any }
+					],
+					block_pricing: [
+						'id',
+						'tagline',
+						'headline',
+						{
+							pricing_cards: [
+								'id',
+								'title',
+								'description',
+								'price',
+								'badge',
+								'features',
+								'is_highlighted',
+								{
+									button: [
+										'id',
+										'label',
+										'variant',
+										'url',
+										'type',
+										{ page: ['permalink'] },
+										{ post: ['slug'] }
+									]
+								}
+							]
+						}
+					],
+					block_hero: [
+						'id',
+						'tagline',
+						'headline',
+						'description',
+						'layout',
+						'image',
+						{
+							button_group: [
+								'id',
+								{
+									buttons: [
+										'id',
+										'label',
+										'variant',
+										'url',
+										'type',
+										{ page: ['permalink'] },
+										{ post: ['slug'] }
+									]
+								}
+							]
+						}
+					],
+					block_posts: ['id', 'tagline', 'headline', 'collection', 'limit'],
+					block_form: [
+						'id',
+						'tagline',
+						'headline',
+						{
+							form: [
+								'id',
+								'title',
+								'submit_label',
+								'success_message',
+								'on_success',
+								'success_redirect_url',
+								'is_active',
+								{
+									fields: [
+										'id',
+										'name',
+										'type',
+										'label',
+										'placeholder',
+										'help',
+										'validation',
+										'width',
+										'choices',
+										'required',
+										'sort'
+									]
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+] as const;
+
+/**
+ * Post fields configuration for Directus queries
+ *
+ * This defines the complete field structure for posts including:
+ * - Basic post metadata (id, title, content, status, published_at)
+ * - Media fields (image, description)
+ * - SEO fields for search engine optimization
+ * - Author relationship with nested user fields
+ */
+const postFields = [
+	'id',
+	'title',
+	'content',
+	'status',
+	'published_at',
+	'image',
+	'description',
+	'slug',
+	'seo',
+	{
+		author: ['id', 'first_name', 'last_name', 'avatar']
+	}
+] as const;
 
 /**
  * Fetches page data by permalink, including all nested blocks and dynamically fetching blog posts if required.
@@ -10,161 +166,235 @@ import { type QueryFilter, aggregate, readItem, readSingleton } from '@directus/
 export const fetchPageData = async (
 	permalink: string,
 	postPage = 1,
-	fetch: RequestEvent['fetch']
+	fetch: RequestEvent['fetch'],
+	token?: string,
+	preview?: boolean
 ) => {
-	const { getDirectus, readItems } = useDirectus();
+	const { getDirectus } = useDirectus();
 	const directus = getDirectus(fetch);
 
-	const pageData = await directus.request(
-		readItems('pages', {
-			filter: { permalink: { _eq: permalink } },
-			limit: 1,
-			fields: [
-				'id',
-				'title',
-				{
-					blocks: [
-						'id',
-						'background',
-						'collection',
-						'item',
-						'sort',
-						'hide_block',
-						{
-							item: {
-								block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
-								block_gallery: [
-									'id',
-									'tagline',
-									'headline',
-									{ items: ['id', 'directus_file', 'sort'] }
-								],
-								block_pricing: [
-									'id',
-									'tagline',
-									'headline',
-									{
-										pricing_cards: [
-											'id',
-											'title',
-											'description',
-											'price',
-											'badge',
-											'features',
-											'is_highlighted',
-											{
-												button: [
-													'id',
-													'label',
-													'variant',
-													'url',
-													'type',
-													{ page: ['permalink'] },
-													{ post: ['slug'] }
-												]
-											}
-										]
-									}
-								],
-								block_hero: [
-									'id',
-									'tagline',
-									'headline',
-									'description',
-									'layout',
-									'image',
-									{
-										button_group: [
-											'id',
-											{
-												buttons: [
-													'id',
-													'label',
-													'variant',
-													'url',
-													'type',
-													{ page: ['permalink'] },
-													{ post: ['slug'] }
-												]
-											}
-										]
-									}
-								],
-								block_posts: ['id', 'tagline', 'headline', 'collection', 'limit'],
-								block_form: [
-									'id',
-									'tagline',
-									'headline',
-									{
-										form: [
-											'id',
-											'title',
-											'submit_label',
-											'success_message',
-											'on_success',
-											'success_redirect_url',
-											'is_active',
-											{
-												fields: [
-													'id',
-													'name',
-													'type',
-													'label',
-													'placeholder',
-													'help',
-													'validation',
-													'width',
-													'choices',
-													'required',
-													'sort'
-												]
-											}
-										]
-									}
-								]
-							}
-						}
-					]
+	try {
+		const pageData = (await directus.request(
+			withToken(
+				token as string,
+				readItems('pages', {
+					filter:
+						preview && token
+							? { permalink: { _eq: permalink } }
+							: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+					limit: 1,
+					fields: pageFields,
+					deep: {
+						blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } }
+					}
+				})
+			)
+		)) as Page[];
+
+		if (!pageData.length) {
+			throw new Error('Page not found');
+		}
+
+		const page = pageData[0];
+
+		// Dynamic Content Enhancement:
+		// Some blocks need additional data fetched at runtime
+		// This is where we enhance static block data with dynamic content
+		if (Array.isArray(page.blocks)) {
+			for (const block of page.blocks as PageBlock[]) {
+				// Handle dynamic posts blocks - these blocks display a list of posts
+				// The posts are fetched dynamically based on the block's configuration
+				if (
+					block.collection === 'block_posts' &&
+					block.item &&
+					typeof block.item !== 'string' &&
+					'collection' in block.item &&
+					block.item.collection === 'posts'
+				) {
+					const blockPost = block.item as BlockPost;
+					const limit = blockPost.limit ?? 6; // Default to 6 posts if no limit specified
+
+					// Fetch the actual posts data for this block
+					// Always fetch published posts only (no preview mode for dynamic content)
+					const posts: Post[] = await directus.request(
+						readItems('posts', {
+							fields: ['id', 'title', 'description', 'slug', 'image', 'published_at'],
+							filter: { status: { _eq: 'published' } },
+							sort: ['-published_at'],
+							limit,
+							page: postPage
+						})
+					);
+
+					// Attach the fetched posts to the block for frontend rendering
+					(block.item as BlockPost & { posts: Post[] }).posts = posts;
 				}
-			],
-			deep: {
-				blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } }
-			}
-		})
-	);
-
-	if (pageData.length === 0) {
-		error(404, {
-			message: 'Not found'
-		});
-	}
-
-	const page = pageData[0];
-
-	if (Array.isArray(page.blocks)) {
-		for (const block of page.blocks as PageBlock[]) {
-			if (
-				block.collection === 'block_posts' &&
-				typeof block.item === 'object' &&
-				(block.item as BlockPost).collection === 'posts'
-			) {
-				const limit = (block.item as BlockPost).limit ?? 6;
-				const posts = await directus.request<Post[]>(
-					readItems('posts', {
-						fields: ['id', 'title', 'description', 'slug', 'image', 'status', 'published_at'],
-						filter: { status: { _eq: 'published' } },
-						sort: ['-published_at'],
-						limit,
-						page: postPage
-					})
-				);
-
-				(block.item as BlockPost & { posts: Post[] }).posts = posts;
 			}
 		}
+
+		return page;
+	} catch (error) {
+		console.error('Error fetching page data:', error);
+		throw new Error('Failed to fetch page data');
+	}
+};
+
+/**
+ * Fetches page data by id and version
+ */
+export const fetchPageDataById = async (
+	id: string,
+	version: string,
+	token: string | undefined,
+	fetch: RequestEvent['fetch']
+): Promise<Page> => {
+	if (!id || id.trim() === '') {
+		throw new Error('Invalid id: id must be a non-empty string');
+	}
+	if (!version || version.trim() === '') {
+		throw new Error('Invalid version: version must be a non-empty string');
 	}
 
-	return page;
+	const { getDirectus } = useDirectus();
+	const directus = getDirectus(fetch);
+
+	try {
+		return (await directus.request(
+			withToken(
+				token as string,
+				readItem('pages', id, {
+					version,
+					fields: pageFields,
+					deep: {
+						blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } }
+					}
+				})
+			)
+		)) as Page;
+	} catch (error) {
+		console.error('Error fetching versioned page:', error);
+		throw new Error('Failed to fetch versioned page');
+	}
+};
+
+/**
+ * Helper function to get page ID by permalink
+ */
+export const getPageIdByPermalink = async (
+	permalink: string,
+	token: string | undefined,
+	fetch: RequestEvent['fetch']
+) => {
+	if (!permalink || permalink.trim() === '') {
+		throw new Error('Invalid permalink: permalink must be a non-empty string');
+	}
+
+	const { getDirectus } = useDirectus();
+	const directus = getDirectus(fetch);
+
+	try {
+		const pageData = (await directus.request(
+			withToken(
+				token as string,
+				readItems('pages', {
+					filter: { permalink: { _eq: permalink } },
+					limit: 1,
+					fields: ['id']
+				})
+			)
+		)) as Pick<Page, 'id'>[];
+
+		return pageData.length > 0 ? pageData[0].id : null;
+	} catch (error) {
+		console.error('Error getting page ID:', error);
+
+		return null;
+	}
+};
+
+/**
+ * Helper function to get post ID by slug
+ */
+export const getPostIdBySlug = async (
+	slug: string,
+	token: string | undefined,
+	fetch: RequestEvent['fetch']
+) => {
+	if (!slug || slug.trim() === '') {
+		throw new Error('Invalid slug: slug must be a non-empty string');
+	}
+
+	const { getDirectus } = useDirectus();
+	const directus = getDirectus(fetch);
+
+	try {
+		const postData = (await directus.request(
+			withToken(
+				token as string,
+				readItems('posts', {
+					filter: { slug: { _eq: slug } },
+					limit: 1,
+					fields: ['id']
+				})
+			)
+		)) as Pick<Post, 'id'>[];
+
+		return postData.length > 0 ? postData[0].id : null;
+	} catch (error) {
+		console.error('Error getting post ID:', error);
+
+		return null;
+	}
+};
+
+/**
+ * Fetches a single blog post by ID and version
+ */
+export const fetchPostByIdAndVersion = async (
+	id: string,
+	version: string,
+	slug: string,
+	token: string | undefined,
+	fetch: RequestEvent['fetch']
+): Promise<{ post: Post; relatedPosts: Post[] }> => {
+	if (!id || id.trim() === '') {
+		throw new Error('Invalid id: id must be a non-empty string');
+	}
+	if (!version || version.trim() === '') {
+		throw new Error('Invalid version: version must be a non-empty string');
+	}
+	if (!slug || slug.trim() === '') {
+		throw new Error('Invalid slug: slug must be a non-empty string');
+	}
+
+	const { getDirectus } = useDirectus();
+	const directus = getDirectus(fetch);
+
+	try {
+		const [postData, relatedPosts] = await Promise.all([
+			directus.request(
+				withToken(
+					token as string,
+					readItem('posts', id, {
+						version,
+						fields: postFields
+					})
+				)
+			),
+			directus.request(
+				readItems('posts', {
+					filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
+					limit: 2,
+					fields: ['id', 'title', 'slug', 'image']
+				})
+			)
+		]);
+
+		return { post: postData as Post, relatedPosts: relatedPosts as Post[] };
+	} catch (error) {
+		console.error('Error fetching versioned post:', error);
+		throw new Error('Failed to fetch versioned post');
+	}
 };
 
 /**
@@ -237,41 +467,52 @@ export const fetchSiteData = async (fetch: RequestEvent['fetch']) => {
 };
 
 /**
- * Fetches a single blog post by slug. Handles live preview mode
+ * Fetches a single blog post by slug and related blog posts excluding the given ID. Handles live preview mode.
  */
 export const fetchPostBySlug = async (
 	slug: string,
-	options: { draft?: boolean },
+	options: { draft?: boolean; token?: string },
 	fetch: RequestEvent['fetch']
-) => {
-	const { getDirectus, readItems } = useDirectus();
+): Promise<{ post: Post | null; relatedPosts: Post[] }> => {
+	const { getDirectus } = useDirectus();
 	const directus = getDirectus(fetch);
+	const { draft, token } = options || {};
 
 	try {
-		const filter: QueryFilter<Schema, Post> = options?.draft
-			? { slug: { _eq: slug } }
-			: { slug: { _eq: slug }, status: { _eq: 'published' } };
+		const filter: QueryFilter<Schema, Post> =
+			token || draft
+				? { slug: { _eq: slug } }
+				: { slug: { _eq: slug }, status: { _eq: 'published' } };
 
-		const posts = await directus.request(
-			readItems('posts', {
-				filter,
-				limit: 1,
-				fields: ['id', 'title', 'content', 'status', 'image', 'description', 'author', 'seo']
-			})
-		);
+		const [posts, relatedPosts] = await Promise.all([
+			directus.request<Post[]>(
+				withToken(
+					token as string,
+					readItems<Schema, 'posts', any>('posts', {
+						filter,
+						limit: 1,
+						fields: postFields
+					})
+				)
+			),
+			directus.request<Post[]>(
+				withToken(
+					token as string,
+					readItems<Schema, 'posts', any>('posts', {
+						filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
+						limit: 2,
+						fields: ['id', 'title', 'slug', 'image']
+					})
+				)
+			)
+		]);
 
-		const post = posts[0];
+		const post: Post | null = posts.length > 0 ? (posts[0] as Post) : null;
 
-		if (!post) {
-			console.error(`No post found with slug: ${slug}`);
-
-			return null;
-		}
-
-		return post;
+		return { post, relatedPosts };
 	} catch (error) {
-		console.error(`Error fetching post with slug "${slug}":`, error);
-		throw new Error(`Failed to fetch post with slug "${slug}"`);
+		console.error('Error in fetchPostBySlug:', error);
+		throw new Error('Failed to fetch blog post and related posts');
 	}
 };
 
@@ -283,13 +524,13 @@ export const fetchRelatedPosts = async (excludeId: string, fetch: RequestEvent['
 	const directus = getDirectus(fetch);
 
 	try {
-		const relatedPosts = await directus.request(
+		const relatedPosts = (await directus.request(
 			readItems('posts', {
 				filter: { status: { _eq: 'published' }, id: { _neq: excludeId } },
 				fields: ['id', 'title', 'image', 'slug'],
 				limit: 2
 			})
-		);
+		)) as Post[];
 
 		return relatedPosts;
 	} catch (error) {
@@ -306,11 +547,11 @@ export const fetchAuthorById = async (authorId: string, fetch: RequestEvent['fet
 	const directus = getDirectus(fetch);
 
 	try {
-		const author = await directus.request(
+		const author = (await directus.request(
 			readUser(authorId, {
 				fields: ['first_name', 'last_name', 'avatar']
 			})
-		);
+		)) as DirectusUser;
 
 		return author;
 	} catch (error) {
@@ -322,11 +563,11 @@ export const fetchAuthorById = async (authorId: string, fetch: RequestEvent['fet
 /**
  * Fetches paginated blog posts. - Runs Client side
  */
-export const fetchPaginatedPosts = async (limit: number, page: number) => {
-	const { getDirectus, readItems } = useDirectus();
+export const fetchPaginatedPosts = async (limit: number, page: number): Promise<Post[]> => {
+	const { getDirectus } = useDirectus();
 	const directus = getDirectus(fetch);
 	try {
-		const response = await directus.request(
+		const response = (await directus.request(
 			readItems('posts', {
 				limit,
 				page,
@@ -334,7 +575,7 @@ export const fetchPaginatedPosts = async (limit: number, page: number) => {
 				fields: ['id', 'title', 'description', 'slug', 'image'],
 				filter: { status: { _eq: 'published' } }
 			})
-		);
+		)) as Post[];
 
 		return response;
 	} catch (error) {
@@ -344,7 +585,7 @@ export const fetchPaginatedPosts = async (limit: number, page: number) => {
 };
 
 /**
- * Fetches the total number of published blog posts. - Runs Client side
+ * Fetches the total number of published blog posts.
  */
 export const fetchTotalPostCount = async (): Promise<number> => {
 	const { getDirectus } = useDirectus();

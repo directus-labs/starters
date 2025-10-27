@@ -6,8 +6,10 @@
 	import { ModeWatcher } from 'mode-watcher';
 	import { getDirectusAssetURL } from '$lib/directus/directus-utils';
 	import { page } from '$app/state';
-	import { onMount } from 'svelte';
 	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
+	import { afterNavigate, invalidateAll } from '$app/navigation';
+	import { enableVisualEditing } from '$lib/directus/visualEditing';
+	import { apply } from '@directus/visual-editing';
 
 	let { children, data } = $props();
 
@@ -20,15 +22,14 @@
 	);
 	const accentColor = $derived(data.globals?.accent_color || '#6644ff');
 
-	onMount(async () => {
-		const { apply } = await import('@directus/visual-editing');
+	enableVisualEditing();
+
+	afterNavigate(async (_navigation) => {
 		apply({
-			directusUrl: PUBLIC_DIRECTUS_URL
-			// onSaved: async (...e) => {
-			// 	console.log('SAVED', e);
-			// 	await new Promise((r) => setTimeout(r, 2000));
-			// 	await invalidateAll();
-			// }
+			directusUrl: PUBLIC_DIRECTUS_URL,
+			onSaved: async () => {
+				await invalidateAll();
+			}
 		});
 	});
 </script>
