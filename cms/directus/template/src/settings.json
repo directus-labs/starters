@@ -275,9 +275,9 @@
   ],
   "accepted_terms": true,
   "project_id": "018de2a3-baf7-7798-ab21-7009ba6fc84e",
-  "mcp_enabled": false,
+  "mcp_enabled": true,
   "mcp_allow_deletes": false,
-  "mcp_prompts_collection": null,
+  "mcp_prompts_collection": "ai_prompts",
   "mcp_system_prompt_enabled": true,
   "mcp_system_prompt": null
 }
