@@ -122,7 +122,8 @@
           }
         }
       ],
-      "location": "item"
+      "location": "item",
+      "error_on_reject": true
     },
     "operation": "5d667ac5-2594-4f16-a863-3847d8917caa",
     "date_created": "2024-09-12T21:27:14.184Z",
@@ -397,7 +398,8 @@
           }
         }
       ],
-      "location": "item"
+      "location": "item",
+      "error_on_reject": true
     },
     "operation": "0cf30253-f9ed-413f-ac27-7a0ecffa9ee4",
     "date_created": "2024-09-12T21:34:20.685Z",
