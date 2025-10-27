@@ -19,17 +19,9 @@ interface BlogPostClientProps {
 	author?: DirectusUser | null;
 	authorName: string;
 	postUrl: string;
-	isDraft?: boolean;
 }
 
-export default function BlogPostClient({
-	post,
-	relatedPosts,
-	author,
-	authorName,
-	postUrl,
-	isDraft,
-}: BlogPostClientProps) {
+export default function BlogPostClient({ post, relatedPosts, author, authorName, postUrl }: BlogPostClientProps) {
 	const { isVisualEditingEnabled, apply } = useVisualEditing();
 	const router = useRouter();
 
@@ -45,8 +37,6 @@ export default function BlogPostClient({
 
 	return (
 		<>
-			{isDraft && <p>(Draft Mode)</p>}
-
 			<Container className="py-12">
 				{post.image && (
 					<div className="mb-8">

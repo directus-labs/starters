@@ -14,6 +14,9 @@ const {
 	public: { directusUrl },
 } = useRuntimeConfig();
 
+// Handle Live Preview adding version=main which is not required when fetching the main version.
+const version = route.query.version === 'main' ? undefined : (route.query.version as string);
+
 const { data, error, refresh } = await useFetch<{
 	post: Post;
 	relatedPosts: Post[];
@@ -22,6 +25,8 @@ const { data, error, refresh } = await useFetch<{
 	query: {
 		preview: enabled.value ? true : undefined,
 		token: enabled.value ? state.token : undefined,
+		id: route.query.id as string,
+		version,
 	},
 });
 
@@ -36,7 +41,6 @@ const author = computed(() => post.value?.author as Partial<DirectusUser>);
 onMounted(() => {
 	if (!isVisualEditingEnabled.value) return;
 	apply({
-		directusUrl,
 		onSaved: () => refresh(),
 	});
 });

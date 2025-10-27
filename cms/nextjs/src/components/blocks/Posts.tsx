@@ -39,7 +39,7 @@ const Posts = ({ data }: PostsProps) => {
 	const perPage = limit || 6;
 
 	const [currentPage, setCurrentPage] = useState(initialPage);
-	const [paginatedPosts, setPaginatedPosts] = useState<Post[]>(currentPage === 1 ? posts : []);
+	const [paginatedPosts, setPaginatedPosts] = useState<Post[]>(currentPage === 1 ? posts || [] : []);
 	const [totalPages, setTotalPages] = useState(0);
 
 	useEffect(() => {
@@ -59,14 +59,15 @@ const Posts = ({ data }: PostsProps) => {
 		const fetchPosts = async () => {
 			try {
 				if (currentPage === 1) {
-					setPaginatedPosts(posts);
+					setPaginatedPosts(posts || []);
 
 					return;
 				}
 				const response = await fetchPaginatedPosts(perPage, currentPage);
-				setPaginatedPosts(response);
+				setPaginatedPosts(response || []);
 			} catch (error) {
 				console.error('Error fetching paginated posts:', error);
+				setPaginatedPosts([]);
 			}
 		};
 
@@ -133,7 +134,7 @@ const Posts = ({ data }: PostsProps) => {
 					mode: 'popover',
 				})}
 			>
-				{paginatedPosts.length > 0 ? (
+				{paginatedPosts && paginatedPosts.length > 0 ? (
 					paginatedPosts.map((post) => (
 						<Link key={post.id} href={`/blog/${post.slug}`} className="group block overflow-hidden rounded-lg">
 							<div className="relative w-full h-64 rounded-lg overflow-hidden">
