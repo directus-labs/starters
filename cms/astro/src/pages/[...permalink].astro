@@ -2,7 +2,7 @@
 export const prerender = true;
 
 import Layout from '@/layouts/BaseLayout.astro';
-import { fetchAllPages, fetchPageData } from '@/lib/directus/fetchers';
+import { fetchAllPages, fetchPageData, fetchPageDataById, getPageIdByPermalink } from '@/lib/directus/fetchers';
 import PageClient from '@/components/layout/PageClient';
 import type { Page, PageBlock } from '@/types/directus-schema';
 
@@ -15,6 +15,12 @@ export async function getStaticPaths() {
 }
 
 const { permalink } = Astro.params;
+const query = Astro.url.searchParams;
+
+const id = query.get('id') || '';
+const version = query.get('version') === 'main' ? undefined : query.get('version') || '';
+const preview = query.get('preview') === 'true';
+const token = query.get('token') || '';
 
 const permalinkSegments =
   typeof permalink === 'string'
@@ -27,7 +33,21 @@ const resolvedPermalink =
 
 let page: Page | null = null;
 try {
-  page = await fetchPageData(resolvedPermalink);
+
+  if (id && version) {
+    page = await fetchPageDataById(id, version, token || undefined);
+  }
+
+  else if (version && !id) {
+    const foundPageId = await getPageIdByPermalink(resolvedPermalink, token || undefined, preview);
+    if (foundPageId) {
+      page = await fetchPageDataById(foundPageId, version, token || undefined);
+    }
+  }
+
+  else {
+    page = await fetchPageData(resolvedPermalink, 1, token || undefined, preview);
+  }
 } catch (error) {
   console.error('Error loading page:', error);
   page = null;
