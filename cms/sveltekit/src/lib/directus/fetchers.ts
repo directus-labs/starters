@@ -10,10 +10,10 @@ import { type QueryFilter, aggregate, readItem, readSingleton } from '@directus/
 export const fetchPageData = async (
 	permalink: string,
 	postPage = 1,
-	fetch: RequestEvent['fetch']
+	sveltekitFetch: typeof fetch
 ) => {
 	const { getDirectus, readItems } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus(sveltekitFetch);
 
 	const pageData = await directus.request(
 		readItems('pages', {
@@ -170,9 +170,9 @@ export const fetchPageData = async (
 /**
  * Fetches global site data, header navigation, and footer navigation.
  */
-export const fetchSiteData = async (fetch: RequestEvent['fetch']) => {
+export const fetchSiteData = async (sveltekitFetch: typeof fetch) => {
 	const { getDirectus } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus(sveltekitFetch);
 
 	try {
 		const [globals, headerNavigation, footerNavigation] = await Promise.all([
@@ -242,10 +242,10 @@ export const fetchSiteData = async (fetch: RequestEvent['fetch']) => {
 export const fetchPostBySlug = async (
 	slug: string,
 	options: { draft?: boolean },
-	fetch: RequestEvent['fetch']
+	sveltekitFetch: typeof fetch
 ) => {
 	const { getDirectus, readItems } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus(sveltekitFetch);
 
 	try {
 		const filter: QueryFilter<Schema, Post> = options?.draft
@@ -278,9 +278,9 @@ export const fetchPostBySlug = async (
 /**
  * Fetches related blog posts excluding the given ID.
  */
-export const fetchRelatedPosts = async (excludeId: string, fetch: RequestEvent['fetch']) => {
+export const fetchRelatedPosts = async (excludeId: string, sveltekitFetch: typeof fetch) => {
 	const { getDirectus, readItems } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus(sveltekitFetch);
 
 	try {
 		const relatedPosts = await directus.request(
@@ -301,9 +301,9 @@ export const fetchRelatedPosts = async (excludeId: string, fetch: RequestEvent['
 /**
  * Fetches author details by ID.
  */
-export const fetchAuthorById = async (authorId: string, fetch: RequestEvent['fetch']) => {
+export const fetchAuthorById = async (authorId: string, sveltekitFetch: typeof fetch) => {
 	const { getDirectus, readUser } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus(sveltekitFetch);
 
 	try {
 		const author = await directus.request(
