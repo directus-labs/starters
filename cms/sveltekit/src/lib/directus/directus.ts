@@ -42,6 +42,7 @@ const getDirectus = () => {
 	if (!browser) {
 		// server side, so using sveltekit optimized fetch
 		// https://svelte.dev/docs/kit/load#Making-fetch-requests
+		// https://svelte.dev/docs/kit/$app-server#getRequestEvent
 		const { fetch: sveltekitFetch } = getRequestEvent();
 		fetch = sveltekitFetch;
 	} else {
