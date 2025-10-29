@@ -1,5 +1,4 @@
 import { error } from '@sveltejs/kit';
-import type { RequestEvent } from '@sveltejs/kit';
 import { type BlockPost, type PageBlock, type Post, type Schema } from '../types/directus-schema';
 import { useDirectus } from './directus';
 import { type QueryFilter, aggregate, readItem, readSingleton } from '@directus/sdk';
