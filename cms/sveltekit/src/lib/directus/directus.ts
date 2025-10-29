@@ -14,6 +14,7 @@ import Queue from 'p-queue';
 import type { Schema } from '../types/directus-schema';
 import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 import { getRequestEvent } from '$app/server';
+import { browser } from '$app/environment';
 
 
 // Helper for retrying fetch requests
@@ -36,7 +37,16 @@ const queue = new Queue({ intervalCap: 10, interval: 500, carryoverConcurrencyCo
 const directusUrl = PUBLIC_DIRECTUS_URL;
 
 const getDirectus = () => {
-	const { fetch } = getRequestEvent();
+
+	let fetch = globalThis.fetch;
+	if (!browser) {
+		// server side, so using sveltekit optimized fetch
+		// https://svelte.dev/docs/kit/load#Making-fetch-requests
+		const { fetch: sveltekitFetch } = getRequestEvent();
+		fetch = sveltekitFetch;
+	} else {
+		// client side, so sticking with default fetch
+	}
 
 	const directus = createDirectus<Schema>(directusUrl, {
 		globals: {
