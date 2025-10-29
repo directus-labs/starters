@@ -13,6 +13,8 @@ import type { RestClient } from '@directus/sdk';
 import Queue from 'p-queue';
 import type { Schema } from '../types/directus-schema';
 import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
+import { getRequestEvent } from '$app/server';
+
 
 // Helper for retrying fetch requests
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -33,11 +35,12 @@ const queue = new Queue({ intervalCap: 10, interval: 500, carryoverConcurrencyCo
 
 const directusUrl = PUBLIC_DIRECTUS_URL;
 
-const getDirectus = (sveltekitFetch: typeof fetch) => {
+const getDirectus = () => {
+	const { fetch } = getRequestEvent();
 
 	const directus = createDirectus<Schema>(directusUrl, {
 		globals: {
-			fetch: (...args) => queue.add(() => fetchRetry(sveltekitFetch, 0, ...args))
+			fetch: (...args) => queue.add(() => fetchRetry(fetch, 0, ...args))
 		}
 	}).with(rest());
 
@@ -46,7 +49,7 @@ const getDirectus = (sveltekitFetch: typeof fetch) => {
 
 export const useDirectus = () => ({
 	// directus: directus as RestClient<Schema>,
-	getDirectus: getDirectus as (sveltekitFetch: typeof fetch) => RestClient<Schema>,
+	getDirectus: getDirectus as () => RestClient<Schema>,
 	readItems,
 	readItem,
 	readSingleton,
