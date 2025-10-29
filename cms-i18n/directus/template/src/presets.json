@@ -1,0 +1,361 @@
+[
+  {
+    "bookmark": null,
+    "user": null,
+    "role": null,
+    "collection": "pages",
+    "search": null,
+    "layout": "tabular",
+    "layout_query": {
+      "tabular": {
+        "page": 1,
+        "fields": [
+          "title",
+          "permalink",
+          "status",
+          "seo",
+          "published_at",
+          "blocks"
+        ],
+        "sort": [
+          "sort"
+        ]
+      }
+    },
+    "layout_options": {
+      "tabular": {
+        "widths": {
+          "title": 179.501708984375,
+          "status": 149.625,
+          "seo": 97.2890625,
+          "published_at": 192.8046875,
+          "blocks": 106.703125
+        }
+      }
+    },
+    "refresh_interval": null,
+    "filter": null,
+    "icon": "bookmark_border",
+    "color": null
+  },
+  {
+    "bookmark": "1. Workflow",
+    "user": null,
+    "role": null,
+    "collection": "posts",
+    "search": null,
+    "layout": "kanban",
+    "layout_query": {
+      "tabular": {
+        "fields": [
+          "status",
+          "image",
+          "title",
+          "date_published"
+        ],
+        "sort": [
+          "-date_published"
+        ],
+        "page": 1
+      }
+    },
+    "layout_options": {
+      "kanban": {
+        "titleField": "title",
+        "showUngrouped": false,
+        "dateField": "published_at",
+        "textField": "description",
+        "crop": true,
+        "groupField": "status",
+        "groupTitle": null,
+        "userField": "author",
+        "tagsField": null
+      }
+    },
+    "refresh_interval": null,
+    "filter": null,
+    "icon": "view_kanban",
+    "color": null
+  },
+  {
+    "bookmark": null,
+    "user": null,
+    "role": null,
+    "collection": "directus_files",
+    "search": null,
+    "layout": "cards",
+    "layout_query": {
+      "cards": {
+        "sort": [
+          "-uploaded_on"
+        ],
+        "page": 1,
+        "limit": 25
+      }
+    },
+    "layout_options": {
+      "cards": {
+        "icon": "insert_drive_file",
+        "title": "{{ title }}",
+        "subtitle": "{{ type }} • {{ filesize }}",
+        "size": 4,
+        "imageFit": "crop"
+      }
+    },
+    "refresh_interval": null,
+    "filter": null,
+    "icon": "bookmark_border",
+    "color": null
+  },
+  {
+    "bookmark": null,
+    "user": null,
+    "role": null,
+    "collection": "posts",
+    "search": null,
+    "layout": "tabular",
+    "layout_query": {
+      "tabular": {
+        "page": 1,
+        "fields": [
+          "image",
+          "title",
+          "slug",
+          "status",
+          "seo",
+          "published_at",
+          "author"
+        ],
+        "limit": 25
+      }
+    },
+    "layout_options": {
+      "tabular": {
+        "widths": {
+          "image": 55.890625,
+          "title": 375.66015625,
+          "status": 141.15625,
+          "seo": 98.453125,
+          "published_at": 182.125
+        }
+      }
+    },
+    "refresh_interval": null,
+    "filter": null,
+    "icon": "bookmark_border",
+    "color": null
+  },
+  {
+    "bookmark": null,
+    "user": null,
+    "role": null,
+    "collection": "directus_presets",
+    "search": null,
+    "layout": "tabular",
+    "layout_query": {
+      "tabular": {
+        "page": 1,
+        "limit": 25,
+        "fields": [
+          "bookmark",
+          "id",
+          "role",
+          "user",
+          "collection"
+        ],
+        "sort": [
+          "-collection"
+        ]
+      }
+    },
+    "layout_options": null,
+    "refresh_interval": null,
+    "filter": null,
+    "icon": "bookmark_border",
+    "color": null
+  },
+  {
+    "bookmark": null,
+    "user": null,
+    "role": null,
+    "collection": "forms",
+    "search": null,
+    "layout": "tabular",
+    "layout_query": {
+      "tabular": {
+        "fields": [
+          "title",
+          "fields",
+          "submissions",
+          "is_active"
+        ]
+      }
+    },
+    "layout_options": {
+      "tabular": {
+        "widths": {}
+      }
+    },
+    "refresh_interval": null,
+    "filter": null,
+    "icon": "bookmark",
+    "color": null
+  },
+  {
+    "bookmark": null,
+    "user": null,
+    "role": null,
+    "collection": "form_submissions",
+    "search": null,
+    "layout": "tabular",
+    "layout_query": {
+      "tabular": {
+        "fields": [
+          "form",
+          "timestamp",
+          "values",
+          "id"
+        ]
+      }
+    },
+    "layout_options": {
+      "tabular": {
+        "widths": {}
+      }
+    },
+    "refresh_interval": null,
+    "filter": null,
+    "icon": "bookmark",
+    "color": null
+  },
+  {
+    "bookmark": null,
+    "user": null,
+    "role": null,
+    "collection": "navigation",
+    "search": null,
+    "layout": "tabular",
+    "layout_query": {
+      "tabular": {
+        "fields": [
+          "title",
+          "id",
+          "items",
+          "is_active"
+        ]
+      }
+    },
+    "layout_options": {
+      "tabular": {
+        "widths": {
+          "id": 114.37890625
+        }
+      }
+    },
+    "refresh_interval": null,
+    "filter": null,
+    "icon": "bookmark",
+    "color": null
+  },
+  {
+    "bookmark": null,
+    "user": null,
+    "role": null,
+    "collection": "redirects",
+    "search": null,
+    "layout": "tabular",
+    "layout_query": {
+      "tabular": {
+        "page": 1,
+        "fields": [
+          "url_from",
+          "url_to",
+          "response_code",
+          "note"
+        ]
+      }
+    },
+    "layout_options": {
+      "tabular": {
+        "widths": {
+          "url_from": 231.5078125,
+          "url_to": 188.86328125,
+          "response_code": 193.484375
+        }
+      }
+    },
+    "refresh_interval": null,
+    "filter": null,
+    "icon": "bookmark",
+    "color": null
+  },
+  {
+    "bookmark": null,
+    "user": null,
+    "role": null,
+    "collection": "ai_prompts",
+    "search": null,
+    "layout": "tabular",
+    "layout_query": {
+      "tabular": {
+        "page": 1,
+        "fields": [
+          "name",
+          "status",
+          "description",
+          "user_created"
+        ]
+      }
+    },
+    "layout_options": {
+      "tabular": {
+        "widths": {
+          "name": 212.38671875,
+          "status": 133.046875,
+          "description": 395.66015625
+        }
+      }
+    },
+    "refresh_interval": null,
+    "filter": null,
+    "icon": null,
+    "color": null
+  },
+  {
+    "bookmark": null,
+    "user": null,
+    "role": null,
+    "collection": "form_fields",
+    "search": null,
+    "layout": "tabular",
+    "layout_query": {
+      "tabular": {
+        "page": 1,
+        "fields": [
+          "name",
+          "type",
+          "form",
+          "label",
+          "required",
+          "placeholder"
+        ],
+        "sort": [
+          "-form"
+        ]
+      }
+    },
+    "layout_options": {
+      "tabular": {
+        "widths": {
+          "type": 126.90234375,
+          "form": 115.7109375,
+          "label": 214.52734375
+        }
+      }
+    },
+    "refresh_interval": null,
+    "filter": null,
+    "icon": "bookmark",
+    "color": null
+  }
+]
