@@ -1,7 +1,7 @@
 'use client';
 
 import useSWR from 'swr';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useVisualEditing } from '@/hooks/useVisualEditing';
 import PageBuilder from '@/components/layout/PageBuilder';
 import type { PageBlock } from '@/types/directus-schema';
@@ -21,8 +21,10 @@ interface VisualEditingOptions {
   elements?: HTMLElement;
 }
 
-const fetchBlocks = async (permalink: string): Promise<PageBlock[]> => {
-  const res = await fetch(`/api/page-blocks?permalink=${encodeURIComponent(permalink)}`);
+const fetchBlocks = async (permalink: string, params: URLSearchParams): Promise<PageBlock[]> => {
+  const queryString = params.toString();
+  const url = `/api/page-blocks?permalink=${encodeURIComponent(permalink)}${queryString ? `&${queryString}` : ''}`;
+  const res = await fetch(url);
   if (!res.ok) throw new Error('Failed to fetch blocks');
   const data = await res.json();
   return data.blocks;
@@ -31,9 +33,21 @@ const fetchBlocks = async (permalink: string): Promise<PageBlock[]> => {
 export default function PageClient({ initialSections, permalink, pageId }: PageClientProps) {
   const { isVisualEditingEnabled, apply } = useVisualEditing();
 
+  const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
+  const [hasVersioningParams, setHasVersioningParams] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setIsPreviewEnabled(params.get('preview') === 'true');
+    setHasVersioningParams(!!params.get('version') || !!params.get('id'));
+  }, []);
+
+  const shouldFetchLive = isVisualEditingEnabled || isPreviewEnabled || hasVersioningParams;
+  const swrKey = shouldFetchLive ? `${permalink}-${new URLSearchParams(window.location.search).toString()}` : null;
+
   const { data: sections = initialSections, mutate } = useSWR(
-    isVisualEditingEnabled ? permalink : null,
-    () => fetchBlocks(permalink),
+    swrKey,
+    () => fetchBlocks(permalink, new URLSearchParams(window.location.search)),
     {
       fallbackData: initialSections,
       revalidateOnFocus: false,

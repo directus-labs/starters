@@ -6,12 +6,11 @@ import { fetchRedirects } from './src/lib/fetchRedirects';
 
 const directusUrl = process.env.PUBLIC_DIRECTUS_URL || process.env.DIRECTUS_URL || '';
 const directusHost = directusUrl?.split('//')[1];
-const siteUrl = process.env.PUBLIC_SITE_URL || 'http://localhost:4321';
+const siteUrl = process.env.PUBLIC_SITE_URL || 'http://localhost:3000';
 
 if (!directusUrl) {
   throw new Error(
-    'Missing PUBLIC_DIRECTUS_URL in your .env. ' +
-    'Make sure you have PUBLIC_DIRECTUS_URL set at the project root.'
+    'Missing PUBLIC_DIRECTUS_URL in your .env. ' + 'Make sure you have PUBLIC_DIRECTUS_URL set at the project root.',
   );
 }
 
@@ -27,6 +26,10 @@ for (const { source, destination, permanent } of redirectsArray) {
 
 export default defineConfig({
   site: siteUrl,
+  server: {
+    port: 3000,
+    host: true,
+  },
   adapter: vercel(),
   integrations: [react()],
   image: {

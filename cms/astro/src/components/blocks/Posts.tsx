@@ -43,20 +43,20 @@ const Posts = ({ data }: PostsProps) => {
     return 1;
   });
 
-  const [paginatedPosts, setPaginatedPosts] = useState<Post[]>(currentPage === 1 ? posts : []);
+  const [paginatedPosts, setPaginatedPosts] = useState<Post[]>(currentPage === 1 ? posts || [] : []);
 
   useEffect(() => {
     const fetchPosts = async () => {
       if (currentPage === 1) {
-        setPaginatedPosts(posts);
+        setPaginatedPosts(posts || []);
         return;
       }
 
       try {
         const response = await fetchPaginatedPosts(perPage, currentPage);
-        setPaginatedPosts(response);
+        setPaginatedPosts(response || []);
       } catch {
-        throw new Error('Error fetching paginated posts:');
+        setPaginatedPosts([]);
       }
     };
 
@@ -136,7 +136,7 @@ const Posts = ({ data }: PostsProps) => {
           mode: 'popover',
         })}
       >
-        {paginatedPosts.length > 0 ? (
+        {paginatedPosts && paginatedPosts.length > 0 ? (
           paginatedPosts.map((post) => (
             <a key={post.id} href={`/blog/${post.slug}`} className="group block overflow-hidden rounded-lg">
               <div className="relative w-full h-64 rounded-lg overflow-hidden">

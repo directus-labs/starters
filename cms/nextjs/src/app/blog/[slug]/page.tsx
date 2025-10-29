@@ -1,25 +1,45 @@
-import { draftMode } from 'next/headers';
-import { fetchPostBySlug } from '@/lib/directus/fetchers';
+import { fetchPostBySlug, fetchPostByIdAndVersion, getPostIdBySlug } from '@/lib/directus/fetchers';
 import BlogPostClient from './BlogPostClient';
-import type { DirectusUser } from '@/types/directus-schema';
+import type { DirectusUser, Post } from '@/types/directus-schema';
 
 export default async function BlogPostPage({
 	params,
 	searchParams,
 }: {
 	params: Promise<{ slug: string }>;
-	searchParams: Promise<{ preview?: string; token?: string }>;
+	searchParams: Promise<{ id?: string; version?: string; preview?: string; token?: string }>;
 }) {
 	const { slug } = await params;
-	const { preview, token } = await searchParams;
+	const { id, version, preview, token } = await searchParams;
+	const isDraft = (preview === 'true' && !!token) || (!!version && version !== 'published') || !!token;
 
-	const isDraft = preview === 'true' && !!token;
-
+	// Live preview adds version = main which is not required when fetching the main version.
+	const fixedVersion = version != 'main' ? version : undefined;
 	try {
-		const { post, relatedPosts } = await fetchPostBySlug(slug, {
-			draft: isDraft,
-			token,
-		});
+		let postId = id;
+		let post: Post | null;
+		let relatedPosts: Post[] = [];
+		// Content Version Fetching
+		if (fixedVersion && !postId) {
+			const foundPostId = await getPostIdBySlug(slug, token || undefined);
+			if (!foundPostId) {
+				return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
+			}
+			postId = foundPostId;
+		}
+
+		if (postId && fixedVersion) {
+			const result = await fetchPostByIdAndVersion(postId, fixedVersion, slug, token || undefined);
+			post = result.post;
+			relatedPosts = result.relatedPosts;
+		} else {
+			const result = await fetchPostBySlug(slug, {
+				draft: isDraft,
+				token,
+			});
+			post = result.post;
+			relatedPosts = result.relatedPosts;
+		}
 
 		if (!post) {
 			return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
@@ -36,7 +56,6 @@ export default async function BlogPostPage({
 				author={author}
 				authorName={authorName}
 				postUrl={postUrl}
-				isDraft={isDraft}
 			/>
 		);
 	} catch (error) {
