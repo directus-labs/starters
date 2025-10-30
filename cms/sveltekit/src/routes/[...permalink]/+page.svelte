@@ -45,7 +45,7 @@
 
 <svelte:head>
 	<title>{data.title || ''}</title>
-	<meta name="description" content={data.description || ''} />
+	<meta name="description" content={data.globals?.description || ''} />
 </svelte:head>
 
 <div class="relative">

@@ -1,10 +1,6 @@
 import { useDirectus } from './directus';
 import { PUBLIC_DIRECTUS_FORM_TOKEN } from '$env/static/public';
-interface SubmissionValue {
-	field: string;
-	value?: string;
-	file?: string;
-}
+import type { FormSubmission, FormSubmissionValue } from '$lib/types/directus-schema';
 
 export const submitForm = async (
 	formId: string,
@@ -20,7 +16,7 @@ export const submitForm = async (
 	}
 
 	try {
-		const submissionValues: SubmissionValue[] = [];
+		const submissionValues: Array<Pick<FormSubmissionValue, 'field' | 'value' | 'file'>> = [];
 
 		for (const field of fields) {
 			const value = data[field.name];
@@ -47,9 +43,9 @@ export const submitForm = async (
 			}
 		}
 
-		const payload = {
+		const payload: Partial<FormSubmission> = {
 			form: formId,
-			values: submissionValues
+			values: submissionValues as unknown as FormSubmissionValue[]
 		};
 
 		await directus.request(withToken(TOKEN, createItem('form_submissions', payload)));

@@ -7,7 +7,6 @@
 	import SearchModal from '../ui/SearchModal.svelte';
 	import LightSwitch from './LightSwitch.svelte';
 	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
-	import { goto } from '$app/navigation';
 	import { ChevronDown, Menu } from '@lucide/svelte';
 	import * as Collapsible from '$lib/components/ui/collapsible';
 	import setAttr from '$lib/directus/visualEditing';
