@@ -33,7 +33,7 @@
 	let isLightboxOpen = $state(false);
 	let currentIndex = $state(0);
 
-	let sortedItems = $derived([...items].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)));
+	let sortedItems = $derived(items ? [...items].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)) : []);
 	const isValidIndex = $derived(
 		sortedItems.length > 0 && currentIndex >= 0 && currentIndex < sortedItems.length
 	);
