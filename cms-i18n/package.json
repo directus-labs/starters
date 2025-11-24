@@ -1,0 +1,33 @@
+{
+  "name": "directus-cms-i18n-starter",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "directus:template": {
+    "name": "CMS - i18n",
+    "description": "A ready-to-use CMS with i18n support, block builder, visual editing, and integration with your favorite framework. ",
+    "template": "./directus/template",
+    "frontends": {
+        "nextjs": {
+            "name": "Next.js",
+            "path": "./nextjs"
+        },
+        "nuxt": {
+            "name": "Nuxt",
+            "path": "./nuxt"
+        },
+        "astro": {
+            "name": "Astro",
+            "path": "./astro"
+        },
+        "svelte": {
+            "name": "Svelte",
+            "path": "./sveltekit"
+        }
+    }
+  },
+  "keywords": [],
+  "author": ""
+}

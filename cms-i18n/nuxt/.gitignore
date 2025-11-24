@@ -1,0 +1,6 @@
+# Nuxt Build Output
+.nuxt/
+.nitro/
+.cache/
+.output/
+dist/
