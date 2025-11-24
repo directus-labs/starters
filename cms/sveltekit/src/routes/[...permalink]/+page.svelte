@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
-	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 	import PageBuilder from '$lib/components/layout/PageBuilder.svelte';
 	import type { PageBlock } from '$lib/types/directus-schema.js';
 	import { Button } from '$lib/components/ui/button';
@@ -16,36 +14,11 @@
 			(block: any): block is PageBlock => typeof block === 'object' && block.collection
 		);
 	});
-
-	$effect(() => {
-		if (page.data.visualEditingEnabled && data.id) {
-			applyVisualEditing();
-		}
-	});
-
-	const applyVisualEditing = async () => {
-		const { apply } = await import('@directus/visual-editing');
-		apply({
-			directusUrl: PUBLIC_DIRECTUS_URL,
-			onSaved: async () => {
-				await invalidateAll();
-			}
-		});
-
-		apply({
-			directusUrl: PUBLIC_DIRECTUS_URL,
-			elements: document.querySelector('#visual-editing-button') as HTMLElement,
-			customClass: 'visual-editing-button-class',
-			onSaved: async () => {
-				await invalidateAll();
-			}
-		});
-	};
 </script>
 
 <svelte:head>
 	<title>{data.title || ''}</title>
-	<meta name="description" content={data.description || ''} />
+	<meta name="description" content={data.seo?.meta_description || ''} />
 </svelte:head>
 
 <div class="relative">

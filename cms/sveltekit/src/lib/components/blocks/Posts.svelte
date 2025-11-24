@@ -29,7 +29,7 @@
 	let currentPage = $state(initialPage);
 	let perPage = $derived(limit || 6);
 	// svelte-ignore state_referenced_locally
-	let paginatedPosts = $state<Post[]>(currentPage === 1 ? posts : []);
+	let paginatedPosts = $state<Post[]>(currentPage === 1 ? posts || [] : []);
 	let totalPages = $state(0);
 	let totalCount = $state(0);
 
@@ -48,14 +48,14 @@
 	const fetchPosts = async (currentPage: number) => {
 		try {
 			if (currentPage === 1) {
-				paginatedPosts = posts;
-
+				paginatedPosts = posts || [];
 				return;
 			}
 
 			paginatedPosts = await fetchPaginatedPosts(perPage, currentPage);
 		} catch (error) {
 			console.error('Error fetching paginated posts:', error);
+			paginatedPosts = [];
 		}
 	};
 	$effect(() => {
@@ -121,10 +121,10 @@
 				</div>
 
 				<div class="p-4">
-					<h3 class="font-heading group-hover:text-accent text-xl transition-colors duration-300">
+					<h3 class="font-heading text-xl transition-colors duration-300 group-hover:text-accent">
 						{post.title}
 					</h3>
-					<p class="text-foreground mt-2 text-sm">{post.description}</p>
+					<p class="mt-2 text-sm text-foreground">{post.description}</p>
 				</div>
 			</a>
 		{/each}
