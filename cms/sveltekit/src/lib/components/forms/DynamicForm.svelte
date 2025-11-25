@@ -100,7 +100,7 @@
 	})}
 >
 	<!-- add a hidden field for the form id -->
-	<!-- <input type="hidden" name="formId" value={id} /> -->
+	<input type="hidden" name="formId" value={id} />
 
 	{#each sortedFields as field (field.id)}
 		<Field {field} {form} />
