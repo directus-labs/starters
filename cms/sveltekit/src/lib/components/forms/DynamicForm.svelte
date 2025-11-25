@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { enhance, applyAction } from '$app/forms';
 	import { goto } from '$app/navigation';
 	import setAttr from '$lib/directus/visualEditing';
 	import { buildZodSchema } from '$lib/zodSchemaBuilder';
@@ -87,6 +87,7 @@
 				cancel();
 				console.error('result is 400', result);
 			} else {
+				applyAction(result);
 				onSubmitted();
 			}
 			// `update` is a function which triggers the default logic that would be triggered if this callback wasn't set
