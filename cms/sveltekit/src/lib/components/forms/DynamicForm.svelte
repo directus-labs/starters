@@ -9,7 +9,11 @@
 	import { superForm } from 'sveltekit-superforms';
 
 	import { zodClient } from 'sveltekit-superforms/adapters';
-	const { form: formProp, onSubmitted }: FormBuilderProps & { onSubmitted: () => void } = $props();
+	const {
+		form: formProp,
+		onSubmitted,
+		onError
+	}: FormBuilderProps & { onSubmitted: () => void; onError: () => void } = $props();
 
 	const fields = $derived(formProp.fields);
 	const submitLabel = $derived(formProp.submit_label);
@@ -64,11 +68,13 @@
 		const f = await validateForm();
 		$errors = f.errors;
 		if (!f.valid) {
-			console.error('Form is not valid', f.errors);
+			console.error('Form is not valid', f);
+			onError();
 			cancel();
 		}
 
-		return async ({ result, update }) => {
+		return async ({ result }) => {
+			console.log('formProp', formProp);
 			// `result` is an `ActionResult` object
 			if (formProp.on_success === 'redirect' && formProp.success_redirect_url) {
 				if (formProp.success_redirect_url.startsWith('/')) {
@@ -76,6 +82,10 @@
 				} else {
 					window.location.href = formProp.success_redirect_url; // TODO check if internal or external
 				}
+			} else if (result.type === 'failure') {
+				onError();
+				cancel();
+				console.error('result is 400', result);
 			} else {
 				onSubmitted();
 			}
@@ -89,7 +99,9 @@
 		mode: 'popover'
 	})}
 >
-	<input type="hidden" name="formId" value={id} />
+	<!-- add a hidden field for the form id -->
+	<!-- <input type="hidden" name="formId" value={id} /> -->
+
 	{#each sortedFields as field (field.id)}
 		<Field {field} {form} />
 	{/each}

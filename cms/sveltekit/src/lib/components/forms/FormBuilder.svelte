@@ -26,7 +26,11 @@
 					{error}
 				</div>
 			{/if}
-			<DynamicForm {form} onSubmitted={() => (isSubmitted = true)} />
+			<DynamicForm
+				{form}
+				onSubmitted={() => (isSubmitted = true)}
+				onError={() => (error = 'Failed to submit the form. Please try again later.')}
+			/>
 		</div>
 	{/if}
 {/if}

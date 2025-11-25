@@ -1,6 +1,6 @@
 import { DIRECTUS_SERVER_TOKEN } from '$env/static/private';
 import type { FormField, FormSubmission, FormSubmissionValue } from '$lib/types/directus-schema';
-import type { RequestEvent } from '@sveltejs/kit';
+import { fail, type RequestEvent } from '@sveltejs/kit';
 import { useDirectus } from './directus';
 import { fetchFormFields } from './fetchers-forms';
 
@@ -10,18 +10,14 @@ export const submitFormAction = async (event: RequestEvent) => {
 	const formId = formData.get('formId') as string;
 
 	if (!formId) {
-		return { error: 'Form ID is required' };
+		return fail(400, { formId: 'Form ID is required' });
 	}
 
 	// fetch the form and fields config from Directus
 	// This is a regular form so we don't have access to the context here.
 	const form = await fetchFormFields(formId);
 
-	console.log("SUBMIT FORM", form);
-
-	for (const [key, value] of formData.entries()) {
-		console.log(`FormData entry: ${key} =`, value);
-	}
+	// Zod server side size validation goes here
 
 	await submitForm(formId, form.fields as FormField[], formData);
 
