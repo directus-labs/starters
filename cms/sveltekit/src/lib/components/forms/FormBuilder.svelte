@@ -1,55 +1,13 @@
 <script lang="ts">
-	// import { submitForm } from '$lib/directus/forms';
-	import type { FormField } from '$lib/types/directus-schema';
 	import { cn } from '$lib/utils';
 	import { CheckCircle } from '@lucide/svelte';
 	import DynamicForm from './DynamicForm.svelte';
-	import { goto } from '$app/navigation';
-
-	interface FormBuilderProps {
-		class?: string;
-		form: {
-			id: string;
-			on_success?: 'redirect' | 'message' | null;
-			sort?: number | null;
-			submit_label?: string;
-			success_message?: string | null;
-			title?: string | null;
-			success_redirect_url?: string | null;
-			is_active?: boolean | null;
-			fields: FormField[];
-		};
-	}
+	import type { FormBuilderProps } from './formBuilderTypes';
 
 	const { form, class: className }: FormBuilderProps = $props();
 
 	let isSubmitted = $state(false);
 	let error = $state<string | null>(null);
-
-	const handleSubmit = async (data: Record<string, any>) => {
-		try {
-			const fieldsWithNames = form.fields.map((field) => ({
-				id: field.id,
-				name: field.name || '',
-				type: field.type || ''
-			}));
-			// await submitForm(form.id, fieldsWithNames, data);
-			// await createFormSubmission(data);
-
-			if (form.on_success === 'redirect' && form.success_redirect_url) {
-				if (form.success_redirect_url.startsWith('/')) {
-					goto(form.success_redirect_url);
-				} else {
-					window.location.href = form.success_redirect_url; // TODO check if internal or external
-				}
-			} else {
-				isSubmitted = true;
-			}
-		} catch (err) {
-			console.error('Error submitting form:', err);
-			error = 'Failed to submit the form. Please try again later.';
-		}
-	};
 </script>
 
 {#if form.is_active}
@@ -68,12 +26,7 @@
 					{error}
 				</div>
 			{/if}
-			<DynamicForm
-				fields={form.fields}
-				onSubmit={handleSubmit}
-				submitLabel={form.submit_label || 'Submit'}
-				id={form.id}
-			/>
+			<DynamicForm {form} onSubmitted={() => (isSubmitted = true)} />
 		</div>
 	{/if}
 {/if}

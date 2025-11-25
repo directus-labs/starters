@@ -110,6 +110,8 @@
 				{/snippet}
 			</Form.Control>
 			<Form.Description>{field.help}</Form.Description>
+
+			<!-- When this renders, it causes the form fields to be out of line -->
 			{#if $errors[fieldName]}
 				<Form.FieldErrors>
 					{#each $errors[fieldName] as string[] as error}
