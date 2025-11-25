@@ -10,3 +10,5 @@ export const load = (async (event) => {
 	const accentColor = globals?.accent_color || '#6644ff';
 	return { globals, headerNavigation, footerNavigation, accentColor, visualEditingEnabled };
 }) satisfies LayoutServerLoad;
+
+

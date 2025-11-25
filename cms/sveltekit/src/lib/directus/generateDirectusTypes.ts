@@ -5,11 +5,11 @@ config();
 
 async function generateTypes() {
 	const directusUrl = process.env.PUBLIC_DIRECTUS_URL;
-	const directusToken = process.env.PUBLIC_DIRECTUS_TOKEN;
+	const directusToken = process.env.DIRECTUS_SERVER_TOKEN;
 
 	if (!directusUrl || !directusToken) {
 		console.error(
-			'Error: PUBLIC_DIRECTUS_URL or PUBLIC_DIRECTUS_TOKEN is missing in the .env file.'
+			'Error: PUBLIC_DIRECTUS_URL or DIRECTUS_SERVER_TOKEN is missing in the .env file.'
 		);
 		process.exit(1);
 	}

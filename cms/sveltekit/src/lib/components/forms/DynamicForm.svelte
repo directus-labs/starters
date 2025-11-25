@@ -1,68 +1,98 @@
 <script lang="ts">
-	import { dev } from '$app/environment';
+	import { enhance, applyAction } from '$app/forms';
+	import { goto } from '$app/navigation';
 	import setAttr from '$lib/directus/visualEditing';
-	import type { FormField as FormFieldType } from '$lib/types/directus-schema';
 	import { buildZodSchema } from '$lib/zodSchemaBuilder';
 	import Button from '../blocks/Button.svelte';
+	import type { FormBuilderProps } from './formBuilderTypes';
 	import Field from './FormField.svelte';
-	import { superForm, superValidate } from 'sveltekit-superforms';
-	import SuperDebug from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 
-	import { zodClient, zod } from 'sveltekit-superforms/adapters';
+	import { zodClient } from 'sveltekit-superforms/adapters';
+	const {
+		form: formProp,
+		onSubmitted,
+		onError
+	}: FormBuilderProps & { onSubmitted: () => void; onError: () => void } = $props();
 
-	interface DynamicFormProps {
-		fields: FormFieldType[];
-		onSubmit: (data: Record<string, any>) => void;
-		submitLabel: string;
-		id: string;
-	}
+	const fields = $derived(formProp.fields);
+	const submitLabel = $derived(formProp.submit_label);
+	const id = $derived(formProp.id);
 
-	const { fields, onSubmit, submitLabel, id }: DynamicFormProps = $props();
+	const sortedFields = $derived([...fields].sort((a, b) => (a.sort || 0) - (b.sort || 0)));
+	const formSchema = $derived(buildZodSchema(fields));
 
-	const sortedFields = [...fields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
-	const formSchema = buildZodSchema(fields);
+	const defaultValues = $derived(
+		fields.reduce<Record<string, any>>((defaults, field) => {
+			if (!field.name) return defaults;
+			switch (field.type) {
+				case 'checkbox':
+					defaults[field.name] = false;
+					break;
+				case 'checkbox_group':
+					defaults[field.name] = [];
+					break;
+				case 'radio':
+					defaults[field.name] = '';
+					break;
+				default:
+					defaults[field.name] = '';
+					break;
+			}
 
-	const defaultValues = fields.reduce<Record<string, any>>((defaults, field) => {
-		if (!field.name) return defaults;
-		switch (field.type) {
-			case 'checkbox':
-				defaults[field.name] = false;
-				break;
-			case 'checkbox_group':
-				defaults[field.name] = [];
-				break;
-			case 'radio':
-				defaults[field.name] = '';
-				break;
-			default:
-				defaults[field.name] = '';
-				break;
-		}
+			return defaults;
+		}, {})
+	);
 
-		return defaults;
-	}, {});
+	const form = $derived(
+		superForm(defaultValues, {
+			validators: zodClient(formSchema),
+			SPA: true
+		})
+	);
 
-	const form = superForm(defaultValues, {
-		validators: zodClient(formSchema),
-		SPA: true
-	});
-
-	const { enhance, submit, form: formData, errors, validateForm } = $derived(form);
-
-	const onsubmit = async (e: Event) => {
-		e.preventDefault();
-		// const f = await superValidate($formData, zod(formSchema));
-		const f = await validateForm();
-		$errors = f.errors;
-		if (f.valid) {
-			onSubmit($formData);
-		}
-	};
+	const { form: formData, errors, validateForm } = $derived(form);
 </script>
 
 <form
+	enctype="multipart/form-data"
 	class="flex flex-wrap gap-4"
-	{onsubmit}
+	method="POST"
+	action={`/?/createFormSubmission`}
+	use:enhance={async ({ formElement, formData, action, cancel, submitter }) => {
+		// `formElement` is this `<form>` element
+		// `formData` is its `FormData` object that's about to be submitted
+		// `action` is the URL to which the form is posted
+		// calling `cancel()` will prevent the submission
+		// `submitter` is the `HTMLElement` that caused the form to be submitted
+		const f = await validateForm();
+		$errors = f.errors;
+		if (!f.valid) {
+			console.error('Form is not valid', f);
+			onError();
+			cancel();
+		}
+
+		return async ({ result }) => {
+			console.log('formProp', formProp);
+			// `result` is an `ActionResult` object
+			if (formProp.on_success === 'redirect' && formProp.success_redirect_url) {
+				if (formProp.success_redirect_url.startsWith('/')) {
+					goto(formProp.success_redirect_url);
+				} else {
+					window.location.href = formProp.success_redirect_url; // TODO check if internal or external
+				}
+			} else if (result.type === 'failure') {
+				onError();
+				cancel();
+				console.error('result is 400', result);
+			} else {
+				applyAction(result);
+				onSubmitted();
+			}
+			// `update` is a function which triggers the default logic that would be triggered if this callback wasn't set
+		};
+	}}
 	data-directus={setAttr({
 		collection: 'forms',
 		item: id,
@@ -70,6 +100,9 @@
 		mode: 'popover'
 	})}
 >
+	<!-- add a hidden field for the form id -->
+	<input type="hidden" name="formId" value={id} />
+
 	{#each sortedFields as field (field.id)}
 		<Field {field} {form} />
 	{/each}
@@ -88,7 +121,7 @@
 				icon="arrow"
 				label={submitLabel}
 				iconPosition="right"
-				id={`submit-${submitLabel.replace(/\s+/g, '-').toLowerCase()}`}
+				id={`submit-${submitLabel?.replace(/\s+/g, '-').toLowerCase()}`}
 			></Button>
 		</div>
 	</div>

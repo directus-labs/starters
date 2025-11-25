@@ -1,5 +1,8 @@
 import { fetchPageData, fetchPageDataById, getPageIdByPermalink } from '$lib/directus/fetchers';
+import { submitFormAction } from '$lib/directus/forms';
 import type { PageServerLoad } from './$types';
+import type { Actions } from './$types';
+
 
 export const load = (async (event) => {
 	const id = event.url.searchParams.get('id') || '';
@@ -34,3 +37,9 @@ export const load = (async (event) => {
 		throw error;
 	}
 }) satisfies PageServerLoad;
+
+
+
+export const actions = {
+	createFormSubmission: submitFormAction,
+} satisfies Actions;
