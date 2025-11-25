@@ -74,7 +74,7 @@
 						<Input
 							{...props}
 							placeholder={field.placeholder || ''}
-							name={field.name || ''}
+							name={fieldName}
 							bind:value={$formData[field.name!]}
 							type={field.validation?.includes('email') ? 'email' : 'text'}
 						/>
@@ -82,28 +82,28 @@
 						<Textarea
 							{...props}
 							placeholder={field.placeholder || ''}
-							name={field.name || ''}
-							bind:value={$formData[field.name!]}
+							name={fieldName}
+							bind:value={$formData[fieldName!]}
 							required={field.required}
 						/>
 					{:else if field.type === 'checkbox'}
 						<div class="flex items-center space-x-3">
 							<Checkbox
 								{...props}
-								name={field.name}
-								bind:checked={$formData[field.name!]}
+								name={fieldName}
+								bind:checked={$formData[fieldName!]}
 								required={!!field.required}
 							/>
 							<Label for={field.name}>{field.label}</Label>
 						</div>
 					{:else if field.type === 'checkbox_group'}
-						<CheckBoxGroup name={field.name || ''} options={field.choices || []} {form} />
+						<CheckBoxGroup name={fieldName} options={field.choices || []} {form} />
 					{:else if field.type === 'select'}
-						<SelectField name={field.name || ''} options={field.choices || []} {form} />
+						<SelectField name={fieldName} options={field.choices || []} {form} />
 					{:else if field.type === 'radio'}
-						<RadioGroup name={field.name || ''} options={field.choices || []} {form} />
+						<RadioGroup name={fieldName} options={field.choices || []} {form} />
 					{:else if field.type === 'file'}
-						<FileUploadField name={field.name || ''} {form} />
+						<FileUploadField name={fieldName} {form} />
 					{:else}
 						<p>Unknown field type: {field.type}</p>
 					{/if}

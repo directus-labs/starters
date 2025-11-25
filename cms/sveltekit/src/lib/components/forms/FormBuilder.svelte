@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { submitForm } from '$lib/directus/forms';
+	// import { submitForm } from '$lib/directus/forms';
 	import type { FormField } from '$lib/types/directus-schema';
 	import { cn } from '$lib/utils';
 	import { CheckCircle } from '@lucide/svelte';
@@ -33,7 +33,8 @@
 				name: field.name || '',
 				type: field.type || ''
 			}));
-			await submitForm(form.id, fieldsWithNames, data);
+			// await submitForm(form.id, fieldsWithNames, data);
+			// await createFormSubmission(data);
 
 			if (form.on_success === 'redirect' && form.success_redirect_url) {
 				if (form.success_redirect_url.startsWith('/')) {

@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { dev } from '$app/environment';
+	import { enhance } from '$app/forms';
 	import setAttr from '$lib/directus/visualEditing';
 	import type { FormField as FormFieldType } from '$lib/types/directus-schema';
 	import { buildZodSchema } from '$lib/zodSchemaBuilder';
 	import Button from '../blocks/Button.svelte';
 	import Field from './FormField.svelte';
-	import { superForm, superValidate } from 'sveltekit-superforms';
-	import SuperDebug from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms';
 
 	import { zodClient, zod } from 'sveltekit-superforms/adapters';
 
@@ -47,7 +46,7 @@
 		SPA: true
 	});
 
-	const { enhance, submit, form: formData, errors, validateForm } = $derived(form);
+	const { form: formData, errors, validateForm } = $derived(form);
 
 	const onsubmit = async (e: Event) => {
 		e.preventDefault();
@@ -61,8 +60,11 @@
 </script>
 
 <form
+	enctype="multipart/form-data"
 	class="flex flex-wrap gap-4"
-	{onsubmit}
+	method="POST"
+	action={`/?/createFormSubmission`}
+	use:enhance
 	data-directus={setAttr({
 		collection: 'forms',
 		item: id,
@@ -70,6 +72,7 @@
 		mode: 'popover'
 	})}
 >
+	<input type="hidden" name="formId" value={id} />
 	{#each sortedFields as field (field.id)}
 		<Field {field} {form} />
 	{/each}
