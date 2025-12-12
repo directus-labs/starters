@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { setAttr } from '@directus/visual-editing';
 import { useVisualEditing } from '@/hooks/useVisualEditing';
 import DirectusImage from '@/components/shared/DirectusImage';
@@ -12,6 +12,7 @@ import Link from 'next/link';
 import Headline from '@/components/ui/Headline';
 import Container from '@/components/ui/container';
 import { Post, DirectusUser } from '@/types/directus-schema';
+import { getLocaleFromPath, addLocaleToPath } from '@/lib/i18n/utils';
 
 interface BlogPostClientProps {
 	post: Post;
@@ -24,6 +25,8 @@ interface BlogPostClientProps {
 export default function BlogPostClient({ post, relatedPosts, author, authorName, postUrl }: BlogPostClientProps) {
 	const { isVisualEditingEnabled, apply } = useVisualEditing();
 	const router = useRouter();
+	const pathname = usePathname();
+	const { locale } = getLocaleFromPath(pathname);
 
 	useEffect(() => {
 		if (isVisualEditingEnabled) {
@@ -133,7 +136,7 @@ export default function BlogPostClient({ post, relatedPosts, author, authorName,
 								{relatedPosts.map((relatedPost) => (
 									<Link
 										key={relatedPost.id}
-										href={`/blog/${relatedPost.slug}`}
+										href={addLocaleToPath(`/blog/${relatedPost.slug}`, locale)}
 										className="flex items-center space-x-4 hover:text-accent group"
 									>
 										{relatedPost.image && (

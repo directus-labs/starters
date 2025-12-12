@@ -1,5 +1,7 @@
 import { useDirectus } from '@/lib/directus/directus';
 import type { MetadataRoute } from 'next';
+import { readItems } from '@directus/sdk';
+import { addLocaleToPath } from '@/lib/i18n/utils';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -26,23 +28,61 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			}),
 		);
 
-		const [pages, posts] = await Promise.all([pagesPromise, postsPromise]);
+		const languagesPromise = directus.request(
+			readItems('languages', {
+				fields: ['code'],
+				sort: ['code'],
+			}),
+		).catch(() => []);
 
-		const pageUrls = pages
-			.filter((page: { permalink: string; published_at: string | null | undefined }) => page.permalink)
-			.map((page: { permalink: string; published_at: string | null | undefined }) => ({
-				url: `${process.env.NEXT_PUBLIC_SITE_URL}${page.permalink}`,
-				lastModified: page.published_at || new Date().toISOString(),
-			}));
+		const [pages, posts, languages] = await Promise.all([
+			pagesPromise,
+			postsPromise,
+			languagesPromise,
+		]);
+		
+		const supportedLocales = (languages as Array<{ code: string }>).map((lang) => lang.code);
 
-		const postUrls = posts
-			.filter((post: { slug: string | null | undefined; published_at: string | null | undefined }) => post.slug)
-			.map((post: { slug: string | null | undefined; published_at: string | null | undefined }) => ({
-				url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}`,
-				lastModified: post.published_at || new Date().toISOString(),
-			}));
+		const sitemapEntries: MetadataRoute.Sitemap = [];
 
-		return [...pageUrls, ...postUrls];
+		// Generate sitemap entries for each locale
+		for (const locale of supportedLocales) {
+			// Add page URLs
+			const pageUrls = pages
+				.filter((page: { permalink: string; published_at: string | null | undefined }) => page.permalink)
+				.map((page: { permalink: string; published_at: string | null | undefined }) => ({
+					url: `${siteUrl}${addLocaleToPath(page.permalink, locale)}`,
+					lastModified: page.published_at || new Date().toISOString(),
+					alternates: {
+						languages: Object.fromEntries(
+							supportedLocales.map((altLocale) => [
+								altLocale,
+								`${siteUrl}${addLocaleToPath(page.permalink, altLocale)}`,
+							]),
+						),
+					},
+				}));
+
+			// Add post URLs
+			const postUrls = posts
+				.filter((post: { slug: string | null | undefined; published_at: string | null | undefined }) => post.slug)
+				.map((post: { slug: string | null | undefined; published_at: string | null | undefined }) => ({
+					url: `${siteUrl}${addLocaleToPath(`/blog/${post.slug}`, locale)}`,
+					lastModified: post.published_at || new Date().toISOString(),
+					alternates: {
+						languages: Object.fromEntries(
+							supportedLocales.map((altLocale) => [
+								altLocale,
+								`${siteUrl}${addLocaleToPath(`/blog/${post.slug}`, altLocale)}`,
+							]),
+						),
+					},
+				}));
+
+			sitemapEntries.push(...pageUrls, ...postUrls);
+		}
+
+		return sitemapEntries;
 	} catch (error) {
 		console.error('Error generating sitemap:', error);
 		throw new Error('Failed to generate sitemap');

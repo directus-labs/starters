@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { ChevronFirst, ChevronLast } from 'lucide-react';
 import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
@@ -19,6 +19,7 @@ import {
 import { Post } from '@/types/directus-schema';
 import { fetchPaginatedPosts, fetchTotalPostCount } from '@/lib/directus/fetchers';
 import { setAttr } from '@directus/visual-editing';
+import { getLocaleFromPath, addLocaleToPath } from '@/lib/i18n/utils';
 
 interface PostsProps {
 	data: {
@@ -34,6 +35,8 @@ const Posts = ({ data }: PostsProps) => {
 	const { tagline, headline, posts, limit, id } = data;
 	const router = useRouter();
 	const searchParams = useSearchParams();
+	const pathname = usePathname();
+	const { locale } = getLocaleFromPath(pathname);
 	const visiblePages = 5;
 	const initialPage = Number(searchParams.get('page')) || 1;
 	const perPage = limit || 6;
@@ -63,7 +66,7 @@ const Posts = ({ data }: PostsProps) => {
 
 					return;
 				}
-				const response = await fetchPaginatedPosts(perPage, currentPage);
+				const response = await fetchPaginatedPosts(perPage, currentPage, locale);
 				setPaginatedPosts(response || []);
 			} catch (error) {
 				console.error('Error fetching paginated posts:', error);
@@ -136,7 +139,11 @@ const Posts = ({ data }: PostsProps) => {
 			>
 				{paginatedPosts && paginatedPosts.length > 0 ? (
 					paginatedPosts.map((post) => (
-						<Link key={post.id} href={`/blog/${post.slug}`} className="group block overflow-hidden rounded-lg">
+						<Link
+							key={post.id}
+							href={addLocaleToPath(`/blog/${post.slug}`, locale)}
+							className="group block overflow-hidden rounded-lg"
+						>
 							<div className="relative w-full h-64 rounded-lg overflow-hidden">
 								{post.image && (
 									<DirectusImage

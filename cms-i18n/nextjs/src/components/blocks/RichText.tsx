@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import Text from '@/components/ui/Text';
 import { setAttr } from '@directus/visual-editing';
+import { getLocaleFromPath, addLocaleToPath } from '@/lib/i18n/utils';
 
 interface RichTextProps {
 	data: {
@@ -23,6 +24,8 @@ const RichText = ({ data, className }: RichTextProps) => {
 	const { id, tagline, headline, content, alignment = 'left' } = data;
 
 	const router = useRouter();
+	const pathname = usePathname();
+	const { locale } = getLocaleFromPath(pathname);
 
 	useEffect(() => {
 		const container = document.querySelector('.prose');
@@ -30,10 +33,11 @@ const RichText = ({ data, className }: RichTextProps) => {
 
 		links?.forEach((link) => {
 			const href = link.getAttribute('href');
-			if (href && href.startsWith('/')) {
+			if (href && href.startsWith('/') && !href.startsWith('//')) {
 				link.onclick = (event) => {
 					event.preventDefault();
-					router.push(href);
+					const localizedHref = addLocaleToPath(href, locale);
+					router.push(localizedHref);
 				};
 			}
 		});
