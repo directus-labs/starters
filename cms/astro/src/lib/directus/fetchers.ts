@@ -206,6 +206,7 @@ export const fetchSiteData = async () => {
               items: [
                 'id',
                 'title',
+                'url',
                 {
                   page: ['permalink'],
                   children: ['id', 'title', 'url', { page: ['permalink'] }],
@@ -225,6 +226,7 @@ export const fetchSiteData = async () => {
               items: [
                 'id',
                 'title',
+                'url',
                 {
                   page: ['permalink'],
                   children: ['id', 'title', 'url', { page: ['permalink'] }],
