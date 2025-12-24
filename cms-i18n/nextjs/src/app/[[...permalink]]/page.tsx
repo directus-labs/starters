@@ -7,6 +7,9 @@ import { useDirectus } from '@/lib/directus/directus';
 import { readItems } from '@directus/sdk';
 import { addLocaleToPath } from '@/lib/i18n/utils';
 
+/**
+ * Generates page metadata with locale-specific content and alternate language links.
+ */
 export async function generateMetadata({
 	params,
 	searchParams,
@@ -23,7 +26,6 @@ export async function generateMetadata({
 	const preview = searchParamsResolved.preview === 'true';
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
 
-	// Skip metadata generation for preview/versioned content
 	if (preview || version) {
 		return {
 			title: 'Preview Mode',
@@ -39,7 +41,6 @@ export async function generateMetadata({
 		const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
 		const localizedPath = addLocaleToPath(resolvedPermalink, locale);
 
-		// Generate alternate language links
 		const { directus } = useDirectus();
 		const languages = await directus.request(
 			readItems('languages', {
@@ -114,7 +115,6 @@ export default async function Page({
 			}
 			page = await fetchPageDataById(pageId, fixedVersion, token || undefined, locale);
 		} else {
-			// Regular page fetch (published or draft with preview)
 			page = await fetchPageData(resolvedPermalink, 1, token || undefined, preview, locale);
 		}
 

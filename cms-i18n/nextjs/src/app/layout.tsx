@@ -7,11 +7,8 @@ import VisualEditingLayout from '@/components/layout/VisualEditingLayout';
 import { ThemeProvider } from '@/components/ui/ThemeProvider';
 import { fetchSiteData } from '@/lib/directus/fetchers';
 import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
-import { getLocaleFromHeaders } from '@/lib/i18n/server';
-import { getLocaleCode } from '@/lib/i18n/config';
-import { useDirectus } from '@/lib/directus/directus';
-import { readItems } from '@directus/sdk';
-import type { Language } from '@/types/directus-schema';
+import { getLocaleFromHeaders, getLanguagesFromDirectus } from '@/lib/i18n/server';
+import { getLocaleCode, DEFAULT_LOCALE, type Locale } from '@/lib/i18n/config';
 
 export async function generateMetadata(): Promise<Metadata> {
 	const locale = await getLocaleFromHeaders();
@@ -36,49 +33,38 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: { children: ReactNode }) {
 	const locale = await getLocaleFromHeaders();
 	const localeCode = getLocaleCode(locale);
-	const { directus } = useDirectus();
-	
-	// Fetch languages from Directus for language switcher
-	const [siteData, languages] = await Promise.all([
+
+	const [siteData, { languages: languagesArray, directionMap }] = await Promise.all([
 		fetchSiteData(locale),
-		directus
-			.request(
-				readItems('languages', {
-					fields: ['code', 'name'],
-					sort: ['code'],
-				}),
-			)
-			.catch((error) => {
-				console.error('Error fetching languages from Directus:', error);
-				// Return default language as fallback
-				return [{ code: 'en-US', name: 'English' }] as Language[];
-			}),
+		getLanguagesFromDirectus(),
 	]);
 
 	const { globals, headerNavigation, footerNavigation } = siteData;
-	const languagesArray = (languages as Language[]) || [];
-	
-	// Debug: Log languages to help troubleshoot
-	if (languagesArray.length === 0) {
-		console.warn('No languages fetched from Directus. Check permissions for the "languages" collection.');
+
+	const allLocales = languagesArray.map((lang) => lang.code);
+	if (!allLocales.includes(DEFAULT_LOCALE)) {
+		allLocales.unshift(DEFAULT_LOCALE);
 	}
-	
-	// Ensure we have at least the default locale
-	const supportedLocales =
-		languagesArray.length > 0
-			? languagesArray.map((lang) => lang.code)
-			: ['en-US'];
-	
+	const supportedLocales = allLocales.length > 0 ? allLocales : [DEFAULT_LOCALE];
+
 	const localeNames =
 		languagesArray.length > 0
-			? (Object.fromEntries(
-					languagesArray.map((lang) => [lang.code, lang.name || lang.code]),
-				) as Record<Locale, string>)
-			: ({ 'en-US': 'English' } as Record<Locale, string>);
+			? (Object.fromEntries([
+					[DEFAULT_LOCALE, 'English'],
+					...languagesArray.map((lang) => [lang.code, lang.name || lang.code]),
+				]) as Record<Locale, string>)
+			: ({ [DEFAULT_LOCALE]: 'English' } as Record<Locale, string>);
+
+	const direction = directionMap[locale] || 'ltr';
 	const accentColor = globals?.accent_color || '#6644ff';
 
 	return (
-		<html lang={localeCode} style={{ '--accent-color': accentColor } as React.CSSProperties} suppressHydrationWarning>
+		<html
+			lang={localeCode}
+			dir={direction}
+			style={{ '--accent-color': accentColor } as React.CSSProperties}
+			suppressHydrationWarning
+		>
 			<body className="antialiased font-sans flex flex-col min-h-screen">
 				<ThemeProvider>
 					<VisualEditingLayout

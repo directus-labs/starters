@@ -1,14 +1,15 @@
 /**
- * Simple locale configuration
- * Locale is extracted from URL path and used directly in Directus queries
+ * i18n Configuration
+ * URLs use short codes (en, es) while Directus uses full locale codes (en-US, es-ES).
+ * Default locale has no URL prefix for cleaner URLs.
+ *
+ * Languages come from Directus as the source of truth
  */
-
 export const DEFAULT_LOCALE = 'en-US';
-
 export type Locale = string;
 
 /**
- * Get locale code from locale string (e.g., 'en-US' -> 'en')
+ * Converts full locale to short code for URLs (e.g., 'en-US' -> 'en').
  */
 export function getLocaleCode(locale: Locale): string {
 	const parts = locale.split('-');
@@ -17,11 +18,25 @@ export function getLocaleCode(locale: Locale): string {
 }
 
 /**
- * Convert locale code to full locale format (e.g., 'en' -> 'en-US', 'fr' -> 'fr-FR')
- * This maps URL codes to Directus language codes
+ * Converts short URL code to full Directus locale.
+ * Uses provided mapping from Directus languages collection, or falls back to heuristic.
+ *
+ * @param code - Short code from URL (e.g., 'en', 'fr')
+ * @param localeMap - Optional mapping from short codes to full locale codes (from Directus)
+ * @returns Full locale code (e.g., 'en-US', 'fr-FR')
  */
-export function codeToLocale(code: string): Locale {
-	const codeMap: Record<string, Locale> = {
+export function codeToLocale(code: string, localeMap?: Record<string, Locale>): Locale {
+	const lowerCode = code.toLowerCase();
+
+	// If we have a mapping from Directus, use it
+	if (localeMap && localeMap[lowerCode]) {
+		return localeMap[lowerCode];
+	}
+
+	// Fallback: try to construct locale from code
+	// This handles cases where middleware runs before we can fetch from Directus
+	// Common patterns: en -> en-US, fr -> fr-FR, etc.
+	const commonPatterns: Record<string, Locale> = {
 		en: 'en-US',
 		fr: 'fr-FR',
 		es: 'es-ES',
@@ -29,7 +44,25 @@ export function codeToLocale(code: string): Locale {
 		it: 'it-IT',
 		pt: 'pt-BR',
 		ru: 'ru-RU',
+		ar: 'ar-SA',
 	};
 
-	return codeMap[code.toLowerCase()] || code;
+	return commonPatterns[lowerCode] || code;
+}
+
+/**
+ * Builds a mapping from short codes to full locale codes from Directus languages.
+ *
+ * @param languages - Array of languages from Directus
+ * @returns Mapping from short code to full locale code
+ */
+export function buildLocaleMap(languages: Array<{ code: string }>): Record<string, Locale> {
+	const map: Record<string, Locale> = {};
+
+	for (const lang of languages) {
+		const shortCode = getLocaleCode(lang.code);
+		map[shortCode] = lang.code;
+	}
+
+	return map;
 }

@@ -1,3 +1,6 @@
+/**
+ * Extracts locale from URL and sets x-locale header. Rewrites URL to remove locale prefix.
+ */
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getLocaleFromPath } from './lib/i18n/utils';
@@ -5,7 +8,6 @@ import { getLocaleFromPath } from './lib/i18n/utils';
 export function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 
-	// Skip middleware for static files, API routes (except search), and Next.js internals
 	if (
 		pathname.startsWith('/_next') ||
 		pathname.startsWith('/api/draft') ||
@@ -18,25 +20,20 @@ export function middleware(request: NextRequest) {
 		return NextResponse.next();
 	}
 
-	// Extract locale from path
 	const { locale, pathWithoutLocale } = getLocaleFromPath(pathname);
 
-	// Create a new URL with the path without locale
 	const url = request.nextUrl.clone();
 	url.pathname = pathWithoutLocale;
 
-	// Set locale in request headers for server components
 	const requestHeaders = new Headers(request.headers);
 	requestHeaders.set('x-locale', locale);
 
-	// Rewrite the request to the internal path structure
 	const response = NextResponse.rewrite(url, {
 		request: {
 			headers: requestHeaders,
 		},
 	});
 
-	// Set locale in response headers for client-side access
 	response.headers.set('x-locale', locale);
 
 	return response;

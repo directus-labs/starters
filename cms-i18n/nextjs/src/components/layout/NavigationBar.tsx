@@ -100,15 +100,17 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(
 											<NavigationMenuTrigger className="focus:outline-none">
 												<span className="font-heading text-nav">{section.title}</span>
 											</NavigationMenuTrigger>
-											<NavigationMenuContent className="absolute mt-2 min-w-[150px] rounded-md bg-background p-4 shadow-md">
+											<NavigationMenuContent className="min-w-[150px] rounded-md bg-background p-4 shadow-md">
 												<ul className="flex flex-col gap-2 pb-4">
 													{section.children.map((child: any) => (
 														<li key={child.id}>
-															<NavigationMenuLink
-																href={getLocalizedLink(child.page?.permalink, child.url)}
-																className="font-heading text-nav"
-															>
-																{child.title}
+															<NavigationMenuLink asChild>
+																<Link
+																	href={getLocalizedLink(child.page?.permalink, child.url)}
+																	className="font-heading text-nav hover:text-accent"
+																>
+																	{child.title}
+																</Link>
 															</NavigationMenuLink>
 														</li>
 													))}
@@ -116,11 +118,13 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(
 											</NavigationMenuContent>
 										</>
 									) : (
-										<NavigationMenuLink
-											href={getLocalizedLink(section.page?.permalink, section.url)}
-											className="font-heading text-nav"
-										>
-											{section.title}
+										<NavigationMenuLink asChild>
+											<Link
+												href={getLocalizedLink(section.page?.permalink, section.url)}
+												className="font-heading text-nav"
+											>
+												{section.title}
+											</Link>
 										</NavigationMenuLink>
 									)}
 								</NavigationMenuItem>

@@ -1,3 +1,6 @@
+/**
+ * Language switcher component. Uses full page reload to ensure server components re-fetch with new locale.
+ */
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
@@ -10,7 +13,8 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { Globe } from 'lucide-react';
+import { Globe, Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface LanguageSwitcherProps {
 	currentLocale: Locale;
@@ -18,30 +22,25 @@ interface LanguageSwitcherProps {
 	localeNames: Record<Locale, string>;
 }
 
-export default function LanguageSwitcher({
-	currentLocale,
-	supportedLocales,
-	localeNames,
-}: LanguageSwitcherProps) {
+export default function LanguageSwitcher({ currentLocale, supportedLocales, localeNames }: LanguageSwitcherProps) {
 	const pathname = usePathname();
 	const router = useRouter();
 
 	const handleLanguageChange = (newLocale: Locale) => {
 		if (newLocale === currentLocale) return;
 
-		// Get the current path without locale
 		const pathWithoutLocale = removeLocaleFromPath(pathname);
-		
-		// Add the new locale to the path
 		const newPath = addLocaleToPath(pathWithoutLocale, newLocale);
-		
-		// Navigate to the new path
-		router.push(newPath);
+
+		window.location.href = newPath;
 	};
 
-	// Ensure we have at least the current locale
-	const locales = supportedLocales.length > 0 ? supportedLocales : [currentLocale];
-	const names = Object.keys(localeNames).length > 0 ? localeNames : { [currentLocale]: 'English' };
+	const allLocales = [DEFAULT_LOCALE, ...supportedLocales.filter((locale) => locale !== DEFAULT_LOCALE)];
+	const locales = allLocales.length > 0 ? allLocales : [currentLocale];
+	const names: Record<Locale, string> =
+		Object.keys(localeNames).length > 0
+			? { [DEFAULT_LOCALE]: 'English', ...localeNames }
+			: { [currentLocale]: 'English' };
 
 	return (
 		<DropdownMenu>
@@ -51,7 +50,7 @@ export default function LanguageSwitcher({
 					<span className="sr-only">Change language</span>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end" className="min-w-[150px]">
+			<DropdownMenuContent align="end" className="w-auto min-w-fit">
 				{locales.length > 0 ? (
 					locales.map((locale) => {
 						const isActive = locale === currentLocale;
@@ -60,10 +59,10 @@ export default function LanguageSwitcher({
 							<DropdownMenuItem
 								key={locale}
 								onClick={() => handleLanguageChange(locale)}
-								className={isActive ? 'bg-accent' : ''}
+								className={cn(isActive ? 'text-accent' : 'hover:text-accent cursor-pointer', 'px-3 py-1.5')}
 							>
-								{displayName}
-								{isActive && <span className="ml-auto text-xs">✓</span>}
+								<span className="whitespace-nowrap">{displayName}</span>
+								{isActive && <Check className="ml-2 size-4 shrink-0" />}
 							</DropdownMenuItem>
 						);
 					})
@@ -74,6 +73,3 @@ export default function LanguageSwitcher({
 		</DropdownMenu>
 	);
 }
-
-
-
