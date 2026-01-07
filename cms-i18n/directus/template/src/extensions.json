@@ -326,26 +326,11 @@
     }
   },
   {
-    "id": "05a02e12-b64d-40e1-a375-51aa48308f7e",
+    "id": "9549b551-6d6e-4b3f-abd1-8e3bfa61c28b",
     "bundle": "af053cdb-242e-4142-a053-e3e23d7658e5",
     "meta": {
       "enabled": true,
-      "id": "05a02e12-b64d-40e1-a375-51aa48308f7e",
-      "folder": "radio-cards-interface",
-      "source": "registry",
-      "bundle": "af053cdb-242e-4142-a053-e3e23d7658e5"
-    },
-    "schema": {
-      "name": "radio-cards-interface",
-      "type": "interface"
-    }
-  },
-  {
-    "id": "4a8b186c-c250-4d92-ae68-eeb6309e0c2e",
-    "bundle": "af053cdb-242e-4142-a053-e3e23d7658e5",
-    "meta": {
-      "enabled": true,
-      "id": "4a8b186c-c250-4d92-ae68-eeb6309e0c2e",
+      "id": "9549b551-6d6e-4b3f-abd1-8e3bfa61c28b",
       "folder": "image-uuid-interface",
       "source": "registry",
       "bundle": "af053cdb-242e-4142-a053-e3e23d7658e5"
@@ -356,26 +341,26 @@
     }
   },
   {
-    "id": "86ee40f6-6e28-40f8-b675-150970f622ee",
-    "bundle": "6d5e25af-4c3e-4c81-8a42-d7b6f66c9703",
+    "id": "ac4cf7e0-4e32-4071-a139-d63c0cbad5af",
+    "bundle": "af053cdb-242e-4142-a053-e3e23d7658e5",
     "meta": {
       "enabled": true,
-      "id": "86ee40f6-6e28-40f8-b675-150970f622ee",
-      "folder": "seo-interface",
+      "id": "ac4cf7e0-4e32-4071-a139-d63c0cbad5af",
+      "folder": "radio-cards-interface",
       "source": "registry",
-      "bundle": "6d5e25af-4c3e-4c81-8a42-d7b6f66c9703"
+      "bundle": "af053cdb-242e-4142-a053-e3e23d7658e5"
     },
     "schema": {
-      "name": "seo-interface",
+      "name": "radio-cards-interface",
       "type": "interface"
     }
   },
   {
-    "id": "9522b938-1ea9-4ad9-a694-c041ad632efb",
+    "id": "c7c8d391-4ba0-4845-814a-ace3eb0c64a9",
     "bundle": "6d5e25af-4c3e-4c81-8a42-d7b6f66c9703",
     "meta": {
       "enabled": true,
-      "id": "9522b938-1ea9-4ad9-a694-c041ad632efb",
+      "id": "c7c8d391-4ba0-4845-814a-ace3eb0c64a9",
       "folder": "seo-display",
       "source": "registry",
       "bundle": "6d5e25af-4c3e-4c81-8a42-d7b6f66c9703"
@@ -386,11 +371,26 @@
     }
   },
   {
-    "id": "f0d15a4b-07b2-480b-ae21-829b7ec29773",
+    "id": "d071d5fe-f339-4968-a19a-e9534f51329e",
+    "bundle": "6d5e25af-4c3e-4c81-8a42-d7b6f66c9703",
+    "meta": {
+      "enabled": true,
+      "id": "d071d5fe-f339-4968-a19a-e9534f51329e",
+      "folder": "seo-interface",
+      "source": "registry",
+      "bundle": "6d5e25af-4c3e-4c81-8a42-d7b6f66c9703"
+    },
+    "schema": {
+      "name": "seo-interface",
+      "type": "interface"
+    }
+  },
+  {
+    "id": "f55da5ed-ba35-4bb9-9912-8f7079fbc867",
     "bundle": "af053cdb-242e-4142-a053-e3e23d7658e5",
     "meta": {
       "enabled": true,
-      "id": "f0d15a4b-07b2-480b-ae21-829b7ec29773",
+      "id": "f55da5ed-ba35-4bb9-9912-8f7079fbc867",
       "folder": "checkbox-cards-interface",
       "source": "registry",
       "bundle": "af053cdb-242e-4142-a053-e3e23d7658e5"

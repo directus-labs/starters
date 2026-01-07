@@ -4,9 +4,9 @@
     "id": "34fdcf0e-cc5d-4c40-b61f-4f0a5e167306",
     "tagline": "Template Gallery",
     "date_created": "2025-05-07T01:25:08.962Z",
-    "user_created": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8",
-    "date_updated": "2025-10-27T19:32:04.832Z",
-    "user_updated": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "date_updated": "2025-12-22T19:53:38.622Z",
+    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
     "items": [
       "1dbac868-e2cc-4930-9f21-5e0dd1b40e52",
       "2a0369dc-1b43-4d5a-9832-d180a0aa0295",
@@ -15,6 +15,14 @@
       "d3481aae-7dc4-446f-8b68-50e77aab58da",
       "1f520e55-4054-47f9-896a-baf2787ec007"
     ],
-    "translations": []
+    "translations": [
+      "325c6078-0d47-4cbb-8e10-271683538db7",
+      "912a0c3d-26bb-4695-980c-b3e1158282c4",
+      "e367eb95-db41-4609-aede-8a1177467f1d",
+      "2aac0ac6-8e1c-4917-9586-999ef3516364",
+      "669c6f6b-53c7-4900-803d-79641ee6a19c",
+      "dc95add0-9703-47c8-99bb-4903e3f2aed4",
+      "5c7c550f-b48f-43eb-8caf-51d565ca72c2"
+    ]
   }
 ]

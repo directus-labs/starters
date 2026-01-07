@@ -36,8 +36,8 @@
       "dateField": "timestamp",
       "valueField": "id"
     },
-    "date_created": "2025-10-27T19:32:10.082Z",
-    "user_created": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8"
+    "date_created": "2025-12-22T19:48:34.294Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
   },
   {
     "id": "19b3d901-aa7c-4a04-bc9a-800e43510e69",
@@ -59,8 +59,8 @@
       "linkToItem": true,
       "displayTemplate": "{{timestamp}} • {{values}} • {{form}}"
     },
-    "date_created": "2025-10-27T19:32:10.190Z",
-    "user_created": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8"
+    "date_created": "2025-12-22T19:48:34.398Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
   },
   {
     "id": "3861ceb1-11ff-4e9d-a985-60d862d90aa3",
@@ -84,8 +84,8 @@
         "use24": false
       }
     },
-    "date_created": "2025-10-27T19:32:10.280Z",
-    "user_created": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8"
+    "date_created": "2025-12-22T19:48:34.500Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
   },
   {
     "id": "53575d2f-e3a0-4532-a176-d047cbbc11a7",
@@ -116,8 +116,8 @@
         ]
       }
     },
-    "date_created": "2025-10-27T19:32:10.381Z",
-    "user_created": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8"
+    "date_created": "2025-12-22T19:48:34.601Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
   },
   {
     "id": "8cb3b63c-d8e3-4078-9160-096e32b9fcb0",
@@ -138,8 +138,8 @@
       "function": "count",
       "sortField": null
     },
-    "date_created": "2025-10-27T19:32:10.481Z",
-    "user_created": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8"
+    "date_created": "2025-12-22T19:48:34.700Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
   },
   {
     "id": "b770ea7e-1b49-441f-ba6f-2d4b90e08070",
@@ -157,8 +157,8 @@
     "options": {
       "text": "Form Dashboard"
     },
-    "date_created": "2025-10-27T19:32:10.580Z",
-    "user_created": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8"
+    "date_created": "2025-12-22T19:48:34.797Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
   },
   {
     "id": "dc01026c-1728-4e71-ab45-7cea9fc4751c",
@@ -182,7 +182,7 @@
         "use24": false
       }
     },
-    "date_created": "2025-10-27T19:32:10.683Z",
-    "user_created": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8"
+    "date_created": "2025-12-22T19:48:34.900Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
   }
 ]

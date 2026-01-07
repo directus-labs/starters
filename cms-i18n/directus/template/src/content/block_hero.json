@@ -8,9 +8,19 @@
     "tagline": "CMS",
     "layout": "image_right",
     "date_created": "2025-05-07T01:22:17.909Z",
-    "user_created": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8",
-    "date_updated": "2025-10-27T19:32:05.033Z",
-    "user_updated": "f87c7b92-63fe-4ca2-b6f1-f26ed7232ca8",
-    "translations": []
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "date_updated": "2025-12-23T22:43:19.758Z",
+    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "translations": [
+      "ae25ee67-039e-4bf6-99e3-afd4d4102f60",
+      "ebec46f1-a212-40fa-9510-3a9cbb58a5df",
+      "792196c6-0eb1-418f-9a59-29dec229ae1a",
+      "a974a573-48d8-41de-a50d-d49eda0b7c23",
+      "886f219a-0064-4802-9477-d96769008210",
+      "d15a47a0-b3ea-4287-ac8b-406957b16ed1",
+      "9b1b5bc1-8740-438b-8e04-b10ab2a926fe",
+      "6f3ac56e-988e-4dfe-880f-37c6f620bc9b",
+      "c43bae60-b019-4c6e-9c62-74e522e9b767"
+    ]
   }
 ]

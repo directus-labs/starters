@@ -85,10 +85,52 @@
       "singleton": false,
       "translations": [
         {
+          "language": "ar-SA",
+          "translation": "مجموعة الأزرار",
+          "singular": "مجموعة الأزرار",
+          "plural": "مجموعات الأزرار"
+        },
+        {
+          "language": "de-DE",
+          "translation": "Button-Gruppe",
+          "singular": "Button-Gruppe",
+          "plural": "Button-Gruppen"
+        },
+        {
           "language": "en-US",
           "translation": "Button Group",
           "singular": "Button Group",
           "plural": "Button Groups"
+        },
+        {
+          "language": "es-ES",
+          "translation": "Grupo de Botones",
+          "singular": "Grupo de Botones",
+          "plural": "Grupos de Botones"
+        },
+        {
+          "language": "fr-FR",
+          "translation": "Groupe de Boutons",
+          "singular": "Groupe de Boutons",
+          "plural": "Groupes de Boutons"
+        },
+        {
+          "language": "it-IT",
+          "translation": "Gruppo di Pulsanti",
+          "singular": "Gruppo di Pulsanti",
+          "plural": "Gruppi di Pulsanti"
+        },
+        {
+          "language": "pt-BR",
+          "translation": "Grupo de Botões",
+          "singular": "Grupo de Botões",
+          "plural": "Grupos de Botões"
+        },
+        {
+          "language": "ru-RU",
+          "translation": "Группа кнопок",
+          "singular": "Группа кнопок",
+          "plural": "Группы кнопок"
         }
       ],
       "archive_field": null,
@@ -161,8 +203,52 @@
       "singleton": false,
       "translations": [
         {
+          "language": "ar-SA",
+          "translation": "نموذج",
+          "singular": "نموذج",
+          "plural": "نموذج"
+        },
+        {
+          "language": "de-DE",
+          "translation": "Formular",
+          "singular": "Formular",
+          "plural": "Formular"
+        },
+        {
           "language": "en-US",
-          "translation": "Form"
+          "translation": "Form",
+          "singular": "Form",
+          "plural": "Form"
+        },
+        {
+          "language": "es-ES",
+          "translation": "Formulario",
+          "singular": "Formulario",
+          "plural": "Formulario"
+        },
+        {
+          "language": "fr-FR",
+          "translation": "Formulaire",
+          "singular": "Formulaire",
+          "plural": "Formulaire"
+        },
+        {
+          "language": "it-IT",
+          "translation": "Modulo",
+          "singular": "Modulo",
+          "plural": "Modulo"
+        },
+        {
+          "language": "pt-BR",
+          "translation": "Formulário",
+          "singular": "Formulário",
+          "plural": "Formulário"
+        },
+        {
+          "language": "ru-RU",
+          "translation": "Форма",
+          "singular": "Форма",
+          "plural": "Форма"
         }
       ],
       "archive_field": null,
@@ -230,10 +316,52 @@
       "singleton": false,
       "translations": [
         {
+          "language": "ar-SA",
+          "translation": "معرض",
+          "singular": "معرض",
+          "plural": "معرض"
+        },
+        {
+          "language": "de-DE",
+          "translation": "Galerie",
+          "singular": "Galerie",
+          "plural": "Galerie"
+        },
+        {
           "language": "en-US",
           "translation": "Gallery",
           "singular": "Gallery",
           "plural": "Gallery"
+        },
+        {
+          "language": "es-ES",
+          "translation": "Galería",
+          "singular": "Galería",
+          "plural": "Galería"
+        },
+        {
+          "language": "fr-FR",
+          "translation": "Galerie",
+          "singular": "Galerie",
+          "plural": "Galerie"
+        },
+        {
+          "language": "it-IT",
+          "translation": "Galleria",
+          "singular": "Galleria",
+          "plural": "Galleria"
+        },
+        {
+          "language": "pt-BR",
+          "translation": "Galeria",
+          "singular": "Galeria",
+          "plural": "Galeria"
+        },
+        {
+          "language": "ru-RU",
+          "translation": "Галерея",
+          "singular": "Галерея",
+          "plural": "Галерея"
         }
       ],
       "archive_field": null,
@@ -338,7 +466,49 @@
       "singleton": false,
       "translations": [
         {
+          "language": "ar-SA",
+          "translation": "البطل",
+          "singular": "بطل",
+          "plural": "البطل"
+        },
+        {
+          "language": "de-DE",
+          "translation": "Hero",
+          "singular": "Hero",
+          "plural": "Hero"
+        },
+        {
           "language": "en-US",
+          "translation": "Hero",
+          "singular": "Hero",
+          "plural": "Hero"
+        },
+        {
+          "language": "es-ES",
+          "translation": "Hero",
+          "singular": "Hero",
+          "plural": "Hero"
+        },
+        {
+          "language": "fr-FR",
+          "translation": "Hero",
+          "singular": "Hero",
+          "plural": "Hero"
+        },
+        {
+          "language": "it-IT",
+          "translation": "Hero",
+          "singular": "Hero",
+          "plural": "Hero"
+        },
+        {
+          "language": "pt-BR",
+          "translation": "Hero",
+          "singular": "Hero",
+          "plural": "Hero"
+        },
+        {
+          "language": "ru-RU",
           "translation": "Hero",
           "singular": "Hero",
           "plural": "Hero"
@@ -419,8 +589,52 @@
       "singleton": false,
       "translations": [
         {
+          "language": "ar-SA",
+          "translation": "المنشورات",
+          "singular": "منشورات",
+          "plural": "المنشورات"
+        },
+        {
+          "language": "de-DE",
+          "translation": "Beiträge",
+          "singular": "Beiträge",
+          "plural": "Beiträge"
+        },
+        {
           "language": "en-US",
-          "translation": "Posts"
+          "translation": "Posts",
+          "singular": "Posts",
+          "plural": "Posts"
+        },
+        {
+          "language": "es-ES",
+          "translation": "Artículos",
+          "singular": "Artículos",
+          "plural": "Artículos"
+        },
+        {
+          "language": "fr-FR",
+          "translation": "Articles",
+          "singular": "Articles",
+          "plural": "Articles"
+        },
+        {
+          "language": "it-IT",
+          "translation": "Post",
+          "singular": "Post",
+          "plural": "Post"
+        },
+        {
+          "language": "pt-BR",
+          "translation": "Posts",
+          "singular": "Posts",
+          "plural": "Posts"
+        },
+        {
+          "language": "ru-RU",
+          "translation": "Посты",
+          "singular": "Посты",
+          "plural": "Посты"
         }
       ],
       "archive_field": null,
@@ -489,8 +703,52 @@
       "singleton": false,
       "translations": [
         {
+          "language": "ar-SA",
+          "translation": "التسعير",
+          "singular": "تسعير",
+          "plural": "التسعير"
+        },
+        {
+          "language": "de-DE",
+          "translation": "Preise",
+          "singular": "Preise",
+          "plural": "Preise"
+        },
+        {
           "language": "en-US",
-          "translation": "Pricing"
+          "translation": "Pricing",
+          "singular": "Pricing",
+          "plural": "Pricing"
+        },
+        {
+          "language": "es-ES",
+          "translation": "Precios",
+          "singular": "Precios",
+          "plural": "Precios"
+        },
+        {
+          "language": "fr-FR",
+          "translation": "Tarification",
+          "singular": "Tarification",
+          "plural": "Tarification"
+        },
+        {
+          "language": "it-IT",
+          "translation": "Prezzi",
+          "singular": "Prezzi",
+          "plural": "Prezzi"
+        },
+        {
+          "language": "pt-BR",
+          "translation": "Preços",
+          "singular": "Preços",
+          "plural": "Preços"
+        },
+        {
+          "language": "ru-RU",
+          "translation": "Цены",
+          "singular": "Цены",
+          "plural": "Цены"
         }
       ],
       "archive_field": null,
@@ -636,10 +894,52 @@
       "singleton": false,
       "translations": [
         {
+          "language": "ar-SA",
+          "translation": "نص منسق",
+          "singular": "نص منسق",
+          "plural": "نص منسق"
+        },
+        {
+          "language": "de-DE",
+          "translation": "Rich Text",
+          "singular": "Rich Text",
+          "plural": "Rich Text"
+        },
+        {
           "language": "en-US",
           "translation": "Rich Text",
           "singular": "Rich Text",
           "plural": "Rich Text"
+        },
+        {
+          "language": "es-ES",
+          "translation": "Texto Enriquecido",
+          "singular": "Texto Enriquecido",
+          "plural": "Texto Enriquecido"
+        },
+        {
+          "language": "fr-FR",
+          "translation": "Texte Enrichi",
+          "singular": "Texte Enrichi",
+          "plural": "Texte Enrichi"
+        },
+        {
+          "language": "it-IT",
+          "translation": "Testo Formattato",
+          "singular": "Testo Formattato",
+          "plural": "Testo Formattato"
+        },
+        {
+          "language": "pt-BR",
+          "translation": "Texto Rico",
+          "singular": "Texto Rico",
+          "plural": "Texto Rico"
+        },
+        {
+          "language": "ru-RU",
+          "translation": "Форматированный текст",
+          "singular": "Форматированный текст",
+          "plural": "Форматированный текст"
         }
       ],
       "archive_field": null,
@@ -792,7 +1092,56 @@
       "display_template": "{{title}}",
       "hidden": false,
       "singleton": false,
-      "translations": null,
+      "translations": [
+        {
+          "language": "ar-SA",
+          "translation": "النماذج",
+          "singular": "نموذج",
+          "plural": "النماذج"
+        },
+        {
+          "language": "de-DE",
+          "translation": "Formulare",
+          "singular": "Formular",
+          "plural": "Formulare"
+        },
+        {
+          "language": "en-US",
+          "translation": "Forms",
+          "singular": "Form",
+          "plural": "Forms"
+        },
+        {
+          "language": "es-ES",
+          "translation": "Formularios",
+          "singular": "Formulario",
+          "plural": "Formularios"
+        },
+        {
+          "language": "fr-FR",
+          "translation": "Formulaires",
+          "singular": "Formulaire",
+          "plural": "Formulaires"
+        },
+        {
+          "language": "it-IT",
+          "translation": "Moduli",
+          "singular": "Modulo",
+          "plural": "Moduli"
+        },
+        {
+          "language": "pt-BR",
+          "translation": "Formulários",
+          "singular": "Formulário",
+          "plural": "Formulários"
+        },
+        {
+          "language": "ru-RU",
+          "translation": "Формы",
+          "singular": "Форма",
+          "plural": "Формы"
+        }
+      ],
       "archive_field": "is_active",
       "archive_app_filter": true,
       "archive_value": "false",
@@ -819,6 +1168,36 @@
     "schema": {
       "schema": "public",
       "name": "forms",
+      "comment": null
+    }
+  },
+  {
+    "collection": "forms_translations",
+    "meta": {
+      "collection": "forms_translations",
+      "icon": "translate",
+      "note": null,
+      "display_template": null,
+      "hidden": true,
+      "singleton": false,
+      "translations": null,
+      "archive_field": "status",
+      "archive_app_filter": true,
+      "archive_value": "archived",
+      "unarchive_value": "draft",
+      "sort_field": "sort",
+      "accountability": "all",
+      "color": null,
+      "item_duplication_fields": null,
+      "sort": null,
+      "group": "forms",
+      "collapse": "open",
+      "preview_url": null,
+      "versioning": false
+    },
+    "schema": {
+      "schema": "public",
+      "name": "forms_translations",
       "comment": null
     }
   },
@@ -896,7 +1275,56 @@
       "display_template": null,
       "hidden": false,
       "singleton": true,
-      "translations": null,
+      "translations": [
+        {
+          "language": "ar-SA",
+          "translation": "العامة",
+          "singular": "عام",
+          "plural": "العامة"
+        },
+        {
+          "language": "de-DE",
+          "translation": "Globale",
+          "singular": "Global",
+          "plural": "Globale"
+        },
+        {
+          "language": "en-US",
+          "translation": "Globals",
+          "singular": "Global",
+          "plural": "Globals"
+        },
+        {
+          "language": "es-ES",
+          "translation": "Globales",
+          "singular": "Global",
+          "plural": "Globales"
+        },
+        {
+          "language": "fr-FR",
+          "translation": "Globaux",
+          "singular": "Global",
+          "plural": "Globaux"
+        },
+        {
+          "language": "it-IT",
+          "translation": "Globali",
+          "singular": "Globale",
+          "plural": "Globali"
+        },
+        {
+          "language": "pt-BR",
+          "translation": "Globais",
+          "singular": "Global",
+          "plural": "Globais"
+        },
+        {
+          "language": "ru-RU",
+          "translation": "Глобальные",
+          "singular": "Глобальный",
+          "plural": "Глобальные"
+        }
+      ],
       "archive_field": null,
       "archive_app_filter": true,
       "archive_value": null,
@@ -986,7 +1414,56 @@
       "display_template": null,
       "hidden": false,
       "singleton": false,
-      "translations": null,
+      "translations": [
+        {
+          "language": "ar-SA",
+          "translation": "التنقل",
+          "singular": "تنقل",
+          "plural": "التنقل"
+        },
+        {
+          "language": "de-DE",
+          "translation": "Navigation",
+          "singular": "Navigation",
+          "plural": "Navigation"
+        },
+        {
+          "language": "en-US",
+          "translation": "Navigation",
+          "singular": "Navigation",
+          "plural": "Navigation"
+        },
+        {
+          "language": "es-ES",
+          "translation": "Navegación",
+          "singular": "Navegación",
+          "plural": "Navegación"
+        },
+        {
+          "language": "fr-FR",
+          "translation": "Navigation",
+          "singular": "Navigation",
+          "plural": "Navigation"
+        },
+        {
+          "language": "it-IT",
+          "translation": "Navigazione",
+          "singular": "Navigazione",
+          "plural": "Navigazione"
+        },
+        {
+          "language": "pt-BR",
+          "translation": "Navegação",
+          "singular": "Navegação",
+          "plural": "Navegação"
+        },
+        {
+          "language": "ru-RU",
+          "translation": "Навигация",
+          "singular": "Навигация",
+          "plural": "Навигация"
+        }
+      ],
       "archive_field": "is_active",
       "archive_app_filter": true,
       "archive_value": "false",
@@ -1176,7 +1653,56 @@
       "display_template": "{{title}}",
       "hidden": false,
       "singleton": false,
-      "translations": null,
+      "translations": [
+        {
+          "language": "ar-SA",
+          "translation": "الصفحات",
+          "singular": "صفحة",
+          "plural": "الصفحات"
+        },
+        {
+          "language": "de-DE",
+          "translation": "Seiten",
+          "singular": "Seite",
+          "plural": "Seiten"
+        },
+        {
+          "language": "en-US",
+          "translation": "Pages",
+          "singular": "Page",
+          "plural": "Pages"
+        },
+        {
+          "language": "es-ES",
+          "translation": "Páginas",
+          "singular": "Página",
+          "plural": "Páginas"
+        },
+        {
+          "language": "fr-FR",
+          "translation": "Pages",
+          "singular": "Page",
+          "plural": "Pages"
+        },
+        {
+          "language": "it-IT",
+          "translation": "Pagine",
+          "singular": "Pagina",
+          "plural": "Pagine"
+        },
+        {
+          "language": "pt-BR",
+          "translation": "Páginas",
+          "singular": "Página",
+          "plural": "Páginas"
+        },
+        {
+          "language": "ru-RU",
+          "translation": "Страницы",
+          "singular": "Страница",
+          "plural": "Страницы"
+        }
+      ],
       "archive_field": "status",
       "archive_app_filter": true,
       "archive_value": "archived",
@@ -1293,7 +1819,56 @@
       "display_template": "{{title}}",
       "hidden": false,
       "singleton": false,
-      "translations": null,
+      "translations": [
+        {
+          "language": "ar-SA",
+          "translation": "المنشورات",
+          "singular": "منشور",
+          "plural": "المنشورات"
+        },
+        {
+          "language": "de-DE",
+          "translation": "Beiträge",
+          "singular": "Beitrag",
+          "plural": "Beiträge"
+        },
+        {
+          "language": "en-US",
+          "translation": "Posts",
+          "singular": "Post",
+          "plural": "Posts"
+        },
+        {
+          "language": "es-ES",
+          "translation": "Artículos",
+          "singular": "Artículo",
+          "plural": "Artículos"
+        },
+        {
+          "language": "fr-FR",
+          "translation": "Articles",
+          "singular": "Article",
+          "plural": "Articles"
+        },
+        {
+          "language": "it-IT",
+          "translation": "Post",
+          "singular": "Post",
+          "plural": "Post"
+        },
+        {
+          "language": "pt-BR",
+          "translation": "Posts",
+          "singular": "Post",
+          "plural": "Posts"
+        },
+        {
+          "language": "ru-RU",
+          "translation": "Посты",
+          "singular": "Пост",
+          "plural": "Посты"
+        }
+      ],
       "archive_field": "status",
       "archive_app_filter": true,
       "archive_value": "archived",
