@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Post } from '#shared/types/schema';
 import { ChevronsLeft, ChevronsRight, ChevronLeft, ChevronRight } from 'lucide-vue-next';
+import { localizeLink } from '~/lib/i18n/utils';
 
 interface PostsProps {
 	data: {
@@ -17,6 +18,13 @@ const props = defineProps<PostsProps>();
 const route = useRoute();
 const router = useRouter();
 
+// Get locale from composable (handles SSR URL rewrite correctly)
+const { currentLocale } = useLocale();
+const locale = currentLocale.value;
+
+// Helper to localize internal paths using shared utility
+const localize = (path: string) => localizeLink(path, locale);
+
 const perPage = props.data.limit || 6;
 const currentPage = ref(Number(route.query.page) || 1);
 const visiblePages = 5;
@@ -25,8 +33,9 @@ const { data: postsData, error } = await useFetch<{
 	posts: Post[];
 	count: number;
 }>('/api/posts', {
-	key: `block-posts-${props.data?.id}-${currentPage.value}`,
-	query: { page: currentPage, limit: perPage },
+	key: `block-posts-${props.data?.id}-${currentPage.value}-${locale}`,
+	headers: { 'x-locale': locale },
+	query: { page: currentPage, limit: perPage, locale },
 	watch: [currentPage],
 });
 
@@ -67,7 +76,7 @@ const { setAttr } = useVisualEditing();
 			:data-directus="
 				setAttr({
 					collection: 'block_posts',
-					item: data.id,
+					item: data.id || null,
 					fields: 'tagline',
 					mode: 'popover',
 				})
@@ -76,7 +85,9 @@ const { setAttr } = useVisualEditing();
 		<Headline
 			v-if="data.headline"
 			:headline="data.headline"
-			:data-directus="setAttr({ collection: 'block_posts', item: data.id, fields: 'headline', mode: 'popover' })"
+			:data-directus="
+				setAttr({ collection: 'block_posts', item: data.id || null, fields: 'headline', mode: 'popover' })
+			"
 		/>
 
 		<div
@@ -84,7 +95,7 @@ const { setAttr } = useVisualEditing();
 			:data-directus="
 				setAttr({
 					collection: 'block_posts',
-					item: data.id,
+					item: data.id || null,
 					fields: ['collection', 'limit'],
 					mode: 'popover',
 				})
@@ -94,7 +105,7 @@ const { setAttr } = useVisualEditing();
 				<NuxtLink
 					v-for="post in posts"
 					:key="post.id"
-					:to="`/blog/${post.slug}`"
+					:to="localize(`/blog/${post.slug}`)"
 					class="group block overflow-hidden rounded-lg"
 				>
 					<div class="relative w-full h-[256px] overflow-hidden rounded-lg">

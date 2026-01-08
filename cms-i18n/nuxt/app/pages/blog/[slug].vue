@@ -1,18 +1,31 @@
 <script setup lang="ts">
 import type { Post, DirectusUser } from '#shared/types/schema';
+import { localizeLink, addLocaleToPath } from '~/lib/i18n/utils';
+import { DEFAULT_LOCALE } from '~/lib/i18n/config';
 
 const route = useRoute();
 const { enabled, state } = useLivePreview();
 const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
-const postUrl = useRequestURL();
+const runtimeConfig = useRuntimeConfig();
 
 const slug = route.params.slug as string;
+
+// Get locale from composable (handles SSR URL rewrite correctly)
+const { currentLocale } = useLocale();
+const locale = currentLocale.value;
+
+// Helper to localize internal paths using shared utility
+const localize = (path: string) => localizeLink(path, locale);
+
+const userName = (author: Partial<DirectusUser>) => {
+	return [author.first_name, author.last_name].filter(Boolean).join(' ');
+};
 
 const wrapperRef = ref<HTMLElement | null>(null);
 
 const {
-	public: { directusUrl },
-} = useRuntimeConfig();
+	public: { directusUrl, siteUrl },
+} = runtimeConfig;
 
 // Handle Live Preview adding version=main which is not required when fetching the main version.
 const version = route.query.version === 'main' ? undefined : (route.query.version as string);
@@ -21,12 +34,16 @@ const { data, error, refresh } = await useFetch<{
 	post: Post;
 	relatedPosts: Post[];
 }>(() => `/api/posts/${slug}`, {
-	key: `posts-${slug}`,
+	key: `posts-${slug}-${locale}`,
+	headers: {
+		'x-locale': locale,
+	},
 	query: {
 		preview: enabled.value ? true : undefined,
 		token: enabled.value ? state.token : undefined,
 		id: route.query.id as string,
 		version,
+		locale,
 	},
 });
 
@@ -37,6 +54,25 @@ if (!data.value || error.value) {
 const post = computed(() => data.value?.post);
 const relatedPosts = computed(() => data.value?.relatedPosts);
 const author = computed(() => post.value?.author as Partial<DirectusUser>);
+
+// Reuse site data (locales) from layout to avoid refetching
+const siteDataState = useState<any>('site-data');
+const supportedLocales = computed(() => siteDataState.value?.supportedLocales || [DEFAULT_LOCALE]);
+
+// Build alternate language URLs
+const blogPath = `/blog/${slug}`;
+const localizedPath = addLocaleToPath(blogPath, locale);
+const postUrl = `${siteUrl}${localizedPath}`;
+
+// Build alternates for all supported locales
+const alternateLanguages = computed(() => {
+	const alternates: Record<string, string> = {};
+	for (const altLocale of supportedLocales.value) {
+		const altPath = addLocaleToPath(blogPath, altLocale);
+		alternates[altLocale] = `${siteUrl}${altPath}`;
+	}
+	return alternates;
+});
 
 onMounted(() => {
 	if (!isVisualEditingEnabled.value) return;
@@ -50,7 +86,17 @@ useSeoMeta({
 	description: post.value?.seo?.meta_description || post.value?.description,
 	ogTitle: post.value?.seo?.title || post.value?.title,
 	ogDescription: post.value?.seo?.meta_description || post.value?.description,
-	ogUrl: postUrl.toString(),
+	ogUrl: postUrl,
+	ogLocale: locale,
+});
+
+// Set alternate language links via useHead
+useHead({
+	link: Object.entries(alternateLanguages.value).map(([lang, href]) => ({
+		rel: 'alternate',
+		hreflang: lang,
+		href,
+	})),
 });
 </script>
 <template>
@@ -123,7 +169,7 @@ useSeoMeta({
 					</p>
 
 					<div class="flex justify-start">
-						<ShareDialog :post-url="postUrl.toString()" :post-title="post.title" />
+						<ShareDialog :post-url="postUrl" :post-title="post.title" />
 					</div>
 					<div>
 						<Separator class="h-[1px] bg-gray-300 my-4" />
@@ -132,7 +178,7 @@ useSeoMeta({
 							<NuxtLink
 								v-for="relatedPost in relatedPosts"
 								:key="relatedPost.id"
-								:to="`/blog/${relatedPost.slug}`"
+								:to="localize(`/blog/${relatedPost.slug}`)"
 								class="flex items-center space-x-4 hover:text-accent group"
 							>
 								<div v-if="relatedPost.image" class="relative shrink-0 w-[150px] h-[100px] overflow-hidden rounded-lg">

@@ -1,28 +1,6 @@
 import type { Post } from '#shared/types/schema';
-
-/**
- * Post fields configuration for Directus queries
- *
- * This defines the complete field structure for posts including:
- * - Basic post metadata (id, title, content, status, published_at)
- * - Media fields (image, description)
- * - SEO fields for search engine optimization
- * - Author information with nested user data
- */
-const postFields = [
-	'id',
-	'title',
-	'content',
-	'status',
-	'published_at',
-	'image',
-	'description',
-	'slug',
-	'seo',
-	{
-		author: ['id', 'first_name', 'last_name', 'avatar'],
-	},
-];
+import { DEFAULT_LOCALE } from '~/lib/i18n/config';
+import { buildPostFields, buildTranslationsDeep, mergeTranslations } from '../../utils/directus-i18n';
 
 /**
  * Posts API Handler - Fetches individual blog posts by slug
@@ -32,12 +10,14 @@ const postFields = [
  * - Support preview mode for draft/unpublished content
  * - Handle version-specific content (draft, published, etc.)
  * - Include related posts for content discovery
+ * - Support i18n for localized content
  *
  * Key Features:
  * - Slug-based routing (e.g., /blog/my-post-title)
  * - Preview mode with token authentication
  * - Version support for content management workflows
  * - Automatic related posts fetching
+ * - i18n translation support
  */
 export default defineEventHandler(async (event) => {
 	const slug = getRouterParam(event, 'slug');
@@ -49,9 +29,16 @@ export default defineEventHandler(async (event) => {
 	const query = getQuery(event);
 	const { preview, token: rawToken, id, version } = query;
 
+	// Get locale from event (set by middleware or query param)
+	const locale = getLocaleFromEvent(event);
+	const includeTranslations = locale !== DEFAULT_LOCALE;
+
 	// Security: Only accept tokens when preview mode is explicitly enabled
 	// This prevents unauthorized access to draft content
 	const token = preview === 'true' && rawToken ? String(rawToken) : null;
+
+	// Build post fields with translation support
+	const postFields = buildPostFields(includeTranslations);
 
 	try {
 		let post: Post;
@@ -87,48 +74,65 @@ export default defineEventHandler(async (event) => {
 		if (version && postId) {
 			// Version-specific request: Use readItem with specific version
 			// This is used when we have both a postId and want a specific version (draft, published, etc.)
-			post = (await directusServer.request(
+			post = await directusServer.request<Post>(
 				withToken(
 					token as string,
 					readItem('posts', postId, {
 						version: String(version),
-						fields: postFields as any,
+						// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+						fields: postFields,
+						...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
 					}),
 				),
-			)) as unknown as Post;
+			);
 		} else {
 			// Standard request: Use readItems with slug filtering
 			// Filter logic:
 			// - If token exists: fetch any status (for preview mode)
 			// - If no token: only fetch published content (for public viewing)
-			const postsData = await directusServer.request(
+			const postsData = await directusServer.request<Post[]>(
 				withToken(
 					token as string,
 					readItems('posts', {
 						filter: token ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
 						limit: 1,
-						fields: postFields as any,
+						// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+						fields: postFields,
+						...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
 					}),
 				),
 			);
 
-			if (!postsData.length) {
+			if (!postsData.length || !postsData[0]) {
 				throw createError({ statusCode: 404, message: `Post not found: ${slug}` });
 			}
 
-			post = postsData[0] as Post;
+			post = postsData[0];
+		}
+
+		// Merge translations if needed
+		if (includeTranslations) {
+			post = mergeTranslations(post, locale);
 		}
 
 		// Content Discovery: Fetch related posts for better user engagement
 		// Always fetch published posts only (no preview mode for related content)
 		// Excludes the current post and limits to 2 related posts
-		const relatedPosts = await directusServer.request(
+		let relatedPosts = await directusServer.request<Post[]>(
 			readItems('posts', {
 				filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
-				fields: ['id', 'title', 'image', 'slug'],
+					fields: includeTranslations
+					? ['id', 'title', 'image', 'slug', { translations: ['*'] }]
+					: ['id', 'title', 'image', 'slug'],
 				limit: 2,
+				...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
 			}),
 		);
+
+		// Merge translations for related posts if needed
+		if (includeTranslations) {
+			relatedPosts = relatedPosts.map((p) => mergeTranslations(p, locale));
+		}
 
 		// Return both the main post and related posts for the frontend
 		return { post, relatedPosts };

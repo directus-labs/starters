@@ -1,31 +1,30 @@
-
 export interface ExtensionSeoMetadata {
-    title?: string;
-    meta_description?: string;
-    og_image?: string;
-    additional_fields?: Record<string, unknown>;
-    sitemap?: {
-        change_frequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
-        priority: string;
-    };
-    no_index?: boolean;
-    no_follow?: boolean;
+	title?: string;
+	meta_description?: string;
+	og_image?: string;
+	additional_fields?: Record<string, unknown>;
+	sitemap?: {
+		change_frequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
+		priority: string;
+	};
+	no_index?: boolean;
+	no_follow?: boolean;
 }
 
 export interface AiPrompt {
 	/** @primaryKey */
 	id: string;
+	sort?: number | null;
 	/** @description Unique name for the prompt. Use names like "create-article" or "generate-product-description". @required */
 	name: string;
-	/** @description Briefly explain what this prompt does in 1-2 sentences. */
-	description?: string | null;
-	/** @description Instructions that shape how the AI responds. */
-	system_prompt?: string | null;
-	/** @description Optional: Define the conversation structure between users and AI. Used to add context and improve outputs. */
-	messages?: Array<{ role: 'user' | 'assistant'; text: string }> | null;
-	sort?: number | null;
 	/** @description Is this prompt published and available to use? */
 	status?: 'draft' | 'in_review' | 'published';
+	/** @description Briefly explain what this prompt does in 1-2 sentences. */
+	description?: string | null;
+	/** @description Optional: Define the conversation structure between users and AI. Used to add context and improve outputs. */
+	messages?: Array<{ role: 'user' | 'assistant'; text: string }> | null;
+	/** @description Instructions that shape how the AI responds. */
+	system_prompt?: string | null;
 	date_created?: string | null;
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
@@ -54,6 +53,7 @@ export interface BlockButton {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+	translations?: BlockButtonTranslation[] | null;
 }
 
 export interface BlockButtonGroup {
@@ -66,6 +66,21 @@ export interface BlockButtonGroup {
 	user_updated?: DirectusUser | string | null;
 	/** @description Add individual buttons to the button group. */
 	buttons?: BlockButton[] | string[];
+}
+
+export interface BlockButtonTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	block_button?: BlockButton | string;
+	languages_code?: Language | string;
+	/** @description Text to include on the button. */
+	label?: string | null;
 }
 
 export interface BlockForm {
@@ -81,6 +96,24 @@ export interface BlockForm {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+	translations?: BlockFormTranslation[] | null;
+}
+
+export interface BlockFormTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	block_form?: BlockForm | string;
+	languages_code?: Language | string;
+	/** @description Larger main headline for this page section. */
+	headline?: string | null;
+	/** @description Smaller copy shown above the headline to label a section or add extra context. */
+	tagline?: string | null;
 }
 
 export interface BlockGallery {
@@ -96,6 +129,7 @@ export interface BlockGallery {
 	user_updated?: DirectusUser | string | null;
 	/** @description Images to include in the image gallery. */
 	items?: DirectusFile[] | string[] | null;
+	translations?: BlockGalleryTranslation[] | null;
 }
 
 export interface BlockGalleryItem {
@@ -110,6 +144,23 @@ export interface BlockGalleryItem {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+}
+
+export interface BlockGalleryTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	block_gallery?: BlockGallery | string;
+	languages_code?: Language | string;
+	/** @description Larger main headline for this page section. */
+	headline?: string | null;
+	/** @description Smaller copy shown above the headline to label a section or add extra context. */
+	tagline?: string | null;
 }
 
 export interface BlockHero {
@@ -131,6 +182,26 @@ export interface BlockHero {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+	translations?: BlockHeroTranslation[] | null;
+}
+
+export interface BlockHeroTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	block_hero?: BlockHero | string;
+	languages_code?: Language | string;
+	/** @description Larger main headline for this page section. */
+	headline?: string | null;
+	/** @description Supporting copy that shows below the headline. */
+	description?: string | null;
+	/** @description Smaller copy shown above the headline to label a section or add extra context. */
+	tagline?: string | null;
 }
 
 export interface BlockPost {
@@ -147,6 +218,24 @@ export interface BlockPost {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+	translations?: BlockPostsTranslation[] | null;
+}
+
+export interface BlockPostsTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	block_posts?: BlockPost | string;
+	languages_code?: Language | string;
+	/** @description Larger main headline for this page section. */
+	headline?: string | null;
+	/** @description Smaller copy shown above the headline to label a section or add extra context. */
+	tagline?: string | null;
 }
 
 export interface BlockPricing {
@@ -162,6 +251,7 @@ export interface BlockPricing {
 	user_updated?: DirectusUser | string | null;
 	/** @description The individual pricing cards to display. */
 	pricing_cards?: BlockPricingCard[] | string[];
+	translations?: BlockPricingTranslation[] | null;
 }
 
 export interface BlockPricingCard {
@@ -188,6 +278,43 @@ export interface BlockPricingCard {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+	translations?: string;
+}
+
+export interface BlockPricingCardsTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	/** @description Name of the pricing plan. Shown at the top of the card. */
+	title?: string | null;
+	/** @description Short, one sentence description of the pricing plan and who it is for. */
+	description?: string | null;
+	/** @description Price and term for the pricing plan. (ie `$199/mo`) */
+	price?: string | null;
+	/** @description Badge that displays at the top of the pricing plan card to add helpful context. */
+	badge?: string | null;
+}
+
+export interface BlockPricingTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	block_pricing?: BlockPricing | string;
+	languages_code?: Language | string;
+	/** @description Larger main headline for this page section. */
+	headline?: string | null;
+	/** @description Smaller copy shown above the headline to label a section or add extra context. */
+	tagline?: string | null;
 }
 
 export interface BlockRichtext {
@@ -205,6 +332,26 @@ export interface BlockRichtext {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+	translations?: BlockRichtextTranslation[] | null;
+}
+
+export interface BlockRichtextTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	block_richtext?: BlockRichtext | string;
+	languages_code?: Language | string;
+	/** @description Rich text content for this block. */
+	content?: string | null;
+	/** @description Larger main headline for this page section. */
+	headline?: string | null;
+	/** @description Smaller copy shown above the headline to label a section or add extra context. */
+	tagline?: string | null;
 }
 
 export interface FormField {
@@ -235,6 +382,26 @@ export interface FormField {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+	translations?: FormFieldsTranslation[] | null;
+}
+
+export interface FormFieldsTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	form_fields?: FormField | string;
+	languages_code?: Language | string;
+	/** @description Text label shown to form users. */
+	label?: string | null;
+	/** @description Default text shown in empty input. */
+	placeholder?: string | null;
+	/** @description Additional instructions shown below the input */
+	help?: string | null;
 }
 
 export interface Form {
@@ -296,7 +463,10 @@ export interface Globals {
 	/** @primaryKey */
 	id: string;
 	/** @description Social media profile URLs */
-	social_links?: Array<{ url: string; service: 'facebook' | 'instagram' | 'linkedin' | 'x' | 'vimeo' | 'youtube' | 'github' | 'discord' | 'docker' }> | null;
+	social_links?: Array<{
+		url: string;
+		service: 'facebook' | 'instagram' | 'linkedin' | 'x' | 'vimeo' | 'youtube' | 'github' | 'discord' | 'docker';
+	}> | null;
 	/** @description Short phrase describing the site. */
 	tagline?: string | null;
 	/** @description Main site title */
@@ -311,14 +481,43 @@ export interface Globals {
 	openai_api_key?: string | null;
 	/** @description The public URL for this Directus instance. Used in Flows. */
 	directus_url?: string | null;
-	/** @description Accent color for the website (used on buttons, links, etc). */
-	accent_color?: string | null;
 	/** @description Main logo shown on the site (for dark mode). */
 	logo_dark_mode?: DirectusFile | string | null;
+	/** @description Accent color for the website (used on buttons, links, etc). */
+	accent_color?: string | null;
 	date_created?: string | null;
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+	translations?: GlobalsTranslation[] | null;
+}
+
+export interface GlobalsTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	globals?: Globals | string;
+	languages_code?: Language | string;
+	/** @description Site summary for search results. */
+	description?: string | null;
+	/** @description Short phrase describing the site. */
+	tagline?: string | null;
+	/** @description Main site title */
+	title?: string | null;
+}
+
+export interface Language {
+	/** @primaryKey @required */
+	code: string;
+	/** @required */
+	name: string;
+	/** @required */
+	direction: 'ltr' | 'rtl';
 }
 
 export interface Navigation {
@@ -360,6 +559,22 @@ export interface NavigationItem {
 	user_updated?: DirectusUser | string | null;
 	/** @description Add child menu items within the group. */
 	children?: NavigationItem[] | string[];
+	translations?: NavigationItemsTranslation[] | null;
+}
+
+export interface NavigationItemsTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	navigation_items?: NavigationItem | string;
+	languages_code?: Language | string;
+	/** @description Label shown to the user for the menu item. @required */
+	title: string;
 }
 
 export interface PageBlock {
@@ -401,6 +616,24 @@ export interface Page {
 	user_updated?: DirectusUser | string | null;
 	/** @description Create and arrange different content blocks (like text, images, or videos) to build your page. */
 	blocks?: PageBlock[] | string[];
+	translations?: PagesTranslation[] | null;
+}
+
+export interface PagesTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	pages?: Page | string;
+	languages_code?: Language | string;
+	/** @description The title of this page. @required */
+	title: string;
+	/** @description Unique URL for this page (start with `/`, can have multiple segments `/about/me`)). @required */
+	permalink: string;
 }
 
 export interface Post {
@@ -428,6 +661,28 @@ export interface Post {
 	user_created?: DirectusUser | string | null;
 	date_updated?: string | null;
 	user_updated?: DirectusUser | string | null;
+	translations?: PostsTranslation[] | null;
+}
+
+export interface PostsTranslation {
+	/** @primaryKey */
+	id: string;
+	status?: 'published' | 'draft' | 'archived';
+	sort?: number | null;
+	user_created?: DirectusUser | string | null;
+	date_created?: string | null;
+	user_updated?: DirectusUser | string | null;
+	date_updated?: string | null;
+	posts?: Post | string;
+	languages_code?: Language | string;
+	/** @description Rich text content of your blog post. */
+	content?: string | null;
+	/** @description Unique URL for this post (e.g., `yoursite.com/posts/{{your-slug}}`) */
+	slug?: string | null;
+	/** @description Title of the blog post (used in page title and meta tags) @required */
+	title: string;
+	/** @description Short summary of the blog post to entice readers. */
+	description?: string | null;
 }
 
 export interface Redirect {
@@ -679,12 +934,31 @@ export interface DirectusSettings {
 	public_background?: DirectusFile | string | null;
 	public_note?: string | null;
 	auth_login_attempts?: number | null;
-	auth_password_policy?: null | `/^.{8,}$/` | `/(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{';'?>.<,])(?!.*\\s).*$/` | null;
+	auth_password_policy?:
+		| null
+		| `/^.{8,}$/`
+		| `/(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{';'?>.<,])(?!.*\\s).*$/`
+		| null;
 	storage_asset_transform?: 'all' | 'none' | 'presets' | null;
-	storage_asset_presets?: Array<{ key: string; fit: 'contain' | 'cover' | 'inside' | 'outside'; width: number; height: number; quality: number; withoutEnlargement: boolean; format: 'auto' | 'jpeg' | 'png' | 'webp' | 'tiff' | 'avif'; transforms: 'json' }> | null;
+	storage_asset_presets?: Array<{
+		key: string;
+		fit: 'contain' | 'cover' | 'inside' | 'outside';
+		width: number;
+		height: number;
+		quality: number;
+		withoutEnlargement: boolean;
+		format: 'auto' | 'jpeg' | 'png' | 'webp' | 'tiff' | 'avif';
+		transforms: 'json';
+	}> | null;
 	custom_css?: string | null;
 	storage_default_folder?: DirectusFolder | string | null;
-	basemaps?: Array<{ name: string; type: 'raster' | 'tile' | 'style'; url: string; tileSize: number; attribution: string }> | null;
+	basemaps?: Array<{
+		name: string;
+		type: 'raster' | 'tile' | 'style';
+		url: string;
+		tileSize: number;
+		attribution: string;
+	}> | null;
 	mapbox_key?: string | null;
 	module_bar?: 'json' | null;
 	project_descriptor?: string | null;
@@ -703,9 +977,16 @@ export interface DirectusSettings {
 	public_registration_verify_email?: boolean;
 	public_registration_role?: DirectusRole | string | null;
 	public_registration_email_filter?: 'json' | null;
+	visual_editor_urls?: Array<{ url: string }> | null;
+	accepted_terms?: boolean | null;
+	project_id?: string | null;
+	mcp_enabled?: boolean;
+	mcp_allow_deletes?: boolean;
+	mcp_prompts_collection?: string | null;
+	mcp_system_prompt_enabled?: boolean;
+	mcp_system_prompt?: string | null;
 	/** @description Settings for the Command Palette Module. */
 	command_palette_settings?: Record<string, any> | null;
-	visual_editor_urls?: Array<{ url: string }> | null;
 }
 
 export interface DirectusUser {
@@ -736,6 +1017,7 @@ export interface DirectusUser {
 	theme_light?: string | null;
 	theme_light_overrides?: 'json' | null;
 	theme_dark_overrides?: 'json' | null;
+	text_direction?: 'auto' | 'ltr' | 'rtl';
 	/** @description Blog posts this user has authored. */
 	posts?: Post[] | string[];
 	policies?: DirectusAccess[] | string[];
@@ -888,24 +1170,38 @@ export interface Schema {
 	ai_prompts: AiPrompt[];
 	block_button: BlockButton[];
 	block_button_group: BlockButtonGroup[];
+	block_button_translations: BlockButtonTranslation[];
 	block_form: BlockForm[];
+	block_form_translations: BlockFormTranslation[];
 	block_gallery: BlockGallery[];
 	block_gallery_items: BlockGalleryItem[];
+	block_gallery_translations: BlockGalleryTranslation[];
 	block_hero: BlockHero[];
+	block_hero_translations: BlockHeroTranslation[];
 	block_posts: BlockPost[];
+	block_posts_translations: BlockPostsTranslation[];
 	block_pricing: BlockPricing[];
 	block_pricing_cards: BlockPricingCard[];
+	block_pricing_cards_translations: BlockPricingCardsTranslation[];
+	block_pricing_translations: BlockPricingTranslation[];
 	block_richtext: BlockRichtext[];
+	block_richtext_translations: BlockRichtextTranslation[];
 	form_fields: FormField[];
+	form_fields_translations: FormFieldsTranslation[];
 	forms: Form[];
 	form_submissions: FormSubmission[];
 	form_submission_values: FormSubmissionValue[];
 	globals: Globals;
+	globals_translations: GlobalsTranslation[];
+	languages: Language[];
 	navigation: Navigation[];
 	navigation_items: NavigationItem[];
+	navigation_items_translations: NavigationItemsTranslation[];
 	page_blocks: PageBlock[];
 	pages: Page[];
+	pages_translations: PagesTranslation[];
 	posts: Post[];
+	posts_translations: PostsTranslation[];
 	redirects: Redirect[];
 	directus_access: DirectusAccess[];
 	directus_activity: DirectusActivity[];
@@ -940,24 +1236,38 @@ export enum CollectionNames {
 	ai_prompts = 'ai_prompts',
 	block_button = 'block_button',
 	block_button_group = 'block_button_group',
+	block_button_translations = 'block_button_translations',
 	block_form = 'block_form',
+	block_form_translations = 'block_form_translations',
 	block_gallery = 'block_gallery',
 	block_gallery_items = 'block_gallery_items',
+	block_gallery_translations = 'block_gallery_translations',
 	block_hero = 'block_hero',
+	block_hero_translations = 'block_hero_translations',
 	block_posts = 'block_posts',
+	block_posts_translations = 'block_posts_translations',
 	block_pricing = 'block_pricing',
 	block_pricing_cards = 'block_pricing_cards',
+	block_pricing_cards_translations = 'block_pricing_cards_translations',
+	block_pricing_translations = 'block_pricing_translations',
 	block_richtext = 'block_richtext',
+	block_richtext_translations = 'block_richtext_translations',
 	form_fields = 'form_fields',
+	form_fields_translations = 'form_fields_translations',
 	forms = 'forms',
 	form_submissions = 'form_submissions',
 	form_submission_values = 'form_submission_values',
 	globals = 'globals',
+	globals_translations = 'globals_translations',
+	languages = 'languages',
 	navigation = 'navigation',
 	navigation_items = 'navigation_items',
+	navigation_items_translations = 'navigation_items_translations',
 	page_blocks = 'page_blocks',
 	pages = 'pages',
+	pages_translations = 'pages_translations',
 	posts = 'posts',
+	posts_translations = 'posts_translations',
 	redirects = 'redirects',
 	directus_access = 'directus_access',
 	directus_activity = 'directus_activity',
@@ -985,5 +1295,5 @@ export enum CollectionNames {
 	directus_operations = 'directus_operations',
 	directus_translations = 'directus_translations',
 	directus_versions = 'directus_versions',
-	directus_extensions = 'directus_extensions'
+	directus_extensions = 'directus_extensions',
 }

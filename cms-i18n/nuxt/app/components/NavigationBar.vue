@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { Menu, ChevronDown } from 'lucide-vue-next';
 import SearchModal from '~/components/base/SearchModel.vue';
+import LanguageSwitcher from '~/components/shared/LanguageSwitcher.vue';
+import { DEFAULT_LOCALE, type Locale } from '~/lib/i18n/config';
+import { localizeLink } from '~/lib/i18n/utils';
 
 interface NavigationItem {
 	id: string;
-	title: string;
-	url?: string;
-	page?: { permalink: string };
-	children?: NavigationItem[];
+	title?: string | null;
+	url?: string | null;
+	page?: {
+		permalink?: string | null;
+	} | null;
+	children?: NavigationItem[] | string[] | null;
 }
 
 // Using template ref to expose the navigation bar to the layout for visual editing
@@ -15,40 +20,85 @@ const navigationRef = useTemplateRef('navigationRef');
 defineExpose({ navigationRef });
 
 interface Navigation {
-	items: NavigationItem[];
+	id?: string | null;
+	items?: NavigationItem[] | string[] | null;
 }
 
 interface Globals {
-	logo?: string;
-	logo_dark_mode?: string;
+	logo?: string | { id: string } | null;
+	logo_dark_mode?: string | { id: string } | null;
 }
 
 const props = defineProps<{
 	navigation: Navigation;
 	globals: Globals;
+	locale?: Locale;
+	supportedLocales?: Locale[];
+	localeNames?: Record<Locale, string>;
 }>();
 
 const menuOpen = ref(false);
 const runtimeConfig = useRuntimeConfig();
 const { setAttr } = useVisualEditing();
 
-const lightLogoUrl = computed(() =>
-	props.globals?.logo ? `${runtimeConfig.public.directusUrl}/assets/${props.globals.logo}` : '/images/logo.svg',
-);
+// Helper to get logo ID from string or object
+const getLogoId = (logo: string | { id: string } | null | undefined): string | null => {
+	if (!logo) return null;
+	if (typeof logo === 'string') return logo;
+	return logo.id;
+};
 
-const darkLogoUrl = computed(() =>
-	props.globals?.logo_dark_mode ? `${runtimeConfig.public.directusUrl}/assets/${props.globals.logo_dark_mode}` : '',
-);
+const lightLogoUrl = computed(() => {
+	const logoId = getLogoId(props.globals?.logo);
+	return logoId ? `${runtimeConfig.public.directusUrl}/assets/${logoId}` : '/images/logo.svg';
+});
+
+const darkLogoUrl = computed(() => {
+	const logoId = getLogoId(props.globals?.logo_dark_mode);
+	return logoId ? `${runtimeConfig.public.directusUrl}/assets/${logoId}` : '';
+});
 
 const handleLinkClick = () => {
 	menuOpen.value = false;
+};
+
+// Current locale for link localization
+const currentLocale = computed(() => props.locale || DEFAULT_LOCALE);
+
+// Helper to localize internal paths using shared utility
+const localize = (path: string | null | undefined) => localizeLink(path, currentLocale.value);
+
+// Localized home path
+const homeLink = computed(() => localize('/'));
+
+// Helper to check if an item is a full NavigationItem (not just a string ID)
+const isNavigationItem = (item: NavigationItem | string): item is NavigationItem => {
+	return typeof item !== 'string';
+};
+
+// Get navigation items as full objects (filter out string IDs)
+const navigationItems = computed(() => {
+	const items = props.navigation?.items;
+	if (!items) return [];
+	return items.filter(isNavigationItem);
+});
+
+// Helper to get children as full NavigationItems
+const getChildren = (item: NavigationItem): NavigationItem[] => {
+	if (!item.children) return [];
+	return item.children.filter(isNavigationItem);
+};
+
+// Helper to get page permalink from page object
+const getPagePermalink = (page: { permalink?: string | null } | null | undefined): string | null => {
+	return page?.permalink || null;
 };
 </script>
 
 <template>
 	<header ref="navigationRef" class="sticky top-0 z-50 w-full bg-background text-foreground">
 		<Container class="flex items-center justify-between p-4">
-			<NuxtLink to="/" class="flex-shrink-0">
+			<NuxtLink :to="homeLink" class="flex-shrink-0">
 				<img :src="lightLogoUrl" alt="Logo" class="w-[120px] h-auto dark:hidden" width="150" height="100" />
 				<img
 					v-if="darkLogoUrl"
@@ -65,12 +115,12 @@ const handleLinkClick = () => {
 				<NavigationMenu
 					class="hidden md:flex"
 					:data-directus="
-						setAttr({ collection: 'navigation', item: props.navigation.id, fields: ['items'], mode: 'modal' })
+						setAttr({ collection: 'navigation', item: props.navigation.id || null, fields: ['items'], mode: 'modal' })
 					"
 				>
 					<NavigationMenuList class="flex gap-6">
-						<NavigationMenuItem v-for="section in props.navigation.items" :key="section.id">
-							<template v-if="section.children?.length">
+						<NavigationMenuItem v-for="section in navigationItems" :key="section.id">
+							<template v-if="getChildren(section).length">
 								<NavigationMenuTrigger
 									class="focus:outline-none font-heading !text-nav hover:bg-background hover:text-accent"
 								>
@@ -78,9 +128,12 @@ const handleLinkClick = () => {
 								</NavigationMenuTrigger>
 								<NavigationMenuContent class="min-w-[200px] rounded-md bg-background p-4 shadow-md">
 									<ul class="min-h-[100px] flex flex-col gap-2">
-										<li v-for="child in section.children" :key="child.id">
+										<li v-for="child in getChildren(section)" :key="child.id">
 											<NavigationMenuLink as-child>
-												<NuxtLink :to="child.page?.permalink || child.url || '#'" class="font-heading text-nav">
+												<NuxtLink
+													:to="localize(getPagePermalink(child.page) || child.url)"
+													class="font-heading text-nav"
+												>
 													{{ child.title }}
 												</NuxtLink>
 											</NavigationMenuLink>
@@ -90,7 +143,10 @@ const handleLinkClick = () => {
 							</template>
 
 							<NavigationMenuLink v-else as-child>
-								<NuxtLink :to="section.page?.permalink || section.url || '#'" class="font-heading text-nav p-2">
+								<NuxtLink
+									:to="localize(getPagePermalink(section.page) || section.url)"
+									class="font-heading text-nav p-2"
+								>
 									{{ section.title }}
 								</NuxtLink>
 							</NavigationMenuLink>
@@ -116,8 +172,8 @@ const handleLinkClick = () => {
 							class="top-full w-screen p-6 shadow-md max-w-full overflow-hidden bg-background"
 						>
 							<div class="flex flex-col gap-4">
-								<div v-for="section in props.navigation.items" :key="section.id">
-									<Collapsible v-if="section.children?.length">
+								<div v-for="section in navigationItems" :key="section.id">
+									<Collapsible v-if="getChildren(section).length">
 										<CollapsibleTrigger
 											class="font-heading text-nav hover:text-accent w-full text-left flex items-center focus:outline-none"
 										>
@@ -126,9 +182,9 @@ const handleLinkClick = () => {
 										</CollapsibleTrigger>
 										<CollapsibleContent class="ml-4 mt-2 flex flex-col gap-2">
 											<NuxtLink
-												v-for="child in section.children"
+												v-for="child in getChildren(section)"
 												:key="child.id"
-												:to="child.page?.permalink || child.url || '#'"
+												:to="localize(getPagePermalink(child.page) || child.url)"
 												class="font-heading text-nav"
 												@click="handleLinkClick"
 											>
@@ -139,7 +195,7 @@ const handleLinkClick = () => {
 
 									<NuxtLink
 										v-else
-										:to="section.page?.permalink || section.url || '#'"
+										:to="localize(getPagePermalink(section.page) || section.url)"
 										class="font-heading text-nav"
 										@click="handleLinkClick"
 									>
@@ -151,6 +207,12 @@ const handleLinkClick = () => {
 					</DropdownMenu>
 				</div>
 
+				<LanguageSwitcher
+					v-if="locale && supportedLocales && localeNames"
+					:current-locale="locale"
+					:supported-locales="supportedLocales"
+					:locale-names="localeNames"
+				/>
 				<ThemeToggle />
 			</nav>
 		</Container>

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { DEFAULT_LOCALE, type Locale } from '~/lib/i18n/config';
+import { localizeLink } from '~/lib/i18n/utils';
+
 export interface SocialLink {
 	service: string;
 	url: string;
@@ -23,6 +26,7 @@ export interface FooterProps {
 		description?: string | null;
 		social_links?: SocialLink[];
 	};
+	locale?: Locale;
 }
 
 const props = defineProps<FooterProps>();
@@ -39,6 +43,12 @@ const lightLogoUrl = computed(() =>
 const darkLogoUrl = computed(() =>
 	props.globals.logo_dark_mode ? `${runtimeConfig.public.directusUrl}/assets/${props.globals.logo_dark_mode}` : '',
 );
+
+// Get the current locale from props or default
+const currentLocale = computed<Locale>(() => props.locale || DEFAULT_LOCALE);
+
+// Helper to localize internal paths
+const localize = (path: string | null | undefined) => localizeLink(path, currentLocale.value);
 </script>
 
 <template>
@@ -46,7 +56,7 @@ const darkLogoUrl = computed(() =>
 		<Container class="text-foreground dark:text-white">
 			<div class="flex flex-col md:flex-row justify-between items-start gap-8 pt-8">
 				<div class="flex-1">
-					<NuxtLink to="/" class="inline-block transition-opacity hover:opacity-70">
+					<NuxtLink :to="localize('/')" class="inline-block transition-opacity hover:opacity-70">
 						<img
 							v-if="lightLogoUrl"
 							:src="lightLogoUrl"
@@ -90,7 +100,7 @@ const darkLogoUrl = computed(() =>
 							<li v-for="item in props.navigation.items" :key="item.id">
 								<NuxtLink
 									v-if="item.page?.permalink"
-									:to="item.page.permalink"
+									:to="localize(item.page.permalink)"
 									class="text-nav font-medium hover:underline"
 								>
 									{{ item.title }}
