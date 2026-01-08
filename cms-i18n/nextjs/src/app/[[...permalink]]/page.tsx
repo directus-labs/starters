@@ -2,10 +2,6 @@ import { fetchPageData, fetchPageDataById, getPageIdByPermalink } from '@/lib/di
 import { PageBlock, type Page } from '@/types/directus-schema';
 import { notFound } from 'next/navigation';
 import PageClient from './PageClient';
-import { getLocaleFromHeaders } from '@/lib/i18n/server';
-import { useDirectus } from '@/lib/directus/directus';
-import { readItems } from '@directus/sdk';
-import { addLocaleToPath } from '@/lib/i18n/utils';
 
 /**
  * Generates page metadata with locale-specific content and alternate language links.
@@ -21,7 +17,6 @@ export async function generateMetadata({
 	const searchParamsResolved = await searchParams;
 	const permalinkSegments = permalink || [];
 	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
-	const locale = await getLocaleFromHeaders();
 
 	const preview = searchParamsResolved.preview === 'true';
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
@@ -34,7 +29,7 @@ export async function generateMetadata({
 	}
 
 	try {
-		const page = await fetchPageData(resolvedPermalink, 1, undefined, false, locale);
+		const page = await fetchPageData(resolvedPermalink);
 
 		if (!page) return;
 
@@ -42,12 +37,14 @@ export async function generateMetadata({
 		const localizedPath = addLocaleToPath(resolvedPermalink, locale);
 
 		const { directus } = useDirectus();
-		const languages = await directus.request(
-			readItems('languages', {
-				fields: ['code'],
-				sort: ['code'],
-			}),
-		).catch(() => []);
+		const languages = await directus
+			.request(
+				readItems('languages', {
+					fields: ['code'],
+					sort: ['code'],
+				}),
+			)
+			.catch(() => []);
 		const supportedLocales = (languages as Array<{ code: string }>).map((lang) => lang.code);
 		const alternates: Record<string, string> = {};
 		for (const altLocale of supportedLocales) {
@@ -58,15 +55,11 @@ export async function generateMetadata({
 		return {
 			title: page.seo?.title ?? page.title ?? '',
 			description: page.seo?.meta_description ?? '',
-			alternates: {
-				languages: alternates,
-			},
 			openGraph: {
 				title: page.seo?.title ?? page.title ?? '',
 				description: page.seo?.meta_description ?? '',
-				url: `${siteUrl}${localizedPath}`,
+				url: `${process.env.NEXT_PUBLIC_SITE_URL}${resolvedPermalink}`,
 				type: 'website',
-				locale: locale,
 			},
 		};
 	} catch (error) {
@@ -87,7 +80,6 @@ export default async function Page({
 	const searchParamsResolved = await searchParams;
 	const permalinkSegments = permalink || [];
 	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
-	const locale = await getLocaleFromHeaders();
 
 	const id = typeof searchParamsResolved.id === 'string' ? searchParamsResolved.id : '';
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
@@ -106,14 +98,14 @@ export default async function Page({
 		// 3. Fail gracefully if the page doesn't exist for that version
 		if (fixedVersion && id) {
 			// We have both ID and version - fetch the specific version
-			page = await fetchPageDataById(id, fixedVersion, token || undefined, locale);
+			page = await fetchPageDataById(id, fixedVersion, token || undefined);
 		} else if (fixedVersion && !id) {
 			// We have version but no ID - look up the page ID first
 			const pageId = await getPageIdByPermalink(resolvedPermalink, token || undefined);
 			if (!pageId) {
 				notFound();
 			}
-			page = await fetchPageDataById(pageId, fixedVersion, token || undefined, locale);
+			page = await fetchPageDataById(pageId, fixedVersion, token || undefined);
 		} else {
 			page = await fetchPageData(resolvedPermalink, 1, token || undefined, preview, locale);
 		}

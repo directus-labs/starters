@@ -344,7 +344,7 @@ export async function fetchPageDataById(
 	const includeTranslations = locale !== DEFAULT_LOCALE;
 
 	try {
-		const page = (await directus.request(
+		return (await directus.request(
 			withToken(
 				token as string,
 				readItem('pages', id, {
@@ -371,8 +371,6 @@ export async function fetchPageDataById(
 				}),
 			),
 		)) as unknown as Page;
-
-		return includeTranslations ? mergeTranslations(page, locale) : page;
 	} catch (error) {
 		console.error('Error fetching versioned page:', error);
 		throw new Error('Failed to fetch versioned page');
@@ -608,7 +606,7 @@ export async function fetchPaginatedPosts(
 	const includeTranslations = locale !== DEFAULT_LOCALE;
 
 	try {
-		const responseData = await directus.request(
+		const response = (await directus.request(
 			readItems('posts', {
 				limit,
 				page,
@@ -624,7 +622,7 @@ export async function fetchPaginatedPosts(
 				filter: { status: { _eq: 'published' } },
 				...(includeTranslations ? { deep: buildTranslationsDeep(locale) as any } : {}),
 			}),
-		);
+		)) as Post[];
 
 		const posts = responseData as unknown as Post[];
 
@@ -750,7 +748,7 @@ export async function fetchRedirects(): Promise<
 	const { directus } = useDirectus();
 
 	const response = await directus.request(
-		readItems('redirects' as any, {
+		readItems('redirects', {
 			filter: {
 				_and: [{ url_from: { _nnull: true } }, { url_to: { _nnull: true } }],
 			},

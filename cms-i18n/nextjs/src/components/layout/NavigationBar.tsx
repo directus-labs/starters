@@ -19,20 +19,13 @@ import ThemeToggle from '../ui/ThemeToggle';
 import SearchModal from '@/components/ui/SearchModal';
 import Container from '@/components/ui/container';
 import { setAttr } from '@directus/visual-editing';
-import LanguageSwitcher from '@/components/shared/LanguageSwitcher';
-import { Locale } from '@/lib/i18n/config';
-import { addLocaleToPath } from '@/lib/i18n/utils';
 
 interface NavigationBarProps {
 	navigation: any;
 	globals: any;
-	locale: Locale;
-	supportedLocales: Locale[];
-	localeNames: Record<Locale, string>;
 }
 
-const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(
-	({ navigation, globals, locale, supportedLocales, localeNames }, ref) => {
+const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation, globals }, ref) => {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_URL;
@@ -43,20 +36,10 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(
 		setMenuOpen(false);
 	};
 
-	const getLocalizedLink = (permalink: string | null | undefined, url: string | null | undefined): string => {
-		if (permalink) {
-			return addLocaleToPath(permalink, locale);
-		}
-		if (url) {
-			return url;
-		}
-		return '#';
-	};
-
 	return (
 		<header ref={ref} className="sticky top-0 z-50 w-full bg-background text-foreground">
 			<Container className="flex items-center justify-between p-4">
-				<Link href={addLocaleToPath('/', locale)} className="flex-shrink-0">
+				<Link href="/" className="flex-shrink-0">
 					<Image
 						src={lightLogoUrl}
 						alt="Logo"
@@ -158,7 +141,7 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(
 														{section.children.map((child: any) => (
 															<Link
 																key={child.id}
-																href={getLocalizedLink(child.page?.permalink, child.url)}
+																href={child.page?.permalink || child.url || '#'}
 																className="font-heading text-nav"
 																onClick={handleLinkClick}
 															>
@@ -169,7 +152,7 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(
 												</Collapsible>
 											) : (
 												<Link
-													href={getLocalizedLink(section.page?.permalink, section.url)}
+													href={section.page?.permalink || section.url || '#'}
 													className="font-heading text-nav"
 													onClick={handleLinkClick}
 												>
@@ -182,11 +165,6 @@ const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(
 							</DropdownMenuContent>
 						</DropdownMenu>
 					</div>
-					<LanguageSwitcher
-						currentLocale={locale}
-						supportedLocales={supportedLocales}
-						localeNames={localeNames}
-					/>
 					<ThemeToggle />
 				</nav>
 			</Container>

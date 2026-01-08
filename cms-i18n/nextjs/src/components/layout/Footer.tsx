@@ -4,8 +4,6 @@ import React, { forwardRef } from 'react';
 import Link from 'next/link';
 import Container from '@/components/ui/container';
 import ThemeToggle from '@/components/ui/ThemeToggle';
-import { Locale } from '@/lib/i18n/config';
-import { addLocaleToPath } from '@/lib/i18n/utils';
 
 interface SocialLink {
 	service: string;
@@ -27,30 +25,19 @@ interface FooterProps {
 		description?: string | null;
 		social_links?: SocialLink[];
 	};
-	locale: Locale;
 }
 
-const Footer = forwardRef<HTMLElement, FooterProps>(({ navigation, globals, locale }, ref) => {
+const Footer = forwardRef<HTMLElement, FooterProps>(({ navigation, globals }, ref) => {
 	const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_URL;
 	const lightLogoUrl = globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg';
 	const darkLogoUrl = globals?.logo_dark_mode ? `${directusURL}/assets/${globals.logo_dark_mode}` : '';
-
-	const getLocalizedLink = (permalink: string | null | undefined, url: string | null | undefined): string => {
-		if (permalink) {
-			return addLocaleToPath(permalink, locale);
-		}
-		if (url) {
-			return url;
-		}
-		return '#';
-	};
 
 	return (
 		<footer ref={ref} className="bg-gray dark:bg-[var(--background-variant-color)] py-16">
 			<Container className="text-foreground dark:text-white">
 				<div className="flex flex-col md:flex-row justify-between items-start gap-8 pt-8">
 					<div className="flex-1">
-						<Link href={addLocaleToPath('/', locale)} className="inline-block transition-opacity hover:opacity-70">
+						<Link href="/" className="inline-block transition-opacity hover:opacity-70">
 							<img
 								src={lightLogoUrl}
 								alt="Logo"
@@ -87,10 +74,7 @@ const Footer = forwardRef<HTMLElement, FooterProps>(({ navigation, globals, loca
 								{navigation?.items?.map((item) => (
 									<li key={item.id}>
 										{item.page?.permalink ? (
-											<Link
-												href={getLocalizedLink(item.page.permalink, item.url)}
-												className="text-nav font-medium hover:underline"
-											>
+											<Link href={item.page.permalink} className="text-nav font-medium hover:underline">
 												{item.title}
 											</Link>
 										) : (

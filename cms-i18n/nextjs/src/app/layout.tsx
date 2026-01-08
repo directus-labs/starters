@@ -11,8 +11,7 @@ import { getLocaleFromHeaders, getLanguagesFromDirectus } from '@/lib/i18n/serve
 import { getLocaleCode, DEFAULT_LOCALE, type Locale } from '@/lib/i18n/config';
 
 export async function generateMetadata(): Promise<Metadata> {
-	const locale = await getLocaleFromHeaders();
-	const { globals } = await fetchSiteData(locale);
+	const { globals } = await fetchSiteData();
 
 	const siteTitle = globals?.title || 'Simple CMS';
 	const siteDescription = globals?.description || 'A starter CMS template powered by Next.js and Directus.';
@@ -71,9 +70,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 						headerNavigation={headerNavigation}
 						footerNavigation={footerNavigation}
 						globals={globals}
-						locale={locale}
-						supportedLocales={supportedLocales}
-						localeNames={localeNames}
 					>
 						<main className="flex-grow">{children}</main>
 					</VisualEditingLayout>
