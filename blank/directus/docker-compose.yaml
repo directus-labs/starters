@@ -28,7 +28,7 @@ services:
       start_period: 30s
 
   directus:
-    image: directus/directus:11.11.0
+    image: directus/directus:11.14.0
     ports:
       - ${DIRECTUS_PORT}:8055
     volumes:
@@ -53,9 +53,6 @@ services:
       CACHE_AUTO_PURGE: ${CACHE_AUTO_PURGE}
       CACHE_STORE: 'redis'
       REDIS: 'redis://cache:6379'
-
-      ADMIN_EMAIL: ${ADMIN_EMAIL}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
       WEBSOCKETS_ENABLED: ${WEBSOCKETS_ENABLED}
 
