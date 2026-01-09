@@ -58,3 +58,13 @@ export function removeLocaleFromPath(path: string): string {
 
 	return path.startsWith('/') ? path : `/${path}`;
 }
+
+/**
+ * Resolves permalink from Next.js params array.
+ * Converts array of segments to a clean path string.
+ */
+export function resolvePermalink(permalink?: string[]): string {
+	const permalinkSegments = permalink || [];
+
+	return `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+}

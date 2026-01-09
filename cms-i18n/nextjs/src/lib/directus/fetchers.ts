@@ -231,12 +231,13 @@ function buildPageFields(includeTranslations: boolean) {
 export async function fetchPageData(
 	permalink: string,
 	postPage = 1,
+	locale: Locale = DEFAULT_LOCALE,
 	token?: string,
 	preview?: boolean,
-	locale: Locale = DEFAULT_LOCALE,
 ): Promise<Page> {
 	const { directus } = useDirectus();
-	const includeTranslations = locale !== DEFAULT_LOCALE;
+	const resolvedLocale = locale ?? DEFAULT_LOCALE;
+	const includeTranslations = resolvedLocale !== DEFAULT_LOCALE;
 
 	try {
 		const pageData = (await directus.request(
@@ -248,6 +249,7 @@ export async function fetchPageData(
 							? { permalink: { _eq: permalink } }
 							: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
 					limit: 1,
+					// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 					fields: buildPageFields(includeTranslations),
 					// @ts-expect-error Directus SDK doesn't recognize 'item' in deep query for polymorphic relations
 					deep: {
@@ -342,7 +344,8 @@ export async function fetchPageDataById(
 	if (!version?.trim()) throw new Error('Invalid version: version must be a non-empty string');
 
 	const { directus } = useDirectus();
-	const includeTranslations = locale !== DEFAULT_LOCALE;
+	const resolvedLocale = locale ?? DEFAULT_LOCALE;
+	const includeTranslations = resolvedLocale !== DEFAULT_LOCALE;
 
 	try {
 		return (await directus.request(
@@ -572,7 +575,8 @@ export async function fetchPostByIdAndVersion(
 	if (!slug?.trim()) throw new Error('Invalid slug: slug must be a non-empty string');
 
 	const { directus } = useDirectus();
-	const includeTranslations = locale !== DEFAULT_LOCALE;
+	const resolvedLocale = locale ?? DEFAULT_LOCALE;
+	const includeTranslations = resolvedLocale !== DEFAULT_LOCALE;
 
 	const postFields = [
 		'id',
@@ -648,7 +652,8 @@ export async function fetchPaginatedPosts(
 	locale: Locale = DEFAULT_LOCALE,
 ): Promise<Post[]> {
 	const { directus } = useDirectus();
-	const includeTranslations = locale !== DEFAULT_LOCALE;
+	const resolvedLocale = locale ?? DEFAULT_LOCALE;
+	const includeTranslations = resolvedLocale !== DEFAULT_LOCALE;
 
 	try {
 		const response = await directus.request(
@@ -707,7 +712,8 @@ export async function fetchTotalPostCount(): Promise<number> {
  */
 export async function fetchSiteData(locale: Locale = DEFAULT_LOCALE) {
 	const { directus } = useDirectus();
-	const includeTranslations = locale !== DEFAULT_LOCALE;
+	const resolvedLocale = locale ?? DEFAULT_LOCALE;
+	const includeTranslations = resolvedLocale !== DEFAULT_LOCALE;
 
 	const globalsFields = [
 		'id',

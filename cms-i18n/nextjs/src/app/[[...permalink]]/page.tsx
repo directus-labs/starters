@@ -2,10 +2,8 @@ import { fetchPageData, fetchPageDataById, getPageIdByPermalink } from '@/lib/di
 import { PageBlock, type Page } from '@/types/directus-schema';
 import { notFound } from 'next/navigation';
 import PageClient from './PageClient';
-import { getLocaleFromHeaders } from '@/lib/i18n/server';
-import { addLocaleToPath } from '@/lib/i18n/utils';
-import { useDirectus } from '@/lib/directus/directus';
-import { readItems } from '@directus/sdk';
+import { getLocaleFromHeaders, getLanguagesFromDirectus } from '@/lib/i18n/server';
+import { addLocaleToPath, resolvePermalink } from '@/lib/i18n/utils';
 
 /**
  * Generates page metadata with locale-specific content and alternate language links.
@@ -19,12 +17,12 @@ export async function generateMetadata({
 }) {
 	const { permalink } = await params;
 	const searchParamsResolved = await searchParams;
-	const permalinkSegments = permalink || [];
-	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+	const resolvedPermalink = resolvePermalink(permalink);
 
 	const preview = searchParamsResolved.preview === 'true';
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
 
+	// Skip metadata generation for preview/versioned content
 	if (preview || version) {
 		return {
 			title: 'Preview Mode',
@@ -35,23 +33,15 @@ export async function generateMetadata({
 	const locale = await getLocaleFromHeaders();
 
 	try {
-		const page = await fetchPageData(resolvedPermalink, 1, undefined, preview, locale);
+		const page = await fetchPageData(resolvedPermalink, 1, locale);
 
 		if (!page) return;
 
 		const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
 		const localizedPath = addLocaleToPath(resolvedPermalink, locale);
 
-		const { directus } = useDirectus();
-		const languages = await directus
-			.request(
-				readItems('languages', {
-					fields: ['code'],
-					sort: ['code'],
-				}),
-			)
-			.catch(() => []);
-		const supportedLocales = (languages as Array<{ code: string }>).map((lang) => lang.code);
+		const { languages } = await getLanguagesFromDirectus();
+		const supportedLocales = languages.map((lang) => lang.code);
 		const alternates: Record<string, string> = {};
 		for (const altLocale of supportedLocales) {
 			const altPath = addLocaleToPath(resolvedPermalink, altLocale);
@@ -87,8 +77,7 @@ export default async function Page({
 }) {
 	const { permalink } = await params;
 	const searchParamsResolved = await searchParams;
-	const permalinkSegments = permalink || [];
-	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
+	const resolvedPermalink = resolvePermalink(permalink);
 
 	const id = typeof searchParamsResolved.id === 'string' ? searchParamsResolved.id : '';
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
@@ -118,7 +107,7 @@ export default async function Page({
 			}
 			page = await fetchPageDataById(pageId, fixedVersion, token || undefined, locale);
 		} else {
-			page = await fetchPageData(resolvedPermalink, 1, token || undefined, preview, locale);
+			page = await fetchPageData(resolvedPermalink, 1, locale, token || undefined, preview);
 		}
 
 		if (!page || !page.blocks) {
