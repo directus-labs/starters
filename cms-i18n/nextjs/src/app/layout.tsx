@@ -70,6 +70,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 						headerNavigation={headerNavigation}
 						footerNavigation={footerNavigation}
 						globals={globals}
+						currentLocale={locale}
+						supportedLocales={supportedLocales}
+						localeNames={localeNames}
 					>
 						<main className="flex-grow">{children}</main>
 					</VisualEditingLayout>

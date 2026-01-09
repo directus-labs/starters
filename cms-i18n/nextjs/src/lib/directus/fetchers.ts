@@ -248,7 +248,8 @@ export async function fetchPageData(
 							? { permalink: { _eq: permalink } }
 							: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
 					limit: 1,
-					fields: buildPageFields(includeTranslations) as any,
+					fields: buildPageFields(includeTranslations),
+					// @ts-expect-error Directus SDK doesn't recognize 'item' in deep query for polymorphic relations
 					deep: {
 						blocks: {
 							_sort: ['sort'],
@@ -266,7 +267,7 @@ export async function fetchPageData(
 							},
 						},
 						...(includeTranslations ? buildTranslationsDeep(locale) : {}),
-					} as any,
+					},
 				}),
 			),
 		)) as Page[];
@@ -300,14 +301,14 @@ export async function fetchPageData(
 								'image',
 								'published_at',
 								...(includeTranslations
-									? [{ translations: ['title', 'description', 'languages_code', 'status'] }]
+									? [{ translations: ['title', 'description', 'languages_code', 'status'] as const }]
 									: []),
-							] as any,
+							],
 							filter: { status: { _eq: 'published' } },
 							sort: ['-published_at'],
 							limit,
 							page: postPage,
-							...(includeTranslations ? { deep: buildTranslationsDeep(locale) as any } : {}),
+							...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
 						}),
 					);
 
@@ -349,11 +350,13 @@ export async function fetchPageDataById(
 				token as string,
 				readItem('pages', id, {
 					version,
-					fields: buildPageFields(includeTranslations) as any,
+					// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+					fields: buildPageFields(includeTranslations),
 					deep: {
 						blocks: {
 							_sort: ['sort'],
 							_filter: { hide_block: { _neq: true } },
+							// @ts-expect-error Directus SDK doesn't recognize 'item' in deep query for polymorphic relations
 							item: {
 								// Only fetch active forms (required for form_fields permission rules)
 								block_form: {
@@ -367,7 +370,7 @@ export async function fetchPageDataById(
 							},
 						},
 						...(includeTranslations ? buildTranslationsDeep(locale) : {}),
-					} as any,
+					},
 				}),
 			),
 		)) as unknown as Page;
@@ -435,6 +438,7 @@ export async function getPostIdBySlug(slug: string, token?: string): Promise<str
 
 /**
  * Fetches a single blog post by slug with i18n support.
+ * For non-default locales, we first try to find by main slug, then check translations if needed.
  */
 export async function fetchPostBySlug(
 	slug: string,
@@ -444,7 +448,8 @@ export async function fetchPostBySlug(
 	const { draft, token, locale = DEFAULT_LOCALE } = options || {};
 	const includeTranslations = locale !== DEFAULT_LOCALE;
 
-	const filter: QueryFilter<Schema, Post> =
+	// First, try to find post by main slug (works for default locale and when slug is same across languages)
+	const baseFilter: QueryFilter<Schema, Post> =
 		token || draft ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } };
 
 	const postFields = [
@@ -459,7 +464,7 @@ export async function fetchPostBySlug(
 		'seo',
 		{ author: ['id', 'first_name', 'last_name', 'avatar'] },
 		...(includeTranslations
-			? [{ translations: ['title', 'content', 'description', 'slug', 'languages_code', 'status'] }]
+			? [{ translations: ['title', 'content', 'description', 'slug', 'languages_code', 'status'] as const }]
 			: []),
 	];
 
@@ -468,30 +473,65 @@ export async function fetchPostBySlug(
 		'title',
 		'slug',
 		'image',
-		...(includeTranslations ? [{ translations: ['title', 'languages_code', 'status'] }] : []),
+		...(includeTranslations ? [{ translations: ['title', 'languages_code', 'status'] as const }] : []),
 	];
 
 	try {
-		const [postsData, relatedPostsData] = await Promise.all([
-			directus.request(
+		// Try to find post by main slug first
+		let postsData = await directus.request(
+			withToken(
+				token as string,
+				readItems('posts', {
+					filter: baseFilter,
+					limit: 1,
+					// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+					fields: postFields,
+					...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+				}),
+			),
+		);
+
+		// If not found and we're looking for a non-default locale, try searching in translations
+		if (postsData.length === 0 && includeTranslations) {
+			// Search for posts where translation slug matches
+			const translationFilter = {
+				_and: [
+					{ status: { _eq: 'published' } },
+					{
+						translations: {
+							slug: { _eq: slug },
+							languages_code: { _eq: locale },
+							status: { _eq: 'published' },
+						},
+					},
+				],
+			};
+
+			postsData = await directus.request(
 				withToken(
 					token as string,
 					readItems('posts', {
-						filter,
+						// @ts-expect-error Directus SDK doesn't support filtering by translation relations
+						filter: translationFilter,
 						limit: 1,
-						fields: postFields as any,
-						...(includeTranslations ? { deep: buildTranslationsDeep(locale) as any } : {}),
+						// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+						fields: postFields,
+						deep: buildTranslationsDeep(locale),
 					}),
 				),
-			),
+			);
+		}
+
+		const [relatedPostsData] = await Promise.all([
 			directus.request(
 				withToken(
 					token as string,
 					readItems('posts', {
 						filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
 						limit: 2,
-						fields: relatedPostFields as any,
-						...(includeTranslations ? { deep: buildTranslationsDeep(locale) as any } : {}),
+						// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+						fields: relatedPostFields,
+						...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
 					}),
 				),
 			),
@@ -500,9 +540,12 @@ export async function fetchPostBySlug(
 		const post = postsData.length > 0 ? (postsData[0] as unknown as Post) : null;
 		const relatedPosts = relatedPostsData as unknown as Post[];
 
-		if (includeTranslations) {
+		if (includeTranslations && post) {
+			// Merge translations for the main post
+			const mergedPost = mergeTranslations(post, locale);
+
 			return {
-				post: post ? mergeTranslations(post, locale) : null,
+				post: mergedPost,
 				relatedPosts: relatedPosts.map((p) => mergeTranslations(p, locale)),
 			};
 		}
@@ -543,7 +586,7 @@ export async function fetchPostByIdAndVersion(
 		'seo',
 		{ author: ['id', 'first_name', 'last_name', 'avatar'] },
 		...(includeTranslations
-			? [{ translations: ['title', 'content', 'description', 'slug', 'languages_code', 'status'] }]
+			? [{ translations: ['title', 'content', 'description', 'slug', 'languages_code', 'status'] as const }]
 			: []),
 	];
 
@@ -552,7 +595,7 @@ export async function fetchPostByIdAndVersion(
 		'title',
 		'slug',
 		'image',
-		...(includeTranslations ? [{ translations: ['title', 'languages_code', 'status'] }] : []),
+		...(includeTranslations ? [{ translations: ['title', 'languages_code', 'status'] as const }] : []),
 	];
 
 	try {
@@ -562,8 +605,9 @@ export async function fetchPostByIdAndVersion(
 					token as string,
 					readItem('posts', id, {
 						version,
-						fields: postFields as any,
-						...(includeTranslations ? { deep: buildTranslationsDeep(locale) as any } : {}),
+						// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+						fields: postFields,
+						...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
 					}),
 				),
 			),
@@ -571,8 +615,9 @@ export async function fetchPostByIdAndVersion(
 				readItems('posts', {
 					filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
 					limit: 2,
-					fields: relatedPostFields as any,
-					...(includeTranslations ? { deep: buildTranslationsDeep(locale) as any } : {}),
+					// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+					fields: relatedPostFields,
+					...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
 				}),
 			),
 		]);
@@ -606,7 +651,7 @@ export async function fetchPaginatedPosts(
 	const includeTranslations = locale !== DEFAULT_LOCALE;
 
 	try {
-		const response = (await directus.request(
+		const response = await directus.request(
 			readItems('posts', {
 				limit,
 				page,
@@ -617,14 +662,16 @@ export async function fetchPaginatedPosts(
 					'description',
 					'slug',
 					'image',
-					...(includeTranslations ? [{ translations: ['title', 'description', 'languages_code', 'status'] }] : []),
-				] as any,
+					...(includeTranslations
+						? [{ translations: ['title', 'description', 'languages_code', 'status'] as const }]
+						: []),
+				],
 				filter: { status: { _eq: 'published' } },
-				...(includeTranslations ? { deep: buildTranslationsDeep(locale) as any } : {}),
+				...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
 			}),
-		)) as Post[];
+		);
 
-		const posts = responseData as unknown as Post[];
+		const posts = response as unknown as Post[];
 
 		return includeTranslations ? posts.map((post) => mergeTranslations(post, locale)) : posts;
 	} catch (error) {
@@ -671,20 +718,20 @@ export async function fetchSiteData(locale: Locale = DEFAULT_LOCALE) {
 		'social_links',
 		'accent_color',
 		'favicon',
-		...(includeTranslations ? [{ translations: ['title', 'description', 'languages_code', 'status'] }] : []),
+		...(includeTranslations ? [{ translations: ['title', 'description', 'languages_code', 'status'] as const }] : []),
 	];
 
 	const navigationItemFields = [
 		'id',
 		'title',
-		...(includeTranslations ? [{ translations: ['title', 'languages_code', 'status'] }] : []),
+		...(includeTranslations ? [{ translations: ['title', 'languages_code', 'status'] as const }] : []),
 		{ page: ['permalink'] },
 		{
 			children: [
 				'id',
 				'title',
 				'url',
-				...(includeTranslations ? [{ translations: ['title', 'languages_code', 'status'] }] : []),
+				...(includeTranslations ? [{ translations: ['title', 'languages_code', 'status'] as const }] : []),
 				{ page: ['permalink'] },
 			],
 		},
@@ -696,26 +743,29 @@ export async function fetchSiteData(locale: Locale = DEFAULT_LOCALE) {
 		const [globalsData, headerNavigationData, footerNavigationData] = await Promise.all([
 			directus.request(
 				readSingleton('globals', {
-					fields: globalsFields as any,
-					...(includeTranslations ? { deep: buildTranslationsDeep(locale) as any } : {}),
+					// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+					fields: globalsFields,
+					...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
 				}),
 			),
 			directus.request(
 				readItem('navigation', 'main', {
-					fields: navigationFields as any,
+					// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+					fields: navigationFields,
 					deep: {
 						items: { _sort: ['sort'] },
 						...(includeTranslations ? buildTranslationsDeep(locale) : {}),
-					} as any,
+					},
 				}),
 			),
 			directus.request(
 				readItem('navigation', 'footer', {
-					fields: navigationFields as any,
+					// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+					fields: navigationFields,
 					deep: {
 						items: { _sort: ['sort'] },
 						...(includeTranslations ? buildTranslationsDeep(locale) : {}),
-					} as any,
+					},
 				}),
 			),
 		]);

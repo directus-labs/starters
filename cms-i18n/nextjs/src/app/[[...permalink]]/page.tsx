@@ -2,6 +2,10 @@ import { fetchPageData, fetchPageDataById, getPageIdByPermalink } from '@/lib/di
 import { PageBlock, type Page } from '@/types/directus-schema';
 import { notFound } from 'next/navigation';
 import PageClient from './PageClient';
+import { getLocaleFromHeaders } from '@/lib/i18n/server';
+import { addLocaleToPath } from '@/lib/i18n/utils';
+import { useDirectus } from '@/lib/directus/directus';
+import { readItems } from '@directus/sdk';
 
 /**
  * Generates page metadata with locale-specific content and alternate language links.
@@ -28,8 +32,10 @@ export async function generateMetadata({
 		};
 	}
 
+	const locale = await getLocaleFromHeaders();
+
 	try {
-		const page = await fetchPageData(resolvedPermalink);
+		const page = await fetchPageData(resolvedPermalink, 1, undefined, preview, locale);
 
 		if (!page) return;
 
@@ -55,10 +61,13 @@ export async function generateMetadata({
 		return {
 			title: page.seo?.title ?? page.title ?? '',
 			description: page.seo?.meta_description ?? '',
+			alternates: {
+				languages: alternates,
+			},
 			openGraph: {
 				title: page.seo?.title ?? page.title ?? '',
 				description: page.seo?.meta_description ?? '',
-				url: `${process.env.NEXT_PUBLIC_SITE_URL}${resolvedPermalink}`,
+				url: `${siteUrl}${localizedPath}`,
 				type: 'website',
 			},
 		};
@@ -88,6 +97,8 @@ export default async function Page({
 	// Live preview adds version = main which is not required when fetching the main version.
 	const fixedVersion = version != 'main' ? version : undefined;
 
+	const locale = await getLocaleFromHeaders();
+
 	try {
 		let page: Page;
 
@@ -98,14 +109,14 @@ export default async function Page({
 		// 3. Fail gracefully if the page doesn't exist for that version
 		if (fixedVersion && id) {
 			// We have both ID and version - fetch the specific version
-			page = await fetchPageDataById(id, fixedVersion, token || undefined);
+			page = await fetchPageDataById(id, fixedVersion, token || undefined, locale);
 		} else if (fixedVersion && !id) {
 			// We have version but no ID - look up the page ID first
 			const pageId = await getPageIdByPermalink(resolvedPermalink, token || undefined);
 			if (!pageId) {
 				notFound();
 			}
-			page = await fetchPageDataById(pageId, fixedVersion, token || undefined);
+			page = await fetchPageDataById(pageId, fixedVersion, token || undefined, locale);
 		} else {
 			page = await fetchPageData(resolvedPermalink, 1, token || undefined, preview, locale);
 		}

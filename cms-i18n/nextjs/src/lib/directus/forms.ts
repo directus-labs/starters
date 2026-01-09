@@ -1,7 +1,6 @@
 import { useDirectus } from './directus';
 import type { FormSubmission, FormSubmissionValue } from '@/types/directus-schema';
 
-
 export const submitForm = async (
 	formId: string,
 	fields: { id: string; name: string; type: string }[],

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { ChevronFirst, ChevronLast } from 'lucide-react';
 import Tagline from '../ui/Tagline';
 import Headline from '@/components/ui/Headline';
@@ -19,6 +19,7 @@ import {
 import { Post } from '@/types/directus-schema';
 import { fetchPaginatedPosts, fetchTotalPostCount } from '@/lib/directus/fetchers';
 import { setAttr } from '@directus/visual-editing';
+import { getLocaleFromPath, addLocaleToPath } from '@/lib/i18n/utils';
 
 interface PostsProps {
 	data: {
@@ -34,6 +35,8 @@ const Posts = ({ data }: PostsProps) => {
 	const { tagline, headline, posts, limit, id } = data;
 	const router = useRouter();
 	const searchParams = useSearchParams();
+	const pathname = usePathname();
+	const { locale } = getLocaleFromPath(pathname);
 	const visiblePages = 5;
 	const initialPage = Number(searchParams.get('page')) || 1;
 	const perPage = limit || 6;
@@ -63,7 +66,7 @@ const Posts = ({ data }: PostsProps) => {
 
 					return;
 				}
-				const response = await fetchPaginatedPosts(perPage, currentPage);
+				const response = await fetchPaginatedPosts(perPage, currentPage, locale);
 				setPaginatedPosts(response || []);
 			} catch (error) {
 				console.error('Error fetching paginated posts:', error);
@@ -72,7 +75,7 @@ const Posts = ({ data }: PostsProps) => {
 		};
 
 		fetchPosts();
-	}, [currentPage, perPage, posts]);
+	}, [currentPage, perPage, posts, locale]);
 
 	const handlePageChange = (page: number) => {
 		if (page >= 1 && page <= totalPages) {
@@ -135,27 +138,31 @@ const Posts = ({ data }: PostsProps) => {
 				})}
 			>
 				{paginatedPosts && paginatedPosts.length > 0 ? (
-					paginatedPosts.map((post) => (
-						<Link key={post.id} href={`/blog/${post.slug}`} className="group block overflow-hidden rounded-lg">
-							<div className="relative w-full h-64 rounded-lg overflow-hidden">
-								{post.image && (
-									<DirectusImage
-										uuid={typeof post.image === 'string' ? post.image : post.image?.id}
-										alt={post.title}
-										fill
-										sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-										className="w-full h-auto object-cover rounded-lg transition-transform duration-300 group-hover:scale-110"
-									/>
-								)}
-							</div>
-							<div className="p-4">
-								<h3 className="text-xl group-hover:text-accent font-heading transition-colors duration-300">
-									{post.title}
-								</h3>
-								{post.description && <p className="text-sm text-foreground mt-2">{post.description}</p>}
-							</div>
-						</Link>
-					))
+					paginatedPosts.map((post) => {
+						const blogPostPath = addLocaleToPath(`/blog/${post.slug}`, locale);
+
+						return (
+							<Link key={post.id} href={blogPostPath} className="group block overflow-hidden rounded-lg">
+								<div className="relative w-full h-64 rounded-lg overflow-hidden">
+									{post.image && (
+										<DirectusImage
+											uuid={typeof post.image === 'string' ? post.image : post.image?.id}
+											alt={post.title}
+											fill
+											sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+											className="w-full h-auto object-cover rounded-lg transition-transform duration-300 group-hover:scale-110"
+										/>
+									)}
+								</div>
+								<div className="p-4">
+									<h3 className="text-xl group-hover:text-accent font-heading transition-colors duration-300">
+										{post.title}
+									</h3>
+									{post.description && <p className="text-sm text-foreground mt-2">{post.description}</p>}
+								</div>
+							</Link>
+						);
+					})
 				) : (
 					<p className="text-center text-gray-500">No posts available.</p>
 				)}

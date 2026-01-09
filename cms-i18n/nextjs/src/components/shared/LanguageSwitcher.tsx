@@ -45,8 +45,8 @@ export default function LanguageSwitcher({ currentLocale, supportedLocales, loca
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="ghost" size="icon" aria-label="Change language" className="h-9 w-9">
-					<Globe className="h-4 w-4" />
+				<Button variant="ghost" size="icon" aria-label="Change language" className="size-9">
+					<Globe className="size-4" />
 					<span className="sr-only">Change language</span>
 				</Button>
 			</DropdownMenuTrigger>
@@ -55,6 +55,7 @@ export default function LanguageSwitcher({ currentLocale, supportedLocales, loca
 					locales.map((locale) => {
 						const isActive = locale === currentLocale;
 						const displayName = names[locale] || locale;
+
 						return (
 							<DropdownMenuItem
 								key={locale}

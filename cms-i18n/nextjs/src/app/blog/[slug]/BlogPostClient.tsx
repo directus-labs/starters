@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { setAttr } from '@directus/visual-editing';
 import { useVisualEditing } from '@/hooks/useVisualEditing';
 import DirectusImage from '@/components/shared/DirectusImage';
@@ -12,6 +12,7 @@ import Link from 'next/link';
 import Headline from '@/components/ui/Headline';
 import Container from '@/components/ui/container';
 import { Post, DirectusUser } from '@/types/directus-schema';
+import { getLocaleFromPath, addLocaleToPath } from '@/lib/i18n/utils';
 
 interface BlogPostClientProps {
 	post: Post;
@@ -24,6 +25,8 @@ interface BlogPostClientProps {
 export default function BlogPostClient({ post, relatedPosts, author, authorName, postUrl }: BlogPostClientProps) {
 	const { isVisualEditingEnabled, apply } = useVisualEditing();
 	const router = useRouter();
+	const pathname = usePathname();
+	const { locale } = getLocaleFromPath(pathname);
 
 	useEffect(() => {
 		if (isVisualEditingEnabled) {
@@ -130,26 +133,30 @@ export default function BlogPostClient({ post, relatedPosts, author, authorName,
 							<Separator className="my-4" />
 							<h3 className="font-bold mb-4">Related Posts</h3>
 							<div className="space-y-4">
-								{relatedPosts.map((relatedPost) => (
-									<Link
-										key={relatedPost.id}
-										href={`/blog/${relatedPost.slug}`}
-										className="flex items-center space-x-4 hover:text-accent group"
-									>
-										{relatedPost.image && (
-											<div className="relative shrink-0 w-[150px] h-[100px] overflow-hidden rounded-lg">
-												<DirectusImage
-													uuid={relatedPost.image as string}
-													alt={relatedPost.title || 'related posts'}
-													className="object-cover transition-transform duration-300 group-hover:scale-110"
-													fill
-													sizes="(max-width: 768px) 100px, (max-width: 1024px) 150px, 150px"
-												/>
-											</div>
-										)}
-										<span className="font-heading">{relatedPost.title}</span>
-									</Link>
-								))}
+								{relatedPosts.map((relatedPost) => {
+									const relatedPostPath = addLocaleToPath(`/blog/${relatedPost.slug}`, locale);
+
+									return (
+										<Link
+											key={relatedPost.id}
+											href={relatedPostPath}
+											className="flex items-center space-x-4 hover:text-accent group"
+										>
+											{relatedPost.image && (
+												<div className="relative shrink-0 w-[150px] h-[100px] overflow-hidden rounded-lg">
+													<DirectusImage
+														uuid={relatedPost.image as string}
+														alt={relatedPost.title || 'related posts'}
+														className="object-cover transition-transform duration-300 group-hover:scale-110"
+														fill
+														sizes="(max-width: 768px) 100px, (max-width: 1024px) 150px, 150px"
+													/>
+												</div>
+											)}
+											<span className="font-heading">{relatedPost.title}</span>
+										</Link>
+									);
+								})}
 							</div>
 						</div>
 					</aside>
