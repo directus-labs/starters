@@ -48,7 +48,10 @@ const darkLogoUrl = computed(() =>
 const currentLocale = computed<Locale>(() => props.locale || DEFAULT_LOCALE);
 
 // Helper to localize internal paths
-const localize = (path: string | null | undefined) => localizeLink(path, currentLocale.value);
+// Note: localizeLink returns undefined for invalid paths
+// However, NuxtLink requires a valid string for the :to prop, so we fallback to '/' to prevent
+// navigation errors when paths are missing or invalid.
+const localize = (path: string | null | undefined) => localizeLink(path, currentLocale.value) || '/';
 </script>
 
 <template>

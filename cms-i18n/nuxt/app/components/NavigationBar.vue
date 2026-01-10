@@ -66,7 +66,10 @@ const handleLinkClick = () => {
 const currentLocale = computed(() => props.locale || DEFAULT_LOCALE);
 
 // Helper to localize internal paths using shared utility
-const localize = (path: string | null | undefined) => localizeLink(path, currentLocale.value);
+// Note: localizeLink returns undefined for invalid paths
+// However, NuxtLink requires a valid string for the :to prop, so we fallback to '/' to prevent
+// navigation errors when paths are missing or invalid.
+const localize = (path: string | null | undefined) => localizeLink(path, currentLocale.value) || '/';
 
 // Localized home path
 const homeLink = computed(() => localize('/'));
