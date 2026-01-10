@@ -76,17 +76,20 @@ const isNavigationItem = (item: NavigationItem | string): item is NavigationItem
 	return typeof item !== 'string';
 };
 
-// Get navigation items as full objects (filter out string IDs)
-const navigationItems = computed(() => {
-	const items = props.navigation?.items;
+// Normalize mixed navigation items (objects or string IDs) to full NavigationItem objects
+const toNavigationItems = (items?: (NavigationItem | string)[] | null): NavigationItem[] => {
 	if (!items) return [];
 	return items.filter(isNavigationItem);
+};
+
+// Get navigation items as full objects (filter out string IDs)
+const navigationItems = computed(() => {
+	return toNavigationItems(props.navigation?.items);
 });
 
 // Helper to get children as full NavigationItems
 const getChildren = (item: NavigationItem): NavigationItem[] => {
-	if (!item.children) return [];
-	return item.children.filter(isNavigationItem);
+	return toNavigationItems(item.children);
 };
 
 // Helper to get page permalink from page object

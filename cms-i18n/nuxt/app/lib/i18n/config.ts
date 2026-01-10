@@ -19,23 +19,21 @@ export function getLocaleCode(locale: Locale): string {
 
 /**
  * Converts short URL code to full Directus locale.
- * Uses provided mapping from Directus languages collection, or falls back to heuristic.
+ * Uses provided mapping from Directus languages collection, or falls back to common patterns.
  *
  * @param code - Short code from URL (e.g., 'en', 'fr')
- * @param localeMap - Optional mapping from short codes to full locale codes (from Directus)
+ * @param localeMap - Optional mapping from short codes to full locale codes (from Directus languages collection)
  * @returns Full locale code (e.g., 'en-US', 'fr-FR')
  */
 export function codeToLocale(code: string, localeMap?: Record<string, Locale>): Locale {
 	const lowerCode = code.toLowerCase();
 
-	// If we have a mapping from Directus, use it
 	if (localeMap && localeMap[lowerCode]) {
 		return localeMap[lowerCode];
 	}
 
-	// Fallback: try to construct locale from code
-	// This handles cases where middleware runs before we can fetch from Directus
-	// Common patterns: en -> en-US, fr -> fr-FR, etc.
+	// Fallback needed for middleware that runs before Directus languages are fetched.
+	// These patterns should match your Directus languages collection configuration.
 	const commonPatterns: Record<string, Locale> = {
 		en: 'en-US',
 		fr: 'fr-FR',

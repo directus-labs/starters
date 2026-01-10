@@ -34,8 +34,12 @@ export function useLocale() {
 		const path = route.fullPath.split('?')[0] || route.path;
 		const first = path.split('/').filter(Boolean)[0];
 
-		if (first && /^[a-z]{2,3}$/i.test(first)) {
-			return codeToLocale(first.toLowerCase());
+		if (first) {
+			const lowerFirst = first.toLowerCase();
+
+			if (/^[a-z]{2,3}$/.test(lowerFirst)) {
+				return codeToLocale(lowerFirst);
+			}
 		}
 
 		return DEFAULT_LOCALE;

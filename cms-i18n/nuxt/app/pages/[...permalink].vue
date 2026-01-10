@@ -2,7 +2,7 @@
 import type { Page, PageBlock } from '#shared/types/schema';
 import type { SiteData } from '#shared/types/site-data';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
-import { addLocaleToPath } from '~/lib/i18n/utils';
+import { addLocaleToPath, getNotFoundMessage } from '~/lib/i18n/utils';
 import { DEFAULT_LOCALE } from '~/lib/i18n/config';
 
 const route = useRoute();
@@ -60,8 +60,8 @@ const supportedLocales = computed(() => siteDataState.value?.supportedLocales ||
 const localizedPath = addLocaleToPath(permalink, locale);
 const fullUrl = `${siteUrl}${localizedPath}`;
 
-// Build alternates for all supported locales
-const alternateLanguages = computed(() => {
+// Build alternates for all supported locales once
+const alternateLanguages: Record<string, string> = (() => {
 	const alternates: Record<string, string> = {};
 
 	for (const altLocale of supportedLocales.value) {
@@ -70,7 +70,7 @@ const alternateLanguages = computed(() => {
 	}
 
 	return alternates;
-});
+})();
 
 // SEO meta for pages
 useSeoMeta({
@@ -84,7 +84,7 @@ useSeoMeta({
 
 // Set alternate language links via useHead
 useHead({
-	link: Object.entries(alternateLanguages.value).map(([lang, href]) => ({
+	link: Object.entries(alternateLanguages).map(([lang, href]) => ({
 		rel: 'alternate',
 		hreflang: lang,
 		href,
@@ -117,6 +117,8 @@ onMounted(() => {
 	applyVisualEditingButton();
 	applyVisualEditing();
 });
+
+const notFoundMessage = computed(() => getNotFoundMessage(locale, 'page'));
 </script>
 
 <template>
@@ -139,7 +141,7 @@ onMounted(() => {
 			</Button>
 		</div>
 	</div>
-	<div v-else class="text-center text-xl mt-[20%]">404 - Page Not Found</div>
+	<div v-else class="text-center text-xl mt-[20%]">{{ notFoundMessage }}</div>
 </template>
 
 <style>

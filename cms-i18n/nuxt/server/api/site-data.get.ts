@@ -36,13 +36,10 @@ export default defineEventHandler(async (event) => {
 		const supportedLocales = allLocales.length > 0 ? allLocales : [DEFAULT_LOCALE];
 
 		// Build locale names map
-		const localeNames =
-			languages.length > 0
-				? (Object.fromEntries([
-						[DEFAULT_LOCALE, 'English'],
-						...languages.map((lang) => [lang.code, lang.name || lang.code]),
-					]) as Record<Locale, string>)
-				: ({ [DEFAULT_LOCALE]: 'English' } as Record<Locale, string>);
+		const localeNames = Object.fromEntries([
+			[DEFAULT_LOCALE, 'English'],
+			...languages.map((lang) => [lang.code, lang.name || lang.code]),
+		]) as Record<Locale, string>;
 
 		// Build fields
 		const globalsFields = buildGlobalsFields(includeTranslations);

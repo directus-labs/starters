@@ -73,6 +73,12 @@ watch(open, (isOpen) => {
 		loading.value = false;
 	}
 });
+
+function handleInput(e: Event) {
+	if (e.target instanceof HTMLInputElement) {
+		debouncedFetchResults(e.target.value);
+	}
+}
 </script>
 
 <template>
@@ -89,7 +95,7 @@ watch(open, (isOpen) => {
 				<CommandInput
 					placeholder="Search for pages or posts"
 					class="m-2 p-4 focus:outline-none text-base leading-normal"
-					@input="(e: Event) => debouncedFetchResults((e.target as HTMLInputElement).value)"
+					@input="handleInput"
 				/>
 
 				<CommandList class="p-2 text-foreground max-h-[500px] overflow-auto">
@@ -107,8 +113,11 @@ watch(open, (isOpen) => {
 							class="flex items-start gap-4 px-2 py-3"
 							:value="`${result.title} ${result.description} ${result.type} ${result.link} ${result.content}`"
 							@select="
-								router.push(localize(result.link));
-								open = false;
+								const link = localize(result.link);
+								if (link) {
+									router.push(link);
+									open = false;
+								}
 							"
 						>
 							<Badge variant="default">{{ result.type }}</Badge>

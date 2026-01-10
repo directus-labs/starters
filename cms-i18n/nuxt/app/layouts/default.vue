@@ -29,6 +29,8 @@ if (!siteDataState.value && siteData.value) {
 
 const effectiveSiteData = computed(() => siteDataState.value ?? siteData.value ?? null);
 
+const accentColor = computed(() => effectiveSiteData.value?.globals?.accent_color || '#6644ff');
+
 const { isVisualEditingEnabled, apply } = useVisualEditing();
 
 const navigation = useTemplateRef('navigationRef');
@@ -51,7 +53,7 @@ useHead({
 	style: [
 		{
 			id: 'accent-color',
-			innerHTML: `:root { --accent-color: ${effectiveSiteData.value?.globals?.accent_color || '#6644ff'} !important; }`,
+			innerHTML: `:root { --accent-color: ${accentColor.value} !important; }`,
 		},
 	],
 	bodyAttrs: {

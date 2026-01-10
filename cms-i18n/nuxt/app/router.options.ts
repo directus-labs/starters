@@ -10,7 +10,7 @@ export default <RouterConfig>{
 
 		if (blogRoute && blogRoute.component) {
 			newRoutes.unshift({
-				path: '/:locale([a-z]{2,3})/blog/:slug',
+				path: '/:locale([A-Za-z]{2,3})/blog/:slug',
 				name: 'locale-blog-slug',
 				component: blogRoute.component,
 				meta: blogRoute.meta,

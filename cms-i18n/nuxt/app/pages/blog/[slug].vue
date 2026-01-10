@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Post, DirectusUser } from '#shared/types/schema';
 import type { SiteData } from '#shared/types/site-data';
-import { localizeLink, addLocaleToPath } from '~/lib/i18n/utils';
+import { localizeLink, addLocaleToPath, getNotFoundMessage } from '~/lib/i18n/utils';
 import { DEFAULT_LOCALE } from '~/lib/i18n/config';
 
 const route = useRoute();
@@ -16,7 +16,7 @@ const { currentLocale } = useLocale();
 const locale = currentLocale.value;
 
 // Helper to localize internal paths using shared utility
-const localize = (path: string) => localizeLink(path, locale);
+const localize = (path: string | null | undefined) => localizeLink(path, locale);
 
 const wrapperRef = ref<HTMLElement | null>(null);
 
@@ -61,8 +61,8 @@ const blogPath = `/blog/${slug}`;
 const localizedPath = addLocaleToPath(blogPath, locale);
 const postUrl = `${siteUrl}${localizedPath}`;
 
-// Build alternates for all supported locales
-const alternateLanguages = computed(() => {
+// Build alternates for all supported locales once
+const alternateLanguages: Record<string, string> = (() => {
 	const alternates: Record<string, string> = {};
 
 	for (const altLocale of supportedLocales.value) {
@@ -71,7 +71,7 @@ const alternateLanguages = computed(() => {
 	}
 
 	return alternates;
-});
+})();
 
 onMounted(() => {
 	if (!isVisualEditingEnabled.value) return;
@@ -91,12 +91,14 @@ useSeoMeta({
 
 // Set alternate language links via useHead
 useHead({
-	link: Object.entries(alternateLanguages.value).map(([lang, href]) => ({
+	link: Object.entries(alternateLanguages).map(([lang, href]) => ({
 		rel: 'alternate',
 		hreflang: lang,
 		href,
 	})),
 });
+
+const notFoundMessage = computed(() => getNotFoundMessage(locale, 'post'));
 </script>
 <template>
 	<div v-if="post" ref="wrapperRef">
@@ -197,5 +199,5 @@ useHead({
 			</div>
 		</Container>
 	</div>
-	<div v-else class="text-center text-xl mt-[20%]">404 - Post Not Found</div>
+	<div v-else class="text-center text-xl mt-[20%]">{{ notFoundMessage }}</div>
 </template>

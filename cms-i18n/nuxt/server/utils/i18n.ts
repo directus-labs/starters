@@ -2,6 +2,7 @@
  * Server-side locale utilities for Nuxt.
  */
 import type { H3Event } from 'h3';
+import { getHeader, getQuery } from 'h3';
 import { type Locale, DEFAULT_LOCALE, buildLocaleMap } from '~/lib/i18n/config';
 import type { Language } from '#shared/types/schema';
 import { directusServer, readItems } from './directus-server';

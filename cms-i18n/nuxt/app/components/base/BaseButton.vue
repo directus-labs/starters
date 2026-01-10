@@ -41,7 +41,7 @@ const { currentLocale } = useLocale();
 const locale = currentLocale.value;
 
 // Helper to localize internal paths using shared utility
-const localize = (path: string | null | undefined) => localizeLink(path, locale) || undefined;
+const localize = (path: string | null | undefined) => localizeLink(path, locale);
 
 const icons: Record<string, any> = {
 	arrow: ArrowRight,

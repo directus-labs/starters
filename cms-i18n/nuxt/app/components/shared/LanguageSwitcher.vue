@@ -1,9 +1,6 @@
 <script setup lang="ts">
-/**
- * Language switcher component. Uses full page reload to ensure server components re-fetch with new locale.
- */
 import { Globe, Check } from 'lucide-vue-next';
-import { type Locale, DEFAULT_LOCALE } from '~/lib/i18n/config';
+import { type Locale, DEFAULT_LOCALE, getLocaleCode } from '~/lib/i18n/config';
 import { addLocaleToPath, removeLocaleFromPath } from '~/lib/i18n/utils';
 
 interface LanguageSwitcherProps {
@@ -14,16 +11,14 @@ interface LanguageSwitcherProps {
 
 const props = defineProps<LanguageSwitcherProps>();
 
-const route = useRoute();
+const router = useRouter();
 
-function handleLanguageChange(newLocale: Locale) {
+async function handleLanguageChange(newLocale: Locale) {
 	if (newLocale === props.currentLocale) return;
 
-	const pathWithoutLocale = removeLocaleFromPath(route.path);
+	const pathWithoutLocale = removeLocaleFromPath(router.currentRoute.value.path);
 	const newPath = addLocaleToPath(pathWithoutLocale, newLocale);
-
-	// Use full page reload to ensure server components re-fetch with new locale
-	window.location.href = newPath;
+	await router.push(newPath);
 }
 
 // Build ordered list with default locale first
@@ -38,7 +33,14 @@ const names = computed<Record<string, string>>(() => {
 		return { [DEFAULT_LOCALE]: 'English', ...props.localeNames };
 	}
 
-	return { [props.currentLocale]: 'English' };
+	// When no localeNames are provided, generate fallback names for all locales
+	const fallbackNames: Record<string, string> = {};
+
+	for (const locale of allLocales.value) {
+		fallbackNames[locale] = getLocaleCode(locale);
+	}
+
+	return fallbackNames;
 });
 </script>
 

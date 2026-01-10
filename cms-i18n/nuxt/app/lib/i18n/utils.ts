@@ -11,8 +11,10 @@ export function getLocaleFromPath(pathname: string): { locale: Locale; pathWitho
 		return { locale: DEFAULT_LOCALE, pathWithoutLocale: '/' };
 	}
 
-	if (firstSegment.length >= 2 && firstSegment.length <= 3 && /^[a-z]{2,3}$/i.test(firstSegment)) {
-		const locale = codeToLocale(firstSegment.toLowerCase());
+	const lowerSegment = firstSegment.toLowerCase();
+
+	if (lowerSegment.length >= 2 && lowerSegment.length <= 3 && /^[a-z]{2,3}$/.test(lowerSegment)) {
+		const locale = codeToLocale(lowerSegment);
 		const pathWithoutLocale = '/' + segments.slice(1).join('/') || '/';
 
 		return { locale, pathWithoutLocale };
@@ -50,7 +52,9 @@ export function removeLocaleFromPath(path: string): string {
 		return '/';
 	}
 
-	if (firstSegment.length >= 2 && firstSegment.length <= 3 && /^[a-z]{2,3}$/i.test(firstSegment)) {
+	const lowerSegment = firstSegment.toLowerCase();
+
+	if (lowerSegment.length >= 2 && lowerSegment.length <= 3 && /^[a-z]{2,3}$/.test(lowerSegment)) {
 		return '/' + segments.slice(1).join('/') || '/';
 	}
 
@@ -67,10 +71,35 @@ export function isExternalUrl(url: string | null | undefined): boolean {
 
 /**
  * Localizes a link path. Returns external URLs unchanged, adds locale prefix to internal paths.
- * Handles null/undefined gracefully.
  */
-export function localizeLink(path: string | null | undefined, locale: Locale): string {
-	if (!path) return '#';
+export function localizeLink(path: string | null | undefined, locale: Locale): string | undefined {
+	if (!path) {
+		if (import.meta.dev) {
+			// eslint-disable-next-line no-console
+			console.warn('[localizeLink] Received null or undefined path for locale:', locale);
+		}
+
+		return undefined;
+	}
+
 	if (isExternalUrl(path)) return path;
 	return addLocaleToPath(path, locale);
+}
+
+/**
+ * Returns a localized 404 error message based on the current locale.
+ */
+export function getNotFoundMessage(locale: Locale, type: 'page' | 'post' = 'page'): string {
+	const messages: Record<string, { page: string; post: string }> = {
+		'en-US': { page: '404 - Page Not Found', post: '404 - Post Not Found' },
+		'es-ES': { page: '404 - Página No Encontrada', post: '404 - Publicación No Encontrada' },
+		'fr-FR': { page: '404 - Page Non Trouvée', post: '404 - Article Non Trouvé' },
+		'de-DE': { page: '404 - Seite Nicht Gefunden', post: '404 - Beitrag Nicht Gefunden' },
+		'it-IT': { page: '404 - Pagina Non Trovata', post: '404 - Articolo Non Trovato' },
+		'pt-BR': { page: '404 - Página Não Encontrada', post: '404 - Publicação Não Encontrada' },
+		'ru-RU': { page: '404 - Страница Не Найдена', post: '404 - Запись Не Найдена' },
+		'ar-SA': { page: '404 - الصفحة غير موجودة', post: '404 - المنشور غير موجود' },
+	};
+
+	return messages[locale]?.[type] || messages['en-US'][type];
 }
