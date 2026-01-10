@@ -20,12 +20,14 @@ export function getLocaleFromEvent(event: H3Event): Locale {
 
 	// Then check x-locale header (set by middleware or client)
 	const headerLocale = getHeader(event, 'x-locale');
+
 	if (headerLocale) {
 		return headerLocale;
 	}
 
 	// Fallback to query parameter
 	const query = getQuery(event);
+
 	if (query.locale && typeof query.locale === 'string') {
 		return query.locale;
 	}
@@ -58,9 +60,7 @@ export async function getLanguagesFromDirectus(): Promise<{
 		>;
 
 		return { languages, localeMap, directionMap };
-	} catch (error) {
-		console.error('Error fetching languages from Directus:', error);
-
+	} catch {
 		// Return defaults on error
 		return {
 			languages: [{ code: DEFAULT_LOCALE, name: 'English', direction: 'ltr' }],
@@ -90,4 +90,3 @@ export async function getDirectionForLocale(
 
 	return map[locale] || 'ltr';
 }
-

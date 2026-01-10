@@ -3,7 +3,7 @@
  * Language switcher component. Uses full page reload to ensure server components re-fetch with new locale.
  */
 import { Globe, Check } from 'lucide-vue-next';
-import { type Locale, DEFAULT_LOCALE, getLocaleCode } from '~/lib/i18n/config';
+import { type Locale, DEFAULT_LOCALE } from '~/lib/i18n/config';
 import { addLocaleToPath, removeLocaleFromPath } from '~/lib/i18n/utils';
 
 interface LanguageSwitcherProps {
@@ -37,6 +37,7 @@ const names = computed<Record<string, string>>(() => {
 	if (Object.keys(props.localeNames).length > 0) {
 		return { [DEFAULT_LOCALE]: 'English', ...props.localeNames };
 	}
+
 	return { [props.currentLocale]: 'English' };
 });
 </script>

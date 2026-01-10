@@ -96,6 +96,7 @@ export function mergeTranslations<T>(data: T, locale: Locale): T {
 	// Recursively process nested objects and arrays
 	for (const key of Object.keys(result)) {
 		const value = result[key];
+
 		if (Array.isArray(value)) {
 			result[key] = value.map((item) => mergeTranslations(item, locale));
 		} else if (value && typeof value === 'object') {

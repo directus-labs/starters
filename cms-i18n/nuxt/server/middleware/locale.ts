@@ -18,7 +18,7 @@ export default defineEventHandler((event) => {
 		pathname.startsWith('/images') ||
 		pathname.startsWith('/icons') ||
 		pathname.startsWith('/fonts') ||
-		pathname.match(/\.(ico|png|jpg|jpeg|svg|woff|woff2|ttf|eot|js|css|json)$/)
+		pathname.match(/\.(ico|png|jpg|jpeg|svg|webp|woff|woff2|ttf|eot|js|css|json|map|txt|xml)$/)
 	) {
 		return;
 	}

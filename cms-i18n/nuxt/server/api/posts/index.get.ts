@@ -44,9 +44,7 @@ export default defineEventHandler(async (event) => {
 		const [postsRaw, countRaw] = await Promise.all([postsPromise, countPromise]);
 
 		// Merge translations if needed
-		const posts = includeTranslations
-			? postsRaw.map((post) => mergeTranslations(post, locale))
-			: postsRaw;
+		const posts = includeTranslations ? postsRaw.map((post) => mergeTranslations(post, locale)) : postsRaw;
 
 		// Get count from aggregate result
 		const countResult = countRaw[0];

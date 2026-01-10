@@ -33,4 +33,3 @@ export default defineNuxtRouteMiddleware((to) => {
 		useState('locale', () => locale);
 	}
 });
-

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { SiteData } from '#shared/types/site-data';
+
 // Get locale from composable
 const { currentLocale, currentLocaleCode } = useLocale();
 const locale = currentLocale.value;
@@ -8,7 +10,7 @@ const {
 	data: siteData,
 	error: siteError,
 	refresh,
-} = await useFetch('/api/site-data', {
+} = await useFetch<SiteData>('/api/site-data', {
 	key: `site-data-${locale}`,
 	headers: {
 		'x-locale': locale,
@@ -19,10 +21,12 @@ const {
 });
 
 // Persist site data for reuse (locales, globals, navigation)
-const siteDataState = useState('site-data', () => siteData.value ?? null);
+const siteDataState = useState<SiteData | null>('site-data', () => siteData.value ?? null);
+
 if (!siteDataState.value && siteData.value) {
 	siteDataState.value = siteData.value;
 }
+
 const effectiveSiteData = computed(() => siteDataState.value ?? siteData.value ?? null);
 
 const { isVisualEditingEnabled, apply } = useVisualEditing();

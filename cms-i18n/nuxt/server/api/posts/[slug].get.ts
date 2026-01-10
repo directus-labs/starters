@@ -121,7 +121,7 @@ export default defineEventHandler(async (event) => {
 		let relatedPosts = await directusServer.request<Post[]>(
 			readItems('posts', {
 				filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
-					fields: includeTranslations
+				fields: includeTranslations
 					? ['id', 'title', 'image', 'slug', { translations: ['*'] }]
 					: ['id', 'title', 'image', 'slug'],
 				limit: 2,

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Page, PageBlock } from '#shared/types/schema';
+import type { SiteData } from '#shared/types/site-data';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 import { addLocaleToPath } from '~/lib/i18n/utils';
 import { DEFAULT_LOCALE } from '~/lib/i18n/config';
@@ -52,7 +53,7 @@ if (!page.value || pageError.value) {
 const pageBlocks = computed(() => (page.value?.blocks as PageBlock[]) || []);
 
 // Reuse site data (locales) from layout to avoid refetching
-const siteDataState = useState<any>('site-data');
+const siteDataState = useState<SiteData | null>('site-data');
 const supportedLocales = computed(() => siteDataState.value?.supportedLocales || [DEFAULT_LOCALE]);
 
 // Build alternate language URLs
@@ -62,10 +63,12 @@ const fullUrl = `${siteUrl}${localizedPath}`;
 // Build alternates for all supported locales
 const alternateLanguages = computed(() => {
 	const alternates: Record<string, string> = {};
+
 	for (const altLocale of supportedLocales.value) {
 		const altPath = addLocaleToPath(permalink, altLocale);
 		alternates[altLocale] = `${siteUrl}${altPath}`;
 	}
+
 	return alternates;
 });
 

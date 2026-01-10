@@ -98,6 +98,7 @@ export default defineCachedEventHandler(
 						title: translation?.title || page.title,
 					};
 				}
+
 				return page;
 			});
 
@@ -120,6 +121,7 @@ export default defineCachedEventHandler(
 						description: translation?.description || post.description,
 					};
 				}
+
 				return post;
 			});
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Post, DirectusUser } from '#shared/types/schema';
+import type { SiteData } from '#shared/types/site-data';
 import { localizeLink, addLocaleToPath } from '~/lib/i18n/utils';
 import { DEFAULT_LOCALE } from '~/lib/i18n/config';
 
@@ -17,14 +18,10 @@ const locale = currentLocale.value;
 // Helper to localize internal paths using shared utility
 const localize = (path: string) => localizeLink(path, locale);
 
-const userName = (author: Partial<DirectusUser>) => {
-	return [author.first_name, author.last_name].filter(Boolean).join(' ');
-};
-
 const wrapperRef = ref<HTMLElement | null>(null);
 
 const {
-	public: { directusUrl, siteUrl },
+	public: { siteUrl },
 } = runtimeConfig;
 
 // Handle Live Preview adding version=main which is not required when fetching the main version.
@@ -56,7 +53,7 @@ const relatedPosts = computed(() => data.value?.relatedPosts);
 const author = computed(() => post.value?.author as Partial<DirectusUser>);
 
 // Reuse site data (locales) from layout to avoid refetching
-const siteDataState = useState<any>('site-data');
+const siteDataState = useState<SiteData | null>('site-data');
 const supportedLocales = computed(() => siteDataState.value?.supportedLocales || [DEFAULT_LOCALE]);
 
 // Build alternate language URLs
@@ -67,10 +64,12 @@ const postUrl = `${siteUrl}${localizedPath}`;
 // Build alternates for all supported locales
 const alternateLanguages = computed(() => {
 	const alternates: Record<string, string> = {};
+
 	for (const altLocale of supportedLocales.value) {
 		const altPath = addLocaleToPath(blogPath, altLocale);
 		alternates[altLocale] = `${siteUrl}${altPath}`;
 	}
+
 	return alternates;
 });
 

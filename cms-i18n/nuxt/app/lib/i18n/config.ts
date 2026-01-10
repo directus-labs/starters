@@ -66,4 +66,3 @@ export function buildLocaleMap(languages: Array<{ code: string }>): Record<strin
 
 	return map;
 }
-

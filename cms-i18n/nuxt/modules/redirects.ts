@@ -17,14 +17,16 @@ export default defineNuxtModule({
 		try {
 			const directus = createDirectus<Schema>(directusUrl).with(rest());
 
-			const redirects = await directus.request(readItems('redirects', {
-				filter: {
-					url_from: { _nnull: true },
-					url_to: { _nnull: true }
-				},
-				// Get all redirects (Directus defaults to 100 for limit)
-				limit: -1,
-			}));
+			const redirects = await directus.request(
+				readItems('redirects', {
+					filter: {
+						url_from: { _nnull: true },
+						url_to: { _nnull: true },
+					},
+					// Get all redirects (Directus defaults to 100 for limit)
+					limit: -1,
+				}),
+			);
 
 			for (const redirect of redirects) {
 				if (!redirect.url_from || !redirect.url_to) {

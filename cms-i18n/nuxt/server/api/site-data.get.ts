@@ -28,9 +28,11 @@ export default defineEventHandler(async (event) => {
 
 		// Build all supported locales
 		const allLocales = languages.map((lang) => lang.code);
+
 		if (!allLocales.includes(DEFAULT_LOCALE)) {
 			allLocales.unshift(DEFAULT_LOCALE);
 		}
+
 		const supportedLocales = allLocales.length > 0 ? allLocales : [DEFAULT_LOCALE];
 
 		// Build locale names map
@@ -111,8 +113,7 @@ export default defineEventHandler(async (event) => {
 			supportedLocales,
 			localeNames,
 		};
-	} catch (error) {
-		console.error('Error fetching site data:', error);
+	} catch {
 		throw createError({ statusCode: 500, statusMessage: 'Internal Server Error' });
 	}
 });
