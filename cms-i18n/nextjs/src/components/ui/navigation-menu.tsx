@@ -80,7 +80,7 @@ const NavigationMenuViewport = React.forwardRef<
 	<div
 		className={cn('absolute top-full flex justify-center')}
 		style={{
-			left: 'var(--radix-navigation-menu-viewport-left, 0)',
+			left: 'var(--radix-navigation-menu-viewport-left, 0px)',
 			width: 'var(--radix-navigation-menu-viewport-width, 100%)',
 		}}
 	>

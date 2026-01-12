@@ -1,9 +1,6 @@
-/**
- * Language switcher component. Uses full page reload to ensure server components re-fetch with new locale.
- */
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { Locale, DEFAULT_LOCALE } from '@/lib/i18n/config';
 import { addLocaleToPath, removeLocaleFromPath } from '@/lib/i18n/utils';
 import {
@@ -24,7 +21,6 @@ interface LanguageSwitcherProps {
 
 export default function LanguageSwitcher({ currentLocale, supportedLocales, localeNames }: LanguageSwitcherProps) {
 	const pathname = usePathname();
-	const router = useRouter();
 
 	const handleLanguageChange = (newLocale: Locale) => {
 		if (newLocale === currentLocale) return;
@@ -38,9 +34,7 @@ export default function LanguageSwitcher({ currentLocale, supportedLocales, loca
 	const allLocales = [DEFAULT_LOCALE, ...supportedLocales.filter((locale) => locale !== DEFAULT_LOCALE)];
 	const locales = allLocales.length > 0 ? allLocales : [currentLocale];
 	const names: Record<Locale, string> =
-		Object.keys(localeNames).length > 0
-			? { [DEFAULT_LOCALE]: 'English', ...localeNames }
-			: { [currentLocale]: 'English' };
+		Object.keys(localeNames).length > 0 ? localeNames : ({} as Record<Locale, string>);
 
 	return (
 		<DropdownMenu>

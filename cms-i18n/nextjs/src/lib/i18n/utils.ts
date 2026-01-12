@@ -10,10 +10,10 @@ export function getLocaleFromPath(pathname: string): { locale: Locale; pathWitho
 		return { locale: DEFAULT_LOCALE, pathWithoutLocale: '/' };
 	}
 
-	const firstSegment = segments[0];
+	const firstSegment = segments[0].toLowerCase();
 
-	if (firstSegment.length >= 2 && firstSegment.length <= 3 && /^[a-z]{2,3}$/i.test(firstSegment)) {
-		const locale = codeToLocale(firstSegment.toLowerCase());
+	if (firstSegment.length >= 2 && firstSegment.length <= 3 && /^[a-z]{2,3}$/.test(firstSegment)) {
+		const locale = codeToLocale(firstSegment);
 		const pathWithoutLocale = '/' + segments.slice(1).join('/') || '/';
 
 		return { locale, pathWithoutLocale };
@@ -50,9 +50,9 @@ export function removeLocaleFromPath(path: string): string {
 		return '/';
 	}
 
-	const firstSegment = segments[0];
+	const firstSegment = segments[0].toLowerCase();
 
-	if (firstSegment.length >= 2 && firstSegment.length <= 3 && /^[a-z]{2,3}$/i.test(firstSegment)) {
+	if (firstSegment.length >= 2 && firstSegment.length <= 3 && /^[a-z]{2,3}$/.test(firstSegment)) {
 		return '/' + segments.slice(1).join('/') || '/';
 	}
 

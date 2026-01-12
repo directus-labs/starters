@@ -2,7 +2,7 @@
  * Directus Data Fetching with i18n Support
  *
  * This module fetches content from Directus with optional translation support.
- * English (en-US) content is stored directly in collections; translations are
+ * Default locale content is stored directly in collections; translations are
  * stored in {collection}_translations tables.
  *
  * Pattern:
@@ -63,7 +63,7 @@ function buildTranslationsDeep(locale: Locale) {
 /**
  * Recursively merges translations into base objects.
  *
- * Directus stores default (English) content in main fields and translations
+ * Directus stores default locale content in main fields and translations
  * in a nested `translations` array. This flattens translated fields to top
  * level so components can use `page.title` instead of `page.translations[0].title`.
  */

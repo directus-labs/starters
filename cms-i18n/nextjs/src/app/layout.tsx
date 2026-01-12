@@ -40,17 +40,22 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
 	const { globals, headerNavigation, footerNavigation } = siteData;
 
-	const allLocales = languagesArray.map((lang) => lang.code);
+	// Filter out invalid language objects to prevent undefined keys
+	const validLanguages = Array.isArray(languagesArray)
+		? languagesArray.filter((lang) => typeof lang?.code === 'string' && lang.code.trim() !== '')
+		: [];
+	const allLocales = validLanguages.map((lang) => lang.code);
+	// Ensure DEFAULT_LOCALE is first, but avoid duplicates if it already exists
 	if (!allLocales.includes(DEFAULT_LOCALE)) {
 		allLocales.unshift(DEFAULT_LOCALE);
 	}
 	const supportedLocales = allLocales.length > 0 ? allLocales : [DEFAULT_LOCALE];
 
 	const localeNames =
-		languagesArray.length > 0
+		validLanguages.length > 0
 			? (Object.fromEntries([
 					[DEFAULT_LOCALE, 'English'],
-					...languagesArray.map((lang) => [lang.code, lang.name || lang.code]),
+					...validLanguages.map((lang) => [lang.code, lang.name || lang.code]),
 				]) as Record<Locale, string>)
 			: ({ [DEFAULT_LOCALE]: 'English' } as Record<Locale, string>);
 
