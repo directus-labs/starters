@@ -1,18 +1,27 @@
-# Next.js CMS Template with Directus Integration
+# Next.js CMS Template with Directus Integration & i18n Support
 
 <div align="center">
-  <img src="public/images/thumbnail.png" alt="Next.js CMS Template Thumbnail" width="800" height="auto" />
+  <img src="public/images/thumbnail.png" alt="Next.js CMS Template with i18n Thumbnail" width="800" height="auto" />
 </div>
 
-This is a **Next.js-based CMS Template** that is fully integrated with [Directus](https://directus.io/), offering a CMS
-solution for managing and delivering content seamlessly. The template leverages modern technologies like the **Next.js
-App Router**, **Tailwind CSS**, and **Shadcn components**, providing a complete and scalable starting point for building
-CMS-powered web applications.
+This is a **Next.js-based CMS Template with Internationalization (i18n) support** that is fully integrated with
+[Directus](https://directus.io/), offering a CMS solution for managing and delivering multilingual content seamlessly.
+The template leverages modern technologies like the **Next.js App Router**, **Tailwind CSS**, **Shadcn components**, and
+**built-in i18n support**, providing a complete and scalable starting point for building multilingual CMS-powered web
+applications.
+
+> **Note**: This is the i18n-enabled version of the Next.js CMS template. For a single-language version, see the
+> [standard Next.js CMS template](../../cms/nextjs/README.md).
 
 ## **Features**
 
 - **Next.js App Router**: Uses the latest Next.js routing architecture for layouts and dynamic routes.
-- **Full Directus Integration**: Directus API integration for fetching and managing relational data.
+- **Internationalization (i18n)**: Built-in support for multiple languages with locale-based routing, automatic
+  translation fetching from Directus, and language switcher component.
+- **Full Directus Integration**: Directus API integration for fetching and managing relational data with translation
+  support.
+- **Locale-Aware Content**: Automatic content translation based on URL locale prefixes (e.g., `/en/`, `/es/`) with
+  fallback to default locale.
 - **Tailwind CSS**: Fully integrated for rapid UI styling.
 - **TypeScript**: Ensures type safety and reliable code quality.
 - **Shadcn Components**: Pre-built, customizable UI components for modern design systems.
@@ -50,6 +59,19 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 
 ---
 
+## **Internationalization (i18n)**
+
+This template includes built-in internationalization support with locale-based routing, automatic translation fetching
+from Directus, and a language switcher component. The i18n schema (languages collection, translation tables, etc.) is
+included in the Directus template located in `../directus/template/`. Apply it to your Directus instance using the
+[Directus Template CLI](https://github.com/directus/template-cli):
+
+```bash
+npx directus-template-cli@latest apply <path-to-template>
+```
+
+---
+
 ## **Getting Started**
 
 ### Prerequisites
@@ -71,9 +93,9 @@ For instructions on setting up Directus, choose one of the following:
 
 You can instantly deploy this template using one of the following platforms:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nextjs&env=NEXT_PUBLIC_DIRECTUS_URL,NEXT_PUBLIC_SITE_URL,DIRECTUS_PUBLIC_TOKEN,NEXT_PUBLIC_ENABLE_VISUAL_EDITING)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms-i18n/nextjs&env=NEXT_PUBLIC_DIRECTUS_URL,NEXT_PUBLIC_SITE_URL,DIRECTUS_PUBLIC_TOKEN,NEXT_PUBLIC_ENABLE_VISUAL_EDITING)
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/nextjs)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms-i18n/nextjs)
 
 ### **Environment Variables**
 
@@ -165,11 +187,16 @@ src/
 ├── lib/                              # Utility and global logic
 │   ├── directus/                     # Directus utilities
 │   │   ├── directus.ts               # Directus client setup
-│   │   ├── fetchers.ts               # API fetchers
+│   │   ├── fetchers.ts               # API fetchers with i18n support
 │   │   ├── forms.ts                  # Directus form handling
 │   │   ├── generateDirectusTypes.ts  # Generates Directus types
 │   │   └── directus-utils.ts         # General Directus helpers
+│   ├── i18n/                         # i18n configuration and utilities
+│   │   ├── config.ts                 # Locale configuration
+│   │   ├── utils.ts                  # Locale path utilities
+│   │   └── server.ts                 # Server-side i18n utilities
 │   ├── zodSchemaBuilder.ts           # Zod validation schemas
+├── middleware.ts                     # Next.js middleware for locale detection
 ├── styles/                           # Global styles
 │   └── ...
 ├── types/                            # TypeScript types
