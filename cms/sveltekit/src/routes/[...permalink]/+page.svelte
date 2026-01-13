@@ -24,7 +24,7 @@
 <div class="relative">
 	<PageBuilder sections={blocks} />
 	{#if page.data.visualEditingEnabled && data.id}
-		<div class="fixed inset-x-0 bottom-4 z-50 flex w-full items-center justify-center gap-2 p-4">
+		<div class="fixed inset-x-0 bottom-4 z-[60] flex w-full items-center justify-center gap-2 p-4">
 			<!-- If you're not using the visual editor it's safe to remove this element. Just a helper to let editors add edit / add new blocks to a page. -->
 			<Button
 				id="visual-editing-button"
@@ -56,5 +56,9 @@
 		height: 100%;
 		transform: none;
 		background: transparent;
+	}
+	/* Ensure Visual Editor rectangles appear below header and buttons */
+	:global(.directus-visual-editing-overlay) {
+		z-index: 40 !important;
 	}
 </style>

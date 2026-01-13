@@ -25,6 +25,7 @@
 		"bits-ui": "2.9.4",
 		"clsx": "2.1.1",
 		"directus-sdk-typegen": "0.2.1",
+		"dotenv": "17.2.3",
 		"eslint": "9.33.0",
 		"eslint-config-prettier": "10.1.8",
 		"eslint-plugin-svelte": "3.11.0",

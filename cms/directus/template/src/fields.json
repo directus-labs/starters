@@ -989,7 +989,7 @@
       "name": "variant",
       "table": "block_button",
       "data_type": "character varying",
-      "default_value": "solid",
+      "default_value": "default",
       "generation_expression": null,
       "max_length": 255,
       "numeric_precision": null,

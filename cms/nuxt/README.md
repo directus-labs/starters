@@ -43,10 +43,8 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 [Directus Live Preview](https://docs.directus.io/guides/headless-cms/live-preview/nuxt-3.html#set-up-live-preview-with-nuxt-3)
 
 - The live preview feature works seamlessly on deployed environments.
-- To preview content on **localhost**, deploy your application to a staging environment.
-- **Important Note**: Directus employs Content Security Policies (CSPs) that block live previews on `localhost` for
-  security reasons. For a smooth preview experience, deploy the application to a cloud environment and use the
-  deployment URL for Directus previews.
+- **For Local Development**: If using local Docker, the CSP configuration is provided in `.env.example`. See [`../../directus/README.md`](../../directus/README.md#content-security-policy-csp-and-preview-issues) for details.
+- **For Directus Cloud**: Directus Cloud requires HTTPS for previews. You'll need to use HTTPS tunneling (ngrok, localtunnel, etc.) or configure CSP in your Directus Cloud settings. See the [main README troubleshooting section](../../README.md#preview-not-working---content-security-policy-csp-issues) for details.
 
 ### **Admin Bar**
 
