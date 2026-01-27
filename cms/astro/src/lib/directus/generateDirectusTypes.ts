@@ -1,25 +1,25 @@
 /* eslint-disable no-console */
 import { config } from "dotenv";
 import { generateDirectusTypes } from "directus-sdk-typegen";
-import * as readline from "readline";
+import readlineSync from "readline-sync";
 
 config();
 
 function promptForToken(): Promise<string> {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-
-  return new Promise((resolve) => {
-    rl.question(
-      "Enter your Directus admin token (with permissions to read system collections like directus_fields): ",
-      (answer) => {
-        rl.close();
-        resolve(answer.trim());
-      }
+  if (!process.stdin.isTTY) {
+    console.error(
+      "Cannot prompt for token: not a TTY. Set DIRECTUS_ADMIN_TOKEN env var instead."
     );
-  });
+
+    process.exit(1);
+  }
+
+  const answer = readlineSync.question(
+    "Enter your Directus admin token (with permissions to read system collections like directus_fields): ",
+    { hideEchoBack: true }
+  );
+
+  return Promise.resolve(answer.trim());
 }
 
 async function generateTypes() {

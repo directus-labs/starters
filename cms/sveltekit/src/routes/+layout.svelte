@@ -25,12 +25,25 @@
 	enableVisualEditing();
 
 	afterNavigate(async (_navigation) => {
-		apply({
+		// First apply: all [data-directus] elements get overlays
+		await apply({
 			directusUrl: PUBLIC_DIRECTUS_URL,
 			onSaved: async () => {
 				await invalidateAll();
 			}
 		});
+		// Second apply: add customClass to the Edit All Blocks overlay so the hide rule can target it
+		const editButton = document.querySelector('#visual-editing-button');
+		if (editButton) {
+			await apply({
+				directusUrl: PUBLIC_DIRECTUS_URL,
+				elements: editButton as HTMLElement,
+				customClass: 'visual-editing-button-class',
+				onSaved: async () => {
+					await invalidateAll();
+				}
+			});
+		}
 	});
 </script>
 

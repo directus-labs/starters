@@ -158,10 +158,8 @@ Download and install Docker: [https://www.docker.com/products/docker-desktop](ht
 Open your terminal and run:
 
 ```bash
-npx directus-template-cli@1.0.0 init
+npx directus-template-cli@latest init
 ```
-
-> **Security Note:** This command uses a pinned version (`@1.0.0`) instead of `@latest` to reduce supply-chain risk. Check the [npm package page](https://www.npmjs.com/package/directus-template-cli) for the latest stable version and update as needed.
 
 Follow the prompts to:
 

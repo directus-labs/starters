@@ -26,7 +26,7 @@ This directory contains the Docker Compose configuration for running Directus lo
 
    **Interactive mode** (recommended for first-time setup and security):
    ```bash
-   npx directus-template-cli@1.0.0 apply
+   npx directus-template-cli@latest apply
    ```
    
    Follow the interactive prompts:
@@ -39,7 +39,7 @@ This directory contains the Docker Compose configuration for running Directus lo
    
    **Programmatic mode** (for automation/scripts):
    ```bash
-   npx directus-template-cli@1.0.0 apply -p \
+   npx directus-template-cli@latest apply -p \
      --directusUrl="http://localhost:8055" \
      --directusToken="YOUR_TOKEN_HERE" \
      --templateLocation="./template" \
@@ -47,10 +47,9 @@ This directory contains the Docker Compose configuration for running Directus lo
    ```
    
    > **Security Warning:** Passing admin tokens on the command line exposes them in process lists and shell history. For production or shared systems, consider:
-   > - Using environment variables: `DIRECTUS_TOKEN=your_token npx directus-template-cli@1.0.0 apply -p ...`
+   > - Using environment variables: `DIRECTUS_TOKEN=your_token npx directus-template-cli@latest apply -p ...`
    > - Using a temporary token with limited scope
    > - Reviewing the [directus-template-cli package](https://www.npmjs.com/package/directus-template-cli) before use
-   > - Pinning to a specific version (as shown above) instead of `@latest` to reduce supply-chain risk
    
    This will load all collections, fields, permissions, and content from the template into your Directus instance.
 

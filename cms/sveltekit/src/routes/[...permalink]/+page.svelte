@@ -57,6 +57,10 @@
 		transform: none;
 		background: transparent;
 	}
+	/* Hide the rectangle around the "Edit All Blocks" button (customClass set by second apply() in layout) */
+	:global(.directus-visual-editing-overlay.visual-editing-button-class) {
+		display: none !important;
+	}
 	/* Ensure Visual Editor rectangles appear below header and buttons */
 	:global(.directus-visual-editing-overlay) {
 		z-index: 40 !important;

@@ -40,7 +40,7 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 
 ### **Live Preview Setup**
 
-[Directus Live Preview](https://docs.directus.io/guides/headless-cms/live-preview/nextjs.html)
+[Implementing Live Preview in Astro](https://directus.io/docs/tutorials/getting-started/implementing-live-preview-in-astro)
 
 - The live preview feature works seamlessly on deployed environments.
 - **For Local Development**: If using local Docker, the CSP configuration is provided in `.env.example`. See [`../../directus/README.md`](../../directus/README.md#content-security-policy-csp-and-preview-issues) for details.
@@ -147,9 +147,9 @@ for your Directus schema.
    ```bash
    pnpm run generate:types
    ```
-3. When prompted, enter your Directus admin token (with permissions to read system collections like `directus_fields`).
+3. When prompted, enter your Directus admin token (with permissions to read system collections like `directus_fields`), or set it ahead of time via the `DIRECTUS_ADMIN_TOKEN` environment variable for non-interactive runs (e.g., CI).
 
-> **Note:** The type generation requires an admin token with permissions to read system collections like `directus_fields`. The public token (`DIRECTUS_PUBLIC_TOKEN`) does not have sufficient permissions for this operation. The script will prompt you to enter the admin token interactively.
+> **Note:** The type generation requires an admin token with permissions to read system collections like `directus_fields`. The public token (`DIRECTUS_PUBLIC_TOKEN`) does not have sufficient permissions for this operation. You can either provide the admin token interactively when prompted, or set it via the `DIRECTUS_ADMIN_TOKEN` environment variable (e.g., `DIRECTUS_ADMIN_TOKEN=your_token pnpm run generate:types`) to run without a TTY.
 
 ---
 

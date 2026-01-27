@@ -145,6 +145,9 @@ for your Directus schema.
    ```bash
    pnpm run generate:types
    ```
+3. When prompted, enter your Directus admin token (with permissions to read system collections like `directus_fields`), or set it ahead of time via the `DIRECTUS_ADMIN_TOKEN` environment variable for non-interactive runs (e.g., CI).
+
+> **Note:** The type generation requires an admin token with permissions to read system collections like `directus_fields`. The public token does not have sufficient permissions for this operation. You can either provide the admin token interactively when prompted, or set it via the `DIRECTUS_ADMIN_TOKEN` environment variable (e.g., `DIRECTUS_ADMIN_TOKEN=your_token pnpm run generate:types`) to run without a TTY. Nuxt also accepts `DIRECTUS_SERVER_TOKEN` for backward compatibility.
 
 ## Folder Structure
 
