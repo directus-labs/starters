@@ -69,6 +69,11 @@
 		"vue-hook-form": "0.0.4",
 		"zod": "3.24.2"
 	},
+	"pnpm": {
+		"overrides": {
+			"tar": "^7.5.4"
+		}
+	},
 	"engines": {
 		"node": ">=20.0.0",
 		"pnpm": ">=8.6.0"
