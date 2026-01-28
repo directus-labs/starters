@@ -132,13 +132,6 @@ To get started, you need to configure environment variables. Follow these steps:
    ```
    npm doesn't support pnpm's `workspace:` protocol, so you must remove `pnpm-lock.yaml` before running `npm install`. The project will generate a `package-lock.json` instead.
 
-   **To switch back to pnpm:**
-   ```bash
-   rm -rf node_modules package-lock.json
-   pnpm install
-   ```
-   This removes npm's lockfile and regenerates `pnpm-lock.yaml`.
-
 2. Start the development server:
 
    ```bash
