@@ -11,14 +11,17 @@ interface LanguageSwitcherProps {
 
 const props = defineProps<LanguageSwitcherProps>();
 
-const router = useRouter();
+const route = useRoute();
 
 async function handleLanguageChange(newLocale: Locale) {
 	if (newLocale === props.currentLocale) return;
 
-	const pathWithoutLocale = removeLocaleFromPath(router.currentRoute.value.path);
+	const pathWithoutLocale = removeLocaleFromPath(route.path);
 	const newPath = addLocaleToPath(pathWithoutLocale, newLocale);
-	await router.push(newPath);
+
+	// Use hard navigation to ensure all data (header/footer) is refreshed
+	// This is necessary because the layout data needs to be re-fetched for the new locale
+	await navigateTo(newPath, { external: true });
 }
 
 // Build ordered list with default locale first
@@ -57,7 +60,12 @@ const names = computed<Record<string, string>>(() => {
 				<DropdownMenuItem
 					v-for="locale in allLocales"
 					:key="locale"
-					:class="[locale === currentLocale ? 'text-accent' : 'hover:text-accent cursor-pointer', 'px-3 py-1.5']"
+					:class="[
+						'font-heading text-nav cursor-pointer',
+						locale === currentLocale ? 'text-accent' : 'hover:text-accent',
+						'hover:bg-transparent focus:bg-transparent',
+						'px-3 py-1.5',
+					]"
 					@click="handleLanguageChange(locale)"
 				>
 					<span class="whitespace-nowrap">{{ names[locale] || locale }}</span>
