@@ -63,7 +63,7 @@
 		"nuxt-security": "2.2.0",
 		"radix-vue": "1.9.17",
 		"shadcn-nuxt": "2.4.3",
-		"sharp": "0.34.0",
+		"sharp": "0.34.3",
 		"tailwind-merge": "2.6.0",
 		"tailwindcss-animate": "1.0.7",
 		"vee-validate": "4.15.0",
@@ -74,6 +74,9 @@
 		"overrides": {
 			"tar": "^7.5.4"
 		}
+	},
+	"overrides": {
+		"tar": "^7.5.4"
 	},
 	"engines": {
 		"node": ">=20.0.0",

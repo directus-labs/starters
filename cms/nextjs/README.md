@@ -106,6 +106,13 @@ To get started, you need to configure environment variables. Follow these steps:
 
    _(You can also use `npm install` if you prefer.)_
 
+   **Note for npm users:** If you encounter dependency resolution errors, try:
+   ```bash
+   rm -rf node_modules package-lock.json
+   npm install
+   ```
+   This project uses pnpm by default, so any errors about missing packages may indicate stale lockfiles.
+
 2. Start the development server:
 
    ```bash

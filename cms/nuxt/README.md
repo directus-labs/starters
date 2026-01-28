@@ -125,6 +125,13 @@ To get started, you need to configure environment variables. Follow these steps:
 
    _(You can also use `npm install` if you prefer.)_
 
+   **Note for npm users:** If you encounter dependency resolution errors (e.g., `@nuxtjs/eslint-config-typescript`), try:
+   ```bash
+   rm -rf node_modules package-lock.json
+   npm install
+   ```
+   This project uses `@nuxt/eslint` (not the legacy `@nuxtjs/eslint-config-typescript`), so any errors about the old package indicate stale lockfiles.
+
 2. Start the development server:
 
    ```bash
