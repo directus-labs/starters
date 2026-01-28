@@ -125,12 +125,19 @@ To get started, you need to configure environment variables. Follow these steps:
 
    _(You can also use `npm install` if you prefer.)_
 
-   **Note for npm users:** If you encounter dependency resolution errors (e.g., `@nuxtjs/eslint-config-typescript`), try:
+   **Note for npm users:** This project uses pnpm workspaces. If you're using npm instead, you'll need to:
    ```bash
-   rm -rf node_modules package-lock.json
+   rm -rf node_modules pnpm-lock.yaml
    npm install
    ```
-   This project uses `@nuxt/eslint` (not the legacy `@nuxtjs/eslint-config-typescript`), so any errors about the old package indicate stale lockfiles.
+   npm doesn't support pnpm's `workspace:` protocol, so you must remove `pnpm-lock.yaml` before running `npm install`. The project will generate a `package-lock.json` instead.
+
+   **To switch back to pnpm:**
+   ```bash
+   rm -rf node_modules package-lock.json
+   pnpm install
+   ```
+   This removes npm's lockfile and regenerates `pnpm-lock.yaml`.
 
 2. Start the development server:
 

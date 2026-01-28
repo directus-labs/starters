@@ -18,8 +18,8 @@
 		"generate:types": "node ./scripts/generate-types.js"
 	},
 	"devDependencies": {
-		"@directus/types": "13.2.2",
-		"@nuxt/devtools": "2.3.2",
+		"@directus/types": "13.3.1",
+		"@nuxt/devtools": "2.7.0",
 		"@nuxt/eslint": "1.12.1",
 		"@tailwindcss/typography": "0.5.16",
 		"@typescript-eslint/eslint-plugin": "8.29.1",
@@ -72,7 +72,8 @@
 	},
 	"pnpm": {
 		"overrides": {
-			"tar": "^7.5.4"
+			"tar": "^7.5.4",
+			"unhead": "2.1.2"
 		}
 	},
 	"overrides": {
