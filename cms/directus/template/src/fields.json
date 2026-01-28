@@ -26,9 +26,7 @@
     "meta": {
       "collection": "ai_prompts",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -300,9 +298,7 @@
     "meta": {
       "collection": "ai_prompts",
       "field": "messages",
-      "special": [
-        "cast-json"
-      ],
+      "special": ["cast-json"],
       "interface": "inline-repeater-interface",
       "options": {
         "fields": [
@@ -459,9 +455,7 @@
     "meta": {
       "collection": "ai_prompts",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -508,9 +502,7 @@
     "meta": {
       "collection": "ai_prompts",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -557,9 +549,7 @@
     "meta": {
       "collection": "ai_prompts",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -606,9 +596,7 @@
     "meta": {
       "collection": "ai_prompts",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -655,9 +643,7 @@
     "meta": {
       "collection": "block_button",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -829,9 +815,7 @@
     "meta": {
       "collection": "block_button",
       "field": "page",
-      "special": [
-        "m2o"
-      ],
+      "special": ["m2o"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{title}} - {{permalink}}"
@@ -896,9 +880,7 @@
     "meta": {
       "collection": "block_button",
       "field": "post",
-      "special": [
-        "m2o"
-      ],
+      "special": ["m2o"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{title}} - {{slug}}"
@@ -989,7 +971,7 @@
       "name": "variant",
       "table": "block_button",
       "data_type": "character varying",
-      "default_value": "solid",
+      "default_value": "default",
       "generation_expression": null,
       "max_length": 255,
       "numeric_precision": null,
@@ -1194,9 +1176,7 @@
     "meta": {
       "collection": "block_button",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -1243,9 +1223,7 @@
     "meta": {
       "collection": "block_button",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -1292,9 +1270,7 @@
     "meta": {
       "collection": "block_button",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -1341,9 +1317,7 @@
     "meta": {
       "collection": "block_button",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -1390,9 +1364,7 @@
     "meta": {
       "collection": "block_button_group",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -1482,9 +1454,7 @@
     "meta": {
       "collection": "block_button_group",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -1531,9 +1501,7 @@
     "meta": {
       "collection": "block_button_group",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -1580,9 +1548,7 @@
     "meta": {
       "collection": "block_button_group",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -1629,9 +1595,7 @@
     "meta": {
       "collection": "block_button_group",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -1678,9 +1642,7 @@
     "meta": {
       "collection": "block_form",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -1725,9 +1687,7 @@
     "meta": {
       "collection": "block_form",
       "field": "form",
-      "special": [
-        "m2o"
-      ],
+      "special": ["m2o"],
       "interface": "select-dropdown-m2o",
       "options": null,
       "display": null,
@@ -1873,9 +1833,7 @@
     "meta": {
       "collection": "block_form",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -1922,9 +1880,7 @@
     "meta": {
       "collection": "block_form",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -1971,9 +1927,7 @@
     "meta": {
       "collection": "block_form",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -2020,9 +1974,7 @@
     "meta": {
       "collection": "block_form",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -2072,10 +2024,7 @@
       "special": null,
       "interface": "input",
       "options": {
-        "toolbar": [
-          "italic",
-          "removeformat"
-        ]
+        "toolbar": ["italic", "removeformat"]
       },
       "display": null,
       "display_options": null,
@@ -2119,9 +2068,7 @@
     "meta": {
       "collection": "block_gallery",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -2211,9 +2158,7 @@
     "meta": {
       "collection": "block_gallery",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -2260,9 +2205,7 @@
     "meta": {
       "collection": "block_gallery",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -2309,9 +2252,7 @@
     "meta": {
       "collection": "block_gallery",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -2358,9 +2299,7 @@
     "meta": {
       "collection": "block_gallery",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -2407,9 +2346,7 @@
     "meta": {
       "collection": "block_gallery_items",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -2589,9 +2526,7 @@
     "meta": {
       "collection": "block_gallery_items",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -2638,9 +2573,7 @@
     "meta": {
       "collection": "block_gallery_items",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -2687,9 +2620,7 @@
     "meta": {
       "collection": "block_gallery_items",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -2736,9 +2667,7 @@
     "meta": {
       "collection": "block_gallery_items",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -2843,9 +2772,7 @@
     "meta": {
       "collection": "block_hero",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -2890,9 +2817,7 @@
     "meta": {
       "collection": "block_hero",
       "field": "image",
-      "special": [
-        "file"
-      ],
+      "special": ["file"],
       "interface": "file-image",
       "options": {
         "crop": false,
@@ -2940,9 +2865,7 @@
     "meta": {
       "collection": "block_hero",
       "field": "button_group",
-      "special": [
-        "m2o"
-      ],
+      "special": ["m2o"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{buttons.label}}",
@@ -3175,9 +3098,7 @@
     "meta": {
       "collection": "block_hero",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -3224,9 +3145,7 @@
     "meta": {
       "collection": "block_hero",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -3273,9 +3192,7 @@
     "meta": {
       "collection": "block_hero",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -3322,9 +3239,7 @@
     "meta": {
       "collection": "block_hero",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -3371,9 +3286,7 @@
     "meta": {
       "collection": "block_posts",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -3616,9 +3529,7 @@
     "meta": {
       "collection": "block_posts",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -3665,9 +3576,7 @@
     "meta": {
       "collection": "block_posts",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -3714,9 +3623,7 @@
     "meta": {
       "collection": "block_posts",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -3763,9 +3670,7 @@
     "meta": {
       "collection": "block_posts",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -3812,9 +3717,7 @@
     "meta": {
       "collection": "block_pricing",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -3960,9 +3863,7 @@
     "meta": {
       "collection": "block_pricing",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -4009,9 +3910,7 @@
     "meta": {
       "collection": "block_pricing",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -4058,9 +3957,7 @@
     "meta": {
       "collection": "block_pricing",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -4107,9 +4004,7 @@
     "meta": {
       "collection": "block_pricing",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -4156,9 +4051,7 @@
     "meta": {
       "collection": "block_pricing_cards",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -4391,9 +4284,7 @@
     "meta": {
       "collection": "block_pricing_cards",
       "field": "features",
-      "special": [
-        "cast-json"
-      ],
+      "special": ["cast-json"],
       "interface": "simple-list",
       "options": {
         "limit": 10
@@ -4440,9 +4331,7 @@
     "meta": {
       "collection": "block_pricing_cards",
       "field": "button",
-      "special": [
-        "m2o"
-      ],
+      "special": ["m2o"],
       "interface": "select-dropdown-m2o",
       "options": {
         "createRelatedItem": "always",
@@ -4542,9 +4431,7 @@
     "meta": {
       "collection": "block_pricing_cards",
       "field": "is_highlighted",
-      "special": [
-        "cast-boolean"
-      ],
+      "special": ["cast-boolean"],
       "interface": "boolean",
       "options": {
         "label": "Highlighted"
@@ -4636,9 +4523,7 @@
     "meta": {
       "collection": "block_pricing_cards",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -4685,9 +4570,7 @@
     "meta": {
       "collection": "block_pricing_cards",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -4734,9 +4617,7 @@
     "meta": {
       "collection": "block_pricing_cards",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -4783,9 +4664,7 @@
     "meta": {
       "collection": "block_pricing_cards",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -4925,9 +4804,7 @@
     "meta": {
       "collection": "block_richtext",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -5073,9 +4950,7 @@
     "meta": {
       "collection": "block_richtext",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -5122,9 +4997,7 @@
     "meta": {
       "collection": "block_richtext",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -5171,9 +5044,7 @@
     "meta": {
       "collection": "block_richtext",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -5220,9 +5091,7 @@
     "meta": {
       "collection": "block_richtext",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -5269,9 +5138,7 @@
     "meta": {
       "collection": "directus_settings",
       "field": "command_palette_settings",
-      "special": [
-        "cast-json"
-      ],
+      "special": ["cast-json"],
       "interface": "input-code",
       "options": null,
       "display": "raw",
@@ -5316,9 +5183,7 @@
     "meta": {
       "collection": "form_fields",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -5811,9 +5676,7 @@
     "meta": {
       "collection": "form_fields",
       "field": "choices",
-      "special": [
-        "cast-json"
-      ],
+      "special": ["cast-json"],
       "interface": "list",
       "options": {
         "fields": [
@@ -5925,9 +5788,7 @@
     "meta": {
       "collection": "form_fields",
       "field": "form",
-      "special": [
-        "m2o"
-      ],
+      "special": ["m2o"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{title}}"
@@ -6021,9 +5882,7 @@
     "meta": {
       "collection": "form_fields",
       "field": "required",
-      "special": [
-        "cast-boolean"
-      ],
+      "special": ["cast-boolean"],
       "interface": "boolean",
       "options": {
         "label": "Required"
@@ -6070,9 +5929,7 @@
     "meta": {
       "collection": "form_fields",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -6119,9 +5976,7 @@
     "meta": {
       "collection": "form_fields",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -6168,9 +6023,7 @@
     "meta": {
       "collection": "form_fields",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -6217,9 +6070,7 @@
     "meta": {
       "collection": "form_fields",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -6266,9 +6117,7 @@
     "meta": {
       "collection": "form_submission_values",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -6358,9 +6207,7 @@
     "meta": {
       "collection": "form_submission_values",
       "field": "field",
-      "special": [
-        "m2o"
-      ],
+      "special": ["m2o"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{name}} • {{type}}"
@@ -6499,9 +6346,7 @@
     "meta": {
       "collection": "form_submission_values",
       "field": "file",
-      "special": [
-        "file"
-      ],
+      "special": ["file"],
       "interface": "file",
       "options": {
         "folder": "e6308546-92fb-4b10-b586-eefaf1d97f7f"
@@ -6548,9 +6393,7 @@
     "meta": {
       "collection": "form_submission_values",
       "field": "timestamp",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -6597,9 +6440,7 @@
     "meta": {
       "collection": "form_submissions",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": {
         "iconLeft": "vpn_key"
@@ -6646,9 +6487,7 @@
     "meta": {
       "collection": "form_submissions",
       "field": "timestamp",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -6695,9 +6534,7 @@
     "meta": {
       "collection": "form_submissions",
       "field": "form",
-      "special": [
-        "m2o"
-      ],
+      "special": ["m2o"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{title}}",
@@ -6747,9 +6584,7 @@
     "meta": {
       "collection": "forms",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": {
         "iconLeft": "vpn_key"
@@ -7154,9 +6989,7 @@
     "meta": {
       "collection": "forms",
       "field": "is_active",
-      "special": [
-        "cast-boolean"
-      ],
+      "special": ["cast-boolean"],
       "interface": "boolean",
       "options": {
         "label": "Active"
@@ -7211,9 +7044,7 @@
     "meta": {
       "collection": "forms",
       "field": "emails",
-      "special": [
-        "cast-json"
-      ],
+      "special": ["cast-json"],
       "interface": "list",
       "options": {
         "fields": [
@@ -7336,9 +7167,7 @@
     "meta": {
       "collection": "forms",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -7385,9 +7214,7 @@
     "meta": {
       "collection": "forms",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -7434,9 +7261,7 @@
     "meta": {
       "collection": "forms",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -7483,9 +7308,7 @@
     "meta": {
       "collection": "forms",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -7579,9 +7402,7 @@
     "meta": {
       "collection": "globals",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -7626,9 +7447,7 @@
     "meta": {
       "collection": "globals",
       "field": "social_links",
-      "special": [
-        "cast-json"
-      ],
+      "special": ["cast-json"],
       "interface": "inline-repeater-interface",
       "options": {
         "fields": [
@@ -7941,9 +7760,7 @@
     "meta": {
       "collection": "globals",
       "field": "favicon",
-      "special": [
-        "file"
-      ],
+      "special": ["file"],
       "interface": "file-image",
       "options": {
         "crop": false,
@@ -7991,9 +7808,7 @@
     "meta": {
       "collection": "globals",
       "field": "logo",
-      "special": [
-        "file"
-      ],
+      "special": ["file"],
       "interface": "file-image",
       "options": {
         "crop": false,
@@ -8137,9 +7952,7 @@
     "meta": {
       "collection": "globals",
       "field": "logo_dark_mode",
-      "special": [
-        "file"
-      ],
+      "special": ["file"],
       "interface": "file-image",
       "options": {
         "crop": false,
@@ -8237,9 +8050,7 @@
     "meta": {
       "collection": "globals",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -8286,9 +8097,7 @@
     "meta": {
       "collection": "globals",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -8335,9 +8144,7 @@
     "meta": {
       "collection": "globals",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -8384,9 +8191,7 @@
     "meta": {
       "collection": "globals",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -8525,9 +8330,7 @@
     "meta": {
       "collection": "navigation",
       "field": "is_active",
-      "special": [
-        "cast-boolean"
-      ],
+      "special": ["cast-boolean"],
       "interface": "boolean",
       "options": {
         "label": "Active"
@@ -8582,9 +8385,7 @@
     "meta": {
       "collection": "navigation",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -8631,9 +8432,7 @@
     "meta": {
       "collection": "navigation",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -8680,9 +8479,7 @@
     "meta": {
       "collection": "navigation",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -8729,9 +8526,7 @@
     "meta": {
       "collection": "navigation",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -8778,9 +8573,7 @@
     "meta": {
       "collection": "navigation_items",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -8870,9 +8663,7 @@
     "meta": {
       "collection": "navigation_items",
       "field": "page",
-      "special": [
-        "m2o"
-      ],
+      "special": ["m2o"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{title}}"
@@ -9291,9 +9082,7 @@
     "meta": {
       "collection": "navigation_items",
       "field": "post",
-      "special": [
-        "m2o"
-      ],
+      "special": ["m2o"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{title}}"
@@ -9358,9 +9147,7 @@
     "meta": {
       "collection": "navigation_items",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -9407,9 +9194,7 @@
     "meta": {
       "collection": "navigation_items",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -9456,9 +9241,7 @@
     "meta": {
       "collection": "navigation_items",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -9505,9 +9288,7 @@
     "meta": {
       "collection": "navigation_items",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -9554,9 +9335,7 @@
     "meta": {
       "collection": "page_blocks",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -9785,9 +9564,7 @@
     "meta": {
       "collection": "page_blocks",
       "field": "hide_block",
-      "special": [
-        "cast-boolean"
-      ],
+      "special": ["cast-boolean"],
       "interface": "boolean",
       "options": null,
       "display": null,
@@ -9890,9 +9667,7 @@
     "meta": {
       "collection": "page_blocks",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -9939,9 +9714,7 @@
     "meta": {
       "collection": "page_blocks",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -9988,9 +9761,7 @@
     "meta": {
       "collection": "page_blocks",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -10037,9 +9808,7 @@
     "meta": {
       "collection": "page_blocks",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -10086,9 +9855,7 @@
     "meta": {
       "collection": "pages",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -10439,9 +10206,7 @@
     "meta": {
       "collection": "pages",
       "field": "seo",
-      "special": [
-        "cast-json"
-      ],
+      "special": ["cast-json"],
       "interface": "seo-interface",
       "options": {
         "titleTemplate": "{{title}}",
@@ -10491,9 +10256,7 @@
     "meta": {
       "collection": "pages",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -10540,9 +10303,7 @@
     "meta": {
       "collection": "pages",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -10589,9 +10350,7 @@
     "meta": {
       "collection": "pages",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -10638,9 +10397,7 @@
     "meta": {
       "collection": "pages",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -10756,9 +10513,7 @@
     "meta": {
       "collection": "posts",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -10803,9 +10558,7 @@
     "meta": {
       "collection": "posts",
       "field": "image",
-      "special": [
-        "file"
-      ],
+      "special": ["file"],
       "interface": "file-image",
       "options": {
         "crop": false,
@@ -11130,9 +10883,7 @@
     "meta": {
       "collection": "posts",
       "field": "author",
-      "special": [
-        "m2o"
-      ],
+      "special": ["m2o"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
@@ -11250,9 +11001,7 @@
     "meta": {
       "collection": "posts",
       "field": "seo",
-      "special": [
-        "cast-json"
-      ],
+      "special": ["cast-json"],
       "interface": "seo-interface",
       "options": {
         "titleTemplate": "{{title}}",
@@ -11304,9 +11053,7 @@
     "meta": {
       "collection": "posts",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -11353,9 +11100,7 @@
     "meta": {
       "collection": "posts",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -11402,9 +11147,7 @@
     "meta": {
       "collection": "posts",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -11451,9 +11194,7 @@
     "meta": {
       "collection": "posts",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -11500,9 +11241,7 @@
     "meta": {
       "collection": "redirects",
       "field": "id",
-      "special": [
-        "uuid"
-      ],
+      "special": ["uuid"],
       "interface": "input",
       "options": null,
       "display": null,
@@ -11785,9 +11524,7 @@
     "meta": {
       "collection": "redirects",
       "field": "date_created",
-      "special": [
-        "date-created"
-      ],
+      "special": ["date-created"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -11834,9 +11571,7 @@
     "meta": {
       "collection": "redirects",
       "field": "user_created",
-      "special": [
-        "user-created"
-      ],
+      "special": ["user-created"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -11883,9 +11618,7 @@
     "meta": {
       "collection": "redirects",
       "field": "date_updated",
-      "special": [
-        "date-updated"
-      ],
+      "special": ["date-updated"],
       "interface": "datetime",
       "options": null,
       "display": "datetime",
@@ -11932,9 +11665,7 @@
     "meta": {
       "collection": "redirects",
       "field": "user_updated",
-      "special": [
-        "user-updated"
-      ],
+      "special": ["user-updated"],
       "interface": "select-dropdown-m2o",
       "options": {
         "template": "{{avatar}} {{first_name}} {{last_name}}"
@@ -11962,9 +11693,7 @@
     "meta": {
       "collection": "block_pricing",
       "field": "pricing_cards",
-      "special": [
-        "o2m"
-      ],
+      "special": ["o2m"],
       "interface": "list-o2m",
       "options": {
         "template": "{{title}} • {{price}}"
@@ -11992,10 +11721,7 @@
     "meta": {
       "collection": "pages",
       "field": "meta_divider_content",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-divider",
       "options": {
         "icon": "format_paragraph",
@@ -12025,10 +11751,7 @@
     "meta": {
       "collection": "globals",
       "field": "divider_logo",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-divider",
       "options": {
         "color": "#A2B5CD",
@@ -12058,9 +11781,7 @@
     "meta": {
       "collection": "block_button_group",
       "field": "buttons",
-      "special": [
-        "o2m"
-      ],
+      "special": ["o2m"],
       "interface": "list-o2m",
       "options": {
         "enableLink": true,
@@ -12091,11 +11812,7 @@
     "meta": {
       "collection": "globals",
       "field": "meta_credentials",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
+      "special": ["alias", "no-data", "group"],
       "interface": "group-detail",
       "options": {
         "headerIcon": "warning",
@@ -12129,9 +11846,7 @@
     "meta": {
       "collection": "forms",
       "field": "fields",
-      "special": [
-        "o2m"
-      ],
+      "special": ["o2m"],
       "interface": "list-o2m",
       "options": {
         "template": "{{name}} • {{type}}",
@@ -12163,10 +11878,7 @@
     "meta": {
       "collection": "globals",
       "field": "meta_divider_globals",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-divider",
       "options": {
         "inlineTitle": true,
@@ -12197,17 +11909,10 @@
     "meta": {
       "collection": "form_submissions",
       "field": "values",
-      "special": [
-        "o2m"
-      ],
+      "special": ["o2m"],
       "interface": "list-o2m",
       "options": {
-        "fields": [
-          "field.label",
-          "value",
-          "field.type",
-          "file"
-        ],
+        "fields": ["field.label", "value", "field.type", "file"],
         "enableSearchFilter": true,
         "sort": "sort",
         "template": "{{value}} • {{field}}",
@@ -12252,10 +11957,7 @@
     "meta": {
       "collection": "posts",
       "field": "meta_divider_info",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-divider",
       "options": {
         "icon": "calendar_month",
@@ -12285,10 +11987,7 @@
     "meta": {
       "collection": "pages",
       "field": "meta_m2a_button",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "directus-labs-experimental-m2a-interface",
       "options": {
         "target": "above"
@@ -12316,9 +12015,7 @@
     "meta": {
       "collection": "pages",
       "field": "blocks",
-      "special": [
-        "m2a"
-      ],
+      "special": ["m2a"],
       "interface": "list-m2a",
       "options": {
         "prefix": null,
@@ -12349,17 +12046,11 @@
     "meta": {
       "collection": "forms",
       "field": "submissions",
-      "special": [
-        "o2m"
-      ],
+      "special": ["o2m"],
       "interface": "list-o2m",
       "options": {
         "layout": "table",
-        "fields": [
-          "timestamp",
-          "values.value",
-          "values.field.name"
-        ],
+        "fields": ["timestamp", "values.value", "values.field.name"],
         "sort": "timestamp",
         "enableCreate": false,
         "enableSelect": false,
@@ -12392,11 +12083,7 @@
     "meta": {
       "collection": "forms",
       "field": "meta_fields",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
+      "special": ["alias", "no-data", "group"],
       "interface": "group-raw",
       "options": null,
       "display": null,
@@ -12427,11 +12114,7 @@
     "meta": {
       "collection": "forms",
       "field": "meta_tabs",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
+      "special": ["alias", "no-data", "group"],
       "interface": "group-tabs",
       "options": null,
       "display": null,
@@ -12462,10 +12145,7 @@
     "meta": {
       "collection": "pages",
       "field": "meta_notice_pagebuilder",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-notice",
       "options": {
         "text": "Build dynamic pages quickly using ready-made blocks. <a href=\"https://directus.io/docs/tutorials/getting-started/create-reusable-blocks-with-many-to-any-relationships?ref=simple_cms_notices\" target=\"_blank\">See our documentation to learn more about the Page Builder</a>."
@@ -12493,10 +12173,7 @@
     "meta": {
       "collection": "block_hero",
       "field": "meta_divider_block_image",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-divider",
       "options": {
         "inlineTitle": true,
@@ -12526,10 +12203,7 @@
     "meta": {
       "collection": "globals",
       "field": "meta_notice_globals",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-notice",
       "options": {
         "text": "Globals are settings that are applied across your entire site. Globals use what we call a `singleton` collection type. <a href=\"https://directus.io/features/global-settings\" target=\"_blank\">Learn more about globals and singletons.</a>"
@@ -12557,9 +12231,7 @@
     "meta": {
       "collection": "block_gallery",
       "field": "items",
-      "special": [
-        "files"
-      ],
+      "special": ["files"],
       "interface": "files",
       "options": {
         "folder": "ece7bab9-5433-4a63-b9f7-bde8b517d6d9"
@@ -12587,9 +12259,7 @@
     "meta": {
       "collection": "navigation_items",
       "field": "children",
-      "special": [
-        "o2m"
-      ],
+      "special": ["o2m"],
       "interface": "list-o2m",
       "options": {
         "template": "{{title}} • {{type}}",
@@ -12662,10 +12332,7 @@
     "meta": {
       "collection": "forms",
       "field": "meta_notice_form_fields",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-notice",
       "options": {
         "text": " Create custom forms by adding and configuring your desired input fields below. No coding required."
@@ -12693,10 +12360,7 @@
     "meta": {
       "collection": "forms",
       "field": "meta_notice_form_emails",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-notice",
       "options": {
         "text": "Set up automatic emails to notify your team members when forms are submitted, or send confirmation receipts to people who complete your forms."
@@ -12724,11 +12388,7 @@
     "meta": {
       "collection": "forms",
       "field": "meta_emails",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
+      "special": ["alias", "no-data", "group"],
       "interface": "group-raw",
       "options": null,
       "display": null,
@@ -12759,10 +12419,7 @@
     "meta": {
       "collection": "forms",
       "field": "meta_notice_form_responses",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-notice",
       "options": {
         "text": "This table displays all responses submitted through this form. Each entry includes the submission timestamp and the values for each form field."
@@ -12790,10 +12447,7 @@
     "meta": {
       "collection": "globals",
       "field": "meta_notice_security",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-notice",
       "options": {
         "color": "warning",
@@ -12823,11 +12477,7 @@
     "meta": {
       "collection": "forms",
       "field": "meta_submissions",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
+      "special": ["alias", "no-data", "group"],
       "interface": "group-raw",
       "options": null,
       "display": null,
@@ -12858,9 +12508,7 @@
     "meta": {
       "collection": "directus_users",
       "field": "posts",
-      "special": [
-        "o2m"
-      ],
+      "special": ["o2m"],
       "interface": "list-o2m",
       "options": {
         "template": "{{title}}"
@@ -12888,10 +12536,7 @@
     "meta": {
       "collection": "navigation",
       "field": "meta_notice_navigation",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-notice",
       "options": {
         "text": "Create and manage navigation menus for your website. Each menu can contain multiple links organized into a hierarchy."
@@ -12919,9 +12564,7 @@
     "meta": {
       "collection": "navigation",
       "field": "items",
-      "special": [
-        "o2m"
-      ],
+      "special": ["o2m"],
       "interface": "list-o2m",
       "options": {
         "enableLink": true,
@@ -12972,10 +12615,7 @@
     "meta": {
       "collection": "form_submissions",
       "field": "meta_notice_submissions",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "presentation-notice",
       "options": {
         "text": "Form submissions are configured to be read-only for data integrity reasons. But they are a great candidate for use in [Flows](/admin/settings/flows). Directus Flows is a drag and drop, low-code automation builder to simplify tasks like automatic notifications or sending incoming requests to third party services. <a href=\"https://directus.io/docs/guides/automate/flows?ref=simple_website_cms\" target=\"_blank\">Learn more about Flows.</a>"
@@ -13003,10 +12643,7 @@
     "meta": {
       "collection": "posts",
       "field": "meta_header_image",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "Image",
@@ -13048,10 +12685,7 @@
     "meta": {
       "collection": "block_gallery",
       "field": "meta_header_block_gallery",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "Gallery Block",
@@ -13082,10 +12716,7 @@
     "meta": {
       "collection": "block_hero",
       "field": "meta_header_block_hero",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "Hero Block",
@@ -13116,10 +12747,7 @@
     "meta": {
       "collection": "block_form",
       "field": "meta_header_block_form",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "Form Block",
@@ -13150,10 +12778,7 @@
     "meta": {
       "collection": "block_posts",
       "field": "meta_header_block_posts",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "Posts Block",
@@ -13184,10 +12809,7 @@
     "meta": {
       "collection": "posts",
       "field": "meta_header_posts",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "{{title}}",
@@ -13245,10 +12867,7 @@
     "meta": {
       "collection": "forms",
       "field": "meta_header_forms",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "{{title}}",
@@ -13279,10 +12898,7 @@
     "meta": {
       "collection": "form_submissions",
       "field": "meta_header_form_submissions",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "Form Submission",
@@ -13313,10 +12929,7 @@
     "meta": {
       "collection": "navigation",
       "field": "meta_header_navigation",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "{{title}}",
@@ -13346,11 +12959,7 @@
     "meta": {
       "collection": "pages",
       "field": "meta_tabs",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
+      "special": ["alias", "no-data", "group"],
       "interface": "group-tabs",
       "options": {
         "fillWidth": true
@@ -13383,10 +12992,7 @@
     "meta": {
       "collection": "redirects",
       "field": "meta_header_redirects",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "{{url_from}} • {{response_code}}",
@@ -13417,11 +13023,7 @@
     "meta": {
       "collection": "posts",
       "field": "meta_content",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
+      "special": ["alias", "no-data", "group"],
       "interface": "group-raw",
       "options": null,
       "display": null,
@@ -13452,11 +13054,7 @@
     "meta": {
       "collection": "posts",
       "field": "meta_seo",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
+      "special": ["alias", "no-data", "group"],
       "interface": "group-raw",
       "options": null,
       "display": null,
@@ -13487,10 +13085,7 @@
     "meta": {
       "collection": "posts",
       "field": "meta_header_content",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "Content",
@@ -13532,10 +13127,7 @@
     "meta": {
       "collection": "globals",
       "field": "meta_header_globals",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "{{title}} • Site Settings",
@@ -13566,10 +13158,7 @@
     "meta": {
       "collection": "block_richtext",
       "field": "meta_header_block_richtext",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "Rich Text Block",
@@ -13600,11 +13189,7 @@
     "meta": {
       "collection": "posts",
       "field": "meta_tabs",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
+      "special": ["alias", "no-data", "group"],
       "interface": "group-tabs",
       "options": {
         "fillWidth": true
@@ -13637,10 +13222,7 @@
     "meta": {
       "collection": "block_pricing",
       "field": "meta_header_block_pricing",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "help": "<p>Display your product or service pricing options in a clear, comparative format. Use this when:</p>\n<ul>\n<li>Showcasing different service tiers</li>\n<li>Highlighting feature differences between plans</li>\n<li>Promoting special offers or featured plans</li>\n<li>Presenting subscription options</li>\n</ul>\n<p>Best practices:</p>\n<ul>\n<li>Use clear, benefit-focused plan names</li>\n<li>Highlight your recommended or most popular option</li>\n<li>Keep feature lists scannable and easy to compare</li>\n<li>Include clear call-to-action buttons for each plan</li>\n</ul>",
@@ -13671,11 +13253,7 @@
     "meta": {
       "collection": "pages",
       "field": "meta_content",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
+      "special": ["alias", "no-data", "group"],
       "interface": "group-raw",
       "options": null,
       "display": null,
@@ -13706,11 +13284,7 @@
     "meta": {
       "collection": "pages",
       "field": "meta_seo",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
+      "special": ["alias", "no-data", "group"],
       "interface": "group-raw",
       "options": null,
       "display": null,
@@ -13741,10 +13315,7 @@
     "meta": {
       "collection": "ai_prompts",
       "field": "meta_header_ai_prompts",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "{{name}}",
@@ -13775,10 +13346,7 @@
     "meta": {
       "collection": "pages",
       "field": "meta_header_pages",
-      "special": [
-        "alias",
-        "no-data"
-      ],
+      "special": ["alias", "no-data"],
       "interface": "super-header",
       "options": {
         "title": "{{title}}",
