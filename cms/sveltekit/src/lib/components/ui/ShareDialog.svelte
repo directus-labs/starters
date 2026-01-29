@@ -74,8 +74,8 @@
 			<p class="mt-2 text-sm text-green-600">Link copied to clipboard!</p>
 		{/if}
 		<Dialog.Footer class="sm:justify-start">
-			<Dialog.Close>
-				<Button type="button" variant="secondary">Close</Button>
+			<Dialog.Close class={buttonVariants({ variant: 'secondary' })}>
+				Close
 			</Dialog.Close>
 		</Dialog.Footer>
 	</Dialog.Content>
