@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Copy, Share } from '@lucide/svelte';
-	import Button from './button/button.svelte';
+	import Button, { buttonVariants } from './button/button.svelte';
 	import { Label } from './label';
 	import { Input } from './input';
 
@@ -34,11 +34,9 @@
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger>
-		<Button variant="outline" class="flex items-center space-x-2">
+	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>
 			<Share class="size-4" />
 			<span>Share Blog</span>
-		</Button>
 	</Dialog.Trigger>
 	<Dialog.Content class="sm:max-w-md">
 		<Dialog.Header>
@@ -76,8 +74,8 @@
 			<p class="mt-2 text-sm text-green-600">Link copied to clipboard!</p>
 		{/if}
 		<Dialog.Footer class="sm:justify-start">
-			<Dialog.Close>
-				<Button type="button" variant="secondary">Close</Button>
+			<Dialog.Close class={buttonVariants({ variant: 'secondary' })}>
+				Close
 			</Dialog.Close>
 		</Dialog.Footer>
 	</Dialog.Content>
