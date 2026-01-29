@@ -5,6 +5,7 @@ directus/extensions/.registry
 
 # Dependencies
 node_modules/
+.pnpm-store
 
 # General Logs
 logs/

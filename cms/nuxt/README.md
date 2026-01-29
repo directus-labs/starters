@@ -1,17 +1,17 @@
-# Nuxt 3 CMS Template with Directus Integration
+# Nuxt 4 CMS Template with Directus Integration
 
 <div align="center">
-  <img src="public/images/thumbnail.png" alt="Nuxt 3 CMS Template Thumbnail" width="800" height="auto" />
+  <img src="public/images/thumbnail.png" alt="Nuxt 4 CMS Template Thumbnail" width="800" height="auto" />
 </div>
 
-This is a **Nuxt 3-based CMS Template** that is fully integrated with [Directus](https://directus.io/), offering a CMS
-solution for managing and delivering content seamlessly. The template leverages modern technologies like **Nuxt 3's
+This is a **Nuxt 4-based CMS Template** that is fully integrated with [Directus](https://directus.io/), offering a CMS
+solution for managing and delivering content seamlessly. The template leverages modern technologies like **Nuxt 4's
 file-based routing system**, **Tailwind CSS**, and **Shadcn Vue components**, providing a complete and scalable starting
 point for building CMS-powered web applications.
 
 ## **Features**
 
-- **Nuxt 3 File-Based Routing**: Uses Nuxt's built-in routing system with dynamic page handling.
+- **Nuxt 4 File-Based Routing**: Uses Nuxt's built-in routing system with dynamic page handling.
 - **Full Directus Integration**: Directus API integration for fetching and managing relational data.
 - **Tailwind CSS**: Fully integrated for rapid UI styling.
 - **TypeScript**: Ensures type safety and reliable code quality.
@@ -35,7 +35,7 @@ you’ll find `pnpm` very similar in usage. You can still use `npm` if you prefe
 
 ### **Draft Mode Overview**
 
-Directus allows you to work on unpublished content using **Draft Mode**. This Nuxt 3 template is configured to support
+Directus allows you to work on unpublished content using **Draft Mode**. This Nuxt 4 template is configured to support
 Directus Draft Mode out of the box, enabling live previews of unpublished or draft content as you make changes.
 
 ### **Live Preview Setup**
@@ -43,10 +43,8 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 [Directus Live Preview](https://docs.directus.io/guides/headless-cms/live-preview/nuxt-3.html#set-up-live-preview-with-nuxt-3)
 
 - The live preview feature works seamlessly on deployed environments.
-- To preview content on **localhost**, deploy your application to a staging environment.
-- **Important Note**: Directus employs Content Security Policies (CSPs) that block live previews on `localhost` for
-  security reasons. For a smooth preview experience, deploy the application to a cloud environment and use the
-  deployment URL for Directus previews.
+- **For Local Development**: If using local Docker, the CSP configuration is provided in `.env.example`. See [`../../directus/README.md`](../../directus/README.md#content-security-policy-csp-and-preview-issues) for details.
+- **For Directus Cloud**: Directus Cloud requires HTTPS for previews. You'll need to use HTTPS tunneling (ngrok, localtunnel, etc.) or configure CSP in your Directus Cloud settings. See the [main README troubleshooting section](../../README.md#preview-not-working---content-security-policy-csp-issues) for details.
 
 ### **Admin Bar**
 
@@ -77,8 +75,8 @@ https://yourwebsite.com/blog/some-post?preview=true
 
 To set up this template, ensure you have the following:
 
-- **Node.js** (16.x or newer)
-- **npm** or **pnpm**
+- **Node.js** (20.x or newer)
+- **pnpm** (8.6.0 or newer) or **npm**
 - Access to a **Directus** instance ([cloud or self-hosted](../../README.md))
 
 ## ⚠️ Directus Setup Instructions
@@ -147,6 +145,9 @@ for your Directus schema.
    ```bash
    pnpm run generate:types
    ```
+3. When prompted, enter your Directus admin token (with permissions to read system collections like `directus_fields`), or set it ahead of time via the `DIRECTUS_ADMIN_TOKEN` environment variable for non-interactive runs (e.g., CI).
+
+> **Note:** The type generation requires an admin token with permissions to read system collections like `directus_fields`. The public token does not have sufficient permissions for this operation. You can either provide the admin token interactively when prompted, or set it via the `DIRECTUS_ADMIN_TOKEN` environment variable (e.g., `DIRECTUS_ADMIN_TOKEN=your_token pnpm run generate:types`) to run without a TTY. Nuxt also accepts `DIRECTUS_SERVER_TOKEN` for backward compatibility.
 
 ## Folder Structure
 
