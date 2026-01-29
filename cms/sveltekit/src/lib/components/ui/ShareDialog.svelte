@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Copy, Share } from '@lucide/svelte';
-	import Button from './button/button.svelte';
+	import Button, { buttonVariants } from './button/button.svelte';
 	import { Label } from './label';
 	import { Input } from './input';
 
@@ -34,11 +34,9 @@
 </script>
 
 <Dialog.Root>
-	<Dialog.Trigger>
-		<Button variant="outline" class="flex items-center space-x-2">
+	<Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>
 			<Share class="size-4" />
 			<span>Share Blog</span>
-		</Button>
 	</Dialog.Trigger>
 	<Dialog.Content class="sm:max-w-md">
 		<Dialog.Header>
