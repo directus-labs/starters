@@ -37,60 +37,61 @@ export default defineSitemapEventHandler(async () => {
 		}
 
 		// Build sitemap entries with alternate language links
-		// Create one entry per page/post with alternate links pointing to all translations
-		const pageUrls: SitemapUrlInput[] = [];
+		// Key point: Create one entry PER language version of each page
+		// Each entry lists ALL language alternatives (including itself)
+		const urls: SitemapUrlInput[] = [];
 
 		for (const page of pages) {
 			const permalink = `/${page.permalink?.replace(/^\/+/, '') || ''}`;
 
-			// Use default locale as the main URL
-			const mainPath = addLocaleToPath(permalink, DEFAULT_LOCALE);
+			// Build alternates array (same for all language versions of this page)
+			const alternates: Array<{ hreflang: string; href: string }> = allLocales.map((locale) => ({
+				hreflang: getLocaleCode(locale),
+				href: addLocaleToPath(permalink, locale),
+			}));
 
-			// Build alternates for all locales
-			const alternates: Array<{ hreflang: string; href: string }> = [];
+			// Add x-default pointing to default locale
+			alternates.push({
+				hreflang: 'x-default',
+				href: addLocaleToPath(permalink, DEFAULT_LOCALE),
+			});
 
+			// Create one entry for EACH language version
 			for (const locale of allLocales) {
-				const altPath = addLocaleToPath(permalink, locale);
-				alternates.push({
-					hreflang: getLocaleCode(locale),
-					href: altPath,
+				const localizedPath = addLocaleToPath(permalink, locale);
+				urls.push({
+					loc: localizedPath,
+					alternatives: alternates,
 				});
 			}
-
-			// Create single entry with alternate links
-			pageUrls.push({
-				loc: mainPath,
-				alternatives: alternates,
-			});
 		}
-
-		const postUrls: SitemapUrlInput[] = [];
 
 		for (const post of posts) {
 			const blogPath = `/blog/${post.slug}`;
 
-			// Use default locale as the main URL
-			const mainPath = addLocaleToPath(blogPath, DEFAULT_LOCALE);
+			// Build alternates array (same for all language versions of this post)
+			const alternates: Array<{ hreflang: string; href: string }> = allLocales.map((locale) => ({
+				hreflang: getLocaleCode(locale),
+				href: addLocaleToPath(blogPath, locale),
+			}));
 
-			// Build alternates for all locales
-			const alternates: Array<{ hreflang: string; href: string }> = [];
+			// Add x-default pointing to default locale
+			alternates.push({
+				hreflang: 'x-default',
+				href: addLocaleToPath(blogPath, DEFAULT_LOCALE),
+			});
 
+			// Create one entry for EACH language version
 			for (const locale of allLocales) {
-				const altPath = addLocaleToPath(blogPath, locale);
-				alternates.push({
-					hreflang: getLocaleCode(locale),
-					href: altPath,
+				const localizedPath = addLocaleToPath(blogPath, locale);
+				urls.push({
+					loc: localizedPath,
+					alternatives: alternates,
 				});
 			}
-
-			// Create single entry with alternate links
-			postUrls.push({
-				loc: mainPath,
-				alternatives: alternates,
-			});
 		}
 
-		return [...pageUrls, ...postUrls];
+		return urls;
 	} catch {
 		return [];
 	}
