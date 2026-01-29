@@ -6,11 +6,16 @@ import { useRouter } from 'next/navigation';
 import NavigationBar from '@/components/layout/NavigationBar';
 import Footer from '@/components/layout/Footer';
 
+import { Locale } from '@/lib/i18n/config';
+
 interface VisualEditingLayoutProps {
 	headerNavigation: any;
 	footerNavigation: any;
 	globals: any;
 	children: ReactNode;
+	currentLocale: Locale;
+	supportedLocales: Locale[];
+	localeNames: Record<Locale, string>;
 }
 
 export default function VisualEditingLayout({
@@ -18,6 +23,9 @@ export default function VisualEditingLayout({
 	footerNavigation,
 	globals,
 	children,
+	currentLocale,
+	supportedLocales,
+	localeNames,
 }: VisualEditingLayoutProps) {
 	const navRef = useRef<HTMLElement>(null);
 	const footerRef = useRef<HTMLElement>(null);
@@ -45,7 +53,14 @@ export default function VisualEditingLayout({
 
 	return (
 		<>
-			<NavigationBar ref={navRef} navigation={headerNavigation} globals={globals} />
+			<NavigationBar
+				ref={navRef}
+				navigation={headerNavigation}
+				globals={globals}
+				currentLocale={currentLocale}
+				supportedLocales={supportedLocales}
+				localeNames={localeNames}
+			/>
 			{children}
 			<Footer ref={footerRef} navigation={footerNavigation} globals={globals} />
 		</>

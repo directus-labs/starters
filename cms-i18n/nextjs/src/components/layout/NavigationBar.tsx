@@ -18,154 +18,181 @@ import { ChevronDown, Menu } from 'lucide-react';
 import ThemeToggle from '../ui/ThemeToggle';
 import SearchModal from '@/components/ui/SearchModal';
 import Container from '@/components/ui/container';
+import LanguageSwitcher from '@/components/shared/LanguageSwitcher';
 import { setAttr } from '@directus/visual-editing';
+import { addLocaleToPath } from '@/lib/i18n/utils';
+import { Locale } from '@/lib/i18n/config';
 
 interface NavigationBarProps {
 	navigation: any;
 	globals: any;
+	currentLocale: Locale;
+	supportedLocales: Locale[];
+	localeNames: Record<Locale, string>;
 }
 
-const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(({ navigation, globals }, ref) => {
-	const [menuOpen, setMenuOpen] = useState(false);
+const NavigationBar = forwardRef<HTMLElement, NavigationBarProps>(
+	({ navigation, globals, currentLocale, supportedLocales, localeNames }, ref) => {
+		const [menuOpen, setMenuOpen] = useState(false);
 
-	const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_URL;
-	const lightLogoUrl = globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg';
-	const darkLogoUrl = globals?.logo_dark_mode ? `${directusURL}/assets/${globals.logo_dark_mode}` : '';
+		const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_URL;
+		const lightLogoUrl = globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg';
+		const darkLogoUrl = globals?.logo_dark_mode ? `${directusURL}/assets/${globals.logo_dark_mode}` : '';
 
-	const handleLinkClick = () => {
-		setMenuOpen(false);
-	};
+		// Function to localize links
+		const getLocalizedLink = (permalink: string | null | undefined, url: string | null | undefined): string => {
+			const link = permalink || url || '/';
 
-	return (
-		<header ref={ref} className="sticky top-0 z-50 w-full bg-background text-foreground">
-			<Container className="flex items-center justify-between p-4">
-				<Link href="/" className="flex-shrink-0">
-					<Image
-						src={lightLogoUrl}
-						alt="Logo"
-						width={150}
-						height={100}
-						className="w-[120px] h-auto dark:hidden"
-						priority
-					/>
-					{darkLogoUrl && (
+			return addLocaleToPath(link, currentLocale);
+		};
+
+		const handleLinkClick = () => {
+			setMenuOpen(false);
+		};
+
+		return (
+			<header ref={ref} className="sticky top-0 z-50 w-full bg-background text-foreground">
+				<Container className="flex items-center justify-between p-4">
+					<Link href="/" className="flex-shrink-0">
 						<Image
-							src={darkLogoUrl}
-							alt="Logo (Dark Mode)"
+							src={lightLogoUrl}
+							alt="Logo"
 							width={150}
 							height={100}
-							className="w-[120px] h-auto hidden dark:block"
+							className="w-[120px] h-auto dark:hidden"
 							priority
 						/>
-					)}
-				</Link>
+						{darkLogoUrl && (
+							<Image
+								src={darkLogoUrl}
+								alt="Logo (Dark Mode)"
+								width={150}
+								height={100}
+								className="w-[120px] h-auto hidden dark:block"
+								priority
+							/>
+						)}
+					</Link>
 
-				<nav className="flex items-center gap-4">
-					<SearchModal />
-					<NavigationMenu
-						className="hidden md:flex"
-						data-directus={
-							navigation
-								? setAttr({
-										collection: 'navigation',
-										item: navigation.id,
-										fields: ['items'],
-										mode: 'modal',
-									})
-								: undefined
-						}
-					>
-						<NavigationMenuList className="flex gap-6">
-							{navigation?.items?.map((section: any) => (
-								<NavigationMenuItem key={section.id}>
-									{section.children && section.children.length > 0 ? (
-										<>
-											<NavigationMenuTrigger className="focus:outline-none">
-												<span className="font-heading text-nav">{section.title}</span>
-											</NavigationMenuTrigger>
-											<NavigationMenuContent className="absolute mt-2 min-w-[150px] rounded-md bg-background p-4 shadow-md">
-												<ul className="flex flex-col gap-2 pb-4">
-													{section.children.map((child: any) => (
-														<li key={child.id}>
-															<NavigationMenuLink
-																href={child.page?.permalink || child.url || '#'}
-																className="font-heading text-nav"
-															>
-																{child.title}
-															</NavigationMenuLink>
-														</li>
-													))}
-												</ul>
-											</NavigationMenuContent>
-										</>
-									) : (
-										<NavigationMenuLink
-											href={section.page?.permalink || section.url || '#'}
-											className="font-heading text-nav"
-										>
-											{section.title}
-										</NavigationMenuLink>
-									)}
-								</NavigationMenuItem>
-							))}
-						</NavigationMenuList>
-					</NavigationMenu>
-
-					<div className="flex md:hidden">
-						<DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
-							<DropdownMenuTrigger asChild>
-								<Button
-									variant="link"
-									size="icon"
-									aria-label="Open menu"
-									className="dark:text-white dark:hover:text-accent"
-								>
-									<Menu />
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent align="start" className="top-full w-screen p-6 shadow-md max-w-full overflow-hidden">
-								<div className="flex flex-col gap-4">
-									{navigation?.items?.map((section: any) => (
-										<div key={section.id}>
-											{section.children && section.children.length > 0 ? (
-												<Collapsible>
-													<CollapsibleTrigger className="font-heading text-nav hover:text-accent w-full text-left flex items-center focus:outline-none">
-														<span>{section.title}</span>
-														<ChevronDown className="size-4 ml-1 hover:rotate-180 active:rotate-180 focus:rotate-180" />
-													</CollapsibleTrigger>
-													<CollapsibleContent className="ml-4 mt-2 flex flex-col gap-2">
+					<nav className="flex items-center gap-4">
+						<SearchModal />
+						<NavigationMenu
+							className="hidden md:flex"
+							data-directus={
+								navigation
+									? setAttr({
+											collection: 'navigation',
+											item: navigation.id,
+											fields: ['items'],
+											mode: 'modal',
+										})
+									: undefined
+							}
+						>
+							<NavigationMenuList className="flex gap-6">
+								{navigation?.items?.map((section: any) => (
+									<NavigationMenuItem key={section.id}>
+										{section.children && section.children.length > 0 ? (
+											<>
+												<NavigationMenuTrigger className="focus:outline-none">
+													<span className="font-heading text-nav">{section.title}</span>
+												</NavigationMenuTrigger>
+												<NavigationMenuContent className="absolute mt-2 min-w-[150px] rounded-md bg-background p-4 shadow-md">
+													<ul className="flex flex-col gap-2 pb-4">
 														{section.children.map((child: any) => (
-															<Link
-																key={child.id}
-																href={child.page?.permalink || child.url || '#'}
-																className="font-heading text-nav"
-																onClick={handleLinkClick}
-															>
-																{child.title}
-															</Link>
+															<li key={child.id}>
+																<NavigationMenuLink asChild>
+																	<Link
+																		href={getLocalizedLink(child.page?.permalink, child.url)}
+																		className="font-heading text-nav hover:text-accent"
+																	>
+																		{child.title}
+																	</Link>
+																</NavigationMenuLink>
+															</li>
 														))}
-													</CollapsibleContent>
-												</Collapsible>
-											) : (
+													</ul>
+												</NavigationMenuContent>
+											</>
+										) : (
+											<NavigationMenuLink asChild>
 												<Link
-													href={section.page?.permalink || section.url || '#'}
+													href={getLocalizedLink(section.page?.permalink, section.url)}
 													className="font-heading text-nav"
-													onClick={handleLinkClick}
 												>
 													{section.title}
 												</Link>
-											)}
-										</div>
-									))}
-								</div>
-							</DropdownMenuContent>
-						</DropdownMenu>
-					</div>
-					<ThemeToggle />
-				</nav>
-			</Container>
-		</header>
-	);
-});
+											</NavigationMenuLink>
+										)}
+									</NavigationMenuItem>
+								))}
+							</NavigationMenuList>
+						</NavigationMenu>
+
+						<div className="flex md:hidden">
+							<DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
+								<DropdownMenuTrigger asChild>
+									<Button
+										variant="link"
+										size="icon"
+										aria-label="Open menu"
+										className="dark:text-white dark:hover:text-accent"
+									>
+										<Menu />
+									</Button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent
+									align="start"
+									className="top-full w-screen p-6 shadow-md max-w-full overflow-hidden"
+								>
+									<div className="flex flex-col gap-4">
+										{navigation?.items?.map((section: any) => (
+											<div key={section.id}>
+												{section.children && section.children.length > 0 ? (
+													<Collapsible>
+														<CollapsibleTrigger className="font-heading text-nav hover:text-accent w-full text-left flex items-center focus:outline-none">
+															<span>{section.title}</span>
+															<ChevronDown className="size-4 ml-1 hover:rotate-180 active:rotate-180 focus:rotate-180" />
+														</CollapsibleTrigger>
+														<CollapsibleContent className="ml-4 mt-2 flex flex-col gap-2">
+															{section.children.map((child: any) => (
+																<Link
+																	key={child.id}
+																	href={getLocalizedLink(child.page?.permalink, child.url)}
+																	className="font-heading text-nav"
+																	onClick={handleLinkClick}
+																>
+																	{child.title}
+																</Link>
+															))}
+														</CollapsibleContent>
+													</Collapsible>
+												) : (
+													<Link
+														href={getLocalizedLink(section.page?.permalink, section.url)}
+														className="font-heading text-nav"
+														onClick={handleLinkClick}
+													>
+														{section.title}
+													</Link>
+												)}
+											</div>
+										))}
+									</div>
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</div>
+						<LanguageSwitcher
+							currentLocale={currentLocale}
+							supportedLocales={supportedLocales}
+							localeNames={localeNames}
+						/>
+						<ThemeToggle />
+					</nav>
+				</Container>
+			</header>
+		);
+	},
+);
 NavigationBar.displayName = 'NavigationBar';
 export default NavigationBar;
