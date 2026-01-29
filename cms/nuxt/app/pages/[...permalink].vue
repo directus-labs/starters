@@ -75,7 +75,7 @@ onMounted(() => {
 		<PageBuilder v-if="pageBlocks" :sections="pageBlocks" />
 		<div
 			v-if="isVisualEditingEnabled && page"
-			class="fixed z-50 w-full bottom-4 left-0 right-0 p-4 flex justify-center items-center gap-2"
+			class="fixed z-[60] w-full bottom-4 left-0 right-0 p-4 flex justify-center items-center gap-2"
 		>
 			<!-- If you're not using the visual editor it's safe to remove this element. Just a helper to let editors add edit / add new blocks to a page. -->
 			<Button
@@ -101,5 +101,13 @@ onMounted(() => {
 	height: 100%;
 	transform: none;
 	background: transparent;
+}
+/* Hide the rectangle around the "Edit All Blocks" button */
+.directus-visual-editing-overlay.visual-editing-button-class {
+	display: none !important;
+}
+/* Ensure Visual Editor rectangles appear below header and buttons */
+.directus-visual-editing-overlay {
+	z-index: 40 !important;
 }
 </style>

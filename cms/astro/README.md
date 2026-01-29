@@ -40,13 +40,11 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 
 ### **Live Preview Setup**
 
-[Directus Live Preview](https://docs.directus.io/guides/headless-cms/live-preview/nextjs.html)
+[Implementing Live Preview in Astro](https://directus.io/docs/tutorials/getting-started/implementing-live-preview-in-astro)
 
 - The live preview feature works seamlessly on deployed environments.
-- To preview content on **localhost**, deploy your application to a staging environment.
-- **Important Note**: Directus employs Content Security Policies (CSPs) that block live previews on `localhost` for
-  security reasons. For a smooth preview experience, deploy the application to a cloud environment and use the
-  deployment URL for Directus previews.
+- **For Local Development**: If using local Docker, the CSP configuration is provided in `.env.example`. See [`../../directus/README.md`](../../directus/README.md#content-security-policy-csp-and-preview-issues) for details.
+- **For Directus Cloud**: Directus Cloud requires HTTPS for previews. You'll need to use HTTPS tunneling (ngrok, localtunnel, etc.) or configure CSP in your Directus Cloud settings. See the [main README troubleshooting section](../../README.md#preview-not-working---content-security-policy-csp-issues) for details.
 
 ---
 
@@ -149,6 +147,9 @@ for your Directus schema.
    ```bash
    pnpm run generate:types
    ```
+3. When prompted, enter your Directus admin token (with permissions to read system collections like `directus_fields`), or set it ahead of time via the `DIRECTUS_ADMIN_TOKEN` environment variable for non-interactive runs (e.g., CI).
+
+> **Note:** The type generation requires an admin token with permissions to read system collections like `directus_fields`. The public token (`DIRECTUS_PUBLIC_TOKEN`) does not have sufficient permissions for this operation. You can either provide the admin token interactively when prompted, or set it via the `DIRECTUS_ADMIN_TOKEN` environment variable (e.g., `DIRECTUS_ADMIN_TOKEN=your_token pnpm run generate:types`) to run without a TTY.
 
 ---
 

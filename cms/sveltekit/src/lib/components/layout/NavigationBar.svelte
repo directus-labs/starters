@@ -23,7 +23,7 @@
 	);
 </script>
 
-<header class="bg-background font-heading text-foreground sticky top-0 z-50 w-full">
+<header class="bg-background font-heading text-foreground sticky top-0 z-[60] w-full">
 	<Container class="flex items-center justify-between p-4">
 		<a href="/" class="flex-shrink-0">
 			<img
