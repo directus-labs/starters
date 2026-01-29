@@ -3,6 +3,7 @@ import { ref, onMounted, watch, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { useDebounceFn } from '@vueuse/core';
 import { Search } from 'lucide-vue-next';
+import { localizeLink } from '~/lib/i18n/utils';
 
 type SearchResult = {
 	id: string;
@@ -19,6 +20,13 @@ const loading = ref(false);
 const searched = ref(false);
 const router = useRouter();
 
+// Get locale from composable (handles SSR URL rewrite correctly)
+const { currentLocale } = useLocale();
+const locale = currentLocale.value;
+
+// Helper to localize internal paths using shared utility
+const localize = (path: string) => localizeLink(path, locale);
+
 const fetchResults = async (search: string) => {
 	if (search.length < 3) {
 		results.value = [];
@@ -31,7 +39,8 @@ const fetchResults = async (search: string) => {
 
 	try {
 		const data = await $fetch<SearchResult[]>('/api/search', {
-			params: { search },
+			params: { search, locale },
+			headers: { 'x-locale': locale },
 		});
 
 		results.value = [...data];
@@ -64,6 +73,12 @@ watch(open, (isOpen) => {
 		loading.value = false;
 	}
 });
+
+function handleInput(e: Event) {
+	if (e.target instanceof HTMLInputElement) {
+		debouncedFetchResults(e.target.value);
+	}
+}
 </script>
 
 <template>
@@ -80,7 +95,7 @@ watch(open, (isOpen) => {
 				<CommandInput
 					placeholder="Search for pages or posts"
 					class="m-2 p-4 focus:outline-none text-base leading-normal"
-					@input="(e) => debouncedFetchResults(e.target.value)"
+					@input="handleInput"
 				/>
 
 				<CommandList class="p-2 text-foreground max-h-[500px] overflow-auto">
@@ -98,8 +113,11 @@ watch(open, (isOpen) => {
 							class="flex items-start gap-4 px-2 py-3"
 							:value="`${result.title} ${result.description} ${result.type} ${result.link} ${result.content}`"
 							@select="
-								router.push(result.link);
-								open = false;
+								const link = localize(result.link);
+								if (link) {
+									router.push(link);
+									open = false;
+								}
 							"
 						>
 							<Badge variant="default">{{ result.type }}</Badge>

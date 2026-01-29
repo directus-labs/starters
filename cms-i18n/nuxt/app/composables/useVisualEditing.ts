@@ -4,7 +4,7 @@ import type { PrimaryKey } from '@directus/types';
 interface ApplyOptions {
 	directusUrl: string;
 	elements?: HTMLElement[] | HTMLElement;
-	onSaved?: (data: { collection?: string; item?: PrimaryKey | null; payload?: Record<string, any> }) => void;
+	onSaved?: (data: { collection?: string; item?: PrimaryKey | null; payload?: Record<string, unknown> }) => void;
 	customClass?: string;
 }
 export default function useVisualEditing() {

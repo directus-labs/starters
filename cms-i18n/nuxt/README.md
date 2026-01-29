@@ -1,18 +1,27 @@
-# Nuxt 3 CMS Template with Directus Integration
+# Nuxt 4 CMS Template with Directus Integration & i18n Support
 
 <div align="center">
-  <img src="public/images/thumbnail.png" alt="Nuxt 3 CMS Template Thumbnail" width="800" height="auto" />
+  <img src="public/images/thumbnail.png" alt="Nuxt 4 CMS Template with i18n Thumbnail" width="800" height="auto" />
 </div>
 
-This is a **Nuxt 3-based CMS Template** that is fully integrated with [Directus](https://directus.io/), offering a CMS
-solution for managing and delivering content seamlessly. The template leverages modern technologies like **Nuxt 3's
-file-based routing system**, **Tailwind CSS**, and **Shadcn Vue components**, providing a complete and scalable starting
-point for building CMS-powered web applications.
+This is a **Nuxt 4-based CMS Template with Internationalization (i18n) support** that is fully integrated with
+[Directus](https://directus.io/), offering a CMS solution for managing and delivering multilingual content seamlessly.
+The template leverages modern technologies like **Nuxt 4's file-based routing system**, **Tailwind CSS**, **Shadcn Vue
+components**, and **built-in i18n support**, providing a complete and scalable starting point for building multilingual
+CMS-powered web applications.
+
+> **Note**: This is the i18n-enabled version of the Nuxt CMS template. For a single-language version, see the
+> [standard Nuxt CMS template](../nuxt/README.md).
 
 ## **Features**
 
-- **Nuxt 3 File-Based Routing**: Uses Nuxt's built-in routing system with dynamic page handling.
-- **Full Directus Integration**: Directus API integration for fetching and managing relational data.
+- **Nuxt 4 File-Based Routing**: Uses Nuxt's built-in routing system with dynamic page handling.
+- **Internationalization (i18n)**: Built-in support for multiple languages with locale-based routing, automatic
+  translation fetching from Directus, and language switcher component.
+- **Full Directus Integration**: Directus API integration for fetching and managing relational data with translation
+  support.
+- **Locale-Aware Content**: Automatic content translation based on URL locale prefixes (e.g., `/en/`, `/es/`) with
+  fallback to default locale.
 - **Tailwind CSS**: Fully integrated for rapid UI styling.
 - **TypeScript**: Ensures type safety and reliable code quality.
 - **Shadcn Vue Components**: Pre-built, customizable UI components for modern design systems.
@@ -35,7 +44,7 @@ you’ll find `pnpm` very similar in usage. You can still use `npm` if you prefe
 
 ### **Draft Mode Overview**
 
-Directus allows you to work on unpublished content using **Draft Mode**. This Nuxt 3 template is configured to support
+Directus allows you to work on unpublished content using **Draft Mode**. This Nuxt 4 template is configured to support
 Directus Draft Mode out of the box, enabling live previews of unpublished or draft content as you make changes.
 
 ### **Live Preview Setup**
@@ -71,14 +80,42 @@ https://yourwebsite.com/blog/some-post?preview=true
 
 ---
 
+## **Internationalization (i18n)**
+
+### **How It Works**
+
+This template includes built-in internationalization support:
+
+- **Locale-Based Routing**: URLs automatically include locale prefixes (e.g., `/en/about`, `/es/about`) with the default
+  locale (en-US) using clean URLs without a prefix.
+- **Directus Translation Integration**: Translations are stored in Directus `{collection}_translations` tables and
+  automatically fetched based on the current locale.
+- **Automatic Content Merging**: Translations are automatically merged onto base content objects, so components can use
+  `item.title` directly without checking for translations.
+- **Language Switcher**: Built-in `LanguageSwitcher` component for easy language selection.
+- **SSR & Client Support**: Locale detection works on both server-side (via middleware) and client-side (via route
+  detection).
+
+### **Directus Setup for i18n**
+
+The i18n schema (languages collection, translation tables, etc.) is included in the Directus template located in
+`../directus/template/`. Apply it to your Directus instance using the
+[Directus Template CLI](https://github.com/directus/template-cli):
+
+```bash
+npx directus-template-cli@latest apply <path-to-template>
+```
+
+---
+
 ## **Getting Started**
 
 ### Prerequisites
 
 To set up this template, ensure you have the following:
 
-- **Node.js** (16.x or newer)
-- **npm** or **pnpm**
+- **Node.js** (20.x or newer)
+- **pnpm** (8.6.0 or newer) or **npm**
 - Access to a **Directus** instance ([cloud or self-hosted](../../README.md))
 
 ## ⚠️ Directus Setup Instructions
@@ -92,9 +129,9 @@ For instructions on setting up Directus, choose one of the following:
 
 You can instantly deploy this template using one of the following platforms:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nuxt&env=DIRECTUS_URL,NUXT_PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,NUXT_PUBLIC_ENABLE_VISUAL_EDITING)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms-i18n/nuxt&env=DIRECTUS_URL,NUXT_PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,NUXT_PUBLIC_ENABLE_VISUAL_EDITING)
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/nuxt)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms-i18n/nuxt)
 
 ### **Environment Variables**
 
@@ -193,9 +230,22 @@ app/                          # Main Nuxt application folder
 │   │   ├── search/index.ts    # Search functionality
 │   │   ├── users/[id].ts      # Fetches user data
 │   │   ├── authenticated-user.ts  # Auth check endpoint
+│   ├── middleware/            # Server middleware
+│   │   ├── locale.ts          # Locale detection and context setup
 │   ├── utils/                 # Backend utilities
 │   │   ├── directus-server.ts # Directus server-side utilities
 │   │   ├── directus-utils.ts  # General Directus helpers
+│   │   ├── directus-i18n.ts   # i18n-specific Directus utilities
+│   │   ├── i18n.ts            # i18n helper functions
 │   ├── shared/                # Shared backend logic
 │   │   ├── types/schema.ts    # Directus schema types
+├── middleware/                # Client-side middleware
+│   ├── locale.global.ts       # Global locale middleware
+├── app/
+│   ├── lib/
+│   │   ├── i18n/              # i18n configuration and utilities
+│   │   │   ├── config.ts      # Locale configuration
+│   │   │   ├── utils.ts       # Locale path utilities
+│   ├── composables/
+│   │   ├── useLocale.ts       # Locale composable for components
 ```
