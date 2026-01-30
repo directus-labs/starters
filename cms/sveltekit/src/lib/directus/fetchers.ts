@@ -1,4 +1,3 @@
-import type { RequestEvent } from '@sveltejs/kit';
 import {
 	type BlockPost,
 	type PageBlock,
@@ -166,12 +165,11 @@ const postFields = [
 export const fetchPageData = async (
 	permalink: string,
 	postPage = 1,
-	fetch: RequestEvent['fetch'],
 	token?: string,
 	preview?: boolean
 ) => {
 	const { getDirectus } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus();
 
 	try {
 		const pageData = (await directus.request(
@@ -246,7 +244,6 @@ export const fetchPageDataById = async (
 	id: string,
 	version: string,
 	token: string | undefined,
-	fetch: RequestEvent['fetch']
 ): Promise<Page> => {
 	if (!id || id.trim() === '') {
 		throw new Error('Invalid id: id must be a non-empty string');
@@ -256,8 +253,7 @@ export const fetchPageDataById = async (
 	}
 
 	const { getDirectus } = useDirectus();
-	const directus = getDirectus(fetch);
-
+	const directus = getDirectus();
 	try {
 		return (await directus.request(
 			withToken(
@@ -265,9 +261,9 @@ export const fetchPageDataById = async (
 				readItem('pages', id, {
 					version,
 					fields: pageFields,
-					deep: {
-						blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } }
-					}
+					// deep: {
+					// 	blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } }
+					// }
 				})
 			)
 		)) as Page;
@@ -283,14 +279,13 @@ export const fetchPageDataById = async (
 export const getPageIdByPermalink = async (
 	permalink: string,
 	token: string | undefined,
-	fetch: RequestEvent['fetch']
 ) => {
 	if (!permalink || permalink.trim() === '') {
 		throw new Error('Invalid permalink: permalink must be a non-empty string');
 	}
 
 	const { getDirectus } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus();
 
 	try {
 		const pageData = (await directus.request(
@@ -318,14 +313,13 @@ export const getPageIdByPermalink = async (
 export const getPostIdBySlug = async (
 	slug: string,
 	token: string | undefined,
-	fetch: RequestEvent['fetch']
 ) => {
 	if (!slug || slug.trim() === '') {
 		throw new Error('Invalid slug: slug must be a non-empty string');
 	}
 
 	const { getDirectus } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus();
 
 	try {
 		const postData = (await directus.request(
@@ -355,7 +349,6 @@ export const fetchPostByIdAndVersion = async (
 	version: string,
 	slug: string,
 	token: string | undefined,
-	fetch: RequestEvent['fetch']
 ): Promise<{ post: Post; relatedPosts: Post[] }> => {
 	if (!id || id.trim() === '') {
 		throw new Error('Invalid id: id must be a non-empty string');
@@ -368,7 +361,7 @@ export const fetchPostByIdAndVersion = async (
 	}
 
 	const { getDirectus } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus();
 
 	try {
 		const [postData, relatedPosts] = await Promise.all([
@@ -400,9 +393,9 @@ export const fetchPostByIdAndVersion = async (
 /**
  * Fetches global site data, header navigation, and footer navigation.
  */
-export const fetchSiteData = async (fetch: RequestEvent['fetch']) => {
+export const fetchSiteData = async () => {
 	const { getDirectus } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus();
 
 	try {
 		const [globals, headerNavigation, footerNavigation] = await Promise.all([
@@ -472,10 +465,9 @@ export const fetchSiteData = async (fetch: RequestEvent['fetch']) => {
 export const fetchPostBySlug = async (
 	slug: string,
 	options: { draft?: boolean; token?: string },
-	fetch: RequestEvent['fetch']
 ): Promise<{ post: Post | null; relatedPosts: Post[] }> => {
 	const { getDirectus } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus();
 	const { draft, token } = options || {};
 
 	try {
@@ -519,9 +511,9 @@ export const fetchPostBySlug = async (
 /**
  * Fetches related blog posts excluding the given ID.
  */
-export const fetchRelatedPosts = async (excludeId: string, fetch: RequestEvent['fetch']) => {
-	const { getDirectus, readItems } = useDirectus();
-	const directus = getDirectus(fetch);
+export const fetchRelatedPosts = async (excludeId: string) => {
+	const { getDirectus } = useDirectus();
+	const directus = getDirectus();
 
 	try {
 		const relatedPosts = (await directus.request(
@@ -542,9 +534,9 @@ export const fetchRelatedPosts = async (excludeId: string, fetch: RequestEvent['
 /**
  * Fetches author details by ID.
  */
-export const fetchAuthorById = async (authorId: string, fetch: RequestEvent['fetch']) => {
+export const fetchAuthorById = async (authorId: string,) => {
 	const { getDirectus, readUser } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus();
 
 	try {
 		const author = (await directus.request(
@@ -565,7 +557,7 @@ export const fetchAuthorById = async (authorId: string, fetch: RequestEvent['fet
  */
 export const fetchPaginatedPosts = async (limit: number, page: number): Promise<Post[]> => {
 	const { getDirectus } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus();
 	try {
 		const response = (await directus.request(
 			readItems('posts', {
@@ -589,7 +581,7 @@ export const fetchPaginatedPosts = async (limit: number, page: number): Promise<
  */
 export const fetchTotalPostCount = async (): Promise<number> => {
 	const { getDirectus } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus();
 
 	try {
 		const response = await directus.request(
