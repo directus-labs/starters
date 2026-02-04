@@ -14,6 +14,13 @@ export default defineNuxtModule({
 			return;
 		}
 
+		// Skip redirects loading during prepare/postinstall phase when Directus may not be available
+		const isPreparePhase = process.env.npm_lifecycle_event === 'postinstall' || process.env.NUXT_PREPARE === 'true';
+		if (isPreparePhase) {
+			logger.debug('Skipping redirects loading during prepare phase');
+			return;
+		}
+
 		try {
 			const directus = createDirectus<Schema>(directusUrl).with(rest());
 
@@ -54,7 +61,13 @@ export default defineNuxtModule({
 				logger.info(`${redirect.response_code} - From: ${redirect.url_from} To:${redirect.url_to}`);
 			}
 		} catch (error) {
-			logger.error('Error loading redirects', error);
+			// Log as warning during development, error only in production builds
+			const isDev = nuxt.options.dev;
+			if (isDev) {
+				logger.warn('Could not load redirects from Directus (this is normal if Directus is not running)');
+			} else {
+				logger.error('Error loading redirects', error);
+			}
 		}
 	},
 });

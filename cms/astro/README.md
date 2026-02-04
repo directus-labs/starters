@@ -126,6 +126,13 @@ To get started, you need to configure environment variables. Follow these steps:
 
    _(You can also use `npm install` if you prefer.)_
 
+   **Note for npm users:** This project uses pnpm workspaces. If you're using npm instead, you'll need to:
+   ```bash
+   rm -rf node_modules pnpm-lock.yaml
+   npm install
+   ```
+   npm doesn't support pnpm's `workspace:` protocol, so you must remove `pnpm-lock.yaml` before running `npm install`. The project will generate a `package-lock.json` instead.
+
 2. Start the development server:
 
    ```bash

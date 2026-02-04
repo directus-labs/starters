@@ -38,7 +38,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "7.55.0",
-    "sharp": "0.34.0",
+    "sharp": "0.34.3",
     "swr": "2.3.3",
     "tailwind-merge": "3.2.0",
     "zod": "3.24.2"
@@ -66,5 +66,8 @@
     "overrides": {
       "tar": "^7.5.4"
     }
+  },
+  "overrides": {
+    "tar": "^7.5.4"
   }
 }
