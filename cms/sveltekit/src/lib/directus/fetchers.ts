@@ -261,9 +261,9 @@ export const fetchPageDataById = async (
 				readItem('pages', id, {
 					version,
 					fields: pageFields,
-					// deep: {
-					// 	blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } }
-					// }
+					deep: {
+						blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } }
+					}
 				})
 			)
 		)) as Page;
