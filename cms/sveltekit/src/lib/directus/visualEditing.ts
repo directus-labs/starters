@@ -1,6 +1,7 @@
 import { browser } from '$app/environment';
 import { page } from '$app/state';
 import { setAttr as basesetAttr } from '@directus/visual-editing';
+import { PersistedState } from "runed";
 
 interface ApplyOptions {
 	collection: string;
@@ -9,17 +10,23 @@ interface ApplyOptions {
 	mode?: 'modal' | 'popover' | 'drawer';
 }
 
+export const visualEditingEnabled = new PersistedState('visual-editing', false, {
+	storage: 'session',
+});
+
 export const setAttr = (options: ApplyOptions) => {
-	if (browser && sessionStorage.getItem('visual-editing') === 'true') {
+	if (browser && visualEditingEnabled.current === true) {
 		return basesetAttr({
 			...options
 		});
 	}
 };
 
+
+
 export const enableVisualEditing = () => {
 	if (browser && page.data.visualEditingEnabled) {
-		sessionStorage.setItem('visual-editing', 'true');
+		visualEditingEnabled.current = true
 	}
 };
 
