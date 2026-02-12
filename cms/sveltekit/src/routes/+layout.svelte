@@ -56,5 +56,5 @@
 
 <ModeWatcher />
 <NavigationBar />
-<main class="flex-grow">{@render children()}</main>
+<main class="grow">{@render children()}</main>
 <Footer />

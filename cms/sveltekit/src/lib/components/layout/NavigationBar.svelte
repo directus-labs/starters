@@ -1,20 +1,25 @@
 <script lang="ts">
 	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import * as NavigationMenu from '$lib/components/ui/navigation-menu/index.js';
 
 	import { page } from '$app/state';
 	import Container from '$lib/components/ui/Container.svelte';
 	import SearchModal from '../ui/SearchModal.svelte';
 	import LightSwitch from './LightSwitch.svelte';
 	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
-	import { goto } from '$app/navigation';
 	import { ChevronDown, Menu } from '@lucide/svelte';
 	import * as Collapsible from '$lib/components/ui/collapsible';
 	import setAttr from '$lib/directus/visualEditing';
 
+	import { IsMobile } from '$lib/hooks/is-mobile.svelte';
+
+	const isMobile = new IsMobile();
+
 	const globals = $derived(page.data.globals);
 	const navigation = $derived(page.data.headerNavigation);
 	const directusURL = PUBLIC_DIRECTUS_URL;
+
 	const lightLogoUrl = $derived(
 		globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg'
 	);
@@ -23,9 +28,9 @@
 	);
 </script>
 
-<header class="bg-background font-heading text-foreground sticky top-0 z-[60] w-full">
+<header class="bg-background font-heading text-foreground sticky top-0 z-60 w-full">
 	<Container class="flex items-center justify-between p-4">
-		<a href="/" class="flex-shrink-0">
+		<a href="/" class="shrink-0">
 			<img
 				src={lightLogoUrl}
 				alt="Logo"
@@ -55,28 +60,63 @@
 						})
 					: undefined}
 			>
-				{#each navigation?.items as item (item.id)}
+				<NavigationMenu.Root viewport={isMobile.current}>
+					<NavigationMenu.List class="flex-wrap">
+						{#each navigation?.items as item (item.id)}
+							<NavigationMenu.Item>
+								{#if item.children.length === 0}
+									<!-- Buttons -->
+									<NavigationMenu.Link
+										class={buttonVariants({ variant: 'ghost' })}
+										href={item.page.permalink}>{item.title}</NavigationMenu.Link
+									>
+								{:else}
+									<!-- Dropdown -->
+									<NavigationMenu.Trigger class={buttonVariants({ variant: 'ghost' })}
+										>{item.title}</NavigationMenu.Trigger
+									>
+									<NavigationMenu.Content>
+										<ul class="grid w-[200px] gap-4 p-2">
+											<li>
+												{#each item.children as child (child.id)}
+													<NavigationMenu.Link
+														class={buttonVariants({ variant: 'ghost' })}
+														href={child.page.permalink}
+													>
+														{child.title}
+													</NavigationMenu.Link>
+												{/each}
+											</li>
+										</ul>
+									</NavigationMenu.Content>
+								{/if}
+							</NavigationMenu.Item>
+						{/each}
+					</NavigationMenu.List>
+				</NavigationMenu.Root>
+
+				<!-- {#each navigation?.items as item (item.id)}
 					{#if item.children.length === 0}
 						<Button
 							href={item.page.permalink}
 							variant="ghost"
-							class="!font-heading !text-nav !text-inherit
+							class="font-heading! text-nav! text-inherit!
 ">{item.title}</Button
 						>
 					{:else}
 						<DropdownMenu.Root>
 							<DropdownMenu.Trigger
-								class="data-[active]:text-accent/50 data-[state=open]:text-accent/50 bg-background hover:text-accent focus:text-accent group inline-flex h-10 w-max items-center justify-center rounded-md  px-4 py-2 font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+								class="data-active:text-accent/50 data-[state=open]:text-accent/50 bg-background hover:text-accent focus:text-accent group inline-flex h-10 w-max items-center justify-center rounded-md  px-4 py-2 font-medium transition-colors focus:outline-hidden disabled:pointer-events-none disabled:opacity-50"
 								>{item.title}
 								<ChevronDown
-									class="relative top-[1px] ml-1 size-3 transition duration-200 group-data-[state=open]:rotate-180"
+									class="relative top-px ml-1 size-3 transition duration-200 group-data-[state=open]:rotate-180"
 								/>
 							</DropdownMenu.Trigger>
 							<DropdownMenu.Content
 								class="bg-background data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0  data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95  data-[side=bottom]:slide-in-from-top-2   data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant top-full z-50 w-56 max-w-full overflow-hidden rounded-xl shadow-md"
 							>
 								{#each item.children as child}
-									<DropdownMenu.Item class="!bg-transparent">
+									<DropdownMenu.Item class="bg-transparent!">
 										<a class="hover:text-primary-500 text-nav w-full" href={child.page.permalink}
 											>{child.title}</a
 										>
@@ -85,7 +125,7 @@
 							</DropdownMenu.Content>
 						</DropdownMenu.Root>
 					{/if}
-				{/each}
+				{/each} -->
 			</div>
 
 			<div class="flex md:hidden">
@@ -99,7 +139,7 @@
 					<DropdownMenu.Content
 						forceMount
 						align="start"
-						class="bg-background-muted data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant top-full z-50 w-screen min-w-[8rem] max-w-full overflow-hidden rounded p-6 shadow-md"
+						class="bg-background-muted data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-background-variant top-full z-50 w-screen max-w-full min-w-32 overflow-hidden rounded-sm p-6 shadow-md"
 					>
 						{#snippet child({ wrapperProps, props, open })}
 							{#if open}
@@ -108,7 +148,7 @@
 										<div class="flex flex-col gap-4">
 											{#each navigation?.items as item (item.id)}
 												{#if item.children.length === 0}
-													<DropdownMenu.Item class="!bg-transparent p-0 "
+													<DropdownMenu.Item class="bg-transparent! p-0 "
 														><a
 															href={item.page?.permalink || item.url || '#'}
 															class="font-heading text-nav w-full"
@@ -127,7 +167,7 @@
 															/>
 														</Collapsible.Trigger>
 														<Collapsible.Content>
-															<div class="ml-4 mt-2 flex flex-col gap-2">
+															<div class="mt-2 ml-4 flex flex-col gap-2">
 																{#each item.children as child (child.id)}
 																	<a
 																		class="font-heading text-nav w-full"

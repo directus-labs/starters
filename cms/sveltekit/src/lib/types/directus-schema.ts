@@ -44,7 +44,7 @@ export interface BlockButton {
 	/** @description Text to include on the button. */
 	label?: string | null;
 	/** @description What type of button */
-	variant?: 'default' | 'outline' | 'soft' | 'ghost' | 'link' | null;
+	variant?: 'default' | 'outline-solid' | 'soft' | 'ghost' | 'link' | null;
 	/** @description The id of the Button Group this button belongs to. */
 	button_group?: BlockButtonGroup | string | null;
 	/** @description The URL to link to. Could be relative (ie `/my-page`) or a full external URL (ie `https://docs.directus.io`) */

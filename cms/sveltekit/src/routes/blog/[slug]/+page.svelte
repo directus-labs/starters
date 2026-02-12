@@ -43,7 +43,7 @@
 	<Headline
 		as="h2"
 		headline={post.title}
-		class="mb-4 !text-accent"
+		class="mb-4 text-accent!"
 		data-directus={setAttr({
 			collection: 'posts',
 			item: post.id,
@@ -53,7 +53,7 @@
 	/>
 	<Separator class="mb-8" />
 
-	<div class="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,_2fr)_400px]">
+	<div class="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,2fr)_400px]">
 		<main class="text-left">
 			<BaseText
 				content={post.content || ''}

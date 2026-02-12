@@ -82,7 +82,7 @@
 		<Command.Input
 			placeholder="Type a command or search..."
 			bind:value={search}
-			class="m-2 p-4 text-base leading-normal focus:outline-none"
+			class="m-2 p-4 text-base leading-normal focus:outline-hidden"
 		/>
 		<Command.List>
 			{#if !loading && !searched}
