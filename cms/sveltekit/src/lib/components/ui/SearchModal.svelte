@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import { Button } from '$lib/components/ui/button/index.js';
 
 	import { Search } from '@lucide/svelte';
 	import * as Command from '$lib/components/ui/command/index.js';
+	import { Debounced } from 'runed';
 
-	import { debounce } from '$lib/utils';
 	import Badge from './badge/badge.svelte';
-	import { goto } from '$app/navigation';
 
 	let open = $state(false);
 	let search = $state('');
@@ -59,16 +58,12 @@
 			loading = false;
 		}
 	};
-	const debouncedFetchResults = debounce(fetchResults, 300);
 
 	$effect(() => {
-		debouncedFetchResults(search);
+		fetchResults(debouncedSearch.current);
 	});
 
-	const handleSelect = (result: SearchResult) => {
-		goto(result.link);
-		open = false;
-	};
+	const debouncedSearch = new Debounced(() => search, 300);
 </script>
 
 <svelte:document onkeydown={handleKeydown} />
@@ -100,16 +95,17 @@
 			{#if results.length > 0}
 				<Command.Group heading="Search Results">
 					{#each results as result}
-						<Command.Item
+						<Command.LinkItem
+							onSelect={() => (open = false)}
 							class="flex items-start gap-4 px-2 py-3"
-							onSelect={() => handleSelect(result)}
+							href={result.link}
 						>
 							<Badge variant="default">{result.type}</Badge>
 							<div class="ml-2 w-full">
 								<p class="text-base font-medium">{result.title}</p>
 								<p class="mt-1 line-clamp-2 text-sm">{result.description}</p>
 							</div>
-						</Command.Item>
+						</Command.LinkItem>
 					{/each}
 				</Command.Group>
 			{/if}

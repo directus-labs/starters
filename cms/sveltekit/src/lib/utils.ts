@@ -19,18 +19,6 @@ type FlyAndScaleParams = {
 	duration?: number;
 };
 
-// Native debounce utility
-export function debounce<T extends (...args: any[]) => void>(
-	func: T,
-	wait: number
-): (...args: Parameters<T>) => void {
-	let timeout: ReturnType<typeof setTimeout> | null;
-
-	return (...args: Parameters<T>) => {
-		if (timeout) clearTimeout(timeout);
-		timeout = setTimeout(() => func(...args), wait);
-	};
-}
 
 export const flyAndScale = (
 	node: Element,
