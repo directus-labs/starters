@@ -11,7 +11,6 @@
 
 	import { ArrowLeft, ArrowRight, ZoomIn, X } from '@lucide/svelte';
 	import Headline from '../ui/Headline.svelte';
-	import Title from '../ui/Title.svelte';
 	import Tagline from '../ui/Tagline.svelte';
 	import setAttr from '$lib/directus/visualEditing';
 
@@ -108,7 +107,7 @@
 						class="h-auto w-full rounded-lg object-cover"
 					/>
 					<div
-						class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-60 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+						class="bg-opacity-60 absolute inset-0 flex items-center justify-center bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 					>
 						<ZoomIn class="size-10 text-gray-800" />
 					</div>
@@ -120,7 +119,7 @@
 	<!-- {/* Lightbox */} -->
 	{#if isLightboxOpen && isValidIndex}
 		<Dialog open={isLightboxOpen} onOpenChange={() => (isLightboxOpen = false)}>
-			<DialogOverlay class="fixed inset-0 z-50 bg-black bg-opacity-30" />
+			<DialogOverlay class="bg-opacity-30 fixed inset-0 z-50 bg-black" />
 			<DialogContent
 				class="z-50 flex max-h-full max-w-full items-center  justify-center border-none bg-transparent p-2"
 			>
@@ -141,7 +140,7 @@
 
 				<div class="absolute inset-x-0 bottom-4 flex items-center justify-between px-4">
 					<button
-						class="flex items-center gap-2 rounded-full bg-black bg-opacity-70 px-4 py-2 text-white hover:bg-opacity-90"
+						class="bg-opacity-70 hover:bg-opacity-90 flex items-center gap-2 rounded-full bg-black px-4 py-2 text-white"
 						onclick={handlePrev}
 						aria-label="Previous"
 					>
@@ -149,7 +148,7 @@
 						<span>Prev</span>
 					</button>
 					<button
-						class="flex items-center gap-2 rounded-full bg-black bg-opacity-70 px-4 py-2 text-white hover:bg-opacity-90"
+						class="bg-opacity-70 hover:bg-opacity-90 flex items-center gap-2 rounded-full bg-black px-4 py-2 text-white"
 						onclick={handleNext}
 						aria-label="Next"
 					>
@@ -159,7 +158,7 @@
 				</div>
 				<DialogClose>
 					<button
-						class="absolute right-4 top-4 rounded-full bg-black bg-opacity-70 p-2 text-white hover:bg-opacity-90"
+						class="bg-opacity-70 hover:bg-opacity-90 absolute top-4 right-4 rounded-full bg-black p-2 text-white"
 						aria-label="Close"
 					>
 						<X class="size-8" />
