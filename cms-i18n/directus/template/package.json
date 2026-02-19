@@ -1,0 +1,11 @@
+{
+  "author": "",
+  "description": "",
+  "directusTemplate": true,
+  "files": [
+    "src"
+  ],
+  "name": "directus-template-cms-i18n",
+  "templateName": "CMS - i18n",
+  "version": "1.0.0"
+}

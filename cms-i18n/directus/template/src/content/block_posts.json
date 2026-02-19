@@ -1,0 +1,22 @@
+[
+  {
+    "id": "060b632d-d70d-4db1-8b95-4fbab7a52ae8",
+    "headline": "All rabbits, all the time",
+    "collection": "posts",
+    "tagline": "Blog",
+    "limit": 6,
+    "date_created": "2025-05-07T01:22:46.276Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "date_updated": "2025-12-22T19:53:38.929Z",
+    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "translations": [
+      "5968140b-1025-41a8-bf39-7d1cdb338577",
+      "4fcd9b71-2f32-4998-b18f-4b1b0ee5d613",
+      "490eedd3-67cf-419b-a7cc-bd4e1a9e58d5",
+      "f6f2ce8b-1a05-485a-9edf-2d89b36345fa",
+      "ed2cda8a-c48c-4b72-b52e-2b3f6069fc83",
+      "b0665f8d-3e26-4e7e-a733-083d8d91823a",
+      "a5c9c429-a60c-41bb-8e46-f58f9fb07ab3"
+    ]
+  }
+]

@@ -1,0 +1,93 @@
+[
+  {
+    "id": "325c6078-0d47-4cbb-8e10-271683538db7",
+    "status": "published",
+    "sort": null,
+    "user_created": null,
+    "date_created": "2025-12-22T21:47:53.918Z",
+    "user_updated": null,
+    "date_updated": null,
+    "block_gallery": "34fdcf0e-cc5d-4c40-b61f-4f0a5e167306",
+    "languages_code": "es-ES",
+    "headline": "Echa un vistazo a algunas de nuestras últimas plantillas",
+    "tagline": "Galería de Plantillas"
+  },
+  {
+    "id": "912a0c3d-26bb-4695-980c-b3e1158282c4",
+    "status": "published",
+    "sort": null,
+    "user_created": null,
+    "date_created": "2025-12-23T23:01:52.746Z",
+    "user_updated": null,
+    "date_updated": null,
+    "block_gallery": "34fdcf0e-cc5d-4c40-b61f-4f0a5e167306",
+    "languages_code": "ar-SA",
+    "headline": "اطلع على أحدث قوالبنا",
+    "tagline": "معرض القوالب"
+  },
+  {
+    "id": "e367eb95-db41-4609-aede-8a1177467f1d",
+    "status": "published",
+    "sort": null,
+    "user_created": null,
+    "date_created": "2025-12-23T23:01:52.764Z",
+    "user_updated": null,
+    "date_updated": null,
+    "block_gallery": "34fdcf0e-cc5d-4c40-b61f-4f0a5e167306",
+    "languages_code": "de-DE",
+    "headline": "Entdecke einige unserer neuesten Vorlagen",
+    "tagline": "Vorlagengalerie"
+  },
+  {
+    "id": "2aac0ac6-8e1c-4917-9586-999ef3516364",
+    "status": "published",
+    "sort": null,
+    "user_created": null,
+    "date_created": "2025-12-23T23:01:52.766Z",
+    "user_updated": null,
+    "date_updated": null,
+    "block_gallery": "34fdcf0e-cc5d-4c40-b61f-4f0a5e167306",
+    "languages_code": "fr-FR",
+    "headline": "Découvrez quelques-unes de nos dernières templates",
+    "tagline": "Galerie de modèles"
+  },
+  {
+    "id": "669c6f6b-53c7-4900-803d-79641ee6a19c",
+    "status": "published",
+    "sort": null,
+    "user_created": null,
+    "date_created": "2025-12-23T23:01:52.768Z",
+    "user_updated": null,
+    "date_updated": null,
+    "block_gallery": "34fdcf0e-cc5d-4c40-b61f-4f0a5e167306",
+    "languages_code": "it-IT",
+    "headline": "Scopri alcuni dei nostri template più recenti",
+    "tagline": "Galleria Template"
+  },
+  {
+    "id": "dc95add0-9703-47c8-99bb-4903e3f2aed4",
+    "status": "published",
+    "sort": null,
+    "user_created": null,
+    "date_created": "2025-12-23T23:01:52.770Z",
+    "user_updated": null,
+    "date_updated": null,
+    "block_gallery": "34fdcf0e-cc5d-4c40-b61f-4f0a5e167306",
+    "languages_code": "pt-BR",
+    "headline": "Confira alguns dos nossos templates mais recentes",
+    "tagline": "Galeria de Modelos"
+  },
+  {
+    "id": "5c7c550f-b48f-43eb-8caf-51d565ca72c2",
+    "status": "published",
+    "sort": null,
+    "user_created": null,
+    "date_created": "2025-12-23T23:01:52.771Z",
+    "user_updated": null,
+    "date_updated": null,
+    "block_gallery": "34fdcf0e-cc5d-4c40-b61f-4f0a5e167306",
+    "languages_code": "ru-RU",
+    "headline": "Посмотрите наши новейшие шаблоны",
+    "tagline": "Галерея шаблонов"
+  }
+]
