@@ -16,16 +16,15 @@ export const load = (async (event) => {
 			const foundPageId = await getPageIdByPermalink(
 				event.url.pathname,
 				token || undefined,
-				event.fetch
 			);
 			pageId = foundPageId || '';
 		}
 
 		let data;
 		if (pageId && version) {
-			data = await fetchPageDataById(pageId, version, token || undefined, event.fetch);
+			data = await fetchPageDataById(pageId, version, token || undefined);
 		} else {
-			data = await fetchPageData(event.url.pathname, 1, event.fetch, token || undefined, preview);
+			data = await fetchPageData(event.url.pathname, 1, token || undefined, preview);
 		}
 
 		return data;
