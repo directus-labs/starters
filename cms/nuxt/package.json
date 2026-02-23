@@ -40,7 +40,7 @@
 	},
 	"dependencies": {
 		"@directus/sdk": "20.0.3",
-		"@directus/visual-editing": "1.1.0",
+		"@directus/visual-editing": "1.2.0",
 		"@formkit/auto-animate": "0.8.2",
 		"@hookform/resolvers": "5.0.1",
 		"@nuxt/fonts": "0.11.4",
