@@ -15,8 +15,8 @@ importers:
         specifier: 20.0.3
         version: 20.0.3
       '@directus/visual-editing':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 1.2.0
+        version: 1.2.0
       '@lucide/svelte':
         specifier: 0.525.0
         version: 0.525.0(svelte@5.38.2)
@@ -165,9 +165,9 @@ packages:
     resolution: {integrity: sha512-PFTYx8QxYi36L9zjOVldwZ88Iln9pBGtEamEjLGFuYqy1jk5jKJ7qA7827KfeZJkz3EtNNZM6J605I7s/ayD2g==}
     engines: {node: '>=22'}
 
-  '@directus/visual-editing@1.1.0':
-    resolution: {integrity: sha512-nEkPnkdB3WXUODlgdd5cyCw9BT2JrL9xHBLYAhz940b/MJ25mZ9NZJ9xdnPAGh0WaRetEMcAcXy7e6t28x/4EQ==}
-    engines: {node: '>=22'}
+  '@directus/visual-editing@1.2.0':
+    resolution: {integrity: sha512-kC0MugiMLXwpy3t2a0qvKDSCuTLNw/STMt+7j95c+YOztRkyD+exz9a+EAcv+x6mMhUYLvNq9Yyo4wZ9xjHShQ==}
+    engines: {node: '>=22.12.0'}
 
   '@emnapi/runtime@1.8.1':
     resolution: {integrity: sha512-mehfKSMWjjNol8659Z8KxEMrdSJDDot5SXMq00dM8BN4o+CLNXQ0xH2V7EchNHV4RmbZLmmPdEaXZc5H2FXmDg==}
@@ -835,8 +835,8 @@ packages:
       svelte: ^5.0.0
       vite: ^6.3.0 || ^7.0.0
 
-  '@swc/helpers@0.5.18':
-    resolution: {integrity: sha512-TXTnIcNJQEKwThMMqBXsZ4VGAza6bvN4pa41Rkqoio6QBKMvo+5lexeTMScGCIxtzgQJzElcvIltani+adC5PQ==}
+  '@swc/helpers@0.5.19':
+    resolution: {integrity: sha512-QamiFeIK3txNjgUTNppE6MiG3p7TdninpZu0E0PbqVh1a9FNLT2FRhisaa4NcaX52XVhA5l7Pk58Ft7Sqi/2sA==}
 
   '@tailwindcss/container-queries@0.1.1':
     resolution: {integrity: sha512-p18dswChx6WnTSaJCSGx6lTmrGzNNvm2FtXmiO6AuA1V4U5REyoqwmT6kgAsIMdjo07QdAfYXHJ4hnMtfHzWgA==}
@@ -2322,7 +2322,7 @@ snapshots:
 
   '@directus/sdk@20.0.3': {}
 
-  '@directus/visual-editing@1.1.0':
+  '@directus/visual-editing@1.2.0':
     dependencies:
       '@reach/observe-rect': 1.2.0
 
@@ -2599,7 +2599,7 @@ snapshots:
 
   '@internationalized/date@3.10.1':
     dependencies:
-      '@swc/helpers': 0.5.18
+      '@swc/helpers': 0.5.19
 
   '@isaacs/cliui@8.0.2':
     dependencies:
@@ -2837,7 +2837,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@swc/helpers@0.5.18':
+  '@swc/helpers@0.5.19':
     dependencies:
       tslib: 2.8.1
 
