@@ -28,8 +28,15 @@ export async function generateRedirects(): Promise<NextRedirect[]> {
 				permanent: redirect.response_code === '301',
 			}));
 	} catch (error) {
-		console.error('Error generating redirects:', error);
-
-		return [];
+		// During build/config evaluation, Directus may not be available yet
+		// Log as warning instead of error to avoid failing builds
+		const isBuildPhase = process.env.npm_lifecycle_event === 'build' || process.env.NEXT_BUILD === 'true';
+		if (isBuildPhase) {
+			console.warn('Could not load redirects from Directus during build (this is normal if Directus is not configured/running)');
+		} else {
+			console.error('Error generating redirects:', error);
+		}
+		
+return [];
 	}
 }

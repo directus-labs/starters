@@ -59,9 +59,10 @@ const nextConfig: NextConfig = {
 		];
 	},
 	async redirects() {
+		// generateRedirects handles errors gracefully and returns empty array if Directus is unavailable
 		const redirects = await generateRedirects();
-
-		return redirects;
+		
+return redirects;
 	},
 };
 

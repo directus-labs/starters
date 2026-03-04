@@ -1,0 +1,21 @@
+diff --git a/dist/rollup/index.mjs b/dist/rollup/index.mjs
+index 5f2bc76d97385f8f0af55ff0643f57f5b3d05c34..7c1211b00861d040cd1d6cf3bb02448cc2370bab 100644
+--- a/dist/rollup/index.mjs
++++ b/dist/rollup/index.mjs
+@@ -448,7 +448,15 @@ function externals$1(opts) {
+         ),
+         ...opts.traceOptions
+       });
+-      const _resolveTracedPath = (p) => promises.realpath(resolve(opts.traceOptions?.base || ".", p));
++      const _resolveTracedPath = async (p) => {
++        const resolved = resolve(opts.traceOptions?.base || ".", p);
++        try {
++          return await promises.realpath(resolved);
++        } catch (e) {
++          if (e?.code === "ENOENT") return resolved;
++          throw e;
++        }
++      };
+       const tracedFiles = Object.fromEntries(
+         await Promise.all(
+           [..._fileTrace.reasons.entries()].map(async ([_path, reasons]) => {

@@ -8,13 +8,9 @@ const directusUrl = process.env.PUBLIC_DIRECTUS_URL || process.env.DIRECTUS_URL 
 const directusHost = directusUrl?.split('//')[1];
 const siteUrl = process.env.PUBLIC_SITE_URL || 'http://localhost:3000';
 
-if (!directusUrl) {
-  throw new Error(
-    'Missing PUBLIC_DIRECTUS_URL in your .env. ' + 'Make sure you have PUBLIC_DIRECTUS_URL set at the project root.',
-  );
-}
-
-const redirectsArray = await fetchRedirects(directusUrl);
+// Gracefully handle missing Directus URL during build/config evaluation
+// fetchRedirects will return empty array if Directus is not available
+const redirectsArray = directusUrl ? await fetchRedirects(directusUrl) : [];
 const redirectsConfig: Record<string, { status: 301 | 302; destination: string }> = {};
 
 for (const { source, destination, permanent } of redirectsArray) {
