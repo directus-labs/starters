@@ -6,7 +6,6 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"prebuild": "node scripts/ensure-resvg-dirs.js",
 		"build": "nuxt build",
 		"dev": "nuxt dev",
 		"start": "nuxt start",
@@ -75,6 +74,9 @@
 		"overrides": {
 			"tar": "^7.5.4",
 			"unhead": "2.1.2"
+		},
+		"patchedDependencies": {
+			"nitropack@2.13.1": "patches/nitropack@2.13.1.patch"
 		}
 	},
 	"overrides": {
