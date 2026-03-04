@@ -1,0 +1,40 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "packages": {
+    "cms": {
+      "release-type": "node",
+      "component": "cms",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "blank": {
+      "release-type": "node",
+      "component": "blank",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "agencyos": {
+      "release-type": "node",
+      "component": "agencyos",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "simple-crm": {
+      "release-type": "node",
+      "component": "simple-crm",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "simple-ecommerce": {
+      "release-type": "node",
+      "component": "simple-ecommerce",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "simple-website-cms": {
+      "release-type": "node",
+      "component": "simple-website-cms",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "help-center": {
+      "release-type": "node",
+      "component": "help-center",
+      "changelog-path": "CHANGELOG.md"
+    }
+  }
+}
