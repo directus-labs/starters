@@ -84,24 +84,4 @@ export default defineNuxtConfig({
 	},
 
 	compatibilityDate: '2025-01-16',
-
-	// Prevent Nitro/Rollup from resolving optional native bindings that may not exist on the build host (e.g. Vercel Linux has gnu, not musl).
-	nitro: {
-		externals: {
-			external: [
-				'@resvg/resvg-js-android-arm-eabi',
-				'@resvg/resvg-js-android-arm64',
-				'@resvg/resvg-js-darwin-arm64',
-				'@resvg/resvg-js-darwin-x64',
-				'@resvg/resvg-js-linux-arm-gnueabihf',
-				'@resvg/resvg-js-linux-arm64-gnu',
-				'@resvg/resvg-js-linux-arm64-musl',
-				'@resvg/resvg-js-linux-x64-gnu',
-				'@resvg/resvg-js-linux-x64-musl',
-				'@resvg/resvg-js-win32-arm64-msvc',
-				'@resvg/resvg-js-win32-ia32-msvc',
-				'@resvg/resvg-js-win32-x64-msvc',
-			],
-		},
-	},
 });
