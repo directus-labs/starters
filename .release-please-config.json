@@ -1,14 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "packages": {
-    "cms": {
-      "release-type": "node",
-      "component": "cms",
-      "changelog-path": "CHANGELOG.md"
-    },
     "blank": {
       "release-type": "node",
       "component": "blank",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "cms": {
+      "release-type": "node",
+      "component": "cms",
       "changelog-path": "CHANGELOG.md"
     }
   }
