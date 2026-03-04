@@ -5,6 +5,7 @@
 	},
 	"private": true,
 	"type": "module",
+	"packageManager": "pnpm@10.15.1",
 	"scripts": {
 		"build": "nuxt build",
 		"dev": "nuxt dev",
@@ -74,6 +75,9 @@
 		"overrides": {
 			"tar": "^7.5.4",
 			"unhead": "2.1.2"
+		},
+		"patchedDependencies": {
+			"nitropack@2.13.1": "patches/nitropack@2.13.1.patch"
 		}
 	},
 	"overrides": {
