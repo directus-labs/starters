@@ -1,0 +1,59 @@
+name: Check Directus Version
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # Every Monday at 9am UTC
+  workflow_dispatch: # Allow manual trigger
+
+permissions:
+  issues: write
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get current Directus version from repo
+        id: current
+        run: |
+          VERSION=$(grep -oP 'directus/directus:\K[^\s"'"'"']+' _shared/docker-compose.yaml | head -1)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Current version: $VERSION"
+
+      - name: Get latest Directus release
+        id: latest
+        run: |
+          LATEST=$(curl -s https://registry.hub.docker.com/v2/repositories/directus/directus/tags/?page_size=10\&ordering=last_updated \
+            | jq -r '.results[].name' \
+            | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' \
+            | head -1)
+          echo "version=$LATEST" >> "$GITHUB_OUTPUT"
+          echo "Latest version: $LATEST"
+
+      - name: Compare and open issue
+        if: steps.current.outputs.version != steps.latest.outputs.version
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          CURRENT="${{ steps.current.outputs.version }}"
+          LATEST="${{ steps.latest.outputs.version }}"
+
+          # Check if an issue already exists
+          EXISTING=$(gh issue list --search "Update Directus to $LATEST" --state open --json number --jq '.[0].number // empty')
+
+          if [ -z "$EXISTING" ]; then
+            gh issue create \
+              --title "Update Directus to $LATEST" \
+              --body "A new Directus version is available.
+
+          **Current:** \`$CURRENT\`
+          **Latest:** \`$LATEST\`
+
+          Update \`_shared/docker-compose.yaml\` and all template \`directus/docker-compose.yaml\` files.
+
+          [Release notes](https://github.com/directus/directus/releases/tag/v$LATEST)" \
+              --label "dependencies"
+          else
+            echo "Issue already exists: #$EXISTING"
+          fi
