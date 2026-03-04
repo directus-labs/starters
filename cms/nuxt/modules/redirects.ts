@@ -61,13 +61,11 @@ export default defineNuxtModule({
 				logger.info(`${redirect.response_code} - From: ${redirect.url_from} To:${redirect.url_to}`);
 			}
 		} catch (error) {
-			// Log as warning during development, error only in production builds
-			const isDev = nuxt.options.dev;
-			if (isDev) {
-				logger.warn('Could not load redirects from Directus (this is normal if Directus is not running)');
-			} else {
-				logger.error('Error loading redirects', error);
-			}
+			// Non-fatal: build and dev continue without redirects when Directus is unavailable
+			logger.warn(
+				'Could not load redirects from Directus (Directus may be unavailable). Build will continue without redirects.',
+				error instanceof Error ? error.message : String(error),
+			);
 		}
 	},
 });
