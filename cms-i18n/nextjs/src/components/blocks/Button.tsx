@@ -1,7 +1,11 @@
+'use client';
+
 import { Button as ShadcnButton, buttonVariants } from '@/components/ui/button';
 import { LucideIcon, ArrowRight, Plus } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { getLocaleFromPath, addLocaleToPath } from '@/lib/i18n/utils';
 
 export interface ButtonProps {
 	id: string;
@@ -38,6 +42,8 @@ const Button = ({
 	disabled = false,
 	block = false,
 }: ButtonProps) => {
+	const pathname = usePathname();
+	const { locale } = getLocaleFromPath(pathname);
 	const icons: Record<string, LucideIcon> = {
 		arrow: ArrowRight,
 		plus: Plus,
@@ -46,8 +52,12 @@ const Button = ({
 	const Icon = customIcon || (icon ? icons[icon] : null);
 
 	const href = (() => {
-		if (type === 'page' && page?.permalink) return page.permalink;
-		if (type === 'post' && post?.slug) return `/blog/${post.slug}`;
+		if (type === 'page' && page?.permalink) {
+			return addLocaleToPath(page.permalink, locale);
+		}
+		if (type === 'post' && post?.slug) {
+			return addLocaleToPath(`/blog/${post.slug}`, locale);
+		}
 
 		return url || undefined;
 	})();

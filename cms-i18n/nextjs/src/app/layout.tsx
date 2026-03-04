@@ -7,6 +7,8 @@ import VisualEditingLayout from '@/components/layout/VisualEditingLayout';
 import { ThemeProvider } from '@/components/ui/ThemeProvider';
 import { fetchSiteData } from '@/lib/directus/fetchers';
 import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
+import { getLocaleFromHeaders, getLanguagesFromDirectus } from '@/lib/i18n/server';
+import { getLocaleCode, DEFAULT_LOCALE, type Locale } from '@/lib/i18n/config';
 
 export async function generateMetadata(): Promise<Metadata> {
 	const { globals } = await fetchSiteData();
@@ -28,17 +30,54 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
-	const { globals, headerNavigation, footerNavigation } = await fetchSiteData();
+	const locale = await getLocaleFromHeaders();
+	const localeCode = getLocaleCode(locale);
+
+	const [siteData, { languages: languagesArray, directionMap }] = await Promise.all([
+		fetchSiteData(locale),
+		getLanguagesFromDirectus(),
+	]);
+
+	const { globals, headerNavigation, footerNavigation } = siteData;
+
+	// Filter out invalid language objects to prevent undefined keys
+	const validLanguages = Array.isArray(languagesArray)
+		? languagesArray.filter((lang) => typeof lang?.code === 'string' && lang.code.trim() !== '')
+		: [];
+	const allLocales = validLanguages.map((lang) => lang.code);
+	// Ensure DEFAULT_LOCALE is first, but avoid duplicates if it already exists
+	if (!allLocales.includes(DEFAULT_LOCALE)) {
+		allLocales.unshift(DEFAULT_LOCALE);
+	}
+	const supportedLocales = allLocales.length > 0 ? allLocales : [DEFAULT_LOCALE];
+
+	const localeNames =
+		validLanguages.length > 0
+			? (Object.fromEntries([
+					[DEFAULT_LOCALE, 'English'],
+					...validLanguages.map((lang) => [lang.code, lang.name || lang.code]),
+				]) as Record<Locale, string>)
+			: ({ [DEFAULT_LOCALE]: 'English' } as Record<Locale, string>);
+
+	const direction = directionMap[locale] || 'ltr';
 	const accentColor = globals?.accent_color || '#6644ff';
 
 	return (
-		<html lang="en" style={{ '--accent-color': accentColor } as React.CSSProperties} suppressHydrationWarning>
+		<html
+			lang={localeCode}
+			dir={direction}
+			style={{ '--accent-color': accentColor } as React.CSSProperties}
+			suppressHydrationWarning
+		>
 			<body className="antialiased font-sans flex flex-col min-h-screen">
 				<ThemeProvider>
 					<VisualEditingLayout
 						headerNavigation={headerNavigation}
 						footerNavigation={footerNavigation}
 						globals={globals}
+						currentLocale={locale}
+						supportedLocales={supportedLocales}
+						localeNames={localeNames}
 					>
 						<main className="flex-grow">{children}</main>
 					</VisualEditingLayout>

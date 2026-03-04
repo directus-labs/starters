@@ -1,6 +1,8 @@
 import { fetchPostBySlug, fetchPostByIdAndVersion, getPostIdBySlug } from '@/lib/directus/fetchers';
 import BlogPostClient from './BlogPostClient';
 import type { DirectusUser, Post } from '@/types/directus-schema';
+import { getLocaleFromHeaders } from '@/lib/i18n/server';
+import { addLocaleToPath } from '@/lib/i18n/utils';
 
 export default async function BlogPostPage({
 	params,
@@ -12,6 +14,7 @@ export default async function BlogPostPage({
 	const { slug } = await params;
 	const { id, version, preview, token } = await searchParams;
 	const isDraft = (preview === 'true' && !!token) || (!!version && version !== 'published') || !!token;
+	const locale = await getLocaleFromHeaders();
 
 	// Live preview adds version = main which is not required when fetching the main version.
 	const fixedVersion = version != 'main' ? version : undefined;
@@ -29,13 +32,14 @@ export default async function BlogPostPage({
 		}
 
 		if (postId && fixedVersion) {
-			const result = await fetchPostByIdAndVersion(postId, fixedVersion, slug, token || undefined);
+			const result = await fetchPostByIdAndVersion(postId, fixedVersion, slug, token || undefined, locale);
 			post = result.post;
 			relatedPosts = result.relatedPosts;
 		} else {
 			const result = await fetchPostBySlug(slug, {
 				draft: isDraft,
 				token,
+				locale,
 			});
 			post = result.post;
 			relatedPosts = result.relatedPosts;
@@ -47,7 +51,8 @@ export default async function BlogPostPage({
 
 		const author = post.author as DirectusUser | null;
 		const authorName = author ? [author.first_name, author.last_name].filter(Boolean).join(' ') : '';
-		const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`;
+		const localizedBlogPath = addLocaleToPath(`/blog/${slug}`, locale);
+		const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL}${localizedBlogPath}`;
 
 		return (
 			<BlogPostClient

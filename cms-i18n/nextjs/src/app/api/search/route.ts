@@ -1,5 +1,8 @@
 import { useDirectus } from '@/lib/directus/directus';
 import { NextResponse } from 'next/server';
+import { headers } from 'next/headers';
+import { DEFAULT_LOCALE } from '@/lib/i18n/config';
+import { addLocaleToPath } from '@/lib/i18n/utils';
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
@@ -8,6 +11,10 @@ export async function GET(request: Request) {
 	if (!search || search.length < 3) {
 		return NextResponse.json({ error: 'Query must be at least 3 characters.' }, { status: 400 });
 	}
+
+	// Get locale from header (set by middleware)
+	const headersList = await headers();
+	const locale = headersList.get('x-locale') || DEFAULT_LOCALE;
 
 	const { directus, readItems } = useDirectus();
 
@@ -43,21 +50,29 @@ export async function GET(request: Request) {
 		]);
 
 		const results = [
-			...pages.map((page: any) => ({
-				id: page.id,
-				title: page.title,
-				description: page.seo.meta_description,
-				type: 'Page',
-				link: `/${page.permalink.replace(/^\/+/, '')}`,
-			})),
+			...pages.map((page: any) => {
+				const pagePath = `/${page.permalink.replace(/^\/+/, '')}`;
 
-			...posts.map((post: any) => ({
-				id: post.id,
-				title: post.title,
-				description: post.description,
-				type: 'Post',
-				link: `/blog/${post.slug}`,
-			})),
+				return {
+					id: page.id,
+					title: page.title,
+					description: page.seo?.meta_description,
+					type: 'Page',
+					link: addLocaleToPath(pagePath, locale),
+				};
+			}),
+
+			...posts.map((post: any) => {
+				const postPath = `/blog/${post.slug}`;
+
+				return {
+					id: post.id,
+					title: post.title,
+					description: post.description,
+					type: 'Post',
+					link: addLocaleToPath(postPath, locale),
+				};
+			}),
 		];
 
 		return NextResponse.json(results);
