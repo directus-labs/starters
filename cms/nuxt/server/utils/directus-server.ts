@@ -1,21 +1,18 @@
 import { $fetch } from 'ofetch';
 import type { Schema } from '#shared/types/schema';
 import {
-	aggregate,
 	createDirectus,
 	readItem,
 	readItems,
 	rest,
 	readSingleton,
 	createItem,
-	updateItem,
 	// staticToken,
 	uploadFiles,
-	readMe,
 	withToken,
 	type QueryFilter,
-	readUser,
 } from '@directus/sdk';
+export { aggregate, updateItem, readMe, readUser } from '@directus/sdk';
 
 const {
 	public: { directusUrl },
@@ -34,13 +31,9 @@ export {
 	directusServer,
 	readItem,
 	readItems,
-	readMe,
 	readSingleton,
 	createItem,
-	updateItem,
 	withToken,
-	aggregate,
 	uploadFiles,
-	readUser,
 };
 export type { QueryFilter };
