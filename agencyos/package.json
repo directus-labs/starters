@@ -1,11 +1,11 @@
 {
-  "author": "",
-  "description": "",
-  "directusTemplate": true,
-  "files": [
-    "src"
-  ],
-  "name": "directus-template-agencyos",
-  "templateName": "AgencyOS",
-  "version": "3.2.0"
+  "name": "directus-agencyos-starter",
+  "version": "1.0.0",
+  "description": "A full-featured agency management OS template.",
+  "directus:template": {
+    "name": "AgencyOS",
+    "description": "A full-featured agency management OS template.",
+    "template": "./directus/template",
+    "frontends": {}
+  }
 }

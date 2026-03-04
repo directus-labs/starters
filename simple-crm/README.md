@@ -1,10 +1,26 @@
-# Simple CRM Template
+# Simple CRM
 
-This is a template for [Directus](https://directus.io/) - an open-source headless CMS and API. Use the template-cli to load / apply this template to a blank instance.
+A simple CRM template for Directus. Manage contacts, organizations, and deals with a clean pipeline view.
 
-## Why
+## Getting Started
 
-## What
+### Using Directus Cloud
 
-## License
+1. Create a new project at [Directus Cloud](https://directus.io/cloud/) and select the **Simple CRM** template.
+2. Generate a static token for the admin user.
 
+### Using Docker (Local)
+
+```bash
+npx directus-template-cli@latest init
+```
+
+Select **Simple CRM** from the template list and follow the prompts.
+
+## What's Included
+
+- Contacts and organizations
+- Deal pipeline with stages
+- Activities and activity tracking
+- Tags for contacts and organizations
+- Dashboards

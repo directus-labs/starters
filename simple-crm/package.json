@@ -1,11 +1,11 @@
 {
-  "author": "",
-  "description": "",
-  "directusTemplate": true,
-  "files": [
-    "src"
-  ],
-  "name": "directus-template-simple-crm",
-  "templateName": "Simple CRM",
-  "version": "1.0.0"
+  "name": "directus-simple-crm-starter",
+  "version": "1.0.0",
+  "description": "A simple CRM for managing contacts, organizations, and deals.",
+  "directus:template": {
+    "name": "Simple CRM",
+    "description": "A simple CRM for managing contacts, organizations, and deals.",
+    "template": "./directus/template",
+    "frontends": {}
+  }
 }

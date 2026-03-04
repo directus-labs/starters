@@ -1,11 +1,11 @@
 {
-  "author": "",
-  "description": "",
-  "directusTemplate": true,
-  "files": [
-    "src"
-  ],
-  "name": "directus-template-help-center",
-  "templateName": "Help Center",
-  "version": "1.0.0"
+  "name": "directus-help-center-starter",
+  "version": "1.0.0",
+  "description": "A multilingual help center with articles and collections.",
+  "directus:template": {
+    "name": "Help Center",
+    "description": "A multilingual help center with articles and collections.",
+    "template": "./directus/template",
+    "frontends": {}
+  }
 }

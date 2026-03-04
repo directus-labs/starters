@@ -1,11 +1,11 @@
 {
-  "author": "",
-  "description": "",
-  "directusTemplate": true,
-  "files": [
-    "src"
-  ],
-  "name": "directus-template-simple-ecommerce",
-  "templateName": "Simple eCommerce",
-  "version": "1.0.0"
+  "name": "directus-simple-ecommerce-starter",
+  "version": "1.0.0",
+  "description": "A simple eCommerce template for products, orders, and customers.",
+  "directus:template": {
+    "name": "Simple eCommerce",
+    "description": "A simple eCommerce template for products, orders, and customers.",
+    "template": "./directus/template",
+    "frontends": {}
+  }
 }
