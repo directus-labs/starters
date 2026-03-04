@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join } from 'node:path';
 import { generateDirectusTypes } from 'directus-sdk-typegen';

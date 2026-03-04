@@ -71,7 +71,7 @@ export default [
 	{
 		files: ['**/*.vue'],
 		rules: {
-			...vuePlugin.configs['vue3-recommended'].rules,
+			...(vuePlugin.configs?.['vue3-recommended']?.rules || {}),
 		},
 	},
 	{
@@ -83,7 +83,7 @@ export default [
 			},
 		},
 		rules: {
-			...typescriptEslint.configs['recommended'].rules,
+			...(typescriptEslint.configs?.['recommended']?.rules || {}),
 		},
 	},
 ];

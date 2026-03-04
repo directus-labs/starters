@@ -1,11 +1,35 @@
 <script setup lang="ts">
+import type { SiteData } from '#shared/types/site-data';
+
+// Get locale from composable
+const { currentLocale, currentLocaleCode } = useLocale();
+const locale = currentLocale.value;
+const localeCode = currentLocaleCode.value;
+
 const {
 	data: siteData,
 	error: siteError,
 	refresh,
-} = await useFetch('/api/site-data', {
-	key: 'site-data',
+} = await useFetch<SiteData>('/api/site-data', {
+	key: `site-data-${locale}`,
+	headers: {
+		'x-locale': locale,
+	},
+	query: {
+		locale,
+	},
 });
+
+// Persist site data for reuse (locales, globals, navigation)
+const siteDataState = useState<SiteData | null>('site-data', () => siteData.value ?? null);
+
+if (!siteDataState.value && siteData.value) {
+	siteDataState.value = siteData.value;
+}
+
+const effectiveSiteData = computed(() => siteDataState.value ?? siteData.value ?? null);
+
+const accentColor = computed(() => effectiveSiteData.value?.globals?.accent_color || '#6644ff');
 
 const { isVisualEditingEnabled, apply } = useVisualEditing();
 
@@ -20,11 +44,16 @@ if (siteError.value) {
 	});
 }
 
+// Set HTML lang and dir attributes based on locale
 useHead({
+	htmlAttrs: {
+		lang: localeCode,
+		dir: effectiveSiteData.value?.direction || 'ltr',
+	},
 	style: [
 		{
 			id: 'accent-color',
-			innerHTML: `:root { --accent-color: ${unref(siteData)?.globals.accent_color || '#6644ff'} !important; }`,
+			innerHTML: `:root { --accent-color: ${accentColor.value} !important; }`,
 		},
 	],
 	bodyAttrs: {
@@ -33,8 +62,8 @@ useHead({
 });
 
 useSeoMeta({
-	titleTemplate: `%s / ${unref(siteData)?.globals.title}`,
-	ogSiteName: unref(siteData)?.globals.title,
+	titleTemplate: `%s / ${effectiveSiteData.value?.globals?.title || ''}`,
+	ogSiteName: effectiveSiteData.value?.globals?.title,
 });
 
 onMounted(() => {
@@ -51,17 +80,21 @@ onMounted(() => {
 <template>
 	<div>
 		<NavigationBar
-			v-if="siteData?.headerNavigation"
+			v-if="effectiveSiteData?.headerNavigation"
 			ref="navigationRef"
-			:navigation="siteData.headerNavigation"
-			:globals="siteData.globals"
+			:navigation="effectiveSiteData.headerNavigation"
+			:globals="effectiveSiteData.globals"
+			:locale="effectiveSiteData.locale"
+			:supported-locales="effectiveSiteData.supportedLocales"
+			:locale-names="effectiveSiteData.localeNames"
 		/>
 		<NuxtPage />
 		<Footer
-			v-if="siteData?.footerNavigation"
+			v-if="effectiveSiteData?.footerNavigation"
 			ref="footerRef"
-			:navigation="siteData.footerNavigation"
-			:globals="siteData.globals"
+			:navigation="effectiveSiteData.footerNavigation"
+			:globals="effectiveSiteData.globals"
+			:locale="effectiveSiteData.locale"
 		/>
 	</div>
 </template>

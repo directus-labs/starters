@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
 	components: [
-		{ path: '~/components', pathPrefix: false },
+		// Exclude UI components from auto-import - shadcn-nuxt handles their registration
+		{ path: '~/components', pathPrefix: false, ignore: ['**/ui/**'] },
 		{ path: '~/components/block', pathPrefix: false },
 		{ path: '~/components/shared', pathPrefix: false },
 		{ path: '~/components/base', pathPrefix: false },
@@ -8,9 +9,6 @@ export default defineNuxtConfig({
 	],
 
 	ssr: true,
-	future: {
-		compatibilityVersion: 4,
-	},
 	modules: [
 		'@nuxt/image',
 		'@nuxtjs/seo',
@@ -22,7 +20,7 @@ export default defineNuxtConfig({
 		'shadcn-nuxt',
 		'@nuxt/icon',
 		'@nuxtjs/color-mode',
-		'@nuxtjs/seo',
+		'@nuxt/eslint',
 	],
 
 	css: ['~/assets/css/tailwind.css'],
@@ -63,16 +61,8 @@ export default defineNuxtConfig({
 
 	// Image Configuration - https://image.nuxt.com/providers/directus
 	image: {
-		providers: {
-			directus: {
-				provider: 'directus',
-				options: {
-					baseURL: `${process.env.DIRECTUS_URL}/assets/`,
-				},
-			},
-			local: {
-				provider: 'ipx',
-			},
+		directus: {
+			baseURL: `${process.env.DIRECTUS_URL}/assets/`,
 		},
 	},
 

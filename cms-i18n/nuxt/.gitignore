@@ -4,3 +4,4 @@
 .cache/
 .output/
 dist/
+.pnpm-store

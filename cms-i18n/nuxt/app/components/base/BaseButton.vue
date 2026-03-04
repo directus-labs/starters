@@ -1,22 +1,27 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { NuxtLink } from '#components';
-import { buttonVariants } from '~/components/ui/button';
+import { buttonVariants, type ButtonVariants } from '~/components/ui/button';
 import { ArrowRight, Plus } from 'lucide-vue-next';
 import { cn } from '@@/shared/utils';
 import Button from '../ui/button/Button.vue';
+import { localizeLink } from '~/lib/i18n/utils';
+
+// Button variant type from the UI component
+type ButtonVariant = NonNullable<ButtonVariants['variant']>;
+type ButtonSize = NonNullable<ButtonVariants['size']>;
 
 export interface ButtonProps {
 	id: string;
 	label?: string | null;
-	variant?: string | null;
+	variant?: ButtonVariant | string | null;
 	url?: string | null;
 	type?: 'page' | 'post' | 'url' | 'submit' | null;
 	page?: { permalink: string | null };
 	post?: { slug: string | null };
-	size?: 'default' | 'sm' | 'lg' | 'icon';
+	size?: ButtonSize;
 	icon?: 'arrow' | 'plus';
-	customIcon?: any;
+	customIcon?: unknown;
 	iconPosition?: 'left' | 'right';
 	className?: string;
 	disabled?: boolean;
@@ -31,6 +36,13 @@ const props = withDefaults(defineProps<ButtonProps>(), {
 	block: false,
 });
 
+// Get locale from composable (handles SSR URL rewrite correctly)
+const { currentLocale } = useLocale();
+const locale = currentLocale.value;
+
+// Helper to localize internal paths using shared utility
+const localize = (path: string | null | undefined) => localizeLink(path, locale);
+
 const icons: Record<string, any> = {
 	arrow: ArrowRight,
 	plus: Plus,
@@ -39,14 +51,21 @@ const icons: Record<string, any> = {
 const Icon = computed(() => props.customIcon || (props.icon ? icons[props.icon] : null));
 
 const href = computed(() => {
-	if (props.type === 'page' && props.page?.permalink) return props.page.permalink;
-	if (props.type === 'post' && props.post?.slug) return `/blog/${props.post.slug}`;
-	return props.url || undefined;
+	if (props.type === 'page' && props.page?.permalink) return localize(props.page.permalink);
+	if (props.type === 'post' && props.post?.slug) return localize(`/blog/${props.post.slug}`);
+	if (props.url) return localize(props.url);
+	return undefined;
+});
+
+// Safe variant that falls back to 'default' if invalid
+const safeVariant = computed<ButtonVariant>(() => {
+	const validVariants: ButtonVariant[] = ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'];
+	return validVariants.includes(props.variant as ButtonVariant) ? (props.variant as ButtonVariant) : 'default';
 });
 
 const buttonClasses = computed(() =>
 	cn(
-		buttonVariants({ variant: props.variant as any, size: props.size }),
+		buttonVariants({ variant: safeVariant.value, size: props.size }),
 		props.className,
 		props.disabled && 'opacity-50 cursor-not-allowed',
 		props.block && 'w-full',
@@ -59,7 +78,7 @@ const linkComponent = computed(() => {
 </script>
 <template>
 	<Button
-		:variant="variant as any"
+		:variant="safeVariant"
 		:size="size"
 		:class="buttonClasses"
 		:disabled="disabled"
