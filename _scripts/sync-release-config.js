@@ -6,14 +6,14 @@
  *
  * Preserves existing versions in the manifest. New templates start at 0.0.0.
  *
- * Usage: node scripts/sync-release-config.js
+ * Usage: node _scripts/sync-release-config.js
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
 const ROOT = resolve(import.meta.dirname, '..')
-const SKIP_DIRS = ['_shared', 'node_modules', '.git', '.github', 'scripts']
+const SKIP_DIRS = ['_shared', '_scripts', 'node_modules', '.git', '.github']
 
 const CONFIG_PATH = join(ROOT, '.release-please-config.json')
 const MANIFEST_PATH = join(ROOT, '.release-please-manifest.json')

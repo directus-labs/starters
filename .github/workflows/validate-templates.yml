@@ -18,7 +18,7 @@ jobs:
           node-version: 20
 
       - name: Validate templates
-        run: node scripts/validate-templates.js
+        run: node _scripts/validate-templates.js
 
   build-frontends:
     name: Build ${{ matrix.template }}/${{ matrix.frontend }}
