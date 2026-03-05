@@ -1,0 +1,74 @@
+name: Validate Templates
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validate template structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate templates
+        run: node _scripts/validate-templates.js
+
+  build-frontends:
+    name: Build ${{ matrix.template }}/${{ matrix.frontend }}
+    runs-on: ubuntu-latest
+    needs: validate
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - template: cms
+            frontend: nextjs
+          - template: cms
+            frontend: nuxt
+          - template: cms
+            frontend: astro
+          - template: cms
+            frontend: sveltekit
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Check for changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            frontend:
+              - '${{ matrix.template }}/${{ matrix.frontend }}/**'
+
+      - name: Install dependencies
+        if: steps.changes.outputs.frontend == 'true'
+        working-directory: ${{ matrix.template }}/${{ matrix.frontend }}
+        run: pnpm install --frozen-lockfile
+
+      - name: Create .env from .env.example
+        if: steps.changes.outputs.frontend == 'true'
+        working-directory: ${{ matrix.template }}/${{ matrix.frontend }}
+        run: |
+          if [ -f .env.example ]; then
+            cp .env.example .env
+          fi
+
+      - name: Build
+        if: steps.changes.outputs.frontend == 'true'
+        working-directory: ${{ matrix.template }}/${{ matrix.frontend }}
+        run: pnpm build
