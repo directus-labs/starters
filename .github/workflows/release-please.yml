@@ -19,7 +19,7 @@ jobs:
           node-version: 20
 
       - name: Sync release config
-        run: node scripts/sync-release-config.js
+        run: node _scripts/sync-release-config.js
 
       - name: Commit config changes
         run: |

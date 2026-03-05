@@ -4,7 +4,7 @@
  * Validates all starter templates have the required structure and metadata
  * for compatibility with directus-template-cli.
  *
- * Usage: node scripts/validate-templates.js
+ * Usage: node _scripts/validate-templates.js
  */
 
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs'
@@ -12,7 +12,7 @@ import { join, resolve } from 'node:path'
 import { execSync } from 'node:child_process'
 
 const ROOT = resolve(import.meta.dirname, '..')
-const SKIP_DIRS = ['_shared', 'node_modules', '.git', '.github', 'scripts']
+const SKIP_DIRS = ['_shared', '_scripts', 'node_modules', '.git', '.github']
 
 let errors = []
 let warnings = []
