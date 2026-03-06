@@ -1,0 +1,150 @@
+[
+  {
+    "id": "636dc283-e634-4d5d-aada-e6743db46036",
+    "sort": 1,
+    "title": "Home",
+    "permalink": "/",
+    "status": "published",
+    "published_at": "2025-04-07T18:17:00.000Z",
+    "seo": {
+      "meta_description": "Directus is a great choice for your headless CMS. I'm also padding out the meta description here just to get a check on the SEO score.",
+      "title": "Build your next website faster with our CMS Template",
+      "no_index": false,
+      "no_follow": false,
+      "og_image": "ea743e20-e6e9-4be8-a949-3771cd182810.png"
+    },
+    "date_created": "2025-05-07T00:49:42.958Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "date_updated": "2025-12-23T22:43:19.748Z",
+    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "blocks": [
+      "2b757f25-9c2f-446c-980f-87fb138c6766",
+      "7e1ce212-3f8a-43b4-aff7-131bf4241e30",
+      "2d9abe8f-a7ad-480d-8fc7-603c712e2f40",
+      "529e6408-7372-4195-b82d-e444c06ac492",
+      "39d02b18-18d2-4c29-9268-038f72ea05fe"
+    ],
+    "translations": [
+      "e87cf572-70e1-4395-9d4e-eb64dd3bf7d6",
+      "4a70c316-537a-4769-b187-a41f01054b71",
+      "856c92bd-2119-458a-9534-bdf87ba2a3c6",
+      "116b73a1-04c4-4668-a539-b70600ffb4aa",
+      "d1fcb50f-f3b1-4942-abd8-5c9fb9832f91",
+      "f5808c71-fe23-4119-aafe-1bc92e9f8099",
+      "cd6bb63f-2da8-49fd-b6c7-2013287c213d"
+    ]
+  },
+  {
+    "id": "1ce02298-817a-46bc-ac92-6a6c10c20f88",
+    "sort": 2,
+    "title": "Blog",
+    "permalink": "/blog",
+    "status": "published",
+    "published_at": "2024-09-01T16:00:00.000Z",
+    "seo": {
+      "title": "Learn from our team | Blog",
+      "meta_description": "All the tips and advice we've learned about working with headless CMS over the years."
+    },
+    "date_created": "2025-05-07T00:49:42.958Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "date_updated": "2025-12-22T19:53:40.158Z",
+    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "blocks": [
+      "45227f61-5ff1-431c-8dee-1a50d369325f",
+      "2b017efb-ce7c-4b90-9f59-a39236ffe571"
+    ],
+    "translations": [
+      "dc96bd16-269a-4616-9361-87a3f488b669",
+      "01055f2f-3357-432d-8b9f-3da331e264a7",
+      "396215bb-7d3c-4364-864b-3ea8d2130bae",
+      "59c59698-ea5e-441b-8d74-d91468239204",
+      "fbba3be7-a9f2-44b4-94ff-25061a174c10",
+      "f25afc8b-bbef-41a8-97e7-baceef004718",
+      "72142c38-f8d5-45f2-8569-5483c8306a46"
+    ]
+  },
+  {
+    "id": "9821199f-4b05-49fb-8407-fbfe9b866ef0",
+    "sort": 3,
+    "title": "Contact",
+    "permalink": "/contact",
+    "status": "published",
+    "published_at": "2024-07-01T16:00:00.000Z",
+    "seo": {
+      "no_index": false,
+      "title": "Contact Us | Reach out to our team if you need help"
+    },
+    "date_created": "2025-05-07T00:49:42.958Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "date_updated": "2025-12-22T19:53:40.170Z",
+    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "blocks": [
+      "1f774f44-3e33-4b0f-93f4-fdd6df898438"
+    ],
+    "translations": [
+      "63818efd-5e5b-4d40-8e1d-ac2c87b2def0",
+      "643f4cbf-4660-4181-87cb-5d4e756ceba5",
+      "8f4f5bb7-955a-4651-a074-1da511f5ec42",
+      "62bd0f89-ffa7-4cd5-9d0d-4b67edf052c6",
+      "0ea063ad-8b6f-4610-b23f-a3ddc5748729",
+      "e9777ce4-3da9-48bb-a2aa-112d6accb4dc",
+      "2245012b-de43-4dba-803d-18d8d6726874"
+    ]
+  },
+  {
+    "id": "2a62887e-2384-4bd2-a919-7665d85fed07",
+    "sort": 4,
+    "title": "About Us",
+    "permalink": "/about-us",
+    "status": "published",
+    "published_at": "2024-12-01T17:00:00.000Z",
+    "seo": {
+      "title": "About Us",
+      "no_index": true
+    },
+    "date_created": "2025-05-07T00:49:42.958Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "date_updated": "2025-12-22T19:53:40.181Z",
+    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "blocks": [
+      "0ff1d6c4-ff77-46c6-ad02-f9ae31484505"
+    ],
+    "translations": [
+      "007e4078-cfd5-4b6c-8e63-b3d0abda1df8",
+      "f91650dd-66d2-42b5-9d7d-bb7b875b5c93",
+      "c874cbe8-1c24-4a2f-a2ec-ed8b64fd593f",
+      "4a70ea8d-63a6-435c-b078-19ce5b3a538f",
+      "b5c63f85-bd93-4837-931d-da4decc4ceeb",
+      "54366690-0f6c-493b-a6e8-f25a1fc028c3",
+      "587e7917-744f-4680-9463-1f8f2f812ae4"
+    ]
+  },
+  {
+    "id": "93023385-f574-4040-9ead-42b717db2015",
+    "sort": 5,
+    "title": "Privacy Policy",
+    "permalink": "/privacy-policy",
+    "status": "published",
+    "published_at": "2024-05-01T16:00:00.000Z",
+    "seo": {
+      "title": "Privacy Policy for Simple Website CMS template",
+      "meta_description": "Here's all the fine print for our website. You can read it all. There's nothing secret. It's just words to fill up the page. You'll want to change them later."
+    },
+    "date_created": "2025-05-07T00:49:42.958Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "date_updated": "2025-12-22T19:53:40.191Z",
+    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "blocks": [
+      "bc826e30-4988-4035-98bd-5ffc4799e5fc"
+    ],
+    "translations": [
+      "81669775-5271-435d-a30e-fde511e902fb",
+      "2d135ba1-1b54-44bd-af92-2924ba3986d5",
+      "58f5dce4-9219-4a3b-a426-69c5610dd968",
+      "730226b2-2826-4d69-9ca9-c5e10ea4b8fe",
+      "e6c4b684-31dd-41b3-8bb8-e51daa9ede6a",
+      "6d9c6373-e860-4cf8-af2b-93b492fa149a",
+      "99c3b50e-0f40-4713-9465-d84b2d9fcc24"
+    ]
+  }
+]
