@@ -44,7 +44,7 @@
 		plus: Plus
 	};
 
-	const Icon = $state(customIcon || (icon ? icons[icon] : null));
+	const Icon = $derived(customIcon || (icon ? icons[icon] : null));
 
 	const href = $derived.by(() => {
 		if (type === 'page' && page?.permalink) return page.permalink;
@@ -60,6 +60,12 @@
 			block && 'w-full'
 		)
 	);
+
+	const isRelativeUrl = $derived(href && href.startsWith('/') ? true : false);
+	const includeTargetEqualsBlank = $derived(isRelativeUrl ? undefined : '_blank');
+	const includeRelAttribute = $derived(isRelativeUrl ? undefined : 'noopener noreferrer');
+
+	const buttonType = $derived(type === 'submit' ? 'submit' : null);
 </script>
 
 {#snippet content()}
@@ -78,19 +84,16 @@
 	</span>
 {/snippet}
 
-{#if href}
-	<!-- TODO CHECK IF ASCHILD WORKS -->
-	<ShadcnButton variant={variant as any} {size} class={buttonClasses} {disabled} onclick={onClick}>
-		{#if href.startsWith('/')}
-			<a {href}>{@render content()}</a>
-		{:else}
-			<a {href} target="_blank" rel="noopener noreferrer">
-				{@render content()}
-			</a>
-		{/if}
-	</ShadcnButton>
-{:else}
-	<ShadcnButton type="submit" variant={variant as any} {size} class={buttonClasses} {disabled}>
-		{@render content()}
-	</ShadcnButton>
-{/if}
+<ShadcnButton
+	variant={variant as any}
+	{size}
+	class={buttonClasses}
+	{disabled}
+	onclick={onClick}
+	{href}
+	type={buttonType}
+	target={includeTargetEqualsBlank}
+	rel={includeRelAttribute}
+>
+	{@render content()}
+</ShadcnButton>

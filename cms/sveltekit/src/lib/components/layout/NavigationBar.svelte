@@ -66,25 +66,28 @@
 						<NavigationMenu.Item>
 							{#if item.children.length === 0}
 								<!-- Buttons -->
-								<NavigationMenu.Link href={item.page.permalink}>{item.title}</NavigationMenu.Link>
+								<NavigationMenu.Link>
+									{#snippet child()}
+										<a href={item.page.permalink}>{item.title}</a>
+									{/snippet}
+								</NavigationMenu.Link>
 							{:else}
 								<!-- Dropdown -->
-								<NavigationMenu.Trigger class="focus:outline-none">
-									<span class="font-heading text-nav">
-										{item.title}
-									</span>
+								<NavigationMenu.Trigger
+									class="font-heading text-nav! hover:bg-background hover:text-accent focus:outline-none"
+								>
+									{item.title}
 								</NavigationMenu.Trigger>
 								<NavigationMenu.Content
 									class="bg-background absolute mt-2 min-w-[150px] rounded-md p-4 shadow-md"
 								>
 									<ul class="grid w-[150px] gap-2">
-										{#each item.children as child (child.id)}
+										{#each item.children as childItem (childItem.id)}
 											<li>
-												<NavigationMenu.Link
-													class="font-heading text-nav"
-													href={child.page.permalink}
-												>
-													{child.title}
+												<NavigationMenu.Link>
+													{#snippet child()}
+														<a href={childItem.page.permalink}>{childItem.title}</a>
+													{/snippet}
 												</NavigationMenu.Link>
 											</li>
 										{/each}

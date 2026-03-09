@@ -10,7 +10,7 @@
 
 	const { name, options, placeholder, form }: SelectFieldProps = $props();
 
-	let { form: formData } = form;
+	const formData = $derived(form.form);
 
 	let activeLabel = $derived(
 		options.find((option) => option.value === $formData[name])?.text ||
