@@ -103,9 +103,10 @@ export default function PageClient({ initialSections, permalink, pageId }: PageC
             transform: none;
             background: transparent;
           }
-          /* Hide the rectangle around the "Edit All Blocks" button */
+          /* Hide the rectangle but keep the overlay above the button so it can receive clicks */
           .directus-visual-editing-overlay.visual-editing-button-class {
-            display: none !important;
+            opacity: 0 !important;
+            z-index: 70 !important;
           }
           /* Ensure Visual Editor rectangles appear below header and buttons */
           .directus-visual-editing-overlay {

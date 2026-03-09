@@ -1,0 +1,43 @@
+[
+  {
+    "id": "48cf2543-15e0-454f-9b31-cbf3c2406712",
+    "headline": "Plans to fit every budget",
+    "tagline": "Pricing",
+    "date_created": "2025-12-22T19:48:15.722Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "date_updated": "2025-12-23T22:37:53.955Z",
+    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "pricing_cards": [
+      "388404db-1703-4b10-b12b-e5d4385f1530",
+      "83972d2a-742e-4a6c-8698-563d01dde54d"
+    ],
+    "translations": [
+      "f14fa5b8-1bb5-45cf-bec0-397028ddfae0",
+      "4168586d-406b-41e2-9345-4264980f13f2",
+      "77c87196-dd67-4f1f-93cd-f8b144d140a8",
+      "d9ca3dce-ed88-4932-a425-fe649412cc68",
+      "0e7632aa-7078-42b5-b5f2-cec65b4b6de3",
+      "547a5bad-29f6-40e3-8355-0caf479d7b20",
+      "ae4d1d07-a683-4717-a801-9f97b10a811e"
+    ]
+  },
+  {
+    "id": "a15ef6f7-4f44-4705-820e-5fc76e9489f1",
+    "headline": null,
+    "tagline": null,
+    "date_created": "2025-12-22T19:48:15.727Z",
+    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "date_updated": null,
+    "user_updated": null,
+    "pricing_cards": [],
+    "translations": [
+      "33db6874-b3cf-43f3-91b7-9781bc19ae8b",
+      "d0c17221-c4d3-4de1-b362-8ec70d903933",
+      "562c6b5c-f1f1-447a-9a59-e6dbdae2718b",
+      "b9dc23fd-836e-4fd1-a87e-e9d3d81983f5",
+      "f0e5cb02-0ece-453b-bde6-79e298722900",
+      "e60d1872-fb02-4445-bf84-b585c45a7cc4",
+      "026930fe-6962-406b-bfaf-5c576e2af058"
+    ]
+  }
+]

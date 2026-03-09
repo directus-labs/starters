@@ -15,8 +15,8 @@ importers:
         specifier: 20.0.3
         version: 20.0.3
       '@directus/visual-editing':
-        specifier: 1.1.0
-        version: 1.1.0
+        specifier: 2.0.0
+        version: 2.0.0
       '@hookform/resolvers':
         specifier: 5.0.1
         version: 5.0.1(react-hook-form@7.55.0(react@19.2.3))
@@ -312,9 +312,9 @@ packages:
     resolution: {integrity: sha512-PFTYx8QxYi36L9zjOVldwZ88Iln9pBGtEamEjLGFuYqy1jk5jKJ7qA7827KfeZJkz3EtNNZM6J605I7s/ayD2g==}
     engines: {node: '>=22'}
 
-  '@directus/visual-editing@1.1.0':
-    resolution: {integrity: sha512-nEkPnkdB3WXUODlgdd5cyCw9BT2JrL9xHBLYAhz940b/MJ25mZ9NZJ9xdnPAGh0WaRetEMcAcXy7e6t28x/4EQ==}
-    engines: {node: '>=22'}
+  '@directus/visual-editing@2.0.0':
+    resolution: {integrity: sha512-cPcMEPiFVdVO6KeC3OcuZPRoiYHxeATBJSflbewhcwGuG0Qze6ybKL+WWtCgV+mS4DCFbPd/7+ctQPu/JL60RQ==}
+    engines: {node: '>=22.12.0'}
 
   '@discoveryjs/json-ext@0.5.7':
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
@@ -3634,7 +3634,7 @@ snapshots:
 
   '@directus/sdk@20.0.3': {}
 
-  '@directus/visual-editing@1.1.0':
+  '@directus/visual-editing@2.0.0':
     dependencies:
       '@reach/observe-rect': 1.2.0
 
