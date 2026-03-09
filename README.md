@@ -194,3 +194,35 @@ If you encounter CSP errors when using the Visual Editor preview, this is typica
 **For complete documentation on configuring CSP for the Visual Editor, see the [official Directus documentation](https://directus.io/docs/guides/content/visual-editor/frontend-library).**
 
 ---
+
+## Contributing
+
+### Commit Conventions
+
+This repo uses [Conventional Commits](https://www.conventionalcommits.org/) and [Release Please](https://github.com/googleapis/release-please) to automate changelogs and versioning per template.
+
+**Use the template name as the commit scope** so Release Please attributes changes correctly:
+
+```
+feat(cms): add new hero block
+fix(blank): correct docker-compose volume path
+chore(cms): update dependencies
+```
+
+Without a scope, changes are attributed to all templates.
+
+### Repo Structure
+
+```
+├── cms/                  # CMS starter template
+├── blank/                # Blank starter template
+├── _shared/              # Shared files (docker-compose, .env.example)
+├── _scripts/             # Internal build/validation scripts
+└── .github/              # CI workflows
+```
+
+Directories prefixed with `_` or `.` are internal and excluded from the template CLI.
+
+### Validation
+
+Run `node _scripts/validate-templates.js` to check all templates have the required structure and metadata.

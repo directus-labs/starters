@@ -1,0 +1,9 @@
+{
+  "name": "directus-starters",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node _scripts/validate-templates.js",
+    "sync-release-config": "node _scripts/sync-release-config.js"
+  }
+}

@@ -9,15 +9,27 @@ import {
 	uploadFiles,
 	withToken
 } from '@directus/sdk';
-import type { RestClient } from '@directus/sdk';
 import Queue from 'p-queue';
 import type { Schema } from '../types/directus-schema';
 import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
+import { getRequestEvent } from '$app/server';
+import { browser } from '$app/environment';
+
+const getFetchFn = () => {
+	try {
+		if (!browser) return getRequestEvent().fetch;
+		return globalThis.fetch;
+	} catch {
+		return globalThis.fetch;
+	}
+};
 
 // Helper for retrying fetch requests
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-const fetchRetry = async (fetch: Function, count: number, ...args: any[]) => {
-	const response = await fetch(...args);
+const fetchRetry = async (count: number, ...args: any[]) => {
+
+	const fetch = getFetchFn();
+	const response = await fetch(...args as Parameters<typeof fetch>);
 
 	if (count > 2 || response.status !== 429) return response;
 
@@ -25,7 +37,7 @@ const fetchRetry = async (fetch: Function, count: number, ...args: any[]) => {
 
 	await sleep(500);
 
-	return fetchRetry(fetch, count + 1, ...args);
+	return fetchRetry(count + 1, ...args);
 };
 
 // Queue for rate-limited requests
@@ -33,11 +45,12 @@ const queue = new Queue({ intervalCap: 10, interval: 500, carryoverConcurrencyCo
 
 const directusUrl = PUBLIC_DIRECTUS_URL;
 
-const getDirectus = (fetch: Function) => {
+const getDirectus = () => {
+
 
 	const directus = createDirectus<Schema>(directusUrl, {
 		globals: {
-			fetch: (...args) => queue.add(() => fetchRetry(fetch, 0, ...args))
+			fetch: (...args) => queue.add(() => fetchRetry(0, ...args))
 		}
 	}).with(rest());
 
@@ -46,7 +59,7 @@ const getDirectus = (fetch: Function) => {
 
 export const useDirectus = () => ({
 	// directus: directus as RestClient<Schema>,
-	getDirectus: getDirectus as (fetch: Function) => RestClient<Schema>,
+	getDirectus: getDirectus,
 	readItems,
 	readItem,
 	readSingleton,
