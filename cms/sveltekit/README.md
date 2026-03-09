@@ -69,17 +69,7 @@ For instructions on setting up Directus, choose one of the following:
 
 You can instantly deploy this template using Vercel:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,PUBLIC_DIRECTUS_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
-
-> **Note:**  
-> SvelteKit requires a few extra environment variables at deploy time:
->
-> - `PUBLIC_DIRECTUS_FORM_TOKEN`
-> - `DRAFT_MODE_SECRET`
->
-> When getting started, you can use the same static token for  
-> `PUBLIC_DIRECTUS_FORM_TOKEN`, `DRAFT_MODE_SECRET`, and `PUBLIC_DIRECTUS_TOKEN`.  
-> For better security, **configure separate tokens with only the required permissions** for each variable after setup.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,DIRECTUS_FORM_TOKEN,DRAFT_MODE_SECRET,PUBLIC_ENABLE_VISUAL_EDITING)
 
 ---
 
@@ -109,12 +99,10 @@ To get started, you need to configure environment variables. Follow these steps:
 
 2. **Update the following variables in your `.env` file:**
    - **`PUBLIC_DIRECTUS_URL`**: URL of your Directus instance.
-   - **`PUBLIC_DIRECTUS_TOKEN`**: Public token for accessing public resources in Directus. Use the token from the
-     **Webmaster** account.
-   - **`PUBLIC_DIRECTUS_FORM_TOKEN`**: Token from the **Frontend Bot User** account in Directus for handling form submissions.
    - **`PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
-   - **`DRAFT_MODE_SECRET`**: The secret you generate for live preview. This is used to view draft posts in directus and
-     live edits.
+   - **`DIRECTUS_FORM_TOKEN`**: Token from the **Frontend Bot User** account in Directus for handling form submissions.
+   - **`DRAFT_MODE_SECRET`**: The secret you generate for live preview. This is used to view draft posts in Directus and live edits.
+   - **`PUBLIC_ENABLE_VISUAL_EDITING`**: Enable or disable visual editing in Directus.
 
 ## **Running the Application**
 
@@ -157,7 +145,7 @@ for your Directus schema.
    ```
 3. When prompted, enter your Directus admin token (with permissions to read system collections like `directus_fields`), or set it ahead of time via the `DIRECTUS_ADMIN_TOKEN` environment variable for non-interactive runs (e.g., CI).
 
-> **Note:** The type generation requires an admin token with permissions to read system collections like `directus_fields`. The public token (`DIRECTUS_PUBLIC_TOKEN`) does not have sufficient permissions for this operation. You can either provide the admin token interactively when prompted, or set it via the `DIRECTUS_ADMIN_TOKEN` environment variable (e.g., `DIRECTUS_ADMIN_TOKEN=your_token pnpm run generate:types`) to run without a TTY.
+> **Note:** The type generation requires an admin token with permissions to read system collections like `directus_fields`. You can either provide the admin token interactively when prompted, or set it via the `DIRECTUS_ADMIN_TOKEN` environment variable (e.g., `DIRECTUS_ADMIN_TOKEN=your_token pnpm run generate:types`) to run without a TTY.
 
 ## Folder Structure
 

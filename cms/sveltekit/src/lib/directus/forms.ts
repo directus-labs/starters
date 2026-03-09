@@ -1,5 +1,5 @@
 import { useDirectus } from './directus';
-import { PUBLIC_DIRECTUS_FORM_TOKEN } from '$env/static/public';
+import { DIRECTUS_FORM_TOKEN } from '$env/static/private';
 interface SubmissionValue {
 	field: string;
 	value?: string;
@@ -12,7 +12,7 @@ export const submitForm = async (
 	data: Record<string, any>
 ) => {
 	const { getDirectus, uploadFiles, createItem, withToken } = useDirectus();
-	const TOKEN = PUBLIC_DIRECTUS_FORM_TOKEN;
+	const TOKEN = DIRECTUS_FORM_TOKEN;
 	const directus = getDirectus();
 
 	if (!TOKEN) {
