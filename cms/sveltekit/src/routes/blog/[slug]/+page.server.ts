@@ -25,7 +25,7 @@ export const load = (async (event) => {
 	try {
 		let postId = id;
 		if (version && !postId) {
-			const foundPostId = await getPostIdBySlug(slug, token || undefined, event.fetch);
+			const foundPostId = await getPostIdBySlug(slug, token || undefined);
 			if (!foundPostId) {
 				error(404, {
 					message: 'Post Not found'
@@ -41,13 +41,11 @@ export const load = (async (event) => {
 				version,
 				slug,
 				token || undefined,
-				event.fetch
 			);
 		} else {
 			result = await fetchPostBySlug(
 				slug,
 				{ draft: isDraft, token: token || undefined },
-				event.fetch
 			);
 		}
 
