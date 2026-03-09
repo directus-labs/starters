@@ -47,11 +47,13 @@ export default defineEventHandler(async (event) => {
 	}
 
 	const query = getQuery(event);
-	const { preview, token: rawToken, id, version } = query;
+	const { preview, id } = query;
+	// Handle Live Preview adding version=main which is not required when fetching the main version.
+	const version = String(query.version) !== 'main' ? query.version : undefined;
 
-	// Security: Only accept tokens when preview mode is explicitly enabled
-	// This prevents unauthorized access to draft content
-	const token = preview === 'true' && rawToken ? String(rawToken) : null;
+	// Use the server token from runtimeConfig when preview mode is enabled
+	const config = useRuntimeConfig();
+	const token = preview === 'true' ? (config.directusServerToken as string) || null : null;
 
 	try {
 		let post: Post;

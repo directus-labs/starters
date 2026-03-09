@@ -2,7 +2,7 @@
 import type { Post, DirectusUser } from '#shared/types/schema';
 
 const route = useRoute();
-const { enabled, state } = useLivePreview();
+const { enabled } = useLivePreview();
 const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
 const postUrl = useRequestURL();
 
@@ -15,7 +15,7 @@ const {
 } = useRuntimeConfig();
 
 // Handle Live Preview adding version=main which is not required when fetching the main version.
-const version = route.query.version === 'main' ? undefined : (route.query.version as string);
+const version = route.query.version !== 'main' ? (route.query.version as string) : undefined;
 
 const { data, error, refresh } = await useFetch<{
 	post: Post;
@@ -24,7 +24,6 @@ const { data, error, refresh } = await useFetch<{
 	key: `posts-${slug}`,
 	query: {
 		preview: enabled.value ? true : undefined,
-		token: enabled.value ? state.token : undefined,
 		id: route.query.id as string,
 		version,
 	},

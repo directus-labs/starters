@@ -28,7 +28,7 @@
     "@radix-ui/react-separator": "1.1.2",
     "@radix-ui/react-slot": "1.1.2",
     "@radix-ui/react-tooltip": "1.1.8",
-    "astro": "5.6.1",
+    "astro": "5.18.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "cmdk": "1.1.1",
@@ -41,7 +41,7 @@
     "sharp": "0.34.3",
     "swr": "2.3.3",
     "tailwind-merge": "3.2.0",
-    "zod": "3.25.0"
+    "zod": "3.24.2"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -64,7 +64,9 @@
   },
   "pnpm": {
     "overrides": {
-      "tar": "^7.5.4"
+      "tar": "^7.5.4",
+      "zod": "3.24.2",
+      "zod-to-json-schema": "3.24.6"
     }
   },
   "overrides": {
