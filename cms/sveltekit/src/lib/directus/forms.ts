@@ -13,7 +13,7 @@ export const submitForm = async (
 ) => {
 	const { getDirectus, uploadFiles, createItem, withToken } = useDirectus();
 	const TOKEN = PUBLIC_DIRECTUS_FORM_TOKEN;
-	const directus = getDirectus(fetch);
+	const directus = getDirectus();
 
 	if (!TOKEN) {
 		throw new Error('DIRECTUS_FORM_TOKEN is not defined. Check your .env file.');
