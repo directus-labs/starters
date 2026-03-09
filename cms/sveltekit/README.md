@@ -69,7 +69,7 @@ For instructions on setting up Directus, choose one of the following:
 
 You can instantly deploy this template using Vercel:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,PUBLIC_DIRECTUS_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
 
 > **Note:**  
 > SvelteKit requires a few extra environment variables at deploy time:
@@ -78,7 +78,7 @@ You can instantly deploy this template using Vercel:
 > - `DRAFT_MODE_SECRET`
 >
 > When getting started, you can use the same static token for  
-> `PUBLIC_DIRECTUS_FORM_TOKEN`, `DRAFT_MODE_SECRET`, and `PUBLIC_DIRECTUS_TOKEN`.  
+> `PUBLIC_DIRECTUS_FORM_TOKEN`, `DRAFT_MODE_SECRET`, and `DIRECTUS_SERVER_TOKEN`.  
 > For better security, **configure separate tokens with only the required permissions** for each variable after setup.
 
 ---
@@ -109,7 +109,7 @@ To get started, you need to configure environment variables. Follow these steps:
 
 2. **Update the following variables in your `.env` file:**
    - **`PUBLIC_DIRECTUS_URL`**: URL of your Directus instance.
-   - **`PUBLIC_DIRECTUS_TOKEN`**: Public token for accessing public resources in Directus. Use the token from the
+   - **`DIRECTUS_SERVER_TOKEN`**: Server token for accessing secure resources in Directus. Use the token from the
      **Webmaster** account.
    - **`PUBLIC_DIRECTUS_FORM_TOKEN`**: Token from the **Frontend Bot User** account in Directus for handling form submissions.
    - **`PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
