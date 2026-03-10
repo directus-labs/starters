@@ -172,19 +172,24 @@ export default defineEventHandler(async (event) => {
 			// This is used when we have both a pageId and want a specific version (draft, published, etc.)
 			try {
 				page = (await directusServer.request(
-					withToken(
-						token as string,
-						readItem('pages', pageId, {
-							version: String(version),
-							fields: pageFields as any,
-							// Deep query options for complex nested data:
-							// - Sort blocks by their sort order
-							// - Filter out hidden blocks
-							deep: {
-								blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
-							},
-						}),
-					),
+					token && token.trim()
+						? withToken(
+								token,
+								readItem('pages', pageId, {
+									version: String(version),
+									fields: pageFields as any,
+									deep: {
+										blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+									},
+								}),
+							)
+						: readItem('pages', pageId, {
+								version: String(version),
+								fields: pageFields as any,
+								deep: {
+									blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+								},
+							}),
 				)) as unknown as Page;
 			} catch (versionError) {
 				// If version fetch fails, throw error
@@ -193,25 +198,35 @@ export default defineEventHandler(async (event) => {
 		} else {
 			// Standard request: Use readItems with permalink filtering
 			// Filter logic:
-			// - If token exists: fetch any status (for preview mode)
-			// - If no token: only fetch published content (for public viewing)
+			// - If preview mode: fetch any status (to show draft content)
+			// - If not preview: only fetch published content (for public viewing)
 			const pageData = await directusServer.request(
-				withToken(
-					token as string,
-					readItems('pages', {
-						filter: token
-							? { permalink: { _eq: permalink } }
-							: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
-						limit: 1,
-						fields: pageFields as any,
-						// Deep query options for complex nested data:
-						// - Sort blocks by their sort order
-						// - Filter out hidden blocks
-						deep: {
-							blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
-						},
-					}),
-				),
+				token && token.trim()
+					? withToken(
+							token,
+							readItems('pages', {
+								filter:
+									preview === 'true'
+										? { permalink: { _eq: permalink } }
+										: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+								limit: 1,
+								fields: pageFields as any,
+								deep: {
+									blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+								},
+							}),
+						)
+					: readItems('pages', {
+							filter:
+								preview === 'true'
+									? { permalink: { _eq: permalink } }
+									: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+							limit: 1,
+							fields: pageFields as any,
+							deep: {
+								blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+							},
+						}),
 			);
 
 			if (!pageData.length) {

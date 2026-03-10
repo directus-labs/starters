@@ -1,11 +1,9 @@
 export function useLivePreview() {
 	return usePreviewMode({
-		// Enable preview mode when:
-		// 1. Both preview and token params exist in URL, OR
-		// 2. Version + token params exist (for versioning)
+		// Enable preview mode when the preview param exists in the URL
 		shouldEnable: () => {
 			const route = useRoute();
-			return !!route.query.preview && !!route.query.token;
+			return !!route.query.preview;
 		},
 
 		// Store the token from the URL for use in API calls

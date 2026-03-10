@@ -13,7 +13,7 @@ export default async function BlogPostPage({
 }) {
 	const { slug } = await params;
 	const { id, version, preview, token } = await searchParams;
-	const isDraft = (preview === 'true' && !!token) || (!!version && version !== 'published') || !!token;
+	const isDraft = preview === 'true' || (!!version && version !== 'published');
 	const locale = await getLocaleFromHeaders();
 
 	// Live preview adds version = main which is not required when fetching the main version.

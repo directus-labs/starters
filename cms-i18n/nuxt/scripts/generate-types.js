@@ -12,10 +12,10 @@ const projectRoot = resolve(__dirname, '../../'); // Go up two levels to project
 
 async function generateTypes() {
 	const directusUrl = process.env.DIRECTUS_URL;
-	const directusToken = process.env.DIRECTUS_SERVER_TOKEN;
+	const directusToken = process.env.DIRECTUS_ADMIN_TOKEN;
 
 	if (!directusUrl || !directusToken) {
-		console.error('Error: DIRECTUS_URL or DIRECTUS_SERVER_TOKEN is missing in the .env file.');
+		console.error('Error: DIRECTUS_URL or DIRECTUS_ADMIN_TOKEN is missing in the .env file.');
 		process.exit(1);
 	}
 
