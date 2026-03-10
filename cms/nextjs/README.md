@@ -23,14 +23,6 @@ CMS-powered web applications.
 
 ---
 
-## **Why pnpm?**
-
-This project uses `pnpm` for managing dependencies due to its speed and efficiency. If you’re familiar with `npm`,
-you’ll find `pnpm` very similar in usage. You can still use `npm` if you prefer by replacing `pnpm` commands with their
-`npm` equivalents.
-
----
-
 ## **Draft Mode in Directus and Live Preview**
 
 ### **Draft Mode Overview**

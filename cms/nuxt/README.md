@@ -23,14 +23,6 @@ point for building CMS-powered web applications.
 
 ---
 
-## **Why pnpm?**
-
-This project uses `pnpm` for managing dependencies due to its speed and efficiency. If you’re familiar with `npm`,
-you’ll find `pnpm` very similar in usage. You can still use `npm` if you prefer by replacing `pnpm` commands with their
-`npm` equivalents.
-
----
-
 ## **Draft Mode in Directus and Live Preview**
 
 ### **Draft Mode Overview**
@@ -46,28 +38,6 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 - **For Local Development**: If using local Docker, the CSP configuration is provided in `.env.example`. See [`../../directus/README.md`](../../directus/README.md#content-security-policy-csp-and-preview-issues) for details.
 - **For Directus Cloud**: Directus Cloud requires HTTPS for previews. You'll need to use HTTPS tunneling (ngrok, localtunnel, etc.) or configure CSP in your Directus Cloud settings. See the [main README troubleshooting section](../../README.md#preview-not-working---content-security-policy-csp-issues) for details.
 
-### **Admin Bar**
-
-Allows authenticated users to easily navigate to their **Directus instance** to edit or create pages and posts directly
-from the frontend.
-
-#### How It Works
-
-By appending `?preview=true` to the URL, users enter **Admin Mode**, which:
-
-- Displays an admin bar at the top of the page.
-- Allows easy navigation to **edit** or **create** new posts/pages in Directus.
-- Requires authentication to access edit and new content buttons.
-
-#### Usage
-
-To enable the **Admin Bar**, simply append `?preview=true` to any URL:
-
-```plaintext
-https://yourwebsite.com/blog/some-post?preview=true
-```
-
----
 
 ## **Getting Started**
 
@@ -168,7 +138,7 @@ app/                          # Main Nuxt application folder
 │   ├── block/                # CMS-driven blocks like Hero, Gallery, etc.
 │   ├── forms/                # Form components and field inputs
 │   │   ├── fields/
-│   ├── shared/               # Shared utilities like AdminBar, DirectusImage
+│   ├── shared/               # Shared utilities like DirectusImage
 │   ├── ui/                   # Shadcn UI components
 │   ├── Footer.vue
 │   ├── NavigationBar.vue
