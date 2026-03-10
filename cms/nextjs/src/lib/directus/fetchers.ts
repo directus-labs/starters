@@ -401,8 +401,9 @@ export const fetchPostBySlug = async (
 	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	try {
-		const filter: QueryFilter<Schema, Post> =
-			draft || token ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } };
+		const filter: QueryFilter<Schema, Post> = draft
+			? { slug: { _eq: slug } }
+			: { slug: { _eq: slug }, status: { _eq: 'published' } };
 
 		const [posts, relatedPosts] = await Promise.all([
 			directus.request<Post[]>(

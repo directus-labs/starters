@@ -456,8 +456,9 @@ export async function fetchPostBySlug(
 	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	// First, try to find post by main slug (works for default locale and when slug is same across languages)
-	const baseFilter: QueryFilter<Schema, Post> =
-		draft || token ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } };
+	const baseFilter: QueryFilter<Schema, Post> = draft
+		? { slug: { _eq: slug } }
+		: { slug: { _eq: slug }, status: { _eq: 'published' } };
 
 	const postFields = [
 		'id',
