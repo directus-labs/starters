@@ -10,6 +10,11 @@
       "release-type": "node",
       "component": "cms",
       "changelog-path": "CHANGELOG.md"
+    },
+    "cms-i18n": {
+      "release-type": "node",
+      "component": "cms-i18n",
+      "changelog-path": "CHANGELOG.md"
     }
   }
 }
