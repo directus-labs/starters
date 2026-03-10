@@ -5,7 +5,6 @@ interface ImportMetaEnv {
   readonly PUBLIC_SITE_URL: string;
   readonly PUBLIC_ENABLE_VISUAL_EDITING: string;
   readonly DIRECTUS_SERVER_TOKEN: string;
-  readonly DIRECTUS_FORM_TOKEN: string;
 }
 
 interface ImportMeta {
