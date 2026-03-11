@@ -4,15 +4,15 @@ import type { Post, DirectusUser } from '#shared/types/schema';
 const route = useRoute();
 const { enabled } = useLivePreview();
 const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
-const postUrl = useRequestURL();
+const {
+	public: { siteUrl },
+} = useRuntimeConfig();
 
 const slug = route.params.slug as string;
+const baseUrl = siteUrl || useRequestURL().origin;
+const postUrl = `${baseUrl}/blog/${slug}`;
 
 const wrapperRef = ref<HTMLElement | null>(null);
-
-const {
-	public: { directusUrl },
-} = useRuntimeConfig();
 
 // Handle Live Preview adding version=main which is not required when fetching the main version.
 const version = route.query.version !== 'main' ? (route.query.version as string) : undefined;
@@ -49,7 +49,7 @@ useSeoMeta({
 	description: post.value?.seo?.meta_description || post.value?.description,
 	ogTitle: post.value?.seo?.title || post.value?.title,
 	ogDescription: post.value?.seo?.meta_description || post.value?.description,
-	ogUrl: postUrl.toString(),
+	ogUrl: postUrl,
 });
 </script>
 <template>
@@ -122,7 +122,7 @@ useSeoMeta({
 					</p>
 
 					<div class="flex justify-start">
-						<ShareDialog :post-url="postUrl.toString()" :post-title="post.title" />
+						<ShareDialog :post-url="postUrl" :post-title="post.title" />
 					</div>
 					<div>
 						<Separator class="h-[1px] bg-gray-300 my-4" />
