@@ -41,11 +41,9 @@
 		return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
 	});
 
-	const containerStyles = $derived(() => {
-		pricing_cards.length === 1 || pricing_cards.length === 2
-			? 'mx-auto max-w-screen-md'
-			: 'max-w-full';
-	});
+	const containerStyles = $derived(
+		pricing_cards.length <= 2 ? 'mx-auto max-w-screen-md' : 'max-w-full'
+	);
 </script>
 
 {#if pricing_cards || Array.isArray(pricing_cards)}

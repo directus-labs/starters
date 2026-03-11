@@ -1,14 +1,11 @@
 <script lang="ts">
-	import { dev } from '$app/environment';
 	import setAttr from '$lib/directus/visualEditing';
 	import type { FormField as FormFieldType } from '$lib/types/directus-schema';
 	import { buildZodSchema } from '$lib/zodSchemaBuilder';
 	import Button from '../blocks/Button.svelte';
 	import Field from './FormField.svelte';
-	import { superForm, superValidate } from 'sveltekit-superforms';
-	import SuperDebug from 'sveltekit-superforms';
-
-	import { zodClient, zod } from 'sveltekit-superforms/adapters';
+	import { superForm } from 'sveltekit-superforms';
+	import { zodClient } from 'sveltekit-superforms/adapters';
 
 	interface DynamicFormProps {
 		fields: FormFieldType[];
@@ -47,7 +44,7 @@
 		SPA: true
 	});
 
-	const { enhance, submit, form: formData, errors, validateForm } = $derived(form);
+	const { form: formData, errors, validateForm } = $derived(form);
 
 	const onsubmit = async (e: Event) => {
 		e.preventDefault();

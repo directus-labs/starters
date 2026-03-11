@@ -11,7 +11,6 @@
 
 	import { ArrowLeft, ArrowRight, ZoomIn, X } from '@lucide/svelte';
 	import Headline from '../ui/Headline.svelte';
-	import Title from '../ui/Title.svelte';
 	import Tagline from '../ui/Tagline.svelte';
 	import setAttr from '$lib/directus/visualEditing';
 
@@ -94,7 +93,7 @@
 				mode: 'modal'
 			})}
 		>
-			{#each sortedItems as item, index}
+			{#each sortedItems as item, index (item.id)}
 				<button
 					class="group relative h-[300px] overflow-hidden rounded-lg transition-shadow duration-300 hover:shadow-lg"
 					onclick={() => handleOpenLightbox(index)}

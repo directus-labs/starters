@@ -21,7 +21,7 @@ const perPage = props.data.limit || 6;
 const currentPage = ref(Number(route.query.page) || 1);
 const visiblePages = 5;
 
-const { data: postsData, error } = await useFetch<{
+const { data: postsData, error: _error } = await useFetch<{
 	posts: Post[];
 	count: number;
 }>('/api/posts', {

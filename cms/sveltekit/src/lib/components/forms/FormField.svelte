@@ -112,7 +112,7 @@
 			<Form.Description>{field.help}</Form.Description>
 			{#if $errors[fieldName]}
 				<Form.FieldErrors>
-					{#each $errors[fieldName] as string[] as error}
+					{#each $errors[fieldName] as string[] as error, i (i)}
 						<p class="text-red-500">{error}</p>
 					{/each}
 				</Form.FieldErrors>
