@@ -33,6 +33,9 @@ export default ts.config(
 		}
 	},
 	{
+		ignores: ['src/lib/types/directus-schema.ts']
+	},
+	{
 		rules: {
 			// ! TO COMPILE SHADCN EXAMPLES, PLEASE REMOVE AS NEEDED
 			'@typescript-eslint/no-explicit-any': 'off',

@@ -5,7 +5,7 @@ export async function GET(request: Request) {
 	const slug = searchParams.get('slug');
 	const token = searchParams.get('token');
 
-	if (!token || token !== process.env.DRAFT_MODE_SECRET) {
+	if (!token || token !== process.env.DIRECTUS_SERVER_TOKEN) {
 		return new Response('Invalid token', { status: 401 });
 	}
 

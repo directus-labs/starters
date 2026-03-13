@@ -41,9 +41,7 @@ const nextConfig: NextConfig = {
 		],
 	},
 	env: {
-		DIRECTUS_PUBLIC_TOKEN: process.env.DIRECTUS_PUBLIC_TOKEN,
-		DIRECTUS_FORM_TOKEN: process.env.DIRECTUS_FORM_TOKEN,
-		DRAFT_MODE_SECRET: process.env.DRAFT_MODE_SECRET,
+		DIRECTUS_SERVER_TOKEN: process.env.DIRECTUS_SERVER_TOKEN,
 	},
 	async headers() {
 		return [

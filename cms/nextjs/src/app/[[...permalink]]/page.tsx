@@ -63,9 +63,9 @@ export default async function Page({
 	const id = typeof searchParamsResolved.id === 'string' ? searchParamsResolved.id : '';
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
 	const preview = searchParamsResolved.preview === 'true';
-	const token = typeof searchParamsResolved.token === 'string' ? searchParamsResolved.token : '';
+	const token = preview ? process.env.DIRECTUS_SERVER_TOKEN : undefined;
 	// Live preview adds version = main which is not required when fetching the main version.
-	const fixedVersion = version != 'main' ? version : undefined;
+	const fixedVersion = version !== 'main' ? version : undefined;
 
 	try {
 		let page: Page;
@@ -77,17 +77,17 @@ export default async function Page({
 		// 3. Fail gracefully if the page doesn't exist for that version
 		if (fixedVersion && id) {
 			// We have both ID and version - fetch the specific version
-			page = await fetchPageDataById(id, fixedVersion, token || undefined);
+			page = await fetchPageDataById(id, fixedVersion, token);
 		} else if (fixedVersion && !id) {
 			// We have version but no ID - look up the page ID first
-			const pageId = await getPageIdByPermalink(resolvedPermalink, token || undefined);
+			const pageId = await getPageIdByPermalink(resolvedPermalink, token);
 			if (!pageId) {
 				notFound();
 			}
-			page = await fetchPageDataById(pageId, fixedVersion, token || undefined);
+			page = await fetchPageDataById(pageId, fixedVersion, token);
 		} else {
 			// Regular page fetch (published or draft with preview)
-			page = await fetchPageData(resolvedPermalink, 1, token || undefined, preview);
+			page = await fetchPageData(resolvedPermalink, 1, token, preview);
 		}
 
 		if (!page || !page.blocks) {

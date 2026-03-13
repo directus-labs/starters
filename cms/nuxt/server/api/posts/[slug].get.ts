@@ -47,11 +47,13 @@ export default defineEventHandler(async (event) => {
 	}
 
 	const query = getQuery(event);
-	const { preview, token: rawToken, id, version } = query;
+	const { preview, id } = query;
+	// Handle Live Preview adding version=main which is not required when fetching the main version.
+	const version = String(query.version) !== 'main' ? query.version : undefined;
 
-	// Security: Only accept tokens when preview mode is explicitly enabled
-	// This prevents unauthorized access to draft content
-	const token = preview === 'true' && rawToken ? String(rawToken) : null;
+	// Use the server token from runtimeConfig when preview mode is enabled
+	const config = useRuntimeConfig();
+	const token = preview === 'true' ? (config.directusServerToken as string) || null : null;
 
 	try {
 		let post: Post;
@@ -65,14 +67,20 @@ export default defineEventHandler(async (event) => {
 		if (version && !postId) {
 			// Look up post ID by slug - this is needed because Directus version API requires an ID
 			const postIdLookup = await directusServer.request(
-				withToken(
-					token as string,
-					readItems('posts', {
-						filter: { slug: { _eq: slug } },
-						limit: 1,
-						fields: ['id'],
-					}),
-				),
+				token && token.trim()
+					? withToken(
+							token,
+							readItems('posts', {
+								filter: { slug: { _eq: slug } },
+								limit: 1,
+								fields: ['id'],
+							}),
+						)
+					: readItems('posts', {
+							filter: { slug: { _eq: slug } },
+							limit: 1,
+							fields: ['id'],
+						}),
 			);
 			postId = postIdLookup.length > 0 ? postIdLookup[0]?.id || '' : '';
 
@@ -88,28 +96,41 @@ export default defineEventHandler(async (event) => {
 			// Version-specific request: Use readItem with specific version
 			// This is used when we have both a postId and want a specific version (draft, published, etc.)
 			post = (await directusServer.request(
-				withToken(
-					token as string,
-					readItem('posts', postId, {
-						version: String(version),
-						fields: postFields as any,
-					}),
-				),
+				token && token.trim()
+					? withToken(
+							token,
+							readItem('posts', postId, {
+								version: String(version),
+								fields: postFields as any,
+							}),
+						)
+					: readItem('posts', postId, {
+							version: String(version),
+							fields: postFields as any,
+						}),
 			)) as unknown as Post;
 		} else {
 			// Standard request: Use readItems with slug filtering
 			// Filter logic:
-			// - If token exists: fetch any status (for preview mode)
-			// - If no token: only fetch published content (for public viewing)
+			// - If preview mode: fetch any status (to show draft content)
+			// - If not preview: only fetch published content (for public viewing)
 			const postsData = await directusServer.request(
-				withToken(
-					token as string,
-					readItems('posts', {
-						filter: token ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
-						limit: 1,
-						fields: postFields as any,
-					}),
-				),
+				token && token.trim()
+					? withToken(
+							token,
+							readItems('posts', {
+								filter:
+									preview === 'true' ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
+								limit: 1,
+								fields: postFields as any,
+							}),
+						)
+					: readItems('posts', {
+							filter:
+								preview === 'true' ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
+							limit: 1,
+							fields: postFields as any,
+						}),
 			);
 
 			if (!postsData.length) {

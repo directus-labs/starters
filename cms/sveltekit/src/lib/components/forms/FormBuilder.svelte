@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { submitForm } from '$lib/directus/forms';
 	import type { FormField } from '$lib/types/directus-schema';
 	import { cn } from '$lib/utils';
 	import { CheckCircle } from '@lucide/svelte';
@@ -33,7 +32,19 @@
 				name: field.name || '',
 				type: field.type || ''
 			}));
-			await submitForm(form.id, fieldsWithNames, data);
+
+			const formData = new FormData();
+			formData.append('formId', form.id);
+			formData.append('fields', JSON.stringify(fieldsWithNames));
+			for (const field of fieldsWithNames) {
+				const value = data[field.name];
+				if (value !== undefined && value !== null) {
+					formData.append(field.name, value);
+				}
+			}
+
+			const response = await fetch('/api/forms/submit', { method: 'POST', body: formData });
+			if (!response.ok) throw new Error('Form submission failed');
 
 			if (form.on_success === 'redirect' && form.success_redirect_url) {
 				if (form.success_redirect_url.startsWith('/')) {
