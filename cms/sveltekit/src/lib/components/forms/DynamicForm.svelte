@@ -1,12 +1,14 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import setAttr from '$lib/directus/visualEditing';
 	import type { FormField as FormFieldType } from '$lib/types/directus-schema';
 	import { buildZodSchema } from '$lib/zodSchemaBuilder';
 	import Button from '../blocks/Button.svelte';
 	import Field from './FormField.svelte';
-	import { superForm } from 'sveltekit-superforms';
+	import { superForm, superValidate } from 'sveltekit-superforms';
+	import SuperDebug from 'sveltekit-superforms';
 
-	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { zodClient, zod } from 'sveltekit-superforms/adapters';
 
 	interface DynamicFormProps {
 		fields: FormFieldType[];
@@ -42,21 +44,25 @@
 
 	const form = superForm(defaultValues, {
 		validators: zodClient(formSchema),
-		SPA: true,
-		onUpdate: ({ form }) => {
-			if (form.valid) {
-				onSubmit(form.data);
-			}
-		}
+		SPA: true
 	});
 
-	const { enhance } = $derived(form);
+	const { enhance, submit, form: formData, errors, validateForm } = $derived(form);
+
+	const onsubmit = async (e: Event) => {
+		e.preventDefault();
+		// const f = await superValidate($formData, zod(formSchema));
+		const f = await validateForm();
+		$errors = f.errors;
+		if (f.valid) {
+			onSubmit($formData);
+		}
+	};
 </script>
 
 <form
 	class="flex flex-wrap gap-4"
-	method="POST"
-	use:enhance
+	{onsubmit}
 	data-directus={setAttr({
 		collection: 'forms',
 		item: id,

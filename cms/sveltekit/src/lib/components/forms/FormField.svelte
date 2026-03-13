@@ -34,8 +34,6 @@
 				33: 'flex-[calc(33%-1rem)]'
 			}[field.width] || 'flex-[100%]'
 		: 'flex-[100%]';
-
-	const fieldErrors = $derived($errors?.[fieldName] as string[] | []);
 </script>
 
 {#if field.type !== 'hidden'}
@@ -114,7 +112,7 @@
 			<Form.Description>{field.help}</Form.Description>
 			{#if $errors[fieldName]}
 				<Form.FieldErrors>
-					{#each fieldErrors as error (error)}
+					{#each $errors[fieldName] as string[] as error}
 						<p class="text-red-500">{error}</p>
 					{/each}
 				</Form.FieldErrors>
