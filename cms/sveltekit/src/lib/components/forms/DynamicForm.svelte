@@ -41,14 +41,18 @@
 
 	const form = superForm(defaultValues, {
 		validators: zodClient(formSchema),
-		SPA: true
+		SPA: true,
+		onUpdate: ({ form }) => {
+			if (form.valid) {
+				onSubmit(form.data);
+			}
+		}
 	});
 
-	const { form: formData, errors, validateForm } = $derived(form);
+	const { form: formData, errors, validateForm, enhance } = $derived(form);
 
 	const onsubmit = async (e: Event) => {
 		e.preventDefault();
-		// const f = await superValidate($formData, zod(formSchema));
 		const f = await validateForm();
 		$errors = f.errors;
 		if (f.valid) {
@@ -59,7 +63,8 @@
 
 <form
 	class="flex flex-wrap gap-4"
-	{onsubmit}
+	method="POST"
+	use:enhance
 	data-directus={setAttr({
 		collection: 'forms',
 		item: id,
