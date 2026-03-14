@@ -83,12 +83,10 @@ export default [
 		files: ['**/*.ts', '**/*.tsx'],
 		languageOptions: {
 			parser: tsParser,
-			parserOptions: {
-				project: './tsconfig.json',
-			},
 		},
 		rules: {
 			...(typescriptEslint.configs?.['recommended']?.rules || {}),
+			'@typescript-eslint/no-explicit-any': 'off',
 		},
 	},
 ];

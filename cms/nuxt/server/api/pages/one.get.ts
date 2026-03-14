@@ -191,7 +191,7 @@ export default defineEventHandler(async (event) => {
 								},
 							}),
 				)) as unknown as Page;
-			} catch (versionError) {
+			} catch {
 				// If version fetch fails, throw error
 				throw createError({ statusCode: 404, statusMessage: 'Page version not found' });
 			}

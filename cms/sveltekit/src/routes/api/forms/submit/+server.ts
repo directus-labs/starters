@@ -9,7 +9,10 @@ export const POST: RequestHandler = async ({ request }) => {
 	const TOKEN = DIRECTUS_SERVER_TOKEN;
 
 	if (!TOKEN) {
-		return json({ error: 'DIRECTUS_SERVER_TOKEN is not defined. Check your .env file.' }, { status: 500 });
+		return json(
+			{ error: 'DIRECTUS_SERVER_TOKEN is not defined. Check your .env file.' },
+			{ status: 500 }
+		);
 	}
 
 	try {

@@ -44,7 +44,7 @@
 				<!-- {/* Social Links */} -->
 				{#if globals?.social_links}
 					<div class="mt-4 flex space-x-4">
-						{#each globals.social_links as social}
+						{#each globals.social_links as social (social.service)}
 							<!-- key={social.service} -->
 							<a
 								href={social.url}
