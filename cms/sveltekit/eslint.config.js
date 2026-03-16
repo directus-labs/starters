@@ -33,7 +33,12 @@ export default ts.config(
 		}
 	},
 	{
-		ignores: ['src/lib/types/directus-schema.ts']
+		ignores: [
+			'src/lib/types/directus-schema.ts',
+			'src/lib/components/ui/**',
+			'.vercel/**',
+			'node_modules/**'
+		]
 	},
 	{
 		rules: {
@@ -44,7 +49,8 @@ export default ts.config(
 			'tailwindcss/no-unnecessary-arbitrary-value': 'off',
 			'tailwindcss/classnames-order': 'off',
 			'import/named': 'off',
-			'import/no-named-as-default-member': 'off'
+			'import/no-named-as-default-member': 'off',
+			'svelte/no-at-html-tags': 'off'
 		}
 	}
 );

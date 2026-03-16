@@ -71,7 +71,7 @@
 			</p>
 		</div>
 	{:else}
-		<div class={cn('border-input space-y-6 rounded-lg border p-8', className)}>
+		<div class={cn('space-y-6 rounded-lg border border-input p-8', className)}>
 			{#if error}
 				<div class="rounded-md bg-red-100 p-4 text-red-500">
 					<strong>Error:</strong>

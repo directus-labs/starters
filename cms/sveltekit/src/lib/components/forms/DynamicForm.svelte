@@ -5,7 +5,6 @@
 	import Button from '../blocks/Button.svelte';
 	import Field from './FormField.svelte';
 	import { superForm } from 'sveltekit-superforms';
-
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
 	interface DynamicFormProps {
@@ -50,7 +49,16 @@
 		}
 	});
 
-	const { enhance } = $derived(form);
+	const { form: formData, errors, validateForm, enhance } = $derived(form);
+
+	const onsubmit = async (e: Event) => {
+		e.preventDefault();
+		const f = await validateForm();
+		$errors = f.errors;
+		if (f.valid) {
+			onSubmit($formData);
+		}
+	};
 </script>
 
 <form
