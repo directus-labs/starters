@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 	return new Response(null, {
 		status: 307,
 		headers: {
-			Location: `/blog/${slug}?preview=true&token=${token}`,
+			Location: `/blog/${slug}?preview=true`,
 		},
 	});
 }
