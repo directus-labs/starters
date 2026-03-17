@@ -40,9 +40,6 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
-	env: {
-		DIRECTUS_SERVER_TOKEN: process.env.DIRECTUS_SERVER_TOKEN,
-	},
 	async headers() {
 		return [
 			{
