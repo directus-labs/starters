@@ -6,7 +6,7 @@ import { addLocaleToPath, getNotFoundMessage } from '~/lib/i18n/utils';
 import { DEFAULT_LOCALE } from '~/lib/i18n/config';
 
 const route = useRoute();
-const { enabled, state } = useLivePreview();
+const { enabled } = useLivePreview();
 const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
 const runtimeConfig = useRuntimeConfig();
 
@@ -37,7 +37,6 @@ const {
 	query: {
 		permalink,
 		preview: enabled.value ? true : undefined,
-		token: enabled.value ? state.token : undefined,
 		id: route.query.id as string,
 		version,
 		locale,

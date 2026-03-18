@@ -7,10 +7,10 @@ export const submitForm = async (
 	data: Record<string, any>,
 ) => {
 	const { directus, uploadFiles, createItem, withToken } = useDirectus();
-	const TOKEN = process.env.DIRECTUS_FORM_TOKEN;
+	const TOKEN = process.env.DIRECTUS_SERVER_TOKEN;
 
 	if (!TOKEN) {
-		throw new Error('DIRECTUS_FORM_TOKEN is not defined. Check your .env file.');
+		throw new Error('DIRECTUS_SERVER_TOKEN is not defined. Check your .env file.');
 	}
 
 	try {

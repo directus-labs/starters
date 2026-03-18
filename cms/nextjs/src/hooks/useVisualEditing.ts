@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import { useSearchParams, usePathname } from 'next/navigation';
 import { apply as applyVisualEditing, setAttr } from '@directus/visual-editing';
 
 interface ApplyOptions {
@@ -14,9 +14,9 @@ export function useVisualEditing() {
 	const [isVisualEditingEnabled, setIsVisualEditingEnabled] = useState(false);
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
-	const router = useRouter();
 
-	const enableVisualEditingEnv = process.env.NEXT_PUBLIC_ENABLE_VISUAL_EDITING === 'true';
+	// Enabled by default; set to 'false' to disable
+	const enableVisualEditingEnv = process.env.NEXT_PUBLIC_ENABLE_VISUAL_EDITING !== 'false';
 	const directusUrl = process.env.NEXT_PUBLIC_DIRECTUS_URL || '';
 
 	useEffect(() => {

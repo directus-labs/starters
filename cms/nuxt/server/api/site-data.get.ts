@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (_event) => {
 	try {
 		const [globals, headerNavigation, footerNavigation] = await Promise.all([
 			directusServer.request(
