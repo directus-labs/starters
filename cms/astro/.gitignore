@@ -1,3 +1,4 @@
 # Astro Build Output
 dist/
 .astro/
+node_modules/
