@@ -14,7 +14,8 @@ export function useVisualEditing() {
   const [isVisualEditingEnabled, setIsVisualEditingEnabled] = useState(false);
 
   useEffect(() => {
-    const isEnvEnabled = import.meta.env.PUBLIC_ENABLE_VISUAL_EDITING === 'true';
+    // Enabled by default; set to 'false' to disable
+    const isEnvEnabled = import.meta.env.PUBLIC_ENABLE_VISUAL_EDITING !== 'false';
     const searchParams = new URLSearchParams(window.location.search);
     const param = searchParams.get('visual-editing');
 

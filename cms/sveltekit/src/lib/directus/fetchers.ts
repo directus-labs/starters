@@ -243,7 +243,7 @@ export const fetchPageData = async (
 export const fetchPageDataById = async (
 	id: string,
 	version: string,
-	token: string | undefined,
+	token: string | undefined
 ): Promise<Page> => {
 	if (!id || id.trim() === '') {
 		throw new Error('Invalid id: id must be a non-empty string');
@@ -276,10 +276,7 @@ export const fetchPageDataById = async (
 /**
  * Helper function to get page ID by permalink
  */
-export const getPageIdByPermalink = async (
-	permalink: string,
-	token: string | undefined,
-) => {
+export const getPageIdByPermalink = async (permalink: string, token: string | undefined) => {
 	if (!permalink || permalink.trim() === '') {
 		throw new Error('Invalid permalink: permalink must be a non-empty string');
 	}
@@ -310,10 +307,7 @@ export const getPageIdByPermalink = async (
 /**
  * Helper function to get post ID by slug
  */
-export const getPostIdBySlug = async (
-	slug: string,
-	token: string | undefined,
-) => {
+export const getPostIdBySlug = async (slug: string, token: string | undefined) => {
 	if (!slug || slug.trim() === '') {
 		throw new Error('Invalid slug: slug must be a non-empty string');
 	}
@@ -348,7 +342,7 @@ export const fetchPostByIdAndVersion = async (
 	id: string,
 	version: string,
 	slug: string,
-	token: string | undefined,
+	token: string | undefined
 ): Promise<{ post: Post; relatedPosts: Post[] }> => {
 	if (!id || id.trim() === '') {
 		throw new Error('Invalid id: id must be a non-empty string');
@@ -464,7 +458,7 @@ export const fetchSiteData = async () => {
  */
 export const fetchPostBySlug = async (
 	slug: string,
-	options: { draft?: boolean; token?: string },
+	options: { draft?: boolean; token?: string }
 ): Promise<{ post: Post | null; relatedPosts: Post[] }> => {
 	const { getDirectus } = useDirectus();
 	const directus = getDirectus();
@@ -534,7 +528,7 @@ export const fetchRelatedPosts = async (excludeId: string) => {
 /**
  * Fetches author details by ID.
  */
-export const fetchAuthorById = async (authorId: string,) => {
+export const fetchAuthorById = async (authorId: string) => {
 	const { getDirectus, readUser } = useDirectus();
 	const directus = getDirectus();
 

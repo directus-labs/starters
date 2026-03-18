@@ -29,6 +29,7 @@ export default defineNuxtConfig({
 		public: {
 			siteUrl: process.env.NUXT_PUBLIC_SITE_URL as string,
 			directusUrl: process.env.DIRECTUS_URL as string,
+			// Enabled by default; set to 'false' to disable
 			enableVisualEditing: process.env.NUXT_PUBLIC_ENABLE_VISUAL_EDITING !== 'false',
 		},
 		directusServerToken: process.env.DIRECTUS_SERVER_TOKEN,
