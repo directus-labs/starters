@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -15,7 +14,8 @@ export function useVisualEditing() {
 
   useEffect(() => {
     // Enabled by default; set to 'false' to disable
-    const isEnvEnabled = import.meta.env.PUBLIC_ENABLE_VISUAL_EDITING !== 'false';
+    const isEnvEnabled =
+      import.meta.env.PUBLIC_ENABLE_VISUAL_EDITING !== 'false';
     const searchParams = new URLSearchParams(window.location.search);
     const param = searchParams.get('visual-editing');
 
@@ -33,7 +33,9 @@ export function useVisualEditing() {
       localStorage.removeItem('visual-editing');
       searchParams.delete('visual-editing');
 
-      const cleanUrl = window.location.pathname + (searchParams.toString() ? `?${searchParams.toString()}` : '');
+      const cleanUrl =
+        window.location.pathname +
+        (searchParams.toString() ? `?${searchParams.toString()}` : '');
 
       window.history.replaceState({}, '', cleanUrl);
     }
@@ -44,13 +46,17 @@ export function useVisualEditing() {
     if (persisted && param !== 'true') {
       searchParams.set('visual-editing', 'true');
 
-      const updatedUrl = window.location.pathname + (searchParams.toString() ? `?${searchParams.toString()}` : '');
+      const updatedUrl =
+        window.location.pathname +
+        (searchParams.toString() ? `?${searchParams.toString()}` : '');
 
       window.history.replaceState({}, '', updatedUrl);
     }
   }, []);
 
-  const apply = (options: Pick<ApplyOptions, 'elements' | 'onSaved' | 'mode'>) => {
+  const apply = (
+    options: Pick<ApplyOptions, 'elements' | 'onSaved' | 'mode'>,
+  ) => {
     if (!isVisualEditingEnabled) return;
 
     applyVisualEditing({

@@ -2,7 +2,8 @@ import React from 'react';
 import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
 import { cn } from '@/lib/utils';
 
-export interface DirectusImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+export interface DirectusImageProps
+  extends React.ImgHTMLAttributes<HTMLImageElement> {
   uuid: string;
   fill?: boolean;
   width?: number;

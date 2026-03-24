@@ -13,6 +13,7 @@ export const GET: APIRoute = async ({ url }) => {
 
   try {
     const siteData = await fetchSiteData();
+
     return new Response(JSON.stringify(siteData), {
       headers: {
         'Content-Type': 'application/json',
@@ -20,9 +21,12 @@ export const GET: APIRoute = async ({ url }) => {
       },
     });
   } catch {
-    return new Response(JSON.stringify({ error: 'Failed to fetch site data' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({ error: 'Failed to fetch site data' }),
+      {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
   }
 };

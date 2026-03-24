@@ -2,15 +2,24 @@
 export const prerender = true;
 
 import Layout from '@/layouts/BaseLayout.astro';
-import { fetchAllPages, fetchPageData, fetchPageDataById, getPageIdByPermalink } from '@/lib/directus/fetchers';
+import {
+  fetchAllPages,
+  fetchPageData,
+  fetchPageDataById,
+  getPageIdByPermalink,
+} from '@/lib/directus/fetchers';
 import PageClient from '@/components/layout/PageClient';
 import type { Page, PageBlock } from '@/types/directus-schema';
 
 export async function getStaticPaths() {
   const pages = await fetchAllPages();
+
   return pages.map((page) => {
     const cleaned = page.permalink.replace(/^\/+|\/+$/g, '');
-    return { params: { permalink: cleaned.length === 0 ? undefined: cleaned } };
+
+    return {
+      params: { permalink: cleaned.length === 0 ? undefined : cleaned },
+    };
   });
 }
 
@@ -22,33 +31,37 @@ const id = query.get('id') || '';
 const rawVersion = query.get('version') || '';
 const version = rawVersion !== 'main' ? rawVersion : '';
 const preview = query.get('preview') === 'true';
-const token = preview ? (import.meta.env.DIRECTUS_SERVER_TOKEN || '') : '';
+const token = preview ? import.meta.env.DIRECTUS_SERVER_TOKEN || '' : '';
 
 const permalinkSegments =
   typeof permalink === 'string'
     ? permalink.split('/')
     : Array.isArray(permalink)
-    ? permalink
-    : [];
+      ? permalink
+      : [];
 const resolvedPermalink =
   `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
 
 let page: Page | null = null;
 try {
-
   if (id && version) {
     page = await fetchPageDataById(id, version, token || undefined);
-  }
-
-  else if (version && !id) {
-    const foundPageId = await getPageIdByPermalink(resolvedPermalink, token || undefined, preview);
+  } else if (version && !id) {
+    const foundPageId = await getPageIdByPermalink(
+      resolvedPermalink,
+      token || undefined,
+      preview,
+    );
     if (foundPageId) {
       page = await fetchPageDataById(foundPageId, version, token || undefined);
     }
-  }
-
-  else {
-    page = await fetchPageData(resolvedPermalink, 1, token || undefined, preview);
+  } else {
+    page = await fetchPageData(
+      resolvedPermalink,
+      1,
+      token || undefined,
+      preview,
+    );
   }
 } catch (error) {
   console.error('Error loading page:', error);
@@ -60,8 +73,9 @@ if (!page || !page.blocks) {
 }
 
 const blocks: PageBlock[] =
-  page?.blocks?.filter((block: any): block is PageBlock =>
-    typeof block === 'object' && block.collection
+  page?.blocks?.filter(
+    (block: any): block is PageBlock =>
+      typeof block === 'object' && block.collection,
   ) ?? [];
 
 const siteURL = import.meta.env.PUBLIC_SITE_URL || '';

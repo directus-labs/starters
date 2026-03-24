@@ -1,6 +1,6 @@
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import type { UseFormReturn } from "react-hook-form";
-import React from "react";
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import type { UseFormReturn } from 'react-hook-form';
+import React from 'react';
 
 interface RadioGroupFieldProps {
   name: string;

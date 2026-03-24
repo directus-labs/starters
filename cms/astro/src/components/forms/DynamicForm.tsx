@@ -15,8 +15,15 @@ interface DynamicFormProps {
   id: string;
 }
 
-const DynamicForm = ({ fields, onSubmit, submitLabel, id }: DynamicFormProps) => {
-  const sortedFields = [...fields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
+const DynamicForm = ({
+  fields,
+  onSubmit,
+  submitLabel,
+  id,
+}: DynamicFormProps) => {
+  const sortedFields = [...fields].sort(
+    (a, b) => (a.sort || 0) - (b.sort || 0),
+  );
   const formSchema = buildZodSchema(fields);
   type FormValues = z.infer<typeof formSchema>;
 
@@ -59,7 +66,7 @@ const DynamicForm = ({ fields, onSubmit, submitLabel, id }: DynamicFormProps) =>
         })}
       >
         {sortedFields.map((field) => (
-            <Field key={field.id} field={field} form={form} />
+          <Field key={field.id} field={field} form={form} />
         ))}
         <div className="w-full">
           <div
@@ -70,7 +77,13 @@ const DynamicForm = ({ fields, onSubmit, submitLabel, id }: DynamicFormProps) =>
               mode: 'popover',
             })}
           >
-            <Button type="submit" label={submitLabel} icon="arrow" iconPosition="right" id={`submit-${id || 'form'}`} />
+            <Button
+              type="submit"
+              label={submitLabel}
+              icon="arrow"
+              iconPosition="right"
+              id={`submit-${id || 'form'}`}
+            />
           </div>
         </div>
       </form>

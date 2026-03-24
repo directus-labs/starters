@@ -123,8 +123,17 @@ const PricingCard = ({ card }: PricingCardProps) => {
             })}
             label={card.button.label}
             variant={
-              ['link', 'default', 'destructive', 'outline', 'secondary', 'ghost'].includes(card.button.variant || '')
-                ? (card.button.variant as VariantProps<typeof buttonVariants>['variant'])
+              [
+                'link',
+                'default',
+                'destructive',
+                'outline',
+                'secondary',
+                'ghost',
+              ].includes(card.button.variant || '')
+                ? (card.button.variant as VariantProps<
+                    typeof buttonVariants
+                  >['variant'])
                 : 'default'
             }
             url={card.button.url}

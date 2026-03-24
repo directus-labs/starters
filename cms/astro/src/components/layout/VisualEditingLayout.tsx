@@ -1,13 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useRef, useEffect } from 'react';
-import useSWR from 'swr';
 import { useVisualEditing } from '@/hooks/useVisualEditing';
-import NavigationBar from './NavigationBar';
-import Footer from './Footer';
 import { fetchSiteData } from '@/lib/directus/fetchers';
+import { useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
+import useSWR from 'swr';
+import Footer from './Footer';
+import NavigationBar from './NavigationBar';
+
+type SiteGlobals = {
+  logo?: string;
+  logo_dark_mode?: string;
+  social_links?: { service: string; url: string }[];
+};
 
 interface VisualEditingLayoutProps {
   headerNavigation: any;
@@ -26,10 +31,21 @@ export default function VisualEditingLayout({
   const footerRef = useRef<HTMLElement>(null);
   const { isVisualEditingEnabled, apply } = useVisualEditing();
 
-  const { data: siteData, mutate } = useSWR(isVisualEditingEnabled ? '/api/site-data' : null, fetchSiteData, {
-    fallbackData: { globals, headerNavigation, footerNavigation },
-    revalidateOnFocus: false,
-  });
+  const { data: siteData, mutate } = useSWR(
+    isVisualEditingEnabled ? '/api/site-data' : null,
+    fetchSiteData,
+    {
+      fallbackData: { globals, headerNavigation, footerNavigation },
+      revalidateOnFocus: false,
+    },
+  );
+
+  const layoutData = siteData ?? {
+    globals,
+    headerNavigation,
+    footerNavigation,
+  };
+  const safeGlobals = (layoutData.globals ?? {}) as SiteGlobals;
 
   useEffect(() => {
     if (isVisualEditingEnabled) {
@@ -58,25 +74,32 @@ export default function VisualEditingLayout({
       <NavigationBar
         ref={navRef}
         navigation={{
-          ...siteData.headerNavigation,
-          items: (siteData.headerNavigation.items || []).map((item: any) => ({
+          ...layoutData.headerNavigation,
+          items: (layoutData.headerNavigation.items || []).map((item: any) => ({
             id: item.id,
             title: item.title || '',
             url: item.url,
-            page: item.page ? { permalink: item.page.permalink || '' } : undefined,
+            page: item.page
+              ? { permalink: item.page.permalink || '' }
+              : undefined,
             children: (item.children || []).map((child: any) => ({
               id: child.id,
               title: child.title || '',
               url: child.url,
-              page: child.page ? { permalink: child.page.permalink || '' } : undefined,
+              page: child.page
+                ? { permalink: child.page.permalink || '' }
+                : undefined,
             })),
           })),
         }}
         globals={{
-          ...siteData.globals,
-          logo: typeof siteData.globals.logo === 'string' ? siteData.globals.logo : undefined,
+          ...safeGlobals,
+          logo:
+            typeof safeGlobals.logo === 'string' ? safeGlobals.logo : undefined,
           logo_dark_mode:
-            typeof siteData.globals.logo_dark_mode === 'string' ? siteData.globals.logo_dark_mode : undefined,
+            typeof safeGlobals.logo_dark_mode === 'string'
+              ? safeGlobals.logo_dark_mode
+              : undefined,
         }}
       />
 
@@ -84,17 +107,24 @@ export default function VisualEditingLayout({
       <Footer
         ref={footerRef}
         navigation={{
-          ...siteData.footerNavigation,
-          items: (siteData.footerNavigation.items || []).map((item: any) => ({
+          ...layoutData.footerNavigation,
+          items: (layoutData.footerNavigation.items || []).map((item: any) => ({
             ...item,
-            page: item.page ? { permalink: item.page.permalink || null } : undefined,
+            page: item.page
+              ? { permalink: item.page.permalink || null }
+              : undefined,
           })),
         }}
         globals={{
-          ...siteData.globals,
-          logo: typeof siteData.globals.logo === 'string' ? siteData.globals.logo : null,
-          logo_dark_mode: typeof siteData.globals.logo_dark_mode === 'string' ? siteData.globals.logo_dark_mode : null,
-          social_links: siteData.globals.social_links || undefined,
+          ...safeGlobals,
+          logo: typeof safeGlobals.logo === 'string' ? safeGlobals.logo : null,
+          logo_dark_mode:
+            typeof safeGlobals.logo_dark_mode === 'string'
+              ? safeGlobals.logo_dark_mode
+              : null,
+          social_links: Array.isArray(safeGlobals.social_links)
+            ? safeGlobals.social_links
+            : undefined,
         }}
       />
     </>

@@ -9,13 +9,19 @@ interface PageBuilderProps {
 const PageBuilder = ({ sections }: PageBuilderProps) => {
   const validBlocks = sections.filter(
     (block): block is PageBlock & { collection: string; item: object } =>
-      typeof block.collection === 'string' && !!block.item && typeof block.item === 'object',
+      typeof block.collection === 'string' &&
+      !!block.item &&
+      typeof block.item === 'object',
   );
 
   return (
     <div>
       {validBlocks.map((block) => (
-        <div key={block.id} data-background={block.background} className="py-16">
+        <div
+          key={block.id}
+          data-background={block.background}
+          className="py-16"
+        >
           <Container>
             <BaseBlock
               block={{

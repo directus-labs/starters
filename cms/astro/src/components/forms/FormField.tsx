@@ -1,7 +1,18 @@
-import { FormField as ShadcnFormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import {
+  FormField as ShadcnFormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { Info } from 'lucide-react';
 import CheckboxField from './fields/CheckboxField';
 import CheckboxGroupField from './fields/CheckboxGroupField';
@@ -23,18 +34,47 @@ const Field = ({ field, form }: FieldProps) => {
   const getFieldElement = () => {
     switch (field.type) {
       case 'text':
-        return <Input placeholder={field.placeholder || ''} {...form.register(field.name!)} />;
+        return (
+          <Input
+            placeholder={field.placeholder || ''}
+            {...form.register(field.name!)}
+          />
+        );
       case 'textarea':
-        return <Textarea placeholder={field.placeholder || ''} {...form.register(field.name!)} />;
+        return (
+          <Textarea
+            placeholder={field.placeholder || ''}
+            {...form.register(field.name!)}
+          />
+        );
       case 'checkbox':
-        return <CheckboxField name={field.name!} label={field.label!} form={form} />;
+        return (
+          <CheckboxField name={field.name!} label={field.label!} form={form} />
+        );
       case 'checkbox_group':
-        return <CheckboxGroupField name={field.name!} options={field.choices || []} form={form} />;
+        return (
+          <CheckboxGroupField
+            name={field.name!}
+            options={field.choices || []}
+            form={form}
+          />
+        );
       case 'radio':
-        return <RadioGroupField name={field.name!} options={field.choices || []} form={form} />;
+        return (
+          <RadioGroupField
+            name={field.name!}
+            options={field.choices || []}
+            form={form}
+          />
+        );
       case 'select':
         return (
-          <SelectField name={field.name!} placeholder={field.placeholder} options={field.choices || []} form={form} />
+          <SelectField
+            name={field.name!}
+            placeholder={field.placeholder}
+            options={field.choices || []}
+            form={form}
+          />
         );
       case 'file':
         return <FileUploadField name={field.name!} form={form} />;
@@ -66,7 +106,9 @@ const Field = ({ field, form }: FieldProps) => {
               htmlFor={field.name!}
               className={cn(
                 'text-sm font-medium flex items-center justify-between',
-                field.type === 'checkbox' || field.type === 'radio' ? 'space-x-2' : '',
+                field.type === 'checkbox' || field.type === 'radio'
+                  ? 'space-x-2'
+                  : '',
               )}
             >
               <div className="flex items-center space-x-1">
@@ -83,7 +125,9 @@ const Field = ({ field, form }: FieldProps) => {
                   </TooltipProvider>
                 )}
               </div>
-              {field.required && <span className="text-sm text-gray-400">*Required</span>}
+              {field.required && (
+                <span className="text-sm text-gray-400">*Required</span>
+              )}
             </FormLabel>
             <FormControl>{fieldElement}</FormControl>
             <FormMessage className="text-red-500 italic text-sm" />

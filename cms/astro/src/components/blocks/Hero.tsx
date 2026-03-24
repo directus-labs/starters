@@ -43,12 +43,18 @@ const layoutStyles = {
 };
 
 export default function Hero({ data }: HeroProps) {
-  const { id, layout, tagline, headline, description, image, button_group } = data;
+  const { id, layout, tagline, headline, description, image, button_group } =
+    data;
   const styles = layoutStyles[layout] ?? layoutStyles.image_left;
   const hasButtons = !!button_group?.buttons?.length;
 
   return (
-    <section className={cn('relative w-full mx-auto flex flex-col gap-6 md:gap-12', styles.layout)}>
+    <section
+      className={cn(
+        'relative w-full mx-auto flex flex-col gap-6 md:gap-12',
+        styles.layout,
+      )}
+    >
       <div className={cn('flex flex-col gap-4 w-full', styles.content)}>
         <Tagline
           tagline={tagline}
@@ -81,7 +87,10 @@ export default function Hero({ data }: HeroProps) {
         )}
         {hasButtons && (
           <div
-            className={cn(layout === 'image_center' && 'flex justify-center', 'mt-6')}
+            className={cn(
+              layout === 'image_center' && 'flex justify-center',
+              'mt-6',
+            )}
             data-directus={setAttr({
               collection: 'block_button_group',
               item: button_group.id,
@@ -107,7 +116,11 @@ export default function Hero({ data }: HeroProps) {
             uuid={image}
             alt={tagline || headline || 'Hero Image'}
             fill
-            sizes={layout === 'image_center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'}
+            sizes={
+              layout === 'image_center'
+                ? '100vw'
+                : '(max-width: 768px) 100vw, 50vw'
+            }
             className="object-contain"
           />
         </div>

@@ -7,7 +7,11 @@ export interface TextProps {
   'data-directus'?: string;
 }
 
-const Text = ({ content, className, 'data-directus': dataDirectus }: TextProps) => {
+const Text = ({
+  content,
+  className,
+  'data-directus': dataDirectus,
+}: TextProps) => {
   return (
     <div
       className={cn('prose dark:prose-invert', className)}

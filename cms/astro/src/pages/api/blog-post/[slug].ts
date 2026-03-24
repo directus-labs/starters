@@ -1,6 +1,10 @@
 export const prerender = false;
 import type { APIRoute } from 'astro';
-import { fetchPostBySlug, fetchPostByIdAndVersion, getPostIdBySlug } from '@/lib/directus/fetchers';
+import {
+  fetchPostBySlug,
+  fetchPostByIdAndVersion,
+  getPostIdBySlug,
+} from '@/lib/directus/fetchers';
 
 export const GET: APIRoute = async ({ request }) => {
   const { pathname, searchParams } = new URL(request.url);
@@ -22,7 +26,9 @@ export const GET: APIRoute = async ({ request }) => {
   }
 
   if (!slug) {
-    return new Response(JSON.stringify({ error: 'Missing slug' }), { status: 400 });
+    return new Response(JSON.stringify({ error: 'Missing slug' }), {
+      status: 400,
+    });
   }
 
   try {
@@ -44,13 +50,20 @@ export const GET: APIRoute = async ({ request }) => {
     }
 
     if (!result.post) {
-      return new Response(JSON.stringify({ error: 'Post not found' }), { status: 404 });
+      return new Response(JSON.stringify({ error: 'Post not found' }), {
+        status: 404,
+      });
     }
 
     return new Response(JSON.stringify(result), {
-      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store',
+      },
     });
   } catch {
-    return new Response(JSON.stringify({ error: 'Error loading post' }), { status: 500 });
+    return new Response(JSON.stringify({ error: 'Error loading post' }), {
+      status: 500,
+    });
   }
 };

@@ -39,6 +39,7 @@ export default function SearchModal() {
     };
 
     document.addEventListener('keydown', onKeyDown);
+
     return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
 
@@ -54,6 +55,7 @@ export default function SearchModal() {
     if (search.length < 3) {
       setResults([]);
       setSearched(false);
+
       return;
     }
 
@@ -75,13 +77,20 @@ export default function SearchModal() {
 
   return (
     <div className="sm:max-w-[540px] max-w-full">
-      <Button variant="ghost" size="icon" onClick={() => setOpen(true)} aria-label="Search">
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => setOpen(true)}
+        aria-label="Search"
+      >
         <Search className="size-5" />
       </Button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
         <DialogTitle className="p-2 sr-only">Search</DialogTitle>
-        <DialogDescription className="px-2 sr-only">Search for pages or posts</DialogDescription>
+        <DialogDescription className="px-2 sr-only">
+          Search for pages or posts
+        </DialogDescription>
         <CommandInput
           placeholder="Search for pages or posts"
           onValueChange={(value) => debouncedFetchResults(value)}
@@ -90,11 +99,19 @@ export default function SearchModal() {
 
         <CommandList className="p-2 text-foreground max-h-[500px] overflow-auto">
           {!loading && !searched && (
-            <CommandEmpty className="py-2 text-sm text-center">Enter a search term above to see results</CommandEmpty>
+            <CommandEmpty className="py-2 text-sm text-center">
+              Enter a search term above to see results
+            </CommandEmpty>
           )}
-          {loading && <CommandEmpty className="py-2 text-sm text-center">Loading...</CommandEmpty>}
+          {loading && (
+            <CommandEmpty className="py-2 text-sm text-center">
+              Loading...
+            </CommandEmpty>
+          )}
           {!loading && searched && results.length === 0 && (
-            <CommandEmpty className="py-2 text-sm text-center">No results found</CommandEmpty>
+            <CommandEmpty className="py-2 text-sm text-center">
+              No results found
+            </CommandEmpty>
           )}
           {!loading && results.length > 0 && (
             <CommandGroup heading="Search Results" className="pt-2" forceMount>
@@ -107,7 +124,11 @@ export default function SearchModal() {
                   <Badge variant="default">{result.type}</Badge>
                   <div className="ml-2 w-full">
                     <p className="font-medium text-base">{result.title}</p>
-                    {result.description && <p className="text-sm mt-1 line-clamp-2">{result.description}</p>}
+                    {result.description && (
+                      <p className="text-sm mt-1 line-clamp-2">
+                        {result.description}
+                      </p>
+                    )}
                   </div>
                 </CommandItem>
               ))}

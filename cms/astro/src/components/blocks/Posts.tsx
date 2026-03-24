@@ -37,18 +37,22 @@ const Posts = ({ data }: PostsProps) => {
   const [currentPage, setCurrentPage] = useState(() => {
     if (typeof window !== 'undefined') {
       const sp = new URLSearchParams(window.location.search);
+
       return Number(sp.get('page')) || 1;
     }
 
     return 1;
   });
 
-  const [paginatedPosts, setPaginatedPosts] = useState<Post[]>(currentPage === 1 ? posts || [] : []);
+  const [paginatedPosts, setPaginatedPosts] = useState<Post[]>(
+    currentPage === 1 ? posts || [] : [],
+  );
 
   useEffect(() => {
     const fetchPosts = async () => {
       if (currentPage === 1) {
         setPaginatedPosts(posts || []);
+
         return;
       }
 
@@ -138,11 +142,19 @@ const Posts = ({ data }: PostsProps) => {
       >
         {paginatedPosts && paginatedPosts.length > 0 ? (
           paginatedPosts.map((post) => (
-            <a key={post.id} href={`/blog/${post.slug}`} className="group block overflow-hidden rounded-lg">
+            <a
+              key={post.id}
+              href={`/blog/${post.slug}`}
+              className="group block overflow-hidden rounded-lg"
+            >
               <div className="relative w-full h-64 rounded-lg overflow-hidden">
                 {post.image && (
                   <DirectusImage
-                    uuid={typeof post.image === 'string' ? post.image : post.image?.id}
+                    uuid={
+                      typeof post.image === 'string'
+                        ? post.image
+                        : post.image?.id
+                    }
                     alt={post.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -154,7 +166,11 @@ const Posts = ({ data }: PostsProps) => {
                 <h3 className="text-xl group-hover:text-accent font-heading transition-colors duration-300">
                   {post.title}
                 </h3>
-                {post.description && <p className="text-sm text-foreground mt-2">{post.description}</p>}
+                {post.description && (
+                  <p className="text-sm text-foreground mt-2">
+                    {post.description}
+                  </p>
+                )}
               </div>
             </a>
           ))

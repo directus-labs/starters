@@ -10,7 +10,9 @@ export const submitForm = async (
   const TOKEN = import.meta.env.DIRECTUS_SERVER_TOKEN;
 
   if (!TOKEN) {
-    throw new Error('DIRECTUS_SERVER_TOKEN is not defined. Check your .env file.');
+    throw new Error(
+      'DIRECTUS_SERVER_TOKEN is not defined. Check your .env file.',
+    );
   }
 
   try {
@@ -25,7 +27,9 @@ export const submitForm = async (
         const formData = new FormData();
         formData.append('file', value);
 
-        const uploadedFile = await directus.request(withToken(TOKEN, uploadFiles(formData)));
+        const uploadedFile = await directus.request(
+          withToken(TOKEN, uploadFiles(formData)),
+        );
 
         if (uploadedFile && 'id' in uploadedFile) {
           submissionValues.push({
@@ -46,7 +50,9 @@ export const submitForm = async (
       values: submissionValues,
     };
 
-    await directus.request(withToken(TOKEN, createItem('form_submissions', payload)));
+    await directus.request(
+      withToken(TOKEN, createItem('form_submissions', payload)),
+    );
   } catch {
     throw new Error('Failed to submit form');
   }

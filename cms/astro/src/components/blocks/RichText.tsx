@@ -18,7 +18,9 @@ const RichText = ({ data, className }: RichTextProps) => {
   const { id, tagline, headline, content, alignment = 'left' } = data;
 
   return (
-    <div className={`mx-auto max-w-[600px] space-y-6 text-${alignment} ${className}`}>
+    <div
+      className={`mx-auto max-w-[600px] space-y-6 text-${alignment} ${className}`}
+    >
       {tagline && (
         <Tagline
           tagline={tagline}

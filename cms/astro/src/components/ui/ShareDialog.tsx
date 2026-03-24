@@ -68,7 +68,11 @@ const ShareDialog = ({ postUrl, postTitle }: ShareDialogProps) => {
               rel="noopener noreferrer"
               className="rounded bg-transparent inline-flex items-center justify-center transition-colors hover:opacity-70"
             >
-              <SocialIcon service={social.service} size={32} className="size-8" />
+              <SocialIcon
+                service={social.service}
+                size={32}
+                className="size-8"
+              />
             </a>
           ))}
         </div>
@@ -84,7 +88,11 @@ const ShareDialog = ({ postUrl, postTitle }: ShareDialogProps) => {
             <Copy />
           </Button>
         </div>
-        {copied && <p className="mt-2 text-sm text-green-600">Link copied to clipboard!</p>}
+        {copied && (
+          <p className="mt-2 text-sm text-green-600">
+            Link copied to clipboard!
+          </p>
+        )}
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
             <Button type="button" variant="secondary">
