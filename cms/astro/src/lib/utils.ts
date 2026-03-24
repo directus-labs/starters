@@ -6,10 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Native debounce utility
-export function debounce<T extends (...args: any[]) => void>(
-  func: T,
-  wait: number,
-): (...args: Parameters<T>) => void {
+export function debounce<T extends (...args: any[]) => void>(func: T, wait: number): (...args: Parameters<T>) => void {
   let timeout: ReturnType<typeof setTimeout> | null;
 
   return (...args: Parameters<T>) => {

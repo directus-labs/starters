@@ -1,16 +1,8 @@
-import type {
-  BlockPost,
-  DirectusUser,
-  Page,
-  PageBlock,
-  Post,
-  Schema,
-} from '@/types/directus-schema';
+import type { BlockPost, DirectusUser, Page, PageBlock, Post, Schema } from '@/types/directus-schema';
 import type { QueryFilter } from '@directus/sdk';
 import { useDirectus } from './directus';
 
-const { directus, readItems, readItem, readSingleton, aggregate, withToken } =
-  useDirectus();
+const { directus, readItems, readItem, readSingleton, aggregate, withToken } = useDirectus();
 
 /**
  * Page fields configuration for Directus queries
@@ -36,12 +28,7 @@ const pageFields = [
       {
         item: {
           block_richtext: ['id', 'tagline', 'headline', 'content', 'alignment'],
-          block_gallery: [
-            'id',
-            'tagline',
-            'headline',
-            { items: ['id', 'directus_file', 'sort'] as any },
-          ],
+          block_gallery: ['id', 'tagline', 'headline', { items: ['id', 'directus_file', 'sort'] as any }],
           block_pricing: [
             'id',
             'tagline',
@@ -56,15 +43,7 @@ const pageFields = [
                 'features',
                 'is_highlighted',
                 {
-                  button: [
-                    'id',
-                    'label',
-                    'variant',
-                    'url',
-                    'type',
-                    { page: ['permalink'] },
-                    { post: ['slug'] },
-                  ],
+                  button: ['id', 'label', 'variant', 'url', 'type', { page: ['permalink'] }, { post: ['slug'] }],
                 },
               ],
             },
@@ -80,15 +59,7 @@ const pageFields = [
               button_group: [
                 'id',
                 {
-                  buttons: [
-                    'id',
-                    'label',
-                    'variant',
-                    'url',
-                    'type',
-                    { page: ['permalink'] },
-                    { post: ['slug'] },
-                  ],
+                  buttons: ['id', 'label', 'variant', 'url', 'type', { page: ['permalink'] }, { post: ['slug'] }],
                 },
               ],
             },
@@ -188,15 +159,7 @@ export const fetchPageData = async (
           // Always fetch published posts only (no preview mode for dynamic content)
           const posts = await directus.request<Post[]>(
             readItems('posts', {
-              fields: [
-                'id',
-                'title',
-                'description',
-                'slug',
-                'image',
-                'status',
-                'published_at',
-              ],
+              fields: ['id', 'title', 'description', 'slug', 'image', 'status', 'published_at'],
               filter: { status: { _eq: 'published' } },
               sort: ['-published_at'],
               limit,
@@ -211,16 +174,11 @@ export const fetchPageData = async (
             }),
           );
 
-          const totalPages = Math.ceil(
-            Number(countResponse[0]?.count || 0) / limit,
-          );
+          const totalPages = Math.ceil(Number(countResponse[0]?.count || 0) / limit);
 
           // Attach the fetched posts to the block for frontend rendering
-          (
-            block.item as BlockPost & { posts: Post[]; totalPages: number }
-          ).posts = posts;
-          (block.item as BlockPost & { totalPages: number }).totalPages =
-            totalPages;
+          (block.item as BlockPost & { posts: Post[]; totalPages: number }).posts = posts;
+          (block.item as BlockPost & { totalPages: number }).totalPages = totalPages;
         }
       }
     }
@@ -239,16 +197,7 @@ export const fetchSiteData = async () => {
     const [globals, headerNavigation, footerNavigation] = await Promise.all([
       directus.request(
         readSingleton('globals', {
-          fields: [
-            'id',
-            'title',
-            'description',
-            'logo',
-            'logo_dark_mode',
-            'social_links',
-            'accent_color',
-            'favicon',
-          ],
+          fields: ['id', 'title', 'description', 'logo', 'logo_dark_mode', 'social_links', 'accent_color', 'favicon'],
         }),
       ),
       directus.request(
@@ -294,9 +243,7 @@ export const fetchSiteData = async () => {
 
     return { globals, headerNavigation, footerNavigation };
   } catch {
-    console.warn(
-      'Could not fetch site data from Directus (Directus may not be configured or running)',
-    );
+    console.warn('Could not fetch site data from Directus (Directus may not be configured or running)');
 
     return {
       globals: null,
@@ -309,20 +256,14 @@ export const fetchSiteData = async () => {
 /**
  * Fetches a single blog post by slug. Handles live preview mode
  */
-export const fetchPostBySlug = async (
-  slug: string,
-  draft = false,
-  token?: string,
-) => {
+export const fetchPostBySlug = async (slug: string, draft = false, token?: string) => {
   if (!slug || slug.trim() === '') {
     throw new Error('Invalid slug: slug must be a non-empty string');
   }
 
   try {
     const filter: QueryFilter<Schema, Post> =
-      token || draft
-        ? { slug: { _eq: slug } }
-        : { slug: { _eq: slug }, status: { _eq: 'published' } };
+      token || draft ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } };
 
     const posts = (await directus.request(
       withToken(
@@ -401,10 +342,7 @@ export const fetchAuthorById = async (authorId: string) => {
 /**
  * Fetches paginated blog posts.
  */
-export const fetchPaginatedPosts = async (
-  limit: number,
-  page: number,
-): Promise<Post[]> => {
+export const fetchPaginatedPosts = async (limit: number, page: number): Promise<Post[]> => {
   try {
     const response = (await directus.request(
       readItems('posts', {
@@ -431,10 +369,7 @@ export const searchContent = async (search: string) => {
       directus.request(
         readItems('pages', {
           filter: {
-            _or: [
-              { title: { _contains: search } },
-              { permalink: { _contains: search } },
-            ],
+            _or: [{ title: { _contains: search } }, { permalink: { _contains: search } }],
           },
           fields: ['id', 'title', 'permalink', 'seo'],
         }),
@@ -491,9 +426,7 @@ export const fetchAllPosts = async (): Promise<Post[]> => {
 
     return posts;
   } catch {
-    console.warn(
-      'Could not fetch blog posts from Directus (Directus may not be configured or running)',
-    );
+    console.warn('Could not fetch blog posts from Directus (Directus may not be configured or running)');
 
     return [];
   }
@@ -509,9 +442,7 @@ export const fetchAllPages = async (): Promise<Page[]> => {
 
     return pages.filter((p) => typeof p.permalink === 'string');
   } catch {
-    console.warn(
-      'Could not fetch pages from Directus (Directus may not be configured or running)',
-    );
+    console.warn('Could not fetch pages from Directus (Directus may not be configured or running)');
 
     return [];
   }
@@ -520,11 +451,7 @@ export const fetchAllPages = async (): Promise<Page[]> => {
 /**
  * Fetches page data by id and version
  */
-export const fetchPageDataById = async (
-  id: string,
-  version: string,
-  token?: string,
-): Promise<Page> => {
+export const fetchPageDataById = async (id: string, version: string, token?: string): Promise<Page> => {
   if (!id || id.trim() === '') {
     throw new Error('Invalid id: id must be a non-empty string');
   }
@@ -557,11 +484,7 @@ export const fetchPageDataById = async (
 /**
  * Helper function to get page ID by permalink
  */
-export const getPageIdByPermalink = async (
-  permalink: string,
-  token?: string,
-  preview?: boolean,
-) => {
+export const getPageIdByPermalink = async (permalink: string, token?: string, preview?: boolean) => {
   if (!permalink || permalink.trim() === '') {
     throw new Error('Invalid permalink: permalink must be a non-empty string');
   }

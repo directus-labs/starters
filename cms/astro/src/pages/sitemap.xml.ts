@@ -8,10 +8,7 @@ export async function GET() {
   }
 
   try {
-    const [pages, posts] = await Promise.all([
-      fetchAllPages(),
-      fetchAllPosts(),
-    ]);
+    const [pages, posts] = await Promise.all([fetchAllPages(), fetchAllPosts()]);
 
     const pageUrls = pages.map((page) => ({
       url: `${siteUrl}${page.permalink}`,

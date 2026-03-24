@@ -1,10 +1,4 @@
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from '@/components/ui/select';
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import type { UseFormReturn } from 'react-hook-form';
 
 interface SelectFieldProps {
@@ -14,17 +8,9 @@ interface SelectFieldProps {
   form: UseFormReturn;
 }
 
-const SelectField = ({
-  name,
-  options,
-  placeholder,
-  form,
-}: SelectFieldProps) => {
+const SelectField = ({ name, options, placeholder, form }: SelectFieldProps) => {
   return (
-    <Select
-      onValueChange={(value) => form.setValue(name, value)}
-      value={form.getValues(name)}
-    >
+    <Select onValueChange={(value) => form.setValue(name, value)} value={form.getValues(name)}>
       <SelectTrigger>
         <SelectValue placeholder={placeholder || 'Select an option'} />
       </SelectTrigger>

@@ -1,10 +1,6 @@
 export const prerender = false;
 import type { APIRoute } from 'astro';
-import {
-  fetchPostBySlug,
-  fetchPostByIdAndVersion,
-  getPostIdBySlug,
-} from '@/lib/directus/fetchers';
+import { fetchPostBySlug, fetchPostByIdAndVersion, getPostIdBySlug } from '@/lib/directus/fetchers';
 
 export const GET: APIRoute = async ({ request }) => {
   const { pathname, searchParams } = new URL(request.url);

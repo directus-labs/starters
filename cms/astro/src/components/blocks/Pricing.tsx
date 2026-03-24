@@ -39,8 +39,7 @@ const Pricing = ({ data }: PricingProps) => {
 
   const gridClasses = (() => {
     if (pricing_cards.length === 1) return 'grid-cols-1';
-    if (pricing_cards.length % 3 === 0)
-      return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+    if (pricing_cards.length % 3 === 0) return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
 
     return 'grid-cols-1 sm:grid-cols-2';
   })();

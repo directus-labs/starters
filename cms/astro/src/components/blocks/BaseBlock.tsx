@@ -26,11 +26,7 @@ export default function BaseBlock({ block }: BaseBlockProps) {
   const Component = components[block.collection];
 
   const itemId =
-    typeof block.item === 'object' && block.item !== null && 'id' in block.item
-      ? (block.item.id as string)
-      : undefined;
+    typeof block.item === 'object' && block.item !== null && 'id' in block.item ? (block.item.id as string) : undefined;
 
-  return Component ? (
-    <Component data={block.item} blockId={block.id} itemId={itemId} />
-  ) : null;
+  return Component ? <Component data={block.item} blockId={block.id} itemId={itemId} /> : null;
 }

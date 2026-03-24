@@ -1,9 +1,5 @@
 import type { APIRoute } from 'astro';
-import {
-  fetchPageData,
-  fetchPageDataById,
-  getPageIdByPermalink,
-} from '@/lib/directus/fetchers';
+import { fetchPageData, fetchPageDataById, getPageIdByPermalink } from '@/lib/directus/fetchers';
 export const prerender = false;
 
 export const GET: APIRoute = async ({ request }) => {
@@ -31,9 +27,7 @@ export const GET: APIRoute = async ({ request }) => {
       page = await fetchPageData(permalink, 1, token, preview);
     }
 
-    const blocks = (page?.blocks ?? []).filter(
-      (block: any) => typeof block === 'object' && block.collection,
-    );
+    const blocks = (page?.blocks ?? []).filter((block: any) => typeof block === 'object' && block.collection);
 
     return new Response(JSON.stringify({ blocks }), {
       headers: { 'Content-Type': 'application/json' },

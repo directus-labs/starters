@@ -31,14 +31,10 @@ export default function VisualEditingLayout({
   const footerRef = useRef<HTMLElement>(null);
   const { isVisualEditingEnabled, apply } = useVisualEditing();
 
-  const { data: siteData, mutate } = useSWR(
-    isVisualEditingEnabled ? '/api/site-data' : null,
-    fetchSiteData,
-    {
-      fallbackData: { globals, headerNavigation, footerNavigation },
-      revalidateOnFocus: false,
-    },
-  );
+  const { data: siteData, mutate } = useSWR(isVisualEditingEnabled ? '/api/site-data' : null, fetchSiteData, {
+    fallbackData: { globals, headerNavigation, footerNavigation },
+    revalidateOnFocus: false,
+  });
 
   const layoutData = siteData ?? {
     globals,
@@ -79,27 +75,19 @@ export default function VisualEditingLayout({
             id: item.id,
             title: item.title || '',
             url: item.url,
-            page: item.page
-              ? { permalink: item.page.permalink || '' }
-              : undefined,
+            page: item.page ? { permalink: item.page.permalink || '' } : undefined,
             children: (item.children || []).map((child: any) => ({
               id: child.id,
               title: child.title || '',
               url: child.url,
-              page: child.page
-                ? { permalink: child.page.permalink || '' }
-                : undefined,
+              page: child.page ? { permalink: child.page.permalink || '' } : undefined,
             })),
           })),
         }}
         globals={{
           ...safeGlobals,
-          logo:
-            typeof safeGlobals.logo === 'string' ? safeGlobals.logo : undefined,
-          logo_dark_mode:
-            typeof safeGlobals.logo_dark_mode === 'string'
-              ? safeGlobals.logo_dark_mode
-              : undefined,
+          logo: typeof safeGlobals.logo === 'string' ? safeGlobals.logo : undefined,
+          logo_dark_mode: typeof safeGlobals.logo_dark_mode === 'string' ? safeGlobals.logo_dark_mode : undefined,
         }}
       />
 
@@ -110,21 +98,14 @@ export default function VisualEditingLayout({
           ...layoutData.footerNavigation,
           items: (layoutData.footerNavigation.items || []).map((item: any) => ({
             ...item,
-            page: item.page
-              ? { permalink: item.page.permalink || null }
-              : undefined,
+            page: item.page ? { permalink: item.page.permalink || null } : undefined,
           })),
         }}
         globals={{
           ...safeGlobals,
           logo: typeof safeGlobals.logo === 'string' ? safeGlobals.logo : null,
-          logo_dark_mode:
-            typeof safeGlobals.logo_dark_mode === 'string'
-              ? safeGlobals.logo_dark_mode
-              : null,
-          social_links: Array.isArray(safeGlobals.social_links)
-            ? safeGlobals.social_links
-            : undefined,
+          logo_dark_mode: typeof safeGlobals.logo_dark_mode === 'string' ? safeGlobals.logo_dark_mode : null,
+          social_links: Array.isArray(safeGlobals.social_links) ? safeGlobals.social_links : undefined,
         }}
       />
     </>

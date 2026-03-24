@@ -60,25 +60,15 @@ const Button = ({
 
   const content = (
     <span className="flex items-center space-x-2">
-      {icon && iconPosition === 'left' && Icon && (
-        <Icon className="size-4 shrink-0" />
-      )}
+      {icon && iconPosition === 'left' && Icon && <Icon className="size-4 shrink-0" />}
       {label && <span>{label}</span>}
-      {icon && iconPosition === 'right' && Icon && (
-        <Icon className="size-4 shrink-0" />
-      )}
+      {icon && iconPosition === 'right' && Icon && <Icon className="size-4 shrink-0" />}
     </span>
   );
 
   if (href) {
     return (
-      <ShadcnButton
-        asChild
-        variant={variant}
-        size={size}
-        className={buttonClasses}
-        disabled={disabled}
-      >
+      <ShadcnButton asChild variant={variant} size={size} className={buttonClasses} disabled={disabled}>
         {href.startsWith('/') ? (
           <a href={href}>{content}</a>
         ) : (
@@ -91,13 +81,7 @@ const Button = ({
   }
 
   return (
-    <ShadcnButton
-      variant={variant}
-      size={size}
-      className={buttonClasses}
-      onClick={onClick}
-      disabled={disabled}
-    >
+    <ShadcnButton variant={variant} size={size} className={buttonClasses} onClick={onClick} disabled={disabled}>
       {content}
     </ShadcnButton>
   );

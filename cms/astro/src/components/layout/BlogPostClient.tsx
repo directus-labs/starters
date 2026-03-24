@@ -44,8 +44,7 @@ export default function BlogPostClient({
     setHasVersioningParams(!!params.get('version') || !!params.get('id'));
   }, []);
 
-  const shouldFetchLive =
-    (isVisualEditingEnabled || isPreviewEnabled || hasVersioningParams) && slug;
+  const shouldFetchLive = (isVisualEditingEnabled || isPreviewEnabled || hasVersioningParams) && slug;
 
   const swrKey = shouldFetchLive
     ? `/api/blog-post/${encodeURIComponent(slug!)}?${new URLSearchParams(window.location.search).toString()}&visual-editing=${isVisualEditingEnabled}`
@@ -69,9 +68,7 @@ export default function BlogPostClient({
     },
   );
 
-  const post = isVisualEditingEnabled
-    ? (swrData?.post ?? initialPost)
-    : initialPost;
+  const post = isVisualEditingEnabled ? (swrData?.post ?? initialPost) : initialPost;
 
   useEffect(() => {
     if (isVisualEditingEnabled) {
@@ -149,20 +146,14 @@ export default function BlogPostClient({
               >
                 {author.avatar && (
                   <DirectusImage
-                    uuid={
-                      typeof author.avatar === 'string'
-                        ? author.avatar
-                        : author.avatar.id
-                    }
+                    uuid={typeof author.avatar === 'string' ? author.avatar : author.avatar.id}
                     alt={authorName || 'author avatar'}
                     className="rounded-full object-cover"
                     width={48}
                     height={48}
                   />
                 )}
-                <div>
-                  {authorName && <p className="font-bold">{authorName}</p>}
-                </div>
+                <div>{authorName && <p className="font-bold">{authorName}</p>}</div>
               </div>
             )}
 

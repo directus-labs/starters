@@ -7,12 +7,7 @@ interface TitleProps {
   'data-directus'?: string;
 }
 
-const Tagline = ({
-  tagline,
-  className = '',
-  as: Component = 'h2',
-  'data-directus': dataDirectus,
-}: TitleProps) => {
+const Tagline = ({ tagline, className = '', as: Component = 'h2', 'data-directus': dataDirectus }: TitleProps) => {
   if (!tagline) return null;
 
   return (

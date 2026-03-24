@@ -9,19 +9,13 @@ import '@/styles/fonts.css';
 const { globals, headerNavigation, footerNavigation } = await fetchSiteData();
 
 const siteTitle = globals?.title || 'Simple CMS';
-const siteDescription =
-  globals?.description ||
-  'A starter CMS template powered by Directus and Astro.';
-const faviconURL = globals?.favicon
-  ? getDirectusAssetURL(globals.favicon)
-  : '/favicon.ico';
+const siteDescription = globals?.description || 'A starter CMS template powered by Directus and Astro.';
+const faviconURL = globals?.favicon ? getDirectusAssetURL(globals.favicon) : '/favicon.ico';
 const accentColor = globals?.accent_color || '#6644ff';
 
 const { metadata } = Astro.props;
 
-const fullTitle = metadata?.title
-  ? `${metadata.title} | ${siteTitle}`
-  : siteTitle;
+const fullTitle = metadata?.title ? `${metadata.title} | ${siteTitle}` : siteTitle;
 ---
 <html lang="en" style={`--accent-color: ${accentColor};`}>
   <head>

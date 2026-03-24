@@ -2,13 +2,7 @@ import { useEffect, useState } from 'react';
 import DirectusImage from '@/components/shared/DirectusImage';
 import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogClose,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogClose } from '@/components/ui/dialog';
 import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-react';
 import { setAttr } from '@directus/visual-editing';
 
@@ -35,13 +29,8 @@ const Gallery = ({ data }: GalleryProps) => {
   const [isLightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const sortedItems = items
-    ? [...items].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0))
-    : [];
-  const isValidIndex =
-    sortedItems.length > 0 &&
-    currentIndex >= 0 &&
-    currentIndex < sortedItems.length;
+  const sortedItems = items ? [...items].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)) : [];
+  const isValidIndex = sortedItems.length > 0 && currentIndex >= 0 && currentIndex < sortedItems.length;
 
   const handleOpenLightbox = (index: number) => {
     setCurrentIndex(index);
@@ -136,9 +125,7 @@ const Gallery = ({ data }: GalleryProps) => {
                   className="w-full h-auto object-cover rounded-lg"
                 />
               ) : (
-                <div className="flex items-center justify-center h-full text-sm text-gray-500">
-                  Image not available
-                </div>
+                <div className="flex items-center justify-center h-full text-sm text-gray-500">Image not available</div>
               )}
               <div className="absolute inset-0 bg-white bg-opacity-60 opacity-0 group-hover:opacity-100 flex justify-center items-center transition-opacity duration-300">
                 <ZoomIn className="size-10 text-gray-800" />

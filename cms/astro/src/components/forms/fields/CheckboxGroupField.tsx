@@ -7,17 +7,11 @@ interface CheckboxGroupFieldProps {
   form: UseFormReturn<Record<string, string[]>>;
 }
 
-const CheckboxGroupField = ({
-  name,
-  options,
-  form,
-}: CheckboxGroupFieldProps) => {
+const CheckboxGroupField = ({ name, options, form }: CheckboxGroupFieldProps) => {
   const currentValues = form.watch(name) || [];
 
   const toggleValue = (value: string, checked?: boolean) => {
-    const updatedValues = checked
-      ? [...currentValues, value]
-      : currentValues.filter((v) => v !== value);
+    const updatedValues = checked ? [...currentValues, value] : currentValues.filter((v) => v !== value);
 
     form.setValue(name, updatedValues);
   };

@@ -7,12 +7,7 @@ interface HeadlineProps {
   'data-directus'?: string;
 }
 
-const Headline = ({
-  headline,
-  className = '',
-  as: Component = 'p',
-  'data-directus': dataDirectus,
-}: HeadlineProps) => {
+const Headline = ({ headline, className = '', as: Component = 'p', 'data-directus': dataDirectus }: HeadlineProps) => {
   if (!headline) return null;
 
   return (

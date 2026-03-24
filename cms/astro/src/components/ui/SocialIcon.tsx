@@ -29,13 +29,7 @@ interface SocialIconProps extends React.HTMLAttributes<HTMLImageElement> {
   size?: number;
 }
 
-const SocialIcon = ({
-  service,
-  alt,
-  className,
-  size = 24,
-  ...props
-}: SocialIconProps) => {
+const SocialIcon = ({ service, alt, className, size = 24, ...props }: SocialIconProps) => {
   const key = service.toLowerCase();
   const icon = socialIcons[key];
 

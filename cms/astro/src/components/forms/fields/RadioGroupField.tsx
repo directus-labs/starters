@@ -9,11 +9,7 @@ interface RadioGroupFieldProps {
 }
 
 const RadioGroupField = ({ name, options, form }: RadioGroupFieldProps) => (
-  <RadioGroup
-    value={form.watch(name)}
-    onValueChange={(value) => form.setValue(name, value)}
-    className=""
-  >
+  <RadioGroup value={form.watch(name)} onValueChange={(value) => form.setValue(name, value)} className="">
     {options.map((option) => (
       <div key={option.value} className="flex items-center gap-x-2">
         <RadioGroupItem id={`${name}-${option.value}`} value={option.value} />

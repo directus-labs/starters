@@ -22,9 +22,7 @@ function postProcessTypes(outputPath: string): void {
 
 function promptForToken(): Promise<string> {
   if (!process.stdin.isTTY) {
-    console.error(
-      'Cannot prompt for token: not a TTY. Set DIRECTUS_ADMIN_TOKEN env var instead.',
-    );
+    console.error('Cannot prompt for token: not a TTY. Set DIRECTUS_ADMIN_TOKEN env var instead.');
 
     process.exit(1);
   }
@@ -46,8 +44,7 @@ async function generateTypes() {
   }
 
   // Allow token to be provided via environment variable for testing/CI, otherwise prompt
-  const directusToken =
-    process.env.DIRECTUS_ADMIN_TOKEN || (await promptForToken());
+  const directusToken = process.env.DIRECTUS_ADMIN_TOKEN || (await promptForToken());
 
   if (!directusToken) {
     console.error('Error: Admin token is required to generate types.');

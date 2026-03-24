@@ -21,10 +21,7 @@ interface VisualEditingOptions {
   elements?: HTMLElement;
 }
 
-const fetchBlocks = async (
-  permalink: string,
-  params: URLSearchParams,
-): Promise<PageBlock[]> => {
+const fetchBlocks = async (permalink: string, params: URLSearchParams): Promise<PageBlock[]> => {
   const queryString = params.toString();
   const url = `/api/page-blocks?permalink=${encodeURIComponent(permalink)}${queryString ? `&${queryString}` : ''}`;
   const res = await fetch(url);
@@ -34,11 +31,7 @@ const fetchBlocks = async (
   return data.blocks;
 };
 
-export default function PageClient({
-  initialSections,
-  permalink,
-  pageId,
-}: PageClientProps) {
+export default function PageClient({ initialSections, permalink, pageId }: PageClientProps) {
   const { isVisualEditingEnabled, apply } = useVisualEditing();
 
   const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
@@ -50,11 +43,8 @@ export default function PageClient({
     setHasVersioningParams(!!params.get('version') || !!params.get('id'));
   }, []);
 
-  const shouldFetchLive =
-    isVisualEditingEnabled || isPreviewEnabled || hasVersioningParams;
-  const swrKey = shouldFetchLive
-    ? `${permalink}-${new URLSearchParams(window.location.search).toString()}`
-    : null;
+  const shouldFetchLive = isVisualEditingEnabled || isPreviewEnabled || hasVersioningParams;
+  const swrKey = shouldFetchLive ? `${permalink}-${new URLSearchParams(window.location.search).toString()}` : null;
 
   const { data: sections = initialSections, mutate } = useSWR(
     swrKey,
@@ -74,9 +64,7 @@ export default function PageClient({
       } as VisualEditingOptions);
 
       apply({
-        elements: document.querySelector(
-          '#visual-editing-button',
-        ) as HTMLElement,
+        elements: document.querySelector('#visual-editing-button') as HTMLElement,
         customClass: 'visual-editing-button-class',
         onSaved: () => {
           mutate();

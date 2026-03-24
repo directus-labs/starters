@@ -7,9 +7,7 @@ export interface AstroRedirect {
   permanent: boolean;
 }
 
-export async function fetchRedirects(
-  directusUrl: string,
-): Promise<AstroRedirect[]> {
+export async function fetchRedirects(directusUrl: string): Promise<AstroRedirect[]> {
   if (!directusUrl) {
     console.warn('Missing DIRECTUS_URL');
 
@@ -38,9 +36,7 @@ export async function fetchRedirects(
       }
 
       // If response code is not set, default to 301
-      let responseCode = redirect.response_code
-        ? parseInt(redirect.response_code)
-        : 301;
+      let responseCode = redirect.response_code ? parseInt(redirect.response_code) : 301;
 
       if (responseCode !== 301 && responseCode !== 302) {
         responseCode = 301;
@@ -56,18 +52,14 @@ export async function fetchRedirects(
     console.info(`${redirects.length} redirects loaded`);
 
     for (const redirect of redirects) {
-      console.info(
-        `${redirect.response_code} - From: ${redirect.url_from} To:${redirect.url_to}`,
-      );
+      console.info(`${redirect.response_code} - From: ${redirect.url_from} To:${redirect.url_to}`);
     }
 
     return processedRedirects;
   } catch (error) {
     // During build/config evaluation, Directus may not be available yet
     // Log as warning instead of error to avoid failing builds
-    const isBuildPhase =
-      process.env.npm_lifecycle_event === 'build' ||
-      process.env.ASTRO_BUILD === 'true';
+    const isBuildPhase = process.env.npm_lifecycle_event === 'build' || process.env.ASTRO_BUILD === 'true';
 
     if (isBuildPhase) {
       console.warn(

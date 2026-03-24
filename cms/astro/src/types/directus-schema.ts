@@ -10,14 +10,7 @@ export interface ExtensionSeoMetadata {
   og_image?: string;
   additional_fields?: Record<string, unknown>;
   sitemap?: {
-    change_frequency:
-      | 'always'
-      | 'hourly'
-      | 'daily'
-      | 'weekly'
-      | 'monthly'
-      | 'yearly'
-      | 'never';
+    change_frequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never';
     priority: string;
   };
   no_index?: boolean;
@@ -225,16 +218,7 @@ export interface FormField {
   /** @description Unique field identifier, not shown to users (lowercase, hyphenated) */
   name?: string | null;
   /** @description Input type for the field */
-  type?:
-    | 'text'
-    | 'textarea'
-    | 'checkbox'
-    | 'checkbox_group'
-    | 'radio'
-    | 'file'
-    | 'select'
-    | 'hidden'
-    | null;
+  type?: 'text' | 'textarea' | 'checkbox' | 'checkbox_group' | 'radio' | 'file' | 'select' | 'hidden' | null;
   /** @description Text label shown to form users. */
   label?: string | null;
   /** @description Default text shown in empty input. */
@@ -319,16 +303,7 @@ export interface Globals {
   /** @description Social media profile URLs */
   social_links?: Array<{
     url: string;
-    service:
-      | 'facebook'
-      | 'instagram'
-      | 'linkedin'
-      | 'x'
-      | 'vimeo'
-      | 'youtube'
-      | 'github'
-      | 'discord'
-      | 'docker';
+    service: 'facebook' | 'instagram' | 'linkedin' | 'x' | 'vimeo' | 'youtube' | 'github' | 'discord' | 'docker';
   }> | null;
   /** @description Short phrase describing the site. */
   tagline?: string | null;
@@ -402,15 +377,7 @@ export interface PageBlock {
   /** @description The id of the page that this block belongs to. */
   page?: Page | string | null;
   /** @description The data for the block. */
-  item?:
-    | BlockHero
-    | BlockRichtext
-    | BlockForm
-    | BlockPost
-    | BlockGallery
-    | BlockPricing
-    | string
-    | null;
+  item?: BlockHero | BlockRichtext | BlockForm | BlockPost | BlockGallery | BlockPricing | string | null;
   /** @description The collection (type of block). */
   collection?: string | null;
   /** @description Temporarily hide this block on the website without having to remove it from your page. */
@@ -815,14 +782,9 @@ export interface DirectusSettings {
     | `gpt-5.2-chat-latest`
     | `gpt-5.2-pro`
   > | null;
-  ai_anthropic_allowed_models?: Array<
-    `claude-haiku-4-5` | `claude-sonnet-4-5` | `claude-opus-4-5`
-  > | null;
+  ai_anthropic_allowed_models?: Array<`claude-haiku-4-5` | `claude-sonnet-4-5` | `claude-opus-4-5`> | null;
   ai_google_allowed_models?: Array<
-    | `gemini-3-pro-preview`
-    | `gemini-3-flash-preview`
-    | `gemini-2.5-pro`
-    | `gemini-2.5-flash`
+    `gemini-3-pro-preview` | `gemini-3-flash-preview` | `gemini-2.5-pro` | `gemini-2.5-flash`
   > | null;
   collaborative_editing_enabled?: boolean;
 }
@@ -841,13 +803,7 @@ export interface DirectusUser {
   avatar?: DirectusFile | string | null;
   language?: string | null;
   tfa_secret?: string | null;
-  status?:
-    | 'draft'
-    | 'invited'
-    | 'unverified'
-    | 'active'
-    | 'suspended'
-    | 'archived';
+  status?: 'draft' | 'invited' | 'unverified' | 'active' | 'suspended' | 'archived';
   role?: DirectusRole | string | null;
   token?: string | null;
   last_access?: string | null;

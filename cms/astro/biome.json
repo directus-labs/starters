@@ -1,11 +1,6 @@
 {
   "files": {
-    "ignore": [
-      "**/dist/**",
-      "**/node_modules/**",
-      "**/.astro/**",
-      "**/.vercel/**"
-    ]
+    "ignore": ["**/dist/**", "**/node_modules/**", "**/.astro/**", "**/.vercel/**"]
   },
   "formatter": {
     "enabled": true,
@@ -13,7 +8,7 @@
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf",
-    "lineWidth": 80,
+    "lineWidth": 120,
     "attributePosition": "auto",
     "ignore": [
       "**/*.min.js",
