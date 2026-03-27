@@ -1,6 +1,6 @@
+import type { BlockPost, DirectusUser, Page, PageBlock, Post, Schema } from '@/types/directus-schema';
 import type { QueryFilter } from '@directus/sdk';
 import { useDirectus } from './directus';
-import type { BlockPost, Page, PageBlock, Post, Schema, DirectusUser } from '@/types/directus-schema';
 
 const { directus, readItems, readItem, readSingleton, aggregate, withToken } = useDirectus();
 
@@ -123,7 +123,10 @@ export const fetchPageData = async (
           limit: 1,
           fields: pageFields,
           deep: {
-            blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+            blocks: {
+              _sort: ['sort'],
+              _filter: { hide_block: { _neq: true } },
+            },
           },
         }),
       ),
@@ -240,14 +243,20 @@ export const fetchSiteData = async () => {
 
     return { globals, headerNavigation, footerNavigation };
   } catch {
-    throw new Error('Failed to fetch site data');
+    console.warn('Could not fetch site data from Directus (Directus may not be configured or running)');
+
+    return {
+      globals: null,
+      headerNavigation: { id: 'main', items: [] },
+      footerNavigation: { id: 'footer', items: [] },
+    };
   }
 };
 
 /**
  * Fetches a single blog post by slug. Handles live preview mode
  */
-export const fetchPostBySlug = async (slug: string, draft: boolean = false, token?: string) => {
+export const fetchPostBySlug = async (slug: string, draft = false, token?: string) => {
   if (!slug || slug.trim() === '') {
     throw new Error('Invalid slug: slug must be a non-empty string');
   }
@@ -417,7 +426,9 @@ export const fetchAllPosts = async (): Promise<Post[]> => {
 
     return posts;
   } catch {
-    throw new Error('Failed to fetch all blog posts');
+    console.warn('Could not fetch blog posts from Directus (Directus may not be configured or running)');
+
+    return [];
   }
 };
 export const fetchAllPages = async (): Promise<Page[]> => {
@@ -431,7 +442,9 @@ export const fetchAllPages = async (): Promise<Page[]> => {
 
     return pages.filter((p) => typeof p.permalink === 'string');
   } catch {
-    throw new Error('Failed to fetch all pages');
+    console.warn('Could not fetch pages from Directus (Directus may not be configured or running)');
+
+    return [];
   }
 };
 
@@ -455,7 +468,10 @@ export const fetchPageDataById = async (id: string, version: string, token?: str
           version,
           fields: pageFields,
           deep: {
-            blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+            blocks: {
+              _sort: ['sort'],
+              _filter: { hide_block: { _neq: true } },
+            },
           },
         }),
       ),

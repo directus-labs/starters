@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import type { Schema } from '@/types/directus-schema';
 import { createDirectus, readItems, rest } from '@directus/sdk';
 
@@ -11,6 +10,7 @@ export interface AstroRedirect {
 export async function fetchRedirects(directusUrl: string): Promise<AstroRedirect[]> {
   if (!directusUrl) {
     console.warn('Missing DIRECTUS_URL');
+
     return [];
   }
 
@@ -62,7 +62,9 @@ export async function fetchRedirects(directusUrl: string): Promise<AstroRedirect
     const isBuildPhase = process.env.npm_lifecycle_event === 'build' || process.env.ASTRO_BUILD === 'true';
 
     if (isBuildPhase) {
-      console.warn('Could not load redirects from Directus during build (this is normal if Directus is not configured/running)');
+      console.warn(
+        'Could not load redirects from Directus during build (this is normal if Directus is not configured/running)',
+      );
     } else {
       console.error('Error loading redirects', error);
     }

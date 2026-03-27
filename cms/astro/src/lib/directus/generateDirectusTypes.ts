@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { config } from 'dotenv';
 import { generateDirectusTypes } from 'directus-sdk-typegen';
 import readlineSync from 'readline-sync';

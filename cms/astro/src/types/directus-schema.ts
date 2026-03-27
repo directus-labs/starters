@@ -485,7 +485,12 @@ export interface DirectusCollection {
   display_template?: string | null;
   hidden?: boolean;
   singleton?: boolean;
-  translations?: Array<{ language: string; translation: string; singular: string; plural: string }> | null;
+  translations?: Array<{
+    language: string;
+    translation: string;
+    singular: string;
+    plural: string;
+  }> | null;
   archive_field?: string | null;
   archive_app_filter?: boolean;
   archive_value?: string | null;
@@ -761,7 +766,10 @@ export interface DirectusSettings {
     reasoning: boolean;
     providerOptions: Record<string, any>;
   }> | null;
-  ai_openai_compatible_headers?: Array<{ header: string; value: string }> | null;
+  ai_openai_compatible_headers?: Array<{
+    header: string;
+    value: string;
+  }> | null;
   ai_openai_allowed_models?: Array<
     | `gpt-4o-mini`
     | `gpt-4.1-nano`

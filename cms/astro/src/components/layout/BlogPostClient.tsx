@@ -59,6 +59,7 @@ export default function BlogPostClient({
         throw new Error(error.error || 'Failed to fetch post');
       }
       const data = await res.json();
+
       return data;
     },
     {

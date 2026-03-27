@@ -1,51 +1,49 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import clsx from "clsx";
-import React from "react";
+import { useState, useEffect } from 'react';
+import clsx from 'clsx';
+import React from 'react';
 
 interface ThemeToggleProps {
   className?: string;
 }
 
 export default function ThemeToggle({ className }: ThemeToggleProps) {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    if (storedTheme === "dark" || (!storedTheme && prefersDark)) {
-      setTheme("dark");
-      document.documentElement.classList.add("dark");
+    const storedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+      setTheme('dark');
+      document.documentElement.classList.add('dark');
     } else {
-      setTheme("light");
-      document.documentElement.classList.remove("dark");
+      setTheme('light');
+      document.documentElement.classList.remove('dark');
     }
   }, []);
 
   const toggleTheme = () => {
-    if (theme === "dark") {
-      setTheme("light");
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
+    if (theme === 'dark') {
+      setTheme('light');
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     } else {
-      setTheme("dark");
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
+      setTheme('dark');
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     }
   };
 
-  const isDark = theme === "dark";
+  const isDark = theme === 'dark';
 
   return (
     <button
       aria-label="Toggle Dark Mode"
       onClick={toggleTheme}
       className={clsx(
-        "p-1 rounded-full border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 transition-colors",
-        className
+        'p-1 rounded-full border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 transition-colors',
+        className,
       )}
     >
       {isDark ? (
