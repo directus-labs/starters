@@ -19,8 +19,6 @@ interface BlogPostClientProps {
   authorName: string;
   postUrl: string;
   slug?: string;
-  token: string | null;
-  isDraft?: boolean;
 }
 
 export default function BlogPostClient({
@@ -30,8 +28,6 @@ export default function BlogPostClient({
   authorName,
   postUrl,
   slug,
-  token,
-  isDraft,
 }: BlogPostClientProps) {
   const { isVisualEditingEnabled, apply } = useVisualEditing();
 

@@ -193,6 +193,10 @@ export const fetchPageData = async (
  * Fetches global site data, header navigation, and footer navigation.
  */
 export const fetchSiteData = async () => {
+  if (!import.meta.env.PUBLIC_DIRECTUS_URL?.trim()) {
+    throw new Error('Missing PUBLIC_DIRECTUS_URL. Copy .env.example to .env and set your Directus URL.');
+  }
+
   try {
     const [globals, headerNavigation, footerNavigation] = await Promise.all([
       directus.request(
@@ -242,14 +246,8 @@ export const fetchSiteData = async () => {
     ]);
 
     return { globals, headerNavigation, footerNavigation };
-  } catch {
-    console.warn('Could not fetch site data from Directus (Directus may not be configured or running)');
-
-    return {
-      globals: null,
-      headerNavigation: { id: 'main', items: [] },
-      footerNavigation: { id: 'footer', items: [] },
-    };
+  } catch (error) {
+    throw new Error(`Failed to fetch site data from Directus: ${error}`);
   }
 };
 
@@ -426,9 +424,7 @@ export const fetchAllPosts = async (): Promise<Post[]> => {
 
     return posts;
   } catch {
-    console.warn('Could not fetch blog posts from Directus (Directus may not be configured or running)');
-
-    return [];
+    throw new Error('Failed to fetch all blog posts');
   }
 };
 export const fetchAllPages = async (): Promise<Page[]> => {
@@ -442,9 +438,7 @@ export const fetchAllPages = async (): Promise<Page[]> => {
 
     return pages.filter((p) => typeof p.permalink === 'string');
   } catch {
-    console.warn('Could not fetch pages from Directus (Directus may not be configured or running)');
-
-    return [];
+    throw new Error('Failed to fetch all pages');
   }
 };
 
