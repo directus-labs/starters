@@ -5,9 +5,8 @@
 </div>
 
 This is an **Astro-based CMS Template** that is fully integrated with [Directus](https://directus.io/), offering a CMS
-solution for managing and delivering content seamlessly. The template leverages modern technologies like **Astro’s
-File-based Routing**, **Tailwind CSS**, and **Shadcn components**, providing a complete and scalable starting point for
-building CMS-powered web applications.
+solution for managing and delivering content seamlessly. It uses **Astro 6** with **file-based routing**, **Tailwind
+CSS**, and **Shadcn-style components**, as a starting point for CMS-powered sites.
 
 ## **Features**
 
@@ -16,7 +15,7 @@ building CMS-powered web applications.
 - **Tailwind CSS**: Fully integrated for rapid UI styling.
 - **TypeScript**: Ensures type safety and reliable code quality.
 - **Shadcn Components**: Pre-built, customizable UI components for modern design systems.
-- **ESLint & Prettier**: Enforces consistent code quality and formatting.
+- **ESLint & Biome**: Linting and formatting.
 - **Dynamic Page Builder**: A page builder interface for creating and customizing CMS-driven pages.
 - **Preview Mode**: Built-in draft/live preview for editing unpublished content.
 - **Optimized Dependency Management**: Project is set up with **pnpm** for faster and more efficient package management.
@@ -50,7 +49,7 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 
 To set up this template, ensure you have the following:
 
-- **Node.js** (16.x or newer)
+- **Node.js** (see `.nvmrc` for the version used in this repo)
 - **npm** or **pnpm**
 - Access to a **Directus** instance ([cloud or self-hosted](../../README.md))
 
@@ -72,14 +71,14 @@ You can instantly deploy this template using Vercel:
 > To deploy on Netlify:
 >
 > 1. Run: `pnpm add -D @astrojs/netlify`
-> 2. In `astro.config.mjs`, swap the adapter lines:
+> 2. In `astro.config.ts`, swap the adapter (see
+>    [Netlify adapter docs](https://docs.astro.build/en/guides/integrations-guide/netlify/)):
 >
->    ```js
+>    ```ts
 >    import netlify from '@astrojs/netlify';
->    // import vercel from '@astrojs/vercel/serverless';
+>    // import vercel from '@astrojs/vercel';
 >
 >    export default defineConfig({
->      output: 'static',
 >      adapter: netlify(),
 >    });
 >    ```
@@ -119,15 +118,8 @@ To get started, you need to configure environment variables. Follow these steps:
 
    _(You can also use `npm install` if you prefer.)_
 
-   **Note for npm users:** This project uses pnpm workspaces. If you're using npm instead, you'll need to:
-
-   ```bash
-   rm -rf node_modules pnpm-lock.yaml
-   npm install
-   ```
-
-   npm doesn't support pnpm's `workspace:` protocol, so you must remove `pnpm-lock.yaml` before running `npm install`.
-   The project will generate a `package-lock.json` instead.
+   **Note for npm users:** Remove `pnpm-lock.yaml` (and optionally `node_modules`) if you want npm to generate its own
+   lockfile, then run `npm install`.
 
 2. Start the development server:
 

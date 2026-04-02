@@ -1,6 +1,6 @@
+import type { BlockPost, DirectusUser, Page, PageBlock, Post, Schema } from '@/types/directus-schema';
 import type { QueryFilter } from '@directus/sdk';
 import { useDirectus } from './directus';
-import type { BlockPost, Page, PageBlock, Post, Schema, DirectusUser } from '@/types/directus-schema';
 
 const { directus, readItems, readItem, readSingleton, aggregate, withToken } = useDirectus();
 
@@ -123,7 +123,10 @@ export const fetchPageData = async (
           limit: 1,
           fields: pageFields,
           deep: {
-            blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+            blocks: {
+              _sort: ['sort'],
+              _filter: { hide_block: { _neq: true } },
+            },
           },
         }),
       ),
@@ -190,6 +193,10 @@ export const fetchPageData = async (
  * Fetches global site data, header navigation, and footer navigation.
  */
 export const fetchSiteData = async () => {
+  if (!import.meta.env.PUBLIC_DIRECTUS_URL?.trim()) {
+    throw new Error('Missing PUBLIC_DIRECTUS_URL. Copy .env.example to .env and set your Directus URL.');
+  }
+
   try {
     const [globals, headerNavigation, footerNavigation] = await Promise.all([
       directus.request(
@@ -239,15 +246,15 @@ export const fetchSiteData = async () => {
     ]);
 
     return { globals, headerNavigation, footerNavigation };
-  } catch {
-    throw new Error('Failed to fetch site data');
+  } catch (error) {
+    throw new Error(`Failed to fetch site data from Directus: ${error}`);
   }
 };
 
 /**
  * Fetches a single blog post by slug. Handles live preview mode
  */
-export const fetchPostBySlug = async (slug: string, draft: boolean = false, token?: string) => {
+export const fetchPostBySlug = async (slug: string, draft = false, token?: string) => {
   if (!slug || slug.trim() === '') {
     throw new Error('Invalid slug: slug must be a non-empty string');
   }
@@ -455,7 +462,10 @@ export const fetchPageDataById = async (id: string, version: string, token?: str
           version,
           fields: pageFields,
           deep: {
-            blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+            blocks: {
+              _sort: ['sort'],
+              _filter: { hide_block: { _neq: true } },
+            },
           },
         }),
       ),

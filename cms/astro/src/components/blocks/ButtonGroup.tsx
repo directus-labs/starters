@@ -1,6 +1,6 @@
-import React from "react";
-import Button, { type ButtonProps } from "./Button";
-import { cn } from "@/lib/utils";
+import React from 'react';
+import Button, { type ButtonProps } from './Button';
+import { cn } from '@/lib/utils';
 
 export interface ButtonGroupProps {
   buttons: Array<ButtonProps>;
@@ -10,7 +10,7 @@ export interface ButtonGroupProps {
 const ButtonGroup = ({ buttons, className }: ButtonGroupProps) => {
   if (!buttons || !buttons.length) return null;
 
-  const containerClasses = cn("flex gap-4", className);
+  const containerClasses = cn('flex gap-4', className);
 
   return (
     <div className={containerClasses}>

@@ -1,7 +1,8 @@
 ---
-import { fetchSiteData } from '@/lib/directus/fetchers';
-import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
+import { ClientRouter } from 'astro:transitions';
 import VisualEditingLayout from '@/components/layout/VisualEditingLayout';
+import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
+import { fetchSiteData } from '@/lib/directus/fetchers';
 import '@/styles/global.css';
 import '@/styles/fonts.css';
 
@@ -33,20 +34,39 @@ const fullTitle = metadata?.title ? `${metadata.title} | ${siteTitle}` : siteTit
       </>
     )}
 
+    <ClientRouter />
+
     <script is:inline>
       const getThemePreference = () => {
         if (localStorage.getItem('theme')) {
           return localStorage.getItem('theme');
         }
+
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       };
-      const isDark = getThemePreference() === 'dark';
-      document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+      const applyThemeClass = () => {
+        const isDark = getThemePreference() === 'dark';
+        document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+      };
+      // is:inline scripts re-run on every view transition; remove the previous
+      // listener before adding a new one (new closure each run makes
+      // removeEventListener a no-op without storing the reference on window).
+      if (window.__themeHandler) {
+        document.removeEventListener('astro:after-swap', window.__themeHandler);
+      }
+      window.__themeHandler = applyThemeClass;
+      document.addEventListener('astro:after-swap', applyThemeClass);
+      // Disconnect any previous MutationObserver before creating a new one.
+      if (window.__themeObserver) {
+        window.__themeObserver.disconnect();
+      }
       const observer = new MutationObserver(() => {
         const isDark = document.documentElement.classList.contains('dark');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
       });
       observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+      window.__themeObserver = observer;
+      applyThemeClass();
     </script>
   </head>
   <body class="antialiased font-sans flex flex-col min-h-screen">
