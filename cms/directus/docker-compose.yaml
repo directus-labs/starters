@@ -28,7 +28,7 @@ services:
       start_period: 30s
 
   directus:
-    image: directus/directus:11.17.1
+    image: directus/directus:11.17.2
     ports:
       - ${DIRECTUS_PORT}:8055
     volumes:
@@ -58,6 +58,8 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
       WEBSOCKETS_ENABLED: ${WEBSOCKETS_ENABLED}
+      WEBSOCKETS_COLLAB_ENABLED: ${WEBSOCKETS_COLLAB_ENABLED}
+      LOG_LEVEL: ${LOG_LEVEL}
 
       PUBLIC_URL: ${PUBLIC_URL}
 
