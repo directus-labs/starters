@@ -44,6 +44,7 @@
 		"@directus/visual-editing": "2.0.0",
 		"@formkit/auto-animate": "0.8.2",
 		"@hookform/resolvers": "5.0.1",
+		"@iconify/utils": "3.1.0",
 		"@nuxt/fonts": "0.14.0",
 		"@nuxt/icon": "1.11.0",
 		"@nuxt/image": "2.0.0",
@@ -73,6 +74,7 @@
 	},
 	"pnpm": {
 		"overrides": {
+			"@iconify/utils": "3.1.0",
 			"@isaacs/brace-expansion@<6": "5.0.1",
 			"flatted": "^3.4.2",
 			"h3": "^1.15.9",
@@ -99,6 +101,7 @@
 		}
 	},
 	"overrides": {
+		"@iconify/utils": "3.1.0",
 		"@isaacs/brace-expansion@<6": "5.0.1",
 		"flatted": "^3.4.2",
 		"h3": "^1.15.9",
