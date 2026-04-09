@@ -1,9 +1,8 @@
+import { isPreviewQueryValue } from '~/utils/preview-query';
+
 export function useLivePreview() {
 	return usePreviewMode({
-		// Enable preview mode when preview param exists in URL
-		shouldEnable: () => {
-			const route = useRoute();
-			return !!route.query.preview;
-		},
+		// `token` in the URL is ignored for auth (server uses DIRECTUS_SERVER_TOKEN)
+		shouldEnable: () => isPreviewQueryValue(useRoute().query.preview),
 	});
 }

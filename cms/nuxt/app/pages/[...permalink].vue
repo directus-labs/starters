@@ -1,29 +1,28 @@
 <script setup lang="ts">
 import type { Page, PageBlock } from '#shared/types/schema';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
+import { firstQueryValue, isPreviewQueryValue, normalizeVersionQuery } from '~/utils/preview-query';
 
 const route = useRoute();
 const { enabled } = useLivePreview();
+const previewActive = computed(() => isPreviewQueryValue(route.query.preview) || enabled.value);
 const pageUrl = useRequestURL();
 const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
 
 const permalink = withoutTrailingSlash(withLeadingSlash(route.path));
-
-// Handle Live Preview adding version=main which is not required when fetching the main version.
-const version = route.query.version !== 'main' ? (route.query.version as string) : undefined;
 
 const {
 	data: page,
 	error,
 	refresh,
 } = await useFetch<Page>('/api/pages/one', {
-	key: `pages-${permalink}`,
-	query: {
+	key: computed(() => `pages-${permalink}-${normalizeVersionQuery(route.query.version) ?? ''}-${firstQueryValue(route.query.id) ?? ''}-${previewActive.value ? 'p' : '0'}`),
+	query: computed(() => ({
 		permalink,
-		preview: enabled.value ? true : undefined,
-		id: route.query.id as string,
-		version,
-	},
+		preview: previewActive.value ? true : undefined,
+		id: firstQueryValue(route.query.id),
+		version: normalizeVersionQuery(route.query.version),
+	})),
 });
 
 if (!page.value || error.value) {

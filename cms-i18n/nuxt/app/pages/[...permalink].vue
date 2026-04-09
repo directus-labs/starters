@@ -4,9 +4,11 @@ import type { SiteData } from '#shared/types/site-data';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 import { addLocaleToPath, getNotFoundMessage } from '~/lib/i18n/utils';
 import { DEFAULT_LOCALE } from '~/lib/i18n/config';
+import { firstQueryValue, isPreviewQueryValue, normalizeVersionQuery } from '~/utils/preview-query';
 
 const route = useRoute();
 const { enabled } = useLivePreview();
+const previewActive = computed(() => isPreviewQueryValue(route.query.preview) || enabled.value);
 const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
 const runtimeConfig = useRuntimeConfig();
 
@@ -16,9 +18,6 @@ const locale = currentLocale.value;
 
 // Use the path without locale for the permalink
 const permalink = withoutTrailingSlash(withLeadingSlash(pathNoLocale.value));
-
-// Handle Live Preview adding version=main which is not required when fetching the main version.
-const version = route.query.version === 'main' ? undefined : (route.query.version as string);
 
 const {
 	public: { siteUrl },
@@ -30,17 +29,20 @@ const {
 	error: pageError,
 	refresh,
 } = await useFetch<Page>('/api/pages/one', {
-	key: `pages-${permalink}-${locale}`,
+	key: computed(
+		() =>
+			`pages-${permalink}-${locale}-${normalizeVersionQuery(route.query.version) ?? ''}-${firstQueryValue(route.query.id) ?? ''}-${previewActive.value ? 'p' : '0'}`,
+	),
 	headers: {
 		'x-locale': locale,
 	},
-	query: {
+	query: computed(() => ({
 		permalink,
-		preview: enabled.value ? true : undefined,
-		id: route.query.id as string,
-		version,
+		preview: previewActive.value ? true : undefined,
+		id: firstQueryValue(route.query.id),
+		version: normalizeVersionQuery(route.query.version),
 		locale,
-	},
+	})),
 });
 
 // Handle 404

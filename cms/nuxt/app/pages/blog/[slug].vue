@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { Post, DirectusUser } from '#shared/types/schema';
+import { firstQueryValue, isPreviewQueryValue, normalizeVersionQuery } from '~/utils/preview-query';
 
 const route = useRoute();
 const { enabled } = useLivePreview();
+const previewActive = computed(() => isPreviewQueryValue(route.query.preview) || enabled.value);
 const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
 const {
 	public: { siteUrl },
@@ -14,19 +16,16 @@ const postUrl = `${baseUrl}/blog/${slug}`;
 
 const wrapperRef = ref<HTMLElement | null>(null);
 
-// Handle Live Preview adding version=main which is not required when fetching the main version.
-const version = route.query.version !== 'main' ? (route.query.version as string) : undefined;
-
 const { data, error, refresh } = await useFetch<{
 	post: Post;
 	relatedPosts: Post[];
 }>(() => `/api/posts/${slug}`, {
-	key: `posts-${slug}`,
-	query: {
-		preview: enabled.value ? true : undefined,
-		id: route.query.id as string,
-		version,
-	},
+	key: computed(() => `posts-${slug}-${normalizeVersionQuery(route.query.version) ?? ''}-${firstQueryValue(route.query.id) ?? ''}-${previewActive.value ? 'p' : '0'}`),
+	query: computed(() => ({
+		preview: previewActive.value ? true : undefined,
+		id: firstQueryValue(route.query.id),
+		version: normalizeVersionQuery(route.query.version),
+	})),
 });
 
 if (!data.value || error.value) {

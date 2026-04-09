@@ -1,5 +1,7 @@
 import { withoutTrailingSlash, withLeadingSlash } from 'ufo';
 import type { Page, PageBlock, BlockPost, Post } from '#shared/types/schema';
+import { firstQueryValue, isPreviewQueryValue, normalizeVersionQuery } from '../../../app/utils/preview-query';
+import { serverTokenForPreviewOrVersion } from '../../utils/preview-auth';
 
 /**
  * Page fields configuration for Directus queries
@@ -123,21 +125,21 @@ const pageFields = [
 export default defineEventHandler(async (event) => {
 	const query = getQuery(event);
 
-	const { preview, permalink: rawPermalink, id } = query;
-	// Handle Live Preview adding version=main which is not required when fetching the main version.
-	const version = String(query.version) !== 'main' ? query.version : undefined;
+	const previewFlag = isPreviewQueryValue(query.preview);
+	const rawPermalink = firstQueryValue(query.permalink) ?? '/';
+	const id = firstQueryValue(query.id);
+	const version = normalizeVersionQuery(query.version);
 
 	// Normalize permalink: ensure it starts with / and doesn't end with /
 	// This handles various URL formats consistently
 	const permalink = withoutTrailingSlash(withLeadingSlash(String(rawPermalink)));
 
-	// Use the server token from runtimeConfig when preview mode is enabled
 	const config = useRuntimeConfig();
-	const token = preview === 'true' ? (config.directusServerToken as string) || null : null;
+	const token = serverTokenForPreviewOrVersion(config, previewFlag, version);
 
 	try {
 		let page: Page;
-		let pageId = id as string;
+		let pageId = id || '';
 
 		// Version-specific content handling:
 		// When a version is requested (e.g., "draft", "published"), we need to:
@@ -152,7 +154,7 @@ export default defineEventHandler(async (event) => {
 				fields: ['id'],
 			});
 
-			if (token && token.trim()) {
+			if (token) {
 				lookupRequest = withToken(token, lookupRequest);
 			}
 
@@ -172,7 +174,7 @@ export default defineEventHandler(async (event) => {
 			// This is used when we have both a pageId and want a specific version (draft, published, etc.)
 			try {
 				page = (await directusServer.request(
-					token && token.trim()
+					token
 						? withToken(
 								token,
 								readItem('pages', pageId, {
@@ -201,12 +203,12 @@ export default defineEventHandler(async (event) => {
 			// - If preview mode: fetch any status (to show draft content)
 			// - If not preview: only fetch published content (for public viewing)
 			const pageData = await directusServer.request(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItems('pages', {
 								filter:
-									preview === 'true'
+									previewFlag
 										? { permalink: { _eq: permalink } }
 										: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
 								limit: 1,
@@ -218,7 +220,7 @@ export default defineEventHandler(async (event) => {
 						)
 					: readItems('pages', {
 							filter:
-								preview === 'true'
+								previewFlag
 									? { permalink: { _eq: permalink } }
 									: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
 							limit: 1,

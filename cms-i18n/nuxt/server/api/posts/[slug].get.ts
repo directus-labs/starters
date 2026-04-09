@@ -1,5 +1,7 @@
 import type { Post } from '#shared/types/schema';
 import { DEFAULT_LOCALE } from '~/lib/i18n/config';
+import { firstQueryValue, isPreviewQueryValue, normalizeVersionQuery } from '../../../app/utils/preview-query';
+import { serverTokenForPreviewOrVersion } from '../../utils/preview-auth';
 import { buildPostFields, buildTranslationsDeep, mergeTranslations } from '../../utils/directus-i18n';
 
 /**
@@ -27,25 +29,23 @@ export default defineEventHandler(async (event) => {
 	}
 
 	const query = getQuery(event);
-	const { preview, id, version: rawVersion } = query;
-
-	// 'main' is not a real Directus content version — strip it (it's a live preview indicator)
-	const version = String(rawVersion) !== 'main' ? rawVersion : undefined;
+	const previewFlag = isPreviewQueryValue(query.preview);
+	const id = firstQueryValue(query.id);
+	const version = normalizeVersionQuery(query.version);
 
 	// Get locale from event (set by middleware or query param)
 	const locale = getLocaleFromEvent(event);
 	const includeTranslations = locale !== DEFAULT_LOCALE;
 
-	// Use the server token from runtimeConfig when preview mode is enabled
 	const config = useRuntimeConfig();
-	const token = preview === 'true' ? (config.directusServerToken as string) || null : null;
+	const token = serverTokenForPreviewOrVersion(config, previewFlag, version);
 
 	// Build post fields with translation support
 	const postFields = buildPostFields(includeTranslations);
 
 	try {
 		let post: Post;
-		let postId = id as string;
+		let postId = id || '';
 
 		// Version-specific content handling:
 		// When a version is requested (e.g., "draft", "published"), we need to:
@@ -55,7 +55,7 @@ export default defineEventHandler(async (event) => {
 		if (version && !postId) {
 			// Look up post ID by slug - this is needed because Directus version API requires an ID
 			const postIdLookup = await directusServer.request(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItems('posts', {
@@ -84,7 +84,7 @@ export default defineEventHandler(async (event) => {
 			// Version-specific request: Use readItem with specific version
 			// This is used when we have both a postId and want a specific version (draft, published, etc.)
 			post = await directusServer.request<Post>(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItem('posts', postId, {
@@ -107,12 +107,11 @@ export default defineEventHandler(async (event) => {
 			// - If preview mode: fetch any status (to show draft content)
 			// - If not preview: only fetch published content (for public viewing)
 			const postsData = await directusServer.request<Post[]>(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItems('posts', {
-								filter:
-									preview === 'true' ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
+								filter: previewFlag ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
 								limit: 1,
 								// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 								fields: postFields,
@@ -120,8 +119,7 @@ export default defineEventHandler(async (event) => {
 							}),
 						)
 					: readItems('posts', {
-							filter:
-								preview === 'true' ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
+							filter: previewFlag ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
 							limit: 1,
 							// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 							fields: postFields,

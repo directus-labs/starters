@@ -8,6 +8,7 @@ import type { PageBlock } from '@/types/directus-schema';
 import { Button } from '@/components/ui/button';
 import { Pencil } from 'lucide-react';
 import { setAttr } from '@directus/visual-editing';
+import { searchParamsForPreviewApis } from '@/lib/preview-api-params';
 
 interface PageClientProps {
   initialSections: PageBlock[];
@@ -21,8 +22,8 @@ interface VisualEditingOptions {
   elements?: HTMLElement;
 }
 
-const fetchBlocks = async (permalink: string, params: URLSearchParams): Promise<PageBlock[]> => {
-  const queryString = params.toString();
+const fetchBlocks = async (permalink: string, search: string): Promise<PageBlock[]> => {
+  const queryString = searchParamsForPreviewApis(search).toString();
   const url = `/api/page-blocks?permalink=${encodeURIComponent(permalink)}${queryString ? `&${queryString}` : ''}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error('Failed to fetch blocks');
@@ -36,24 +37,25 @@ export default function PageClient({ initialSections, permalink, pageId }: PageC
 
   const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
   const [hasVersioningParams, setHasVersioningParams] = useState(false);
+  /** Set after mount — `window` is not available during SSR. */
+  const [clientSearch, setClientSearch] = useState('');
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
     setIsPreviewEnabled(params.get('preview') === 'true');
     setHasVersioningParams(!!params.get('version') || !!params.get('id'));
+    setClientSearch(search);
   }, []);
 
   const shouldFetchLive = isVisualEditingEnabled || isPreviewEnabled || hasVersioningParams;
-  const swrKey = shouldFetchLive ? `${permalink}-${new URLSearchParams(window.location.search).toString()}` : null;
+  const previewKeySuffix = searchParamsForPreviewApis(clientSearch).toString();
+  const swrKey = shouldFetchLive ? `${permalink}-${previewKeySuffix}` : null;
 
-  const { data: sections = initialSections, mutate } = useSWR(
-    swrKey,
-    () => fetchBlocks(permalink, new URLSearchParams(window.location.search)),
-    {
-      fallbackData: initialSections,
-      revalidateOnFocus: false,
-    },
-  );
+  const { data: sections = initialSections, mutate } = useSWR(swrKey, () => fetchBlocks(permalink, clientSearch), {
+    fallbackData: initialSections,
+    revalidateOnFocus: false,
+  });
 
   useEffect(() => {
     if (isVisualEditingEnabled) {

@@ -3,15 +3,12 @@ import { draftMode } from 'next/headers';
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
 	const slug = searchParams.get('slug');
-	const token = searchParams.get('token');
-
-	if (!token || token !== process.env.DIRECTUS_SERVER_TOKEN) {
-		return new Response('Invalid token', { status: 401 });
-	}
 
 	if (!slug) {
 		return new Response('Missing slug', { status: 400 });
 	}
+
+	// Ignore `token` in the query string. Preview content uses DIRECTUS_SERVER_TOKEN on server routes.
 
 	(await draftMode()).enable();
 

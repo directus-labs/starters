@@ -1,4 +1,6 @@
 import type { Post } from '#shared/types/schema';
+import { firstQueryValue, isPreviewQueryValue, normalizeVersionQuery } from '../../../app/utils/preview-query';
+import { serverTokenForPreviewOrVersion } from '../../utils/preview-auth';
 
 /**
  * Post fields configuration for Directus queries
@@ -47,17 +49,16 @@ export default defineEventHandler(async (event) => {
 	}
 
 	const query = getQuery(event);
-	const { preview, id } = query;
-	// Handle Live Preview adding version=main which is not required when fetching the main version.
-	const version = String(query.version) !== 'main' ? query.version : undefined;
+	const previewFlag = isPreviewQueryValue(query.preview);
+	const id = firstQueryValue(query.id);
+	const version = normalizeVersionQuery(query.version);
 
-	// Use the server token from runtimeConfig when preview mode is enabled
 	const config = useRuntimeConfig();
-	const token = preview === 'true' ? (config.directusServerToken as string) || null : null;
+	const token = serverTokenForPreviewOrVersion(config, previewFlag, version);
 
 	try {
 		let post: Post;
-		let postId = id as string;
+		let postId = id || '';
 
 		// Version-specific content handling:
 		// When a version is requested (e.g., "draft", "published"), we need to:
@@ -67,7 +68,7 @@ export default defineEventHandler(async (event) => {
 		if (version && !postId) {
 			// Look up post ID by slug - this is needed because Directus version API requires an ID
 			const postIdLookup = await directusServer.request(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItems('posts', {
@@ -96,7 +97,7 @@ export default defineEventHandler(async (event) => {
 			// Version-specific request: Use readItem with specific version
 			// This is used when we have both a postId and want a specific version (draft, published, etc.)
 			post = (await directusServer.request(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItem('posts', postId, {
@@ -115,19 +116,19 @@ export default defineEventHandler(async (event) => {
 			// - If preview mode: fetch any status (to show draft content)
 			// - If not preview: only fetch published content (for public viewing)
 			const postsData = await directusServer.request(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItems('posts', {
 								filter:
-									preview === 'true' ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
+									previewFlag ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
 								limit: 1,
 								fields: postFields as any,
 							}),
 						)
 					: readItems('posts', {
 							filter:
-								preview === 'true' ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
+								previewFlag ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
 							limit: 1,
 							fields: postFields as any,
 						}),

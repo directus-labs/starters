@@ -3,9 +3,11 @@ import type { Post, DirectusUser } from '#shared/types/schema';
 import type { SiteData } from '#shared/types/site-data';
 import { localizeLink, addLocaleToPath, getNotFoundMessage } from '~/lib/i18n/utils';
 import { DEFAULT_LOCALE } from '~/lib/i18n/config';
+import { firstQueryValue, isPreviewQueryValue, normalizeVersionQuery } from '~/utils/preview-query';
 
 const route = useRoute();
-const { enabled, state } = useLivePreview();
+const { enabled } = useLivePreview();
+const previewActive = computed(() => isPreviewQueryValue(route.query.preview) || enabled.value);
 const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
 const runtimeConfig = useRuntimeConfig();
 
@@ -24,24 +26,23 @@ const {
 	public: { siteUrl },
 } = runtimeConfig;
 
-// Handle Live Preview adding version=main which is not required when fetching the main version.
-const version = route.query.version === 'main' ? undefined : (route.query.version as string);
-
 const { data, error, refresh } = await useFetch<{
 	post: Post;
 	relatedPosts: Post[];
 }>(() => `/api/posts/${slug}`, {
-	key: `posts-${slug}-${locale}`,
+	key: computed(
+		() =>
+			`posts-${slug}-${locale}-${normalizeVersionQuery(route.query.version) ?? ''}-${firstQueryValue(route.query.id) ?? ''}-${previewActive.value ? 'p' : '0'}`,
+	),
 	headers: {
 		'x-locale': locale,
 	},
-	query: {
-		preview: enabled.value ? true : undefined,
-		token: enabled.value ? state.token : undefined,
-		id: route.query.id as string,
-		version,
+	query: computed(() => ({
+		preview: previewActive.value ? true : undefined,
+		id: firstQueryValue(route.query.id),
+		version: normalizeVersionQuery(route.query.version),
 		locale,
-	},
+	})),
 });
 
 if (!data.value || error.value) {

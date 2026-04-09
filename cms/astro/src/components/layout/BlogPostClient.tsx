@@ -11,6 +11,7 @@ import Container from '@/components/ui/Container';
 import type { Post, DirectusUser } from '@/types/directus-schema';
 import { setAttr } from '@directus/visual-editing';
 import { useVisualEditing } from '@/hooks/useVisualEditing';
+import { searchParamsForPreviewApis } from '@/lib/preview-api-params';
 
 interface BlogPostClientProps {
   initialPost: Post;
@@ -33,17 +34,22 @@ export default function BlogPostClient({
 
   const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
   const [hasVersioningParams, setHasVersioningParams] = useState(false);
+  /** Set after mount — `window` is not available during SSR. */
+  const [clientSearch, setClientSearch] = useState('');
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
     setIsPreviewEnabled(params.get('preview') === 'true');
     setHasVersioningParams(!!params.get('version') || !!params.get('id'));
+    setClientSearch(search);
   }, []);
 
   const shouldFetchLive = (isVisualEditingEnabled || isPreviewEnabled || hasVersioningParams) && slug;
 
+  const previewQuery = searchParamsForPreviewApis(clientSearch).toString();
   const swrKey = shouldFetchLive
-    ? `/api/blog-post/${encodeURIComponent(slug!)}?${new URLSearchParams(window.location.search).toString()}&visual-editing=${isVisualEditingEnabled}`
+    ? `/api/blog-post/${encodeURIComponent(slug!)}?${[previewQuery, `visual-editing=${isVisualEditingEnabled}`].filter(Boolean).join('&')}`
     : null;
 
   const { data: swrData, mutate } = useSWR(

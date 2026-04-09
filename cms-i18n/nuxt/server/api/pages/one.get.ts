@@ -1,6 +1,8 @@
 import { withoutTrailingSlash, withLeadingSlash } from 'ufo';
 import type { Page, PageBlock, BlockPost, Post } from '#shared/types/schema';
 import { DEFAULT_LOCALE } from '~/lib/i18n/config';
+import { firstQueryValue, isPreviewQueryValue, normalizeVersionQuery } from '../../../app/utils/preview-query';
+import { serverTokenForPreviewOrVersion } from '../../utils/preview-auth';
 import { buildPageFields, buildTranslationsDeep, mergeTranslations } from '../../utils/directus-i18n';
 
 /**
@@ -25,10 +27,10 @@ import { buildPageFields, buildTranslationsDeep, mergeTranslations } from '../..
 export default defineEventHandler(async (event) => {
 	const query = getQuery(event);
 
-	const { preview, permalink: rawPermalink, id, version: rawVersion } = query;
-
-	// 'main' is not a real Directus content version — strip it (it's a live preview indicator)
-	const version = String(rawVersion) !== 'main' ? rawVersion : undefined;
+	const previewFlag = isPreviewQueryValue(query.preview);
+	const rawPermalink = firstQueryValue(query.permalink) ?? '/';
+	const id = firstQueryValue(query.id);
+	const version = normalizeVersionQuery(query.version);
 
 	// Get locale from event (set by middleware or query param)
 	const locale = getLocaleFromEvent(event);
@@ -38,9 +40,8 @@ export default defineEventHandler(async (event) => {
 	// This handles various URL formats consistently
 	const permalink = withoutTrailingSlash(withLeadingSlash(String(rawPermalink)));
 
-	// Use the server token from runtimeConfig when preview mode is enabled
 	const config = useRuntimeConfig();
-	const token = preview === 'true' ? (config.directusServerToken as string) || null : null;
+	const token = serverTokenForPreviewOrVersion(config, previewFlag, version);
 
 	// Build page fields with translation support
 	const pageFields = buildPageFields(includeTranslations);
@@ -93,7 +94,7 @@ export default defineEventHandler(async (event) => {
 
 	try {
 		let page: Page;
-		let pageId = id as string;
+		let pageId = id || '';
 
 		// Version-specific content handling:
 		// When a version is requested (e.g., "draft", "published"), we need to:
@@ -103,7 +104,7 @@ export default defineEventHandler(async (event) => {
 		if (version && !pageId) {
 			// Look up page ID by permalink - this is needed because Directus version API requires an ID
 			const pageIdLookup = await directusServer.request(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItems('pages', { filter: { permalink: { _eq: permalink } }, limit: 1, fields: ['id'] }),
@@ -125,7 +126,7 @@ export default defineEventHandler(async (event) => {
 			// This is used when we have both a pageId and want a specific version (draft, published, etc.)
 			try {
 				page = await directusServer.request<Page>(
-					token && token.trim()
+					token
 						? withToken(
 								token,
 								readItem('pages', pageId, {
@@ -152,14 +153,13 @@ export default defineEventHandler(async (event) => {
 			// - If preview mode: fetch any status (to show draft content)
 			// - If not preview: only fetch published content (for public viewing)
 			const pageData = await directusServer.request<Page[]>(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItems('pages', {
-								filter:
-									preview === 'true'
-										? { permalink: { _eq: permalink } }
-										: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+								filter: previewFlag
+									? { permalink: { _eq: permalink } }
+									: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
 								limit: 1,
 								// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 								fields: pageFields,
@@ -167,10 +167,9 @@ export default defineEventHandler(async (event) => {
 							}),
 						)
 					: readItems('pages', {
-							filter:
-								preview === 'true'
-									? { permalink: { _eq: permalink } }
-									: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+							filter: previewFlag
+								? { permalink: { _eq: permalink } }
+								: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
 							limit: 1,
 							// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 							fields: pageFields,
