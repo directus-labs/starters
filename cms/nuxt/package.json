@@ -95,9 +95,6 @@
 			"unhead": "2.1.12",
 			"yaml": "^2.8.3",
 			"ajv": "^6.14.0"
-		},
-		"patchedDependencies": {
-			"nitropack@2.13.1": "patches/nitropack@2.13.1.patch"
 		}
 	},
 	"overrides": {

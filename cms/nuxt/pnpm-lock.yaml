@@ -27,11 +27,6 @@ overrides:
   yaml: ^2.8.3
   ajv: ^6.14.0
 
-patchedDependencies:
-  nitropack@2.13.1:
-    hash: ec44ee17f59f3dbea802cd560c64f33bcc253eb03a6daba2240b45e75607208c
-    path: patches/nitropack@2.13.1.patch
-
 importers:
 
   .:
@@ -9674,7 +9669,7 @@ snapshots:
       impound: 1.1.5
       klona: 2.0.6
       mocked-exports: 0.1.1
-      nitropack: 2.13.1(patch_hash=ec44ee17f59f3dbea802cd560c64f33bcc253eb03a6daba2240b45e75607208c)
+      nitropack: 2.13.1
       nuxt: 4.4.2(@babel/core@7.29.0)(@babel/plugin-syntax-jsx@7.28.6(@babel/core@7.29.0))(@parcel/watcher@2.5.6)(@types/node@25.1.0)(@vitejs/devtools@0.1.13(@pnpm/logger@1001.0.1)(db0@0.3.4)(ioredis@5.9.2)(typescript@5.8.3)(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(yaml@2.8.3)))(@vue/compiler-sfc@3.5.32)(cac@6.7.14)(db0@0.3.4)(eslint@9.39.2(jiti@2.6.1))(ioredis@5.9.2)(lightningcss@1.32.0)(magicast@0.5.1)(optionator@0.9.4)(rollup-plugin-visualizer@6.0.5(rollup@4.60.1))(rollup@4.60.1)(terser@5.46.0)(typescript@5.8.3)(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(yaml@2.8.3))(vue-tsc@3.2.2(typescript@5.8.3))(yaml@2.8.3)
       nypm: 0.6.5
       ohash: 2.0.11
@@ -14547,7 +14542,7 @@ snapshots:
 
   negotiator@0.6.3: {}
 
-  nitropack@2.13.1(patch_hash=ec44ee17f59f3dbea802cd560c64f33bcc253eb03a6daba2240b45e75607208c):
+  nitropack@2.13.1:
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.2
       '@rollup/plugin-alias': 6.0.0(rollup@4.60.1)
