@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import type { Schema } from '@/types/directus-schema';
 import { createDirectus, readItems, rest } from '@directus/sdk';
 
@@ -11,6 +10,7 @@ export interface AstroRedirect {
 export async function fetchRedirects(directusUrl: string): Promise<AstroRedirect[]> {
   if (!directusUrl) {
     console.warn('Missing DIRECTUS_URL');
+
     return [];
   }
 
@@ -49,23 +49,18 @@ export async function fetchRedirects(directusUrl: string): Promise<AstroRedirect
       });
     }
 
-    console.info(`${redirects.length} redirects loaded`);
-
-    for (const redirect of redirects) {
-      console.info(`${redirect.response_code} - From: ${redirect.url_from} To:${redirect.url_to}`);
+    if (processedRedirects.length > 0) {
+      console.info(`Loaded ${processedRedirects.length} redirect(s) from Directus`);
     }
 
     return processedRedirects;
   } catch (error) {
-    // During build/config evaluation, Directus may not be available yet
-    // Log as warning instead of error to avoid failing builds
-    const isBuildPhase = process.env.npm_lifecycle_event === 'build' || process.env.ASTRO_BUILD === 'true';
-
-    if (isBuildPhase) {
-      console.warn('Could not load redirects from Directus during build (this is normal if Directus is not configured/running)');
-    } else {
-      console.error('Error loading redirects', error);
-    }
+    // astro.config evaluates this on dev, build, and preview — Directus may not be running yet.
+    // Use a short warning so we don't spam a full stack trace; redirects are optional at config time.
+    const detail = error instanceof Error ? error.message : String(error);
+    console.warn(
+      `[directus] Could not load redirects (${detail}). Continuing with no redirects — ensure Directus is running and PUBLIC_DIRECTUS_URL is correct (try http://127.0.0.1:8055 if localhost fails).`,
+    );
 
     return [];
   }

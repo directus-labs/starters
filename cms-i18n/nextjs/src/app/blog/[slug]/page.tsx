@@ -9,11 +9,11 @@ export default async function BlogPostPage({
 	searchParams,
 }: {
 	params: Promise<{ slug: string }>;
-	searchParams: Promise<{ id?: string; version?: string; preview?: string; token?: string }>;
+	searchParams: Promise<{ id?: string; version?: string; preview?: string }>;
 }) {
 	const { slug } = await params;
-	const { id, version, preview, token } = await searchParams;
-	const isDraft = (preview === 'true' && !!token) || (!!version && version !== 'published') || !!token;
+	const { id, version, preview } = await searchParams;
+	const isDraft = preview === 'true' || (!!version && version !== 'published');
 	const locale = await getLocaleFromHeaders();
 
 	// Live preview adds version = main which is not required when fetching the main version.
@@ -24,7 +24,7 @@ export default async function BlogPostPage({
 		let relatedPosts: Post[] = [];
 		// Content Version Fetching
 		if (fixedVersion && !postId) {
-			const foundPostId = await getPostIdBySlug(slug, token || undefined);
+			const foundPostId = await getPostIdBySlug(slug);
 			if (!foundPostId) {
 				return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
 			}
@@ -32,13 +32,12 @@ export default async function BlogPostPage({
 		}
 
 		if (postId && fixedVersion) {
-			const result = await fetchPostByIdAndVersion(postId, fixedVersion, slug, token || undefined, locale);
+			const result = await fetchPostByIdAndVersion(postId, fixedVersion, slug, undefined, locale);
 			post = result.post;
 			relatedPosts = result.relatedPosts;
 		} else {
 			const result = await fetchPostBySlug(slug, {
 				draft: isDraft,
-				token,
 				locale,
 			});
 			post = result.post;

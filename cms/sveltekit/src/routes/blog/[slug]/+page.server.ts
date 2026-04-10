@@ -4,28 +4,24 @@ import { getDirectusAssetURL } from '$lib/directus/directus-utils';
 import type { PageServerLoad } from './$types';
 import type { DirectusUser } from '$lib/types/directus-schema';
 import { error } from '@sveltejs/kit';
-import { DRAFT_MODE_SECRET } from '$env/static/private';
+import { DIRECTUS_SERVER_TOKEN } from '$env/static/private';
 
 export const load = (async (event) => {
 	const id = event.url.searchParams.get('id') || '';
 	let version = event.url.searchParams.get('version') || '' || undefined;
 	const preview = event.url.searchParams.get('preview') === 'true';
-	const token = event.url.searchParams.get('token') || '';
+	const token = preview ? DIRECTUS_SERVER_TOKEN : undefined;
 	const slug = event.params.slug;
 
 	// Live preview adds version = main which is not required when fetching the main version.
-	version = version != 'main' ? version : undefined;
+	version = version !== 'main' ? version : undefined;
 
-	const isDraft =
-		(preview && !!token) ||
-		(!!version && version !== 'published') ||
-		!!token ||
-		(event.url.searchParams.get('draft') === 'true' && token === DRAFT_MODE_SECRET);
+	const isDraft = preview || (!!version && version !== 'published');
 
 	try {
 		let postId = id;
 		if (version && !postId) {
-			const foundPostId = await getPostIdBySlug(slug, token || undefined);
+			const foundPostId = await getPostIdBySlug(slug, token);
 			if (!foundPostId) {
 				error(404, {
 					message: 'Post Not found'
@@ -36,17 +32,9 @@ export const load = (async (event) => {
 
 		let result;
 		if (postId && version) {
-			result = await fetchPostByIdAndVersion(
-				postId,
-				version,
-				slug,
-				token || undefined,
-			);
+			result = await fetchPostByIdAndVersion(postId, version, slug, token);
 		} else {
-			result = await fetchPostBySlug(
-				slug,
-				{ draft: isDraft, token: token || undefined },
-			);
+			result = await fetchPostBySlug(slug, { draft: isDraft, token });
 		}
 
 		const { post, relatedPosts } = result;

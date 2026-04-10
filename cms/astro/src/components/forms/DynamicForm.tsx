@@ -59,7 +59,7 @@ const DynamicForm = ({ fields, onSubmit, submitLabel, id }: DynamicFormProps) =>
         })}
       >
         {sortedFields.map((field) => (
-            <Field key={field.id} field={field} form={form} />
+          <Field key={field.id} field={field} form={form} />
         ))}
         <div className="w-full">
           <div

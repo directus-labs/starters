@@ -5,17 +5,104 @@ This repo provides a collection of starter templates for building web applicatio
 Each template is designed to be:
 
 - **Reusable**: Modular codebases that can be easily extended.
-- **Framework-Specific**: Tailored implementations for popular frameworks like Next.js, Nuxt.js, Svelte, and Astro.
+- **Framework-Specific**: Tailored implementations for popular frameworks like Next.js, Nuxt, SvelteKit, and Astro.
 - **Scalable**: Suitable for small to medium projects and scalable to larger applications.
 
 ---
 
-## **Current and Upcoming Templates**
+## **Available Templates**
 
-| Template             | Status         | Description                                  |
-| -------------------- | -------------- | -------------------------------------------- |
-| **CMS**       | 🚧 In Progress | A starter CMS template for managing content. |
-| **Headless eCommerce** | 🕒 Upcoming    | A template for building eCommerce solutions. |
+### CMS
+
+A full-featured CMS starter with pages, blog posts, dynamic forms, live preview, and visual editing.
+
+| Framework     | Source                                                                             | Deploy                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------- | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Next.js**   | [cms/nextjs](https://github.com/directus-labs/starters/tree/main/cms/nextjs)       | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nextjs&env=NEXT_PUBLIC_DIRECTUS_URL,NEXT_PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,NEXT_PUBLIC_ENABLE_VISUAL_EDITING) [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/nextjs) |
+| **Nuxt**      | [cms/nuxt](https://github.com/directus-labs/starters/tree/main/cms/nuxt)           | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nuxt&env=DIRECTUS_URL,NUXT_PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,NUXT_PUBLIC_ENABLE_VISUAL_EDITING) [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/nuxt)                 |
+| **Astro**     | [cms/astro](https://github.com/directus-labs/starters/tree/main/cms/astro)         | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/astro&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING) _(Vercel only — [see README to switch adapters](https://github.com/directus-labs/starters/tree/main/cms/astro#-one-click-deploy))_     |
+| **SvelteKit** | [cms/sveltekit](https://github.com/directus-labs/starters/tree/main/cms/sveltekit) | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING) _(Vercel only — [see README to switch adapters](https://github.com/directus-labs/starters/tree/main/cms/sveltekit#-one-click-deploy))_ |
+
+> **Adapter note:** Astro and SvelteKit only support one deployment adapter at a time. Both starters default to Vercel. To deploy to Netlify or another provider, swap the adapter in the config before deploying — see each template's README for instructions.
+
+→ [View CMS templates](./cms/)
+
+### CMS with i18n
+
+The same CMS starter with built-in internationalization: locale-based routing, Directus translation integration, and a
+language switcher.
+
+| Framework   | Source                                                                                 | Deploy                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ----------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Next.js** | [cms-i18n/nextjs](https://github.com/directus-labs/starters/tree/main/cms-i18n/nextjs) | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms-i18n/nextjs&env=NEXT_PUBLIC_DIRECTUS_URL,NEXT_PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,NEXT_PUBLIC_ENABLE_VISUAL_EDITING) [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms-i18n/nextjs) |
+| **Nuxt**    | [cms-i18n/nuxt](https://github.com/directus-labs/starters/tree/main/cms-i18n/nuxt)     | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms-i18n/nuxt&env=DIRECTUS_URL,NUXT_PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,NUXT_PUBLIC_ENABLE_VISUAL_EDITING) [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms-i18n/nuxt)                 |
+
+→ [View CMS i18n templates](./cms-i18n/)
+
+---
+
+## **Required Environment Variables**
+
+Each framework requires your Directus URL, a server-side token, and a site URL. The token (`DIRECTUS_SERVER_TOKEN`)
+comes from your **Webmaster** account and is used server-side for content access, preview, and form submissions. See the
+individual template README for full setup details.
+
+### CMS — Next.js
+
+```
+NEXT_PUBLIC_DIRECTUS_URL=https://your-project.directus.app
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+DIRECTUS_SERVER_TOKEN=your-webmaster-token
+NEXT_PUBLIC_ENABLE_VISUAL_EDITING=true
+```
+
+### CMS — Nuxt
+
+```
+DIRECTUS_URL=https://your-project.directus.app
+NUXT_PUBLIC_SITE_URL=http://localhost:3000
+DIRECTUS_SERVER_TOKEN=your-webmaster-token
+NUXT_PUBLIC_ENABLE_VISUAL_EDITING=true
+```
+
+### CMS — Astro
+
+```
+PUBLIC_DIRECTUS_URL=https://your-project.directus.app
+PUBLIC_SITE_URL=http://localhost:3000
+DIRECTUS_SERVER_TOKEN=your-webmaster-token
+PUBLIC_ENABLE_VISUAL_EDITING=true
+```
+
+### CMS — SvelteKit
+
+```
+PUBLIC_DIRECTUS_URL=https://your-project.directus.app
+PUBLIC_SITE_URL=http://localhost:3000
+DIRECTUS_SERVER_TOKEN=your-webmaster-token
+PUBLIC_ENABLE_VISUAL_EDITING=true
+```
+
+### CMS i18n — Next.js
+
+```
+NEXT_PUBLIC_DIRECTUS_URL=https://your-project.directus.app
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+DIRECTUS_SERVER_TOKEN=your-webmaster-token
+NEXT_PUBLIC_ENABLE_VISUAL_EDITING=true
+```
+
+### CMS i18n — Nuxt
+
+```
+DIRECTUS_URL=https://your-project.directus.app
+NUXT_PUBLIC_SITE_URL=http://localhost:3000
+DIRECTUS_SERVER_TOKEN=your-webmaster-token
+NUXT_PUBLIC_ENABLE_VISUAL_EDITING=true
+```
+
+> **Note:** A `DIRECTUS_ADMIN_TOKEN` is also needed locally for type generation (`pnpm run generate:types`). This is the
+> token from your Admin account and should never be used at runtime or committed to version control.
 
 ---
 
@@ -26,120 +113,41 @@ Each template is designed to be:
 1. **Create a New Project**:
 
    - Visit [Directus Cloud](https://directus.io/cloud/) and create a new project.
-   - During the setup process, be sure to select the appropriate template for your project (**CMS**, **Simple CRM**, or **Simple eCommerce**).
+   - During setup, select the **CMS** template.
    - Once started, it will take around 90 seconds for the Cloud Project to be created.
    - You will receive an email with your project URL, email, and password for logging in.
-   - If you used GitHub to create your account, this will be your GitHub email.
 
 2. **Access Your New Project**:
 
    - Log in to your project using the URL provided in your email or from the Directus Cloud Dashboard.
 
-3. **Generate a static token for the admin user**:
-   
-   - Go to the **Users Directory**
-   - Choose the Administrative User
-   - Scroll down to the **Token** field and generate a static token.
-   - Copy the token and save it. **Do not forget to save the user**, or you will encounter an "Invalid token" error.
+3. **Create accounts and generate tokens**:
 
-4. **Connect to Frontend Template**:
+   - Go to the **Users Directory** and create a **Webmaster** user account.
+   - Scroll down to the **Token** field, generate a static token, and save it — this is your `DIRECTUS_SERVER_TOKEN`.
+   - For local type generation, you can also generate a token on the **Admin** user — this is your
+     `DIRECTUS_ADMIN_TOKEN` (never exposed at runtime).
+   - **Do not forget to save the user**, or you will encounter an "Invalid token" error.
 
-	### 🚀 One-Click Deploy (Recommended for Beginners)
+4. **Connect to a Frontend Template**:
 
-	Want to use **Directus Cloud** and deploy a frontend instantly? Choose your framework below:
-
-	### Next.js
-
-	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nextjs&env=NEXT_PUBLIC_DIRECTUS_URL,NEXT_PUBLIC_SITE_URL,DIRECTUS_PUBLIC_TOKEN,NEXT_PUBLIC_ENABLE_VISUAL_EDITING)
-
-	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/nextjs)  
-
-	---
-
-	### Nuxt
-
-	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/nuxt&env=DIRECTUS_URL,NUXT_PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,NUXT_PUBLIC_ENABLE_VISUAL_EDITING)
-
-	[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms/nuxt)  
-
-	---
-
-	### Astro
-
-
-	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/astro&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,DIRECTUS_PUBLIC_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
-
-
-	**Adapter info:**  
-	Astro only supports one adapter at a time.  
-	This starter is set up for Vercel by default.  
-	See the [framework’s repo](https://github.com/directus-labs/starters/tree/main/cms/astro) for instructions on switching adapters.
-
-
-	---
-
-	### SvelteKit
-
-	[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/sveltekit&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,PUBLIC_DIRECTUS_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING,PUBLIC_DIRECTUS_FORM_TOKEN,DRAFT_MODE_SECRET)
-
-	> **Note:**  
-	> SvelteKit requires a few extra environment variables at deploy time:  
-	> - `PUBLIC_DIRECTUS_FORM_TOKEN`
-	> - `DRAFT_MODE_SECRET`
-	>
-	> When getting started, you can use the same static token for  
-	> `PUBLIC_DIRECTUS_FORM_TOKEN`, `DRAFT_MODE_SECRET`, and `PUBLIC_DIRECTUS_TOKEN`.  
-	> For better security, **configure separate tokens with only the required permissions** for each variable after setup.
-
-	---
-
-	**Adapter info:**  
-	SvelteKit only supports one adapter at a time.  
-	This starter is set up for Vercel by default.  
-	See the [framework’s repo](https://github.com/directus-labs/starters/tree/main/cms/sveltekit) for instructions on switching adapters.
-
-
+   Use one of the one-click deploy buttons above, or clone the source and follow the setup instructions in the
+   template's README.
 
 ---
 
-## Required Environment Variables
+### **Deploying Directus on Railway**
 
-Each framework requires your Directus endpoint, static token, and a `SITE_URL` that points to where the frontend will be served. If you don’t yet know your public URL, you can use `http://localhost:3000` (or your local dev port) and update later.
+Prefer to self-host? You can deploy Directus with the CMS schema pre-loaded directly to Railway.
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/directus-cms?referralCode=b2RDZT&utm_medium=integration&utm_source=template&utm_campaign=generic)
 
+This sets up a hosted Directus instance with the CMS template already applied. Once deployed:
 
-### Next.js
-```
-NEXT_PUBLIC_DIRECTUS_URL=https://your-project.directus.app
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-DIRECTUS_PUBLIC_TOKEN=your-access-token
-NEXT_PUBLIC_ENABLE_VISUAL_EDITING=true
-```
-
-### Nuxt
-```
-DIRECTUS_URL=https://your-project.directus.app
-NUXT_PUBLIC_SITE_URL=http://localhost:3000
-DIRECTUS_SERVER_TOKEN=your-access-token
-NUXT_PUBLIC_ENABLE_VISUAL_EDITING=true
-```
-### Astro
-```
-PUBLIC_DIRECTUS_URL=https://your-project.directus.app
-PUBLIC_SITE_URL=http://localhost:3000
-DIRECTUS_PUBLIC_TOKEN=your-access-token
-PUBLIC_ENABLE_VISUAL_EDITING=true
-```
-
-### SvelteKit
-```
-PUBLIC_DIRECTUS_URL=https://your-project.directus.app
-PUBLIC_SITE_URL=http://localhost:3000
-PUBLIC_DIRECTUS_TOKEN=your-access-token
-PUBLIC_ENABLE_VISUAL_EDITING=true
-PUBLIC_DIRECTUS_FORM_TOKEN=user-with-form-permissions
-DRAFT_MODE_SECRET=live-preview-token
-```
+1. Open your Railway project and grab the public URL for your Directus service — this is your `DIRECTUS_URL`.
+2. Log in to Directus, go to the **Users Directory**, and create a **Webmaster** user.
+3. Generate a static token for that user — this is your `DIRECTUS_SERVER_TOKEN`.
+4. Choose a frontend starter from the table above and follow the setup instructions in its README.
 
 ---
 
@@ -147,11 +155,13 @@ DRAFT_MODE_SECRET=live-preview-token
 
 ## Local Development with CLI
 
-Prefer to run everything locally? You can use Docker and our CLI tool to scaffold and launch a full Directus + frontend setup.
+Prefer to run everything locally? You can use Docker and our CLI tool to scaffold and launch a full Directus + frontend
+setup.
 
 ### 1. Install Docker
 
-Download and install Docker: [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
+Download and install Docker:
+[https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
 
 ### 2. Scaffold Your Project
 
@@ -170,14 +180,12 @@ Follow the prompts to:
 
 This sets up a local project with Docker-based Directus + frontend integration.
 
-### 3. Complete Directus setup and generate a static token
-   - This will start Directus on [http://localhost:8055](http://localhost:8055)
-   - On first launch, you'll be prompted to complete the admin setup
-   - After setup, generate a static token for the admin user:
-        - Go to the **Users Directory**
-        - Choose the Administrative User
-        - Scroll down to the **Token** field and generate a static token
-        - Copy the token and save it. **Do not forget to save the user**, or you will encounter an "Invalid token" error
+### 3. Complete Directus setup and generate tokens
+
+- This will start Directus on [http://localhost:8055](http://localhost:8055)
+- On first launch, you'll be prompted to complete the admin setup
+- After setup, create a **Webmaster** user and generate a static token for `DIRECTUS_SERVER_TOKEN`
+- Optionally generate a token on the Admin user for `DIRECTUS_ADMIN_TOKEN` (type generation only)
 
 ---
 
@@ -185,36 +193,31 @@ This sets up a local project with Docker-based Directus + frontend integration.
 
 ### Preview Not Working - Content Security Policy (CSP) Issues
 
-If you encounter CSP errors when using the Visual Editor preview, this is typically due to Content Security Policy restrictions.
+If you encounter CSP errors when using the Visual Editor preview, this is typically due to Content Security Policy
+restrictions.
 
-**For Local Docker Setup:** See [`cms/directus/README.md`](cms/directus/README.md#content-security-policy-csp-and-preview-issues) for configuration details.
+**For Local Docker Setup:** See
+[`cms/directus/README.md`](cms/directus/README.md#content-security-policy-csp-and-preview-issues) for configuration
+details.
 
-**For Directus Cloud:** You'll need to expose your localhost with HTTPS using a tunneling service (ngrok, localtunnel, etc.).
+**For Directus Cloud:** You'll need to expose your localhost with HTTPS using a tunneling service (ngrok, localtunnel,
+etc.).
 
-**For complete documentation on configuring CSP for the Visual Editor, see the [official Directus documentation](https://directus.io/docs/guides/content/visual-editor/frontend-library).**
+**For complete documentation on configuring CSP for the Visual Editor, see the
+[official Directus documentation](https://directus.io/docs/guides/content/visual-editor/frontend-library).**
 
 ---
 
 ## Contributing
 
-### Commit Conventions
-
-This repo uses [Conventional Commits](https://www.conventionalcommits.org/) and [Release Please](https://github.com/googleapis/release-please) to automate changelogs and versioning per template.
-
-**Use the template name as the commit scope** so Release Please attributes changes correctly:
-
-```
-feat(cms): add new hero block
-fix(blank): correct docker-compose volume path
-chore(cms): update dependencies
-```
-
-Without a scope, changes are attributed to all templates.
+Have a bug report, feature request, or question? Please
+[open an issue](https://github.com/directus-labs/starters/issues) rather than submitting a pull request directly.
 
 ### Repo Structure
 
 ```
-├── cms/                  # CMS starter template
+├── cms/                  # CMS starter templates (Next.js, Nuxt, Astro, SvelteKit)
+├── cms-i18n/             # CMS starter templates with i18n support (Next.js, Nuxt)
 ├── blank/                # Blank starter template
 ├── _shared/              # Shared files (docker-compose, .env.example)
 ├── _scripts/             # Internal build/validation scripts

@@ -27,9 +27,8 @@ const getFetchFn = () => {
 // Helper for retrying fetch requests
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const fetchRetry = async (count: number, ...args: any[]) => {
-
 	const fetch = getFetchFn();
-	const response = await fetch(...args as Parameters<typeof fetch>);
+	const response = await fetch(...(args as Parameters<typeof fetch>));
 
 	if (count > 2 || response.status !== 429) return response;
 
@@ -46,8 +45,6 @@ const queue = new Queue({ intervalCap: 10, interval: 500, carryoverConcurrencyCo
 const directusUrl = PUBLIC_DIRECTUS_URL;
 
 const getDirectus = () => {
-
-
 	const directus = createDirectus<Schema>(directusUrl, {
 		globals: {
 			fetch: (...args) => queue.add(() => fetchRetry(0, ...args))

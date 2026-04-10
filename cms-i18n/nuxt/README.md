@@ -32,14 +32,6 @@ CMS-powered web applications.
 
 ---
 
-## **Why pnpm?**
-
-This project uses `pnpm` for managing dependencies due to its speed and efficiency. If you’re familiar with `npm`,
-you’ll find `pnpm` very similar in usage. You can still use `npm` if you prefer by replacing `pnpm` commands with their
-`npm` equivalents.
-
----
-
 ## **Draft Mode in Directus and Live Preview**
 
 ### **Draft Mode Overview**
@@ -56,29 +48,6 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 - **Important Note**: Directus employs Content Security Policies (CSPs) that block live previews on `localhost` for
   security reasons. For a smooth preview experience, deploy the application to a cloud environment and use the
   deployment URL for Directus previews.
-
-### **Admin Bar**
-
-Allows authenticated users to easily navigate to their **Directus instance** to edit or create pages and posts directly
-from the frontend.
-
-#### How It Works
-
-By appending `?preview=true` to the URL, users enter **Admin Mode**, which:
-
-- Displays an admin bar at the top of the page.
-- Allows easy navigation to **edit** or **create** new posts/pages in Directus.
-- Requires authentication to access edit and new content buttons.
-
-#### Usage
-
-To enable the **Admin Bar**, simply append `?preview=true` to any URL:
-
-```plaintext
-https://yourwebsite.com/blog/some-post?preview=true
-```
-
----
 
 ## **Internationalization (i18n)**
 
@@ -146,11 +115,11 @@ To get started, you need to configure environment variables. Follow these steps:
 2. **Update the following variables in your `.env` file:**
 
    - **`DIRECTUS_URL`**: URL of your Directus instance.
-   - **`DIRECTUS_SERVER_TOKEN`**: Public token for accessing public resources in Directus. Use the token from the
-     **Webmaster** account.
-   - **`DIRECTUS_FORM_TOKEN`**: Token from the **Frontend Bot User** account in Directus for handling form submissions.
+   - **`DIRECTUS_SERVER_TOKEN`**: Server-side token for accessing content, preview, and form submissions. Use the token
+     from the **Webmaster** account.
+   - **`DIRECTUS_ADMIN_TOKEN`**: Admin token for local type generation only. Never used at runtime.
    - **`NUXT_PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
-   - **`NUXT_PUBLIC_ENABLE_VISUAL_EDITING`**: Enable or disable visual editing in Directus
+   - **`NUXT_PUBLIC_ENABLE_VISUAL_EDITING`**: Visual editing is enabled by default. Set to `false` to disable.
 
 ## **Running the Application**
 
@@ -163,6 +132,13 @@ To get started, you need to configure environment variables. Follow these steps:
    ```
 
    _(You can also use `npm install` if you prefer.)_
+
+   **Note for npm users:** This project uses pnpm workspaces. If you're using npm instead, you'll need to:
+   ```bash
+   rm -rf node_modules pnpm-lock.yaml
+   npm install
+   ```
+   npm doesn't support pnpm's `workspace:` protocol, so you must remove `pnpm-lock.yaml` before running `npm install`. The project will generate a `package-lock.json` instead.
 
 2. Start the development server:
 
@@ -199,7 +175,7 @@ app/                          # Main Nuxt application folder
 │   ├── block/                # CMS-driven blocks like Hero, Gallery, etc.
 │   ├── forms/                # Form components and field inputs
 │   │   ├── fields/
-│   ├── shared/               # Shared utilities like AdminBar, DirectusImage
+│   ├── shared/               # Shared utilities like DirectusImage
 │   ├── ui/                   # Shadcn UI components
 │   ├── Footer.vue
 │   ├── NavigationBar.vue

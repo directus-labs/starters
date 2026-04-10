@@ -5,9 +5,8 @@
 </div>
 
 This is an **Astro-based CMS Template** that is fully integrated with [Directus](https://directus.io/), offering a CMS
-solution for managing and delivering content seamlessly. The template leverages modern technologies like **Astro’s
-File-based Routing**, **Tailwind CSS**, and **Shadcn components**, providing a complete and scalable starting point for
-building CMS-powered web applications.
+solution for managing and delivering content seamlessly. It uses **Astro 6** with **file-based routing**, **Tailwind
+CSS**, and **Shadcn-style components**, as a starting point for CMS-powered sites.
 
 ## **Features**
 
@@ -16,18 +15,10 @@ building CMS-powered web applications.
 - **Tailwind CSS**: Fully integrated for rapid UI styling.
 - **TypeScript**: Ensures type safety and reliable code quality.
 - **Shadcn Components**: Pre-built, customizable UI components for modern design systems.
-- **ESLint & Prettier**: Enforces consistent code quality and formatting.
+- **ESLint & Biome**: Linting and formatting.
 - **Dynamic Page Builder**: A page builder interface for creating and customizing CMS-driven pages.
 - **Preview Mode**: Built-in draft/live preview for editing unpublished content.
 - **Optimized Dependency Management**: Project is set up with **pnpm** for faster and more efficient package management.
-
----
-
-## **Why pnpm?**
-
-This project uses `pnpm` for managing dependencies due to its speed and efficiency. If you’re familiar with `npm`,
-you’ll find `pnpm` very similar in usage. You can still use `npm` if you prefer by replacing `pnpm` commands with their
-`npm` equivalents.
 
 ---
 
@@ -43,8 +34,12 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 [Implementing Live Preview in Astro](https://directus.io/docs/tutorials/getting-started/implementing-live-preview-in-astro)
 
 - The live preview feature works seamlessly on deployed environments.
-- **For Local Development**: If using local Docker, the CSP configuration is provided in `.env.example`. See [`../../directus/README.md`](../../directus/README.md#content-security-policy-csp-and-preview-issues) for details.
-- **For Directus Cloud**: Directus Cloud requires HTTPS for previews. You'll need to use HTTPS tunneling (ngrok, localtunnel, etc.) or configure CSP in your Directus Cloud settings. See the [main README troubleshooting section](../../README.md#preview-not-working---content-security-policy-csp-issues) for details.
+- **For Local Development**: If using local Docker, the CSP configuration is provided in `.env.example`. See
+  [`../../directus/README.md`](../../directus/README.md#content-security-policy-csp-and-preview-issues) for details.
+- **For Directus Cloud**: Directus Cloud requires HTTPS for previews. You'll need to use HTTPS tunneling (ngrok,
+  localtunnel, etc.) or configure CSP in your Directus Cloud settings. See the
+  [main README troubleshooting section](../../README.md#preview-not-working---content-security-policy-csp-issues) for
+  details.
 
 ---
 
@@ -54,7 +49,7 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 
 To set up this template, ensure you have the following:
 
-- **Node.js** (16.x or newer)
+- **Node.js** (see `.nvmrc` for the version used in this repo)
 - **npm** or **pnpm**
 - Access to a **Directus** instance ([cloud or self-hosted](../../README.md))
 
@@ -64,27 +59,26 @@ For instructions on setting up Directus, choose one of the following:
 
 - [Setting up Directus Cloud](https://github.com/directus-labs/starters?tab=readme-ov-file#using-directus-with-a-cloud-instance-recommended)
 - [Setting up Directus Self-Hosted](https://github.com/directus-labs/starters?tab=readme-ov-file#using-directus-locally)
--
 
 ## 🚀 One-Click Deploy
 
 You can instantly deploy this template using Vercel:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/astro&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,DIRECTUS_PUBLIC_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms/astro&env=PUBLIC_DIRECTUS_URL,PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,PUBLIC_ENABLE_VISUAL_EDITING)
 
 > ⚡️ **This Astro starter is pre-configured for Vercel.**
 >
 > To deploy on Netlify:
 >
 > 1. Run: `pnpm add -D @astrojs/netlify`
-> 2. In `astro.config.mjs`, swap the adapter lines:
+> 2. In `astro.config.ts`, swap the adapter (see
+>    [Netlify adapter docs](https://docs.astro.build/en/guides/integrations-guide/netlify/)):
 >
->    ```js
+>    ```ts
 >    import netlify from '@astrojs/netlify';
->    // import vercel from '@astrojs/vercel/serverless';
+>    // import vercel from '@astrojs/vercel';
 >
 >    export default defineConfig({
->      output: 'static',
 >      adapter: netlify(),
 >    });
 >    ```
@@ -104,13 +98,11 @@ To get started, you need to configure environment variables. Follow these steps:
 2. **Update the following variables in your `.env` file:**
 
    - **`PUBLIC_DIRECTUS_URL`**: URL of your Directus instance.
-   - **`DIRECTUS_PUBLIC_TOKEN`**: Public token for accessing public resources in Directus. Use the token from the
-     **Webmaster** account.
-   - **`DIRECTUS_FORM_TOKEN`**: Token from the **Frontend Bot User** account in Directus for handling form submissions.
+   - **`DIRECTUS_SERVER_TOKEN`**: Token from the **Webmaster** account in Directus. Used server-side for preview, draft
+     content, and form submissions.
+   - **`DIRECTUS_ADMIN_TOKEN`**: Admin token for local type generation only. Never used at runtime.
    - **`PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
-   - **`DRAFT_MODE_SECRET`**: The secret you generate for live preview. This is used to view draft posts in Directus and
-     live edits.
-   - **`PUBLIC_ENABLE_VISUAL_EDITING`**: Enable or disable visual editing in Directus
+   - **`PUBLIC_ENABLE_VISUAL_EDITING`**: Visual editing is enabled by default. Set to `false` to disable.
 
 ---
 
@@ -126,12 +118,8 @@ To get started, you need to configure environment variables. Follow these steps:
 
    _(You can also use `npm install` if you prefer.)_
 
-   **Note for npm users:** This project uses pnpm workspaces. If you're using npm instead, you'll need to:
-   ```bash
-   rm -rf node_modules pnpm-lock.yaml
-   npm install
-   ```
-   npm doesn't support pnpm's `workspace:` protocol, so you must remove `pnpm-lock.yaml` before running `npm install`. The project will generate a `package-lock.json` instead.
+   **Note for npm users:** Remove `pnpm-lock.yaml` (and optionally `node_modules`) if you want npm to generate its own
+   lockfile, then run `npm install`.
 
 2. Start the development server:
 
@@ -154,9 +142,14 @@ for your Directus schema.
    ```bash
    pnpm run generate:types
    ```
-3. When prompted, enter your Directus admin token (with permissions to read system collections like `directus_fields`), or set it ahead of time via the `DIRECTUS_ADMIN_TOKEN` environment variable for non-interactive runs (e.g., CI).
 
-> **Note:** The type generation requires an admin token with permissions to read system collections like `directus_fields`. The public token (`DIRECTUS_PUBLIC_TOKEN`) does not have sufficient permissions for this operation. You can either provide the admin token interactively when prompted, or set it via the `DIRECTUS_ADMIN_TOKEN` environment variable (e.g., `DIRECTUS_ADMIN_TOKEN=your_token pnpm run generate:types`) to run without a TTY.
+3. When prompted, enter your Directus admin token (with permissions to read system collections like `directus_fields`),
+   or set it ahead of time via the `DIRECTUS_ADMIN_TOKEN` environment variable for non-interactive runs (e.g., CI).
+
+> **Note:** The type generation requires an admin token with permissions to read system collections like
+> `directus_fields`. You can either provide the admin token interactively when prompted, or set it via the
+> `DIRECTUS_ADMIN_TOKEN` environment variable (e.g., `DIRECTUS_ADMIN_TOKEN=your_token pnpm run generate:types`) to run
+> without a TTY.
 
 ---
 

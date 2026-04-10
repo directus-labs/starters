@@ -306,26 +306,6 @@
     }
   },
   {
-    "id": "dab2c341-5ce5-42da-872f-40e596c4db16",
-    "bundle": null,
-    "meta": {
-      "enabled": true,
-      "id": "dab2c341-5ce5-42da-872f-40e596c4db16",
-      "folder": "9621987d-012d-475a-bd7f-e293cac7b077",
-      "source": "registry",
-      "bundle": null
-    },
-    "schema": {
-      "path": "/directus/node_modules/.directus/extensions/.registry/9621987d-012d-475a-bd7f-e293cac7b077",
-      "name": "directus-extension-group-tabs-interface",
-      "version": "2.1.0",
-      "type": "interface",
-      "entrypoint": "dist/index.js",
-      "host": "^10.1.0",
-      "local": true
-    }
-  },
-  {
     "id": "0fe9b997-3aac-4fbf-8d36-fea91ddb883f",
     "bundle": "af053cdb-242e-4142-a053-e3e23d7658e5",
     "meta": {

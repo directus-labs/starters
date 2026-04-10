@@ -18,10 +18,7 @@ export const GET: RequestHandler = async ({ request }) => {
 			directus.request(
 				readItems('pages', {
 					filter: {
-						_or: [
-							{ title: { _contains: search } },
-							{ permalink: { _contains: search } }
-						]
+						_or: [{ title: { _contains: search } }, { permalink: { _contains: search } }]
 					},
 					fields: ['id', 'title', 'permalink']
 				})

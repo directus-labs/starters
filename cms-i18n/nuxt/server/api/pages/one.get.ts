@@ -25,7 +25,10 @@ import { buildPageFields, buildTranslationsDeep, mergeTranslations } from '../..
 export default defineEventHandler(async (event) => {
 	const query = getQuery(event);
 
-	const { preview, token: rawToken, permalink: rawPermalink, id, version } = query;
+	const { preview, permalink: rawPermalink, id, version: rawVersion } = query;
+
+	// 'main' is not a real Directus content version — strip it (it's a live preview indicator)
+	const version = String(rawVersion) !== 'main' ? rawVersion : undefined;
 
 	// Get locale from event (set by middleware or query param)
 	const locale = getLocaleFromEvent(event);
@@ -35,9 +38,9 @@ export default defineEventHandler(async (event) => {
 	// This handles various URL formats consistently
 	const permalink = withoutTrailingSlash(withLeadingSlash(String(rawPermalink)));
 
-	// Security: Only accept tokens when preview mode is explicitly enabled
-	// This prevents unauthorized access to draft content
-	const token = preview === 'true' && rawToken ? String(rawToken) : null;
+	// Use the server token from runtimeConfig when preview mode is enabled
+	const config = useRuntimeConfig();
+	const token = preview === 'true' ? (config.directusServerToken as string) || null : null;
 
 	// Build page fields with translation support
 	const pageFields = buildPageFields(includeTranslations);
@@ -122,15 +125,22 @@ export default defineEventHandler(async (event) => {
 			// This is used when we have both a pageId and want a specific version (draft, published, etc.)
 			try {
 				page = await directusServer.request<Page>(
-					withToken(
-						token as string,
-						readItem('pages', pageId, {
-							version: String(version),
-							// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
-							fields: pageFields,
-							deep: buildDeepQuery(),
-						}),
-					),
+					token && token.trim()
+						? withToken(
+								token,
+								readItem('pages', pageId, {
+									version: String(version),
+									// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+									fields: pageFields,
+									deep: buildDeepQuery(),
+								}),
+							)
+						: readItem('pages', pageId, {
+								version: String(version),
+								// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+								fields: pageFields,
+								deep: buildDeepQuery(),
+							}),
 				);
 			} catch {
 				// If version fetch fails, throw error
@@ -139,21 +149,33 @@ export default defineEventHandler(async (event) => {
 		} else {
 			// Standard request: Use readItems with permalink filtering
 			// Filter logic:
-			// - If token exists: fetch any status (for preview mode)
-			// - If no token: only fetch published content (for public viewing)
+			// - If preview mode: fetch any status (to show draft content)
+			// - If not preview: only fetch published content (for public viewing)
 			const pageData = await directusServer.request<Page[]>(
-				withToken(
-					token as string,
-					readItems('pages', {
-						filter: token
-							? { permalink: { _eq: permalink } }
-							: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
-						limit: 1,
-						// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
-						fields: pageFields,
-						deep: buildDeepQuery(),
-					}),
-				),
+				token && token.trim()
+					? withToken(
+							token,
+							readItems('pages', {
+								filter:
+									preview === 'true'
+										? { permalink: { _eq: permalink } }
+										: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+								limit: 1,
+								// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+								fields: pageFields,
+								deep: buildDeepQuery(),
+							}),
+						)
+					: readItems('pages', {
+							filter:
+								preview === 'true'
+									? { permalink: { _eq: permalink } }
+									: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+							limit: 1,
+							// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+							fields: pageFields,
+							deep: buildDeepQuery(),
+						}),
 			);
 
 			if (!pageData.length || !pageData[0]) {

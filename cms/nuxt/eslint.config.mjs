@@ -1,6 +1,5 @@
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
-import prettier from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
 import vueParser from 'vue-eslint-parser';
 import vuePlugin from 'eslint-plugin-vue';
@@ -8,7 +7,16 @@ import globals from 'globals';
 
 export default [
 	{
-		ignores: ['**/node_modules/**', '**/dist/**', '**/.nuxt/**', '**/.output/**', '.eslintrc.js'],
+		ignores: [
+			'**/node_modules/**',
+			'**/dist/**',
+			'**/.nuxt/**',
+			'**/.output/**',
+			'.eslintrc.js',
+			'**/shared/types/schema.ts',
+			'tailwind.config.ts',
+			'scripts/**',
+		],
 	},
 	prettierConfig,
 	{
@@ -30,11 +38,8 @@ export default [
 		plugins: {
 			'@typescript-eslint': typescriptEslint,
 			vue: vuePlugin,
-			prettier: prettier,
 		},
 		rules: {
-			'prettier/prettier': 'error',
-
 			// TypeScript
 			'@typescript-eslint/ban-ts-comment': 'off',
 			'@typescript-eslint/no-explicit-any': 'off',
@@ -71,19 +76,17 @@ export default [
 	{
 		files: ['**/*.vue'],
 		rules: {
-			...vuePlugin.configs['vue3-recommended'].rules,
+			...(vuePlugin.configs?.['vue3-recommended']?.rules || {}),
 		},
 	},
 	{
 		files: ['**/*.ts', '**/*.tsx'],
 		languageOptions: {
 			parser: tsParser,
-			parserOptions: {
-				project: './tsconfig.json',
-			},
 		},
 		rules: {
-			...typescriptEslint.configs['recommended'].rules,
+			...(typescriptEslint.configs?.['recommended']?.rules || {}),
+			'@typescript-eslint/no-explicit-any': 'off',
 		},
 	},
 ];

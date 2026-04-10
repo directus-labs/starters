@@ -238,24 +238,24 @@ export async function fetchPageData(
 	const { directus } = useDirectus();
 	const resolvedLocale = locale ?? DEFAULT_LOCALE;
 	const includeTranslations = resolvedLocale !== DEFAULT_LOCALE;
+	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	try {
 		const pageData = (await directus.request(
 			withToken(
-				token as string,
+				effectiveToken as string,
 				readItems('pages', {
-					filter:
-						preview && token
-							? { permalink: { _eq: permalink } }
-							: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+					filter: preview
+						? { permalink: { _eq: permalink } }
+						: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
 					limit: 1,
 					// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 					fields: buildPageFields(includeTranslations),
-					// @ts-expect-error Directus SDK doesn't recognize 'item' in deep query for polymorphic relations
 					deep: {
 						blocks: {
 							_sort: ['sort'],
 							_filter: { hide_block: { _neq: true } },
+							// @ts-expect-error Directus SDK doesn't recognize 'item' in deep query for polymorphic relations
 							item: {
 								// Only fetch active forms (required for form_fields permission rules)
 								block_form: {
@@ -346,11 +346,12 @@ export async function fetchPageDataById(
 	const { directus } = useDirectus();
 	const resolvedLocale = locale ?? DEFAULT_LOCALE;
 	const includeTranslations = resolvedLocale !== DEFAULT_LOCALE;
+	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	try {
 		return (await directus.request(
 			withToken(
-				token as string,
+				effectiveToken as string,
 				readItem('pages', id, {
 					version,
 					// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
@@ -390,11 +391,12 @@ export async function getPageIdByPermalink(permalink: string, token?: string): P
 	if (!permalink?.trim()) throw new Error('Invalid permalink: permalink must be a non-empty string');
 
 	const { directus } = useDirectus();
+	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	try {
 		const pageData = (await directus.request(
 			withToken(
-				token as string,
+				effectiveToken as string,
 				readItems('pages', {
 					filter: { permalink: { _eq: permalink } },
 					limit: 1,
@@ -418,11 +420,12 @@ export async function getPostIdBySlug(slug: string, token?: string): Promise<str
 	if (!slug?.trim()) throw new Error('Invalid slug: slug must be a non-empty string');
 
 	const { directus } = useDirectus();
+	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	try {
 		const postData = (await directus.request(
 			withToken(
-				token as string,
+				effectiveToken as string,
 				readItems('posts', {
 					filter: { slug: { _eq: slug } },
 					limit: 1,
@@ -450,10 +453,12 @@ export async function fetchPostBySlug(
 	const { directus } = useDirectus();
 	const { draft, token, locale = DEFAULT_LOCALE } = options || {};
 	const includeTranslations = locale !== DEFAULT_LOCALE;
+	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	// First, try to find post by main slug (works for default locale and when slug is same across languages)
-	const baseFilter: QueryFilter<Schema, Post> =
-		token || draft ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } };
+	const baseFilter: QueryFilter<Schema, Post> = draft
+		? { slug: { _eq: slug } }
+		: { slug: { _eq: slug }, status: { _eq: 'published' } };
 
 	const postFields = [
 		'id',
@@ -483,7 +488,7 @@ export async function fetchPostBySlug(
 		// Try to find post by main slug first
 		let postsData = await directus.request(
 			withToken(
-				token as string,
+				effectiveToken as string,
 				readItems('posts', {
 					filter: baseFilter,
 					limit: 1,
@@ -512,7 +517,7 @@ export async function fetchPostBySlug(
 
 			postsData = await directus.request(
 				withToken(
-					token as string,
+					effectiveToken as string,
 					readItems('posts', {
 						// @ts-expect-error Directus SDK doesn't support filtering by translation relations
 						filter: translationFilter,
@@ -528,7 +533,7 @@ export async function fetchPostBySlug(
 		const [relatedPostsData] = await Promise.all([
 			directus.request(
 				withToken(
-					token as string,
+					effectiveToken as string,
 					readItems('posts', {
 						filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
 						limit: 2,
@@ -577,6 +582,7 @@ export async function fetchPostByIdAndVersion(
 	const { directus } = useDirectus();
 	const resolvedLocale = locale ?? DEFAULT_LOCALE;
 	const includeTranslations = resolvedLocale !== DEFAULT_LOCALE;
+	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	const postFields = [
 		'id',
@@ -606,7 +612,7 @@ export async function fetchPostByIdAndVersion(
 		const [postData, relatedPostsData] = await Promise.all([
 			directus.request(
 				withToken(
-					token as string,
+					effectiveToken as string,
 					readItem('posts', id, {
 						version,
 						// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays

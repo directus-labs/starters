@@ -1,28 +1,31 @@
 ---
 export const prerender = false;
 
-import Layout from '@/layouts/BaseLayout.astro';
-import { fetchPostBySlug, fetchPostByIdAndVersion, getPostIdBySlug, fetchRelatedPosts, fetchAuthorById } from '@/lib/directus/fetchers';
-import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
 import BlogPostClient from '@/components/layout/BlogPostClient';
-import type { Post, DirectusUser } from '@/types/directus-schema';
-
+import Layout from '@/layouts/BaseLayout.astro';
+import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
+import {
+  fetchAuthorById,
+  fetchPostByIdAndVersion,
+  fetchPostBySlug,
+  fetchRelatedPosts,
+  getPostIdBySlug,
+} from '@/lib/directus/fetchers';
+import type { DirectusUser, Post } from '@/types/directus-schema';
 
 const slugParam = Astro.params.slug;
-const slug = Array.isArray(slugParam)
-  ? slugParam.join('/')
-  : typeof slugParam === 'string'
-  ? slugParam
-  : '';
+const slug = Array.isArray(slugParam) ? slugParam.join('/') : typeof slugParam === 'string' ? slugParam : '';
 
 const query = Astro.url.searchParams;
 
 const id = query.get('id') || '';
-const version = query.get('version') === 'main' ? undefined : query.get('version') || '';
+// Live preview adds version = main which is not required when fetching the main version.
+const rawVersion = query.get('version') || '';
+const version = rawVersion !== 'main' ? rawVersion : '';
 const preview = query.get('preview') === 'true';
-const token = query.get('token') || '';
+const token = preview ? import.meta.env.DIRECTUS_SERVER_TOKEN || '' : '';
 
-const isDraft = (preview && !!token) || (!!version && version !== 'published') || !!token;
+const isDraft = preview || (!!version && version !== 'published');
 
 let post: Post | null = null;
 try {
@@ -48,7 +51,7 @@ if (!post) {
 }
 
 const relatedPosts = await fetchRelatedPosts(post.id);
-const author = post.author && typeof post.author === 'object' ? post.author as DirectusUser : null;
+const author = post.author && typeof post.author === 'object' ? (post.author as DirectusUser) : null;
 const authorName = [author?.first_name, author?.last_name].filter(Boolean).join(' ');
 const siteURL = import.meta.env.PUBLIC_SITE_URL || '';
 const postUrl = `${siteURL}/blog/${slug}`;
@@ -65,6 +68,19 @@ const metadata = {
     images: ogImage ? [{ url: ogImage }] : undefined,
   },
 };
+
+// Route caching (Astro v6): only cache published posts; never cache preview/draft
+if (Astro.cache.enabled) {
+  if (isDraft) {
+    Astro.cache.set(false);
+  } else {
+    Astro.cache.set({
+      maxAge: 300,
+      swr: 60,
+      tags: ['blog', `post:${post.id}`],
+    });
+  }
+}
 ---
 <Layout metadata={metadata}>
     <BlogPostClient
@@ -75,7 +91,5 @@ const metadata = {
     authorName={authorName}
     postUrl={postUrl}
     slug={slug}
-    token={token}
-    isDraft={isDraft}
   />
 </Layout>

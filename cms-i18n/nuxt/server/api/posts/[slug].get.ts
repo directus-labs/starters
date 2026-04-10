@@ -27,15 +27,18 @@ export default defineEventHandler(async (event) => {
 	}
 
 	const query = getQuery(event);
-	const { preview, token: rawToken, id, version } = query;
+	const { preview, id, version: rawVersion } = query;
+
+	// 'main' is not a real Directus content version — strip it (it's a live preview indicator)
+	const version = String(rawVersion) !== 'main' ? rawVersion : undefined;
 
 	// Get locale from event (set by middleware or query param)
 	const locale = getLocaleFromEvent(event);
 	const includeTranslations = locale !== DEFAULT_LOCALE;
 
-	// Security: Only accept tokens when preview mode is explicitly enabled
-	// This prevents unauthorized access to draft content
-	const token = preview === 'true' && rawToken ? String(rawToken) : null;
+	// Use the server token from runtimeConfig when preview mode is enabled
+	const config = useRuntimeConfig();
+	const token = preview === 'true' ? (config.directusServerToken as string) || null : null;
 
 	// Build post fields with translation support
 	const postFields = buildPostFields(includeTranslations);
@@ -52,14 +55,20 @@ export default defineEventHandler(async (event) => {
 		if (version && !postId) {
 			// Look up post ID by slug - this is needed because Directus version API requires an ID
 			const postIdLookup = await directusServer.request(
-				withToken(
-					token as string,
-					readItems('posts', {
-						filter: { slug: { _eq: slug } },
-						limit: 1,
-						fields: ['id'],
-					}),
-				),
+				token && token.trim()
+					? withToken(
+							token,
+							readItems('posts', {
+								filter: { slug: { _eq: slug } },
+								limit: 1,
+								fields: ['id'],
+							}),
+						)
+					: readItems('posts', {
+							filter: { slug: { _eq: slug } },
+							limit: 1,
+							fields: ['id'],
+						}),
 			);
 			postId = postIdLookup.length > 0 ? postIdLookup[0]?.id || '' : '';
 
@@ -75,32 +84,49 @@ export default defineEventHandler(async (event) => {
 			// Version-specific request: Use readItem with specific version
 			// This is used when we have both a postId and want a specific version (draft, published, etc.)
 			post = await directusServer.request<Post>(
-				withToken(
-					token as string,
-					readItem('posts', postId, {
-						version: String(version),
-						// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
-						fields: postFields,
-						...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
-					}),
-				),
+				token && token.trim()
+					? withToken(
+							token,
+							readItem('posts', postId, {
+								version: String(version),
+								// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+								fields: postFields,
+								...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+							}),
+						)
+					: readItem('posts', postId, {
+							version: String(version),
+							// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+							fields: postFields,
+							...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+						}),
 			);
 		} else {
 			// Standard request: Use readItems with slug filtering
 			// Filter logic:
-			// - If token exists: fetch any status (for preview mode)
-			// - If no token: only fetch published content (for public viewing)
+			// - If preview mode: fetch any status (to show draft content)
+			// - If not preview: only fetch published content (for public viewing)
 			const postsData = await directusServer.request<Post[]>(
-				withToken(
-					token as string,
-					readItems('posts', {
-						filter: token ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
-						limit: 1,
-						// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
-						fields: postFields,
-						...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
-					}),
-				),
+				token && token.trim()
+					? withToken(
+							token,
+							readItems('posts', {
+								filter:
+									preview === 'true' ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
+								limit: 1,
+								// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+								fields: postFields,
+								...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+							}),
+						)
+					: readItems('posts', {
+							filter:
+								preview === 'true' ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
+							limit: 1,
+							// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
+							fields: postFields,
+							...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+						}),
 			);
 
 			if (!postsData.length || !postsData[0]) {
