@@ -1,5 +1,9 @@
 {
-  "installCommand": "corepack prepare pnpm@10.15.1 --activate && pnpm install",
+  "build": {
+    "env": {
+      "ENABLE_EXPERIMENTAL_COREPACK": "1"
+    }
+  },
   "github": {
     "silent": true
   }
