@@ -1,5 +1,5 @@
 {
-  "installCommand": "corepack enable && pnpm install",
+  "installCommand": "corepack prepare pnpm@10.15.1 --activate && pnpm install --no-frozen-lockfile",
   "github": {
     "silent": true
   }
