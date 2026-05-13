@@ -16,6 +16,7 @@ export default defineNuxtModule({
 
 		// Skip redirects loading during prepare/postinstall phase when Directus may not be available
 		const isPreparePhase = process.env.npm_lifecycle_event === 'postinstall' || process.env.NUXT_PREPARE === 'true';
+
 		if (isPreparePhase) {
 			logger.debug('Skipping redirects loading during prepare phase');
 			return;
@@ -24,14 +25,16 @@ export default defineNuxtModule({
 		try {
 			const directus = createDirectus<Schema>(directusUrl).with(rest());
 
-			const redirects = await directus.request(readItems('redirects', {
-				filter: {
-					url_from: { _nnull: true },
-					url_to: { _nnull: true }
-				},
-				// Get all redirects (Directus defaults to 100 for limit)
-				limit: -1,
-			}));
+			const redirects = await directus.request(
+				readItems('redirects', {
+					filter: {
+						url_from: { _nnull: true },
+						url_to: { _nnull: true },
+					},
+					// Get all redirects (Directus defaults to 100 for limit)
+					limit: -1,
+				}),
+			);
 
 			for (const redirect of redirects) {
 				if (!redirect.url_from || !redirect.url_to) {

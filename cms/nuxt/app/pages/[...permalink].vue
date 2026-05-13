@@ -3,14 +3,14 @@ import type { Page, PageBlock } from '#shared/types/schema';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 
 const route = useRoute();
-const { enabled, state } = useLivePreview();
+const { enabled } = useLivePreview();
 const pageUrl = useRequestURL();
 const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
 
 const permalink = withoutTrailingSlash(withLeadingSlash(route.path));
 
 // Handle Live Preview adding version=main which is not required when fetching the main version.
-const version = route.query.version === 'main' ? undefined : (route.query.version as string);
+const version = route.query.version !== 'main' ? (route.query.version as string) : undefined;
 
 const {
 	data: page,
@@ -21,7 +21,6 @@ const {
 	query: {
 		permalink,
 		preview: enabled.value ? true : undefined,
-		token: enabled.value ? state.token : undefined,
 		id: route.query.id as string,
 		version,
 	},

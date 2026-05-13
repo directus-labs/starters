@@ -14,8 +14,8 @@
 
 {#if buttons && buttons.length > 0}
 	<div class={containerClasses}>
-		{#each buttons as button, index}
-			<Button {...button}>{button.label}</Button>
+		{#each buttons as button, i (i)}
+			<Button {...button} />
 		{/each}
 	</div>
 {/if}

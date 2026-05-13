@@ -23,12 +23,12 @@ export const buildZodSchema = (fields: FormField[]) => {
 			case 'file':
 				if (field.required) {
 					fieldSchema = z.instanceof(File, {
-						message: `${field.label || field.name} is required`,
+						message: `${field.label || field.name} is required`
 					});
 				} else {
 					fieldSchema = z
 						.instanceof(File, {
-							message: `${field.label || field.name} must be a valid file if provided`,
+							message: `${field.label || field.name} must be a valid file if provided`
 						})
 						.or(z.undefined());
 				}
@@ -57,20 +57,26 @@ export const buildZodSchema = (fields: FormField[]) => {
 
 						case 'min': {
 							const min = parseInt(ruleValue, 10);
-							fieldSchema = fieldSchema.min(min, `${field.label || field.name} must be at least ${min} characters`);
+							fieldSchema = fieldSchema.min(
+								min,
+								`${field.label || field.name} must be at least ${min} characters`
+							);
 							break;
 						}
 
 						case 'max': {
 							const max = parseInt(ruleValue, 10);
-							fieldSchema = fieldSchema.max(max, `${field.label || field.name} must be at most ${max} characters`);
+							fieldSchema = fieldSchema.max(
+								max,
+								`${field.label || field.name} must be at most ${max} characters`
+							);
 							break;
 						}
 						case 'length': {
 							const length = parseInt(ruleValue, 10);
 							fieldSchema = fieldSchema.length(
 								length,
-								`${field.label || field.name} must be exactly ${length} characters`,
+								`${field.label || field.name} must be exactly ${length} characters`
 							);
 							break;
 						}

@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { useDirectus } from '$lib/directus/directus';
 
-export const GET: RequestHandler = async ({ request, fetch }) => {
+export const GET: RequestHandler = async ({ request }) => {
 	const { searchParams } = new URL(request.url);
 	const search = searchParams.get('search');
 
@@ -11,17 +11,14 @@ export const GET: RequestHandler = async ({ request, fetch }) => {
 	}
 
 	const { getDirectus, readItems } = useDirectus();
-	const directus = getDirectus(fetch);
+	const directus = getDirectus();
 
 	try {
 		const [pages, posts] = await Promise.all([
 			directus.request(
 				readItems('pages', {
 					filter: {
-						_or: [
-							{ title: { _contains: search } },
-							{ permalink: { _contains: search } }
-						]
+						_or: [{ title: { _contains: search } }, { permalink: { _contains: search } }]
 					},
 					fields: ['id', 'title', 'permalink']
 				})

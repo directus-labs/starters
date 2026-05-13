@@ -50,11 +50,15 @@ export const buildZodSchema = (fields: FormField[]) => {
         if (fieldSchema instanceof z.ZodString) {
           switch (normalizedRule) {
             case 'email':
-              fieldSchema = fieldSchema.email(`${field.label || field.name} must be a valid email`);
+              fieldSchema = fieldSchema.email({
+                message: `${field.label || field.name} must be a valid email`,
+              });
               break;
 
             case 'url':
-              fieldSchema = fieldSchema.url(`${field.label || field.name} must be a valid URL`);
+              fieldSchema = fieldSchema.url({
+                message: `${field.label || field.name} must be a valid URL`,
+              });
               break;
 
             case 'min': {
@@ -82,7 +86,6 @@ export const buildZodSchema = (fields: FormField[]) => {
 
             default:
               if (import.meta.env.DEV) {
-                // eslint-disable-next-line no-console
                 console.warn(`Unknown validation rule: ${ruleName}`);
               }
           }
@@ -92,7 +95,7 @@ export const buildZodSchema = (fields: FormField[]) => {
 
     if (field.required) {
       if (fieldSchema instanceof z.ZodString) {
-        fieldSchema = fieldSchema.nonempty(`${field.label || field.name} is required`);
+        fieldSchema = fieldSchema.min(1, `${field.label || field.name} is required`);
       }
     } else {
       fieldSchema = fieldSchema.or(z.literal('')).or(z.undefined());

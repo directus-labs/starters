@@ -6,23 +6,25 @@ export const GET: APIRoute = async ({ request }) => {
   const url = new URL(request.url);
   const permalink = url.searchParams.get('permalink') || '/';
   const id = url.searchParams.get('id');
-  const version = url.searchParams.get('version');
+  // Live preview adds version = main which is not required when fetching the main version.
+  const rawVersion = url.searchParams.get('version') || '';
+  const version = rawVersion !== 'main' ? rawVersion : null;
   const preview = url.searchParams.get('preview') === 'true';
-  const token = url.searchParams.get('token');
+  const token = preview ? import.meta.env.DIRECTUS_SERVER_TOKEN : undefined;
 
   try {
     let page;
     let pageId = id;
 
     if (version && !pageId) {
-      const foundPageId = await getPageIdByPermalink(permalink, token || undefined, preview);
+      const foundPageId = await getPageIdByPermalink(permalink, token, preview);
       pageId = foundPageId || '';
     }
 
     if (pageId && version) {
-      page = await fetchPageDataById(pageId, version, token || undefined);
+      page = await fetchPageDataById(pageId, version, token);
     } else {
-      page = await fetchPageData(permalink, 1, token || undefined, preview);
+      page = await fetchPageData(permalink, 1, token, preview);
     }
 
     const blocks = (page?.blocks ?? []).filter((block: any) => typeof block === 'object' && block.collection);

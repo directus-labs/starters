@@ -2,3 +2,11 @@
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
+
+# Build outputs
+.vercel/
+.svelte-kit/
+build/
+
+# Auto-generated Shadcn UI components
+src/lib/components/ui/

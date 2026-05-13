@@ -23,14 +23,6 @@ point for building CMS-powered web applications.
 
 ---
 
-## **Why pnpm?**
-
-This project uses `pnpm` for managing dependencies due to its speed and efficiency. If you’re familiar with `npm`,
-you’ll find `pnpm` very similar in usage. You can still use `npm` if you prefer by replacing `pnpm` commands with their
-`npm` equivalents.
-
----
-
 ## **Draft Mode in Directus and Live Preview**
 
 ### **Draft Mode Overview**
@@ -46,28 +38,6 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 - **For Local Development**: If using local Docker, the CSP configuration is provided in `.env.example`. See [`../../directus/README.md`](../../directus/README.md#content-security-policy-csp-and-preview-issues) for details.
 - **For Directus Cloud**: Directus Cloud requires HTTPS for previews. You'll need to use HTTPS tunneling (ngrok, localtunnel, etc.) or configure CSP in your Directus Cloud settings. See the [main README troubleshooting section](../../README.md#preview-not-working---content-security-policy-csp-issues) for details.
 
-### **Admin Bar**
-
-Allows authenticated users to easily navigate to their **Directus instance** to edit or create pages and posts directly
-from the frontend.
-
-#### How It Works
-
-By appending `?preview=true` to the URL, users enter **Admin Mode**, which:
-
-- Displays an admin bar at the top of the page.
-- Allows easy navigation to **edit** or **create** new posts/pages in Directus.
-- Requires authentication to access edit and new content buttons.
-
-#### Usage
-
-To enable the **Admin Bar**, simply append `?preview=true` to any URL:
-
-```plaintext
-https://yourwebsite.com/blog/some-post?preview=true
-```
-
----
 
 ## **Getting Started**
 
@@ -107,11 +77,9 @@ To get started, you need to configure environment variables. Follow these steps:
 2. **Update the following variables in your `.env` file:**
 
    - **`DIRECTUS_URL`**: URL of your Directus instance.
-   - **`DIRECTUS_SERVER_TOKEN`**: Public token for accessing public resources in Directus. Use the token from the
-     **Webmaster** account.
-   - **`DIRECTUS_FORM_TOKEN`**: Token from the **Frontend Bot User** account in Directus for handling form submissions.
+   - **`DIRECTUS_SERVER_TOKEN`**: Token from the **Webmaster** account in Directus. Used server-side for fetching preview/draft content and handling form submissions.
    - **`NUXT_PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
-   - **`NUXT_PUBLIC_ENABLE_VISUAL_EDITING`**: Enable or disable visual editing in Directus
+   - **`NUXT_PUBLIC_ENABLE_VISUAL_EDITING`**: Visual editing is enabled by default. Set to `false` to disable.
 
 ## **Running the Application**
 
@@ -170,7 +138,7 @@ app/                          # Main Nuxt application folder
 │   ├── block/                # CMS-driven blocks like Hero, Gallery, etc.
 │   ├── forms/                # Form components and field inputs
 │   │   ├── fields/
-│   ├── shared/               # Shared utilities like AdminBar, DirectusImage
+│   ├── shared/               # Shared utilities like DirectusImage
 │   ├── ui/                   # Shadcn UI components
 │   ├── Footer.vue
 │   ├── NavigationBar.vue

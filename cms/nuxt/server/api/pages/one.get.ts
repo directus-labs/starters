@@ -123,15 +123,17 @@ const pageFields = [
 export default defineEventHandler(async (event) => {
 	const query = getQuery(event);
 
-	const { preview, token: rawToken, permalink: rawPermalink, id, version } = query;
+	const { preview, permalink: rawPermalink, id } = query;
+	// Handle Live Preview adding version=main which is not required when fetching the main version.
+	const version = String(query.version) !== 'main' ? query.version : undefined;
 
 	// Normalize permalink: ensure it starts with / and doesn't end with /
 	// This handles various URL formats consistently
 	const permalink = withoutTrailingSlash(withLeadingSlash(String(rawPermalink)));
 
-	// Security: Only accept tokens when preview mode is explicitly enabled
-	// This prevents unauthorized access to draft content
-	const token = preview === 'true' && rawToken ? String(rawToken) : null;
+	// Use the server token from runtimeConfig when preview mode is enabled
+	const config = useRuntimeConfig();
+	const token = preview === 'true' ? (config.directusServerToken as string) || null : null;
 
 	try {
 		let page: Page;
@@ -170,46 +172,61 @@ export default defineEventHandler(async (event) => {
 			// This is used when we have both a pageId and want a specific version (draft, published, etc.)
 			try {
 				page = (await directusServer.request(
-					withToken(
-						token as string,
-						readItem('pages', pageId, {
-							version: String(version),
-							fields: pageFields as any,
-							// Deep query options for complex nested data:
-							// - Sort blocks by their sort order
-							// - Filter out hidden blocks
-							deep: {
-								blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
-							},
-						}),
-					),
+					token && token.trim()
+						? withToken(
+								token,
+								readItem('pages', pageId, {
+									version: String(version),
+									fields: pageFields as any,
+									deep: {
+										blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+									},
+								}),
+							)
+						: readItem('pages', pageId, {
+								version: String(version),
+								fields: pageFields as any,
+								deep: {
+									blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+								},
+							}),
 				)) as unknown as Page;
-			} catch (versionError) {
+			} catch {
 				// If version fetch fails, throw error
 				throw createError({ statusCode: 404, statusMessage: 'Page version not found' });
 			}
 		} else {
 			// Standard request: Use readItems with permalink filtering
 			// Filter logic:
-			// - If token exists: fetch any status (for preview mode)
-			// - If no token: only fetch published content (for public viewing)
+			// - If preview mode: fetch any status (to show draft content)
+			// - If not preview: only fetch published content (for public viewing)
 			const pageData = await directusServer.request(
-				withToken(
-					token as string,
-					readItems('pages', {
-						filter: token
-							? { permalink: { _eq: permalink } }
-							: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
-						limit: 1,
-						fields: pageFields as any,
-						// Deep query options for complex nested data:
-						// - Sort blocks by their sort order
-						// - Filter out hidden blocks
-						deep: {
-							blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
-						},
-					}),
-				),
+				token && token.trim()
+					? withToken(
+							token,
+							readItems('pages', {
+								filter:
+									preview === 'true'
+										? { permalink: { _eq: permalink } }
+										: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+								limit: 1,
+								fields: pageFields as any,
+								deep: {
+									blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+								},
+							}),
+						)
+					: readItems('pages', {
+							filter:
+								preview === 'true'
+									? { permalink: { _eq: permalink } }
+									: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+							limit: 1,
+							fields: pageFields as any,
+							deep: {
+								blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } },
+							},
+						}),
 			);
 
 			if (!pageData.length) {

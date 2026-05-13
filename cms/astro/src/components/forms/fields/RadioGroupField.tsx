@@ -1,6 +1,6 @@
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import type { UseFormReturn } from "react-hook-form";
-import React from "react";
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import type { UseFormReturn } from 'react-hook-form';
+import React from 'react';
 
 interface RadioGroupFieldProps {
   name: string;
@@ -9,11 +9,7 @@ interface RadioGroupFieldProps {
 }
 
 const RadioGroupField = ({ name, options, form }: RadioGroupFieldProps) => (
-  <RadioGroup
-    value={form.watch(name)}
-    onValueChange={(value) => form.setValue(name, value)}
-    className=""
-  >
+  <RadioGroup value={form.watch(name)} onValueChange={(value) => form.setValue(name, value)} className="">
     {options.map((option) => (
       <div key={option.value} className="flex items-center gap-x-2">
         <RadioGroupItem id={`${name}-${option.value}`} value={option.value} />

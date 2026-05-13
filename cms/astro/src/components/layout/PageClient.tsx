@@ -27,6 +27,7 @@ const fetchBlocks = async (permalink: string, params: URLSearchParams): Promise<
   const res = await fetch(url);
   if (!res.ok) throw new Error('Failed to fetch blocks');
   const data = await res.json();
+
   return data.blocks;
 };
 

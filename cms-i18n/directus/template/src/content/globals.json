@@ -1,0 +1,48 @@
+{
+  "description": "We empower you to build the best site possible",
+  "id": "ab89c489-faea-4310-8b59-7ddb3caf279a",
+  "social_links": [
+    {
+      "service": "github",
+      "url": "https://github.com/directus/directus"
+    },
+    {
+      "service": "linkedin",
+      "url": "https://www.linkedin.com/company/directus-io"
+    },
+    {
+      "service": "youtube",
+      "url": "https://www.youtube.com/c/DirectusVideos"
+    },
+    {
+      "url": "https://directus.chat/",
+      "service": "discord"
+    },
+    {
+      "url": "https://x.com/directus",
+      "service": "x"
+    }
+  ],
+  "tagline": "The best site ever",
+  "title": "Your Site",
+  "url": "https://www.yoururl.com",
+  "favicon": "2b4a0ba0-52c7-4e10-b191-c803d8da6a36",
+  "logo": "43ddd7b8-9b2f-4aa1-b63c-933b4ae81ca2",
+  "openai_api_key": null,
+  "directus_url": "http://0.0.0.0:8055",
+  "logo_dark_mode": "ae390ba1-fcff-4b99-a445-5f19257095d1",
+  "accent_color": "#6644FF",
+  "date_created": "2025-10-27T19:32:06.531Z",
+  "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+  "date_updated": "2025-12-22T19:53:46.184Z",
+  "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+  "translations": [
+    "60a04efc-a83a-43d4-a8b3-dde34ef90bf1",
+    "0749467a-ca67-49d0-b1c3-d3fdd8c0d467",
+    "ee2f0073-d2b5-4560-81f5-9a4bf3b2bf3f",
+    "855c92ba-7d31-4a54-8d11-8105e3fdc052",
+    "082f0f46-b624-477c-a61b-7643b6630092",
+    "3bc5b193-f5d7-4e92-a2b8-4000edf0ad6b",
+    "e4a688c3-c7ca-4adc-ab47-d352919052ec"
+  ]
+}

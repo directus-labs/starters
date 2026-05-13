@@ -13,6 +13,7 @@ export const GET: APIRoute = async ({ url }) => {
 
   try {
     const siteData = await fetchSiteData();
+
     return new Response(JSON.stringify(siteData), {
       headers: {
         'Content-Type': 'application/json',

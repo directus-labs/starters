@@ -8,8 +8,7 @@
 	import DirectusImage from '../shared/DirectusImage.svelte';
 	import Headline from '../ui/Headline.svelte';
 	import Tagline from '../ui/Tagline.svelte';
-	import { crossfade, fade, fly, scale, slide } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
+	import { scale } from 'svelte/transition';
 
 	interface PostsProps {
 		data: {
@@ -23,7 +22,6 @@
 
 	let { data }: PostsProps = $props();
 	let { tagline, headline, posts, limit, id } = $derived(data);
-	let visiblePages = $state(5);
 	let initialPage = $state(Number(page.url.searchParams.get('page')) || 1);
 
 	let currentPage = $state(initialPage);

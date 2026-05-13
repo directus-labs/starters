@@ -1,6 +1,5 @@
 <script lang="ts">
 	import * as RadioGroup from '$lib/components/ui/radio-group/index.js';
-	import { Label } from '$lib/components/ui/label/index.js';
 
 	interface RadioGroupFieldProps {
 		name: string;

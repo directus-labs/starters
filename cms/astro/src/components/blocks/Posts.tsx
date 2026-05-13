@@ -37,6 +37,7 @@ const Posts = ({ data }: PostsProps) => {
   const [currentPage, setCurrentPage] = useState(() => {
     if (typeof window !== 'undefined') {
       const sp = new URLSearchParams(window.location.search);
+
       return Number(sp.get('page')) || 1;
     }
 
@@ -49,6 +50,7 @@ const Posts = ({ data }: PostsProps) => {
     const fetchPosts = async () => {
       if (currentPage === 1) {
         setPaginatedPosts(posts || []);
+
         return;
       }
 

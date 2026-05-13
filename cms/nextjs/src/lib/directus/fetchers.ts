@@ -106,16 +106,16 @@ const pageFields = [
  */
 export const fetchPageData = async (permalink: string, postPage = 1, token?: string, preview?: boolean) => {
 	const { directus } = useDirectus();
+	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	try {
 		const pageData = (await directus.request(
 			withToken(
-				token as string,
+				effectiveToken as string,
 				readItems('pages', {
-					filter:
-						preview && token
-							? { permalink: { _eq: permalink } }
-							: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+					filter: preview
+						? { permalink: { _eq: permalink } }
+						: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
 					limit: 1,
 					fields: pageFields as any,
 					deep: {
@@ -185,11 +185,12 @@ export const fetchPageDataById = async (id: string, version?: string, token?: st
 	}
 
 	const { directus } = useDirectus();
+	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	try {
 		return (await directus.request(
 			withToken(
-				token as string,
+				effectiveToken as string,
 				readItem('pages', id, {
 					version,
 					fields: pageFields as any,
@@ -214,11 +215,12 @@ export const getPageIdByPermalink = async (permalink: string, token?: string) =>
 	}
 
 	const { directus } = useDirectus();
+	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	try {
 		const pageData = (await directus.request(
 			withToken(
-				token as string,
+				effectiveToken as string,
 				readItems('pages', {
 					filter: { permalink: { _eq: permalink } },
 					limit: 1,
@@ -244,11 +246,12 @@ export const getPostIdBySlug = async (slug: string, token?: string) => {
 	}
 
 	const { directus } = useDirectus();
+	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	try {
 		const postData = (await directus.request(
 			withToken(
-				token as string,
+				effectiveToken as string,
 				readItems('posts', {
 					filter: { slug: { _eq: slug } },
 					limit: 1,
@@ -285,12 +288,13 @@ export const fetchPostByIdAndVersion = async (
 	}
 
 	const { directus } = useDirectus();
+	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	try {
 		const [postData, relatedPosts] = await Promise.all([
 			directus.request(
 				withToken(
-					token as string,
+					effectiveToken as string,
 					readItem('posts', id, {
 						version,
 						fields: [
@@ -394,15 +398,17 @@ export const fetchPostBySlug = async (
 ): Promise<{ post: Post | null; relatedPosts: Post[] }> => {
 	const { directus } = useDirectus();
 	const { draft, token } = options || {};
+	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
 
 	try {
-		const filter: QueryFilter<Schema, Post> =
-			token || draft ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } };
+		const filter: QueryFilter<Schema, Post> = draft
+			? { slug: { _eq: slug } }
+			: { slug: { _eq: slug }, status: { _eq: 'published' } };
 
 		const [posts, relatedPosts] = await Promise.all([
 			directus.request<Post[]>(
 				withToken(
-					token as string,
+					effectiveToken as string,
 					readItems<Schema, 'posts', any>('posts', {
 						filter,
 						limit: 1,
@@ -425,7 +431,7 @@ export const fetchPostBySlug = async (
 			),
 			directus.request<Post[]>(
 				withToken(
-					token as string,
+					effectiveToken as string,
 					readItems<Schema, 'posts', any>('posts', {
 						filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
 						limit: 2,

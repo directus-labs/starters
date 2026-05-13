@@ -7,14 +7,15 @@ export default async function BlogPostPage({
 	searchParams,
 }: {
 	params: Promise<{ slug: string }>;
-	searchParams: Promise<{ id?: string; version?: string; preview?: string; token?: string }>;
+	searchParams: Promise<{ id?: string; version?: string; preview?: string }>;
 }) {
 	const { slug } = await params;
-	const { id, version, preview, token } = await searchParams;
-	const isDraft = (preview === 'true' && !!token) || (!!version && version !== 'published') || !!token;
+	const { id, version, preview } = await searchParams;
+	const token = preview === 'true' ? process.env.DIRECTUS_SERVER_TOKEN : undefined;
+	const isDraft = preview === 'true' || (!!version && version !== 'published');
 
 	// Live preview adds version = main which is not required when fetching the main version.
-	const fixedVersion = version != 'main' ? version : undefined;
+	const fixedVersion = version !== 'main' ? version : undefined;
 	try {
 		let postId = id;
 		let post: Post | null;

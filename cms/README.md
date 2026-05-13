@@ -1,24 +1,37 @@
-# Simple CMS Starter Templates
+# CMS Starter Templates
 
-Welcome to the **Simple CMS Starter Templates**! This repository contains front-end templates for building a simple CMS
-in different frameworks and libraries. Each subfolder represents a specific framework, offering reusable, scalable, and
-easy-to-implement CMS solutions.
+Welcome to the **CMS Starter Templates**! This collection contains front-end templates for building a full-featured CMS
+integrated with Directus. Each subfolder is a specific framework implementation with pages, blog posts, dynamic forms,
+live preview, and visual editing.
 
 ## **Templates**
 
-| Framework/Library | Description                                   | Links |
-| ----------------- | --------------------------------------------- |-------------- |
-| **Next.js**       | A CMS built using Next.js and its App Router. |[→ Go to Next.js Starter](./next) |
-| **Nuxt.js**       | A CMS template leveraging Nuxt.js features.   | [→ Go to Nuxt.js Starter](./nuxt) |
-| **Svelte**        | A CMS template using the Svelte framework.    | [→ Go to Svelte Starter](./svelte) |
-| **Astro**         | A CMS optimized for performance with Astro.   |[→ Go to Astro Starter](./astro) |
+| Framework     | Description                              | Links                                    |
+| ------------- | ---------------------------------------- | ---------------------------------------- |
+| **Next.js**   | CMS built with Next.js App Router        | [→ Go to Next.js Starter](./nextjs)      |
+| **Nuxt**      | CMS template using Nuxt 4                | [→ Go to Nuxt Starter](./nuxt)           |
+| **Astro**     | CMS optimized for performance with Astro | [→ Go to Astro Starter](./astro)         |
+| **SvelteKit** | CMS template using SvelteKit             | [→ Go to SvelteKit Starter](./sveltekit) |
+
+## **Features**
+
+All templates include:
+
+- **Dynamic Page Builder**: CMS-driven pages assembled from reusable blocks (hero, rich text, gallery, pricing, forms,
+  posts)
+- **Blog**: Dynamic blog post listing and detail pages
+- **Dynamic Forms**: Form builder with validation and Directus form submission storage
+- **Live Preview & Visual Editing**: Real-time content preview and in-context editing via the Directus visual editor
+- **Draft Content Support**: Preview unpublished content versions
+- **SEO**: Per-page metadata management
+- **Dark Mode**: Built-in theme toggling
 
 ## **Folder Structure**
 
 Each subfolder contains:
 
-- **Source Code**: Framework-specific implementation of the CMS.
-- **Documentation**: Instructions on how to set up, customize, and use the template.
+- **Source Code**: Framework-specific implementation
+- **Documentation**: Setup and customization instructions
 
 ## Local Setup (with CLI)
 

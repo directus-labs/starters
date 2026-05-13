@@ -1,0 +1,5 @@
+# Next.js Build Output
+.next/
+out/
+.pnpm-store
+node_modules/

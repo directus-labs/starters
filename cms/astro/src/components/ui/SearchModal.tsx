@@ -39,6 +39,7 @@ export default function SearchModal() {
     };
 
     document.addEventListener('keydown', onKeyDown);
+
     return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
 
@@ -54,6 +55,7 @@ export default function SearchModal() {
     if (search.length < 3) {
       setResults([]);
       setSearched(false);
+
       return;
     }
 

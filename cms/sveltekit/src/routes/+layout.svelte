@@ -24,7 +24,7 @@
 
 	enableVisualEditing();
 
-	afterNavigate(async (_navigation) => {
+	afterNavigate(async () => {
 		// First apply: all [data-directus] elements get overlays
 		await apply({
 			directusUrl: PUBLIC_DIRECTUS_URL,

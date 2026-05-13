@@ -36,7 +36,7 @@
 	<div class="mb-4 flex items-start justify-between gap-2">
 		{#if card.title}
 			<h3
-				class="font-heading text-foreground text-xl"
+				class="font-heading text-xl text-foreground"
 				data-directus={setAttr({
 					collection: 'block_pricing_cards',
 					item: card.id,
@@ -73,7 +73,7 @@
 				fields: ['price'],
 				mode: 'popover'
 			})}
-			class="text-h2 mt-2 font-semibold"
+			class="mt-2 text-h2 font-semibold"
 		>
 			{card.price}
 		</p>
@@ -86,7 +86,7 @@
 				fields: ['description'],
 				mode: 'popover'
 			})}
-			class="text-description mt-2 line-clamp-2"
+			class="mt-2 line-clamp-2 text-description"
 		>
 			{card.description}
 		</p>
@@ -105,10 +105,10 @@
 					mode: 'popover'
 				})}
 			>
-				{#each card.features as feature}
-					<li class="text-regular flex items-center gap-3">
+				{#each card.features as feature, i (i)}
+					<li class="flex items-center gap-3 text-regular">
 						<div class="mt-1">
-							<CheckCircle2 class="text-gray-muted size-4" />
+							<CheckCircle2 class="size-4 text-gray-muted" />
 						</div>
 						<p class="leading-relaxed">{feature}</p>
 					</li>

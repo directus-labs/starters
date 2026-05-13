@@ -1,12 +1,11 @@
-import type { DirectusFile } from "@/types/directus-schema";
+import type { DirectusFile } from '@/types/directus-schema';
 
-export function getDirectusAssetURL(
-  fileOrString: string | DirectusFile | null | undefined
-): string {
-  if (!fileOrString) return "";
+export function getDirectusAssetURL(fileOrString: string | DirectusFile | null | undefined): string {
+  if (!fileOrString) return '';
   const baseUrl = import.meta.env.PUBLIC_DIRECTUS_URL;
-  if (typeof fileOrString === "string") {
+  if (typeof fileOrString === 'string') {
     return `${baseUrl}/assets/${fileOrString}`;
   }
+
   return `${baseUrl}/assets/${fileOrString.id}`;
 }

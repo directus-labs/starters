@@ -9,10 +9,10 @@ import {
   uploadFiles,
   withToken,
   aggregate,
-} from "@directus/sdk";
-import type { RestClient } from "@directus/sdk";
-import Queue from "p-queue";
-import type { Schema } from "@/types/directus-schema";
+} from '@directus/sdk';
+import type { RestClient } from '@directus/sdk';
+import Queue from 'p-queue';
+import type { Schema } from '@/types/directus-schema';
 
 // Helper for retrying fetch requests
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
