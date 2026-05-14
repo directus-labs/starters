@@ -1,0 +1,11 @@
+{
+  "name": "directus-simple-website-cms-starter",
+  "version": "1.0.0",
+  "description": "A simple website CMS with pages, posts, and a block builder.",
+  "directus:template": {
+    "name": "Simple Website CMS",
+    "description": "A simple website CMS with pages, posts, and a block builder.",
+    "template": "./directus/template",
+    "frontends": {}
+  }
+}
