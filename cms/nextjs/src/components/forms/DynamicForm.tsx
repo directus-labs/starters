@@ -47,7 +47,6 @@ const DynamicForm = ({ fields, onSubmit, submitLabel, id }: DynamicFormProps) =>
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className="flex flex-wrap gap-4"
 				data-directus={setAttr({
 					collection: 'forms',
 					item: id,
@@ -55,21 +54,20 @@ const DynamicForm = ({ fields, onSubmit, submitLabel, id }: DynamicFormProps) =>
 					mode: 'popover',
 				})}
 			>
-				{sortedFields.map((field) => (
-					<div key={field.id} className="w-full">
-						<Field key={field.id} field={field} form={form} />
-					</div>
-				))}
-				<div className="w-full">
-					<div
-						data-directus={setAttr({
-							collection: 'forms',
-							item: id,
-							fields: 'submit_label',
-							mode: 'popover',
-						})}
-					>
-						<Button type="submit" label={submitLabel} icon="arrow" iconPosition="right" id={`submit-${id}`} />
+				<div className="flex flex-wrap gap-4">
+					{sortedFields.map((field) => <Field key={field.id} field={field} form={form} />)}
+
+					<div className="w-full">
+						<div
+							data-directus={setAttr({
+								collection: 'forms',
+								item: id,
+								fields: 'submit_label',
+								mode: 'popover',
+							})}
+						>
+							<Button type="submit" label={submitLabel} icon="arrow" iconPosition="right" id={`submit-${id}`} />
+						</div>
 					</div>
 				</div>
 			</form>
