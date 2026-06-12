@@ -1,3 +1,9 @@
+import {
+	multipartToFormData,
+	parseFormFieldsJson,
+	validateFormSubmission,
+} from '@@/app/lib/directus/validateFormSubmission';
+
 interface SubmissionValue {
 	field: string;
 	value?: string;
@@ -24,31 +30,53 @@ export default defineEventHandler(async (event) => {
 		});
 	}
 
+	let formId = '';
+	let fieldsRaw = '';
+
+	for (const field of formData) {
+		if (field.name === 'formId') {
+			formId = field.data.toString();
+		} else if (field.name === 'fields') {
+			fieldsRaw = field.data.toString();
+		}
+	}
+
+	if (!formId.trim()) {
+		throw createError({
+			statusCode: 400,
+			statusMessage: 'Missing or invalid formId',
+		});
+	}
+
+	const parsedFields = parseFormFieldsJson(fieldsRaw);
+	if ('error' in parsedFields) {
+		throw createError({
+			statusCode: 400,
+			statusMessage: parsedFields.error,
+		});
+	}
+
+	const bodyFormData = multipartToFormData(formData);
+	const validation = validateFormSubmission(parsedFields, bodyFormData);
+
+	if (!validation.success) {
+		throw createError({
+			statusCode: 400,
+			statusMessage: validation.error,
+		});
+	}
+
 	try {
 		const submissionValues: SubmissionValue[] = [];
-		let formId = '';
-		let fields = [];
 
-		for (const field of formData) {
-			if (field.name === 'formId') {
-				formId = field.data.toString();
-			} else if (field.name === 'fields') {
-				fields = JSON.parse(field.data.toString());
-			}
-		}
+		for (const field of parsedFields) {
+			if (!field.name) continue;
+			const value = validation.data[field.name];
+			if (value === undefined || value === null) continue;
 
-		for (const field of formData) {
-			if (!field.name || !field.data) continue;
-			if (field.name === 'formId' || field.name === 'fields') continue;
-
-			const matchingField = fields.find((f: { name: string | undefined }) => f.name === field.name);
-			if (!matchingField) continue;
-
-			if (field.filename) {
-				const blob = new Blob([field.data], { type: field.type });
-
+			if (field.type === 'file' && value instanceof File) {
 				const uploadFormData = new FormData();
-				uploadFormData.append('file', blob, field.filename);
+				uploadFormData.append('file', value);
 
 				const uploadedFile = (await directusServer.request(withToken(TOKEN, uploadFiles(uploadFormData)))) as {
 					id?: string;
@@ -56,20 +84,20 @@ export default defineEventHandler(async (event) => {
 
 				if (uploadedFile?.id) {
 					submissionValues.push({
-						field: matchingField.id,
+						field: field.id,
 						file: uploadedFile.id,
 					});
 				}
 			} else {
 				submissionValues.push({
-					field: matchingField.id,
-					value: field.data.toString(),
+					field: field.id,
+					value: String(value),
 				});
 			}
 		}
 
 		const payload = {
-			form: formId,
+			form: formId.trim(),
 			values: submissionValues,
 		};
 

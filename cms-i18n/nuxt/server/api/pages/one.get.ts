@@ -27,8 +27,8 @@ export default defineEventHandler(async (event) => {
 
 	const { preview, permalink: rawPermalink, id, version: rawVersion } = query;
 
-	// 'main' is not a real Directus content version — strip it (it's a live preview indicator)
-	const version = String(rawVersion) !== 'main' ? rawVersion : undefined;
+	// Live preview adds version=published ('main' before Directus 12) — strip both; only real versions like 'draft' pass through.
+	const version = String(rawVersion) !== 'main' && String(rawVersion) !== 'published' ? rawVersion : undefined;
 
 	// Get locale from event (set by middleware or query param)
 	const locale = getLocaleFromEvent(event);
@@ -45,51 +45,28 @@ export default defineEventHandler(async (event) => {
 	// Build page fields with translation support
 	const pageFields = buildPageFields(includeTranslations);
 
-	// Build deep query with translations
-	const buildDeepQuery = () => {
-		const baseDeep: Record<string, unknown> = {
-			blocks: {
-				_sort: ['sort'],
-				_filter: { hide_block: { _neq: true } },
-				...(includeTranslations
-					? {
-							item: {
-								block_form: {
+	// Build deep query with translations (aligned with Next.js fetchers)
+	const buildDeepQuery = () => ({
+		blocks: {
+			_sort: ['sort'],
+			_filter: { hide_block: { _neq: true } },
+			...(includeTranslations
+				? {
+						item: {
+							block_form: {
+								...buildTranslationsDeep(locale),
+								form: {
+									_filter: { is_active: { _eq: true } },
 									...buildTranslationsDeep(locale),
-									form: {
-										_filter: { is_active: { _eq: true } },
-										...buildTranslationsDeep(locale),
-										fields: buildTranslationsDeep(locale),
-									},
+									fields: buildTranslationsDeep(locale),
 								},
-								block_hero: {
-									...buildTranslationsDeep(locale),
-									button_group: {
-										buttons: buildTranslationsDeep(locale),
-									},
-								},
-								block_pricing: {
-									...buildTranslationsDeep(locale),
-									pricing_cards: {
-										...buildTranslationsDeep(locale),
-										button: buildTranslationsDeep(locale),
-									},
-								},
-								block_richtext: buildTranslationsDeep(locale),
-								block_gallery: buildTranslationsDeep(locale),
-								block_posts: buildTranslationsDeep(locale),
 							},
-						}
-					: {}),
-			},
-		};
-
-		if (includeTranslations) {
-			return { ...baseDeep, ...buildTranslationsDeep(locale) };
-		}
-
-		return baseDeep;
-	};
+						},
+					}
+				: {}),
+		},
+		...(includeTranslations ? buildTranslationsDeep(locale) : {}),
+	});
 
 	try {
 		let page: Page;
@@ -233,7 +210,8 @@ export default defineEventHandler(async (event) => {
 		}
 
 		return page;
-	} catch {
-		throw createError({ statusCode: 500, statusMessage: 'Page not found' });
+	} catch (error) {
+		console.error('Error fetching page:', error);
+		throw createError({ statusCode: 404, statusMessage: 'Page not found' });
 	}
 });

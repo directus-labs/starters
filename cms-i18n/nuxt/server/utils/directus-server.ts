@@ -9,7 +9,7 @@ import {
 	readSingleton,
 	createItem,
 	updateItem,
-	// staticToken,
+	staticToken,
 	uploadFiles,
 	readMe,
 	withToken,
@@ -19,16 +19,20 @@ import {
 
 const {
 	public: { directusUrl },
-	// directusServerToken,
+	directusServerToken,
 } = useRuntimeConfig();
 
-// By default, we use the Public permissions to fetch content (even on the server side). If you want to restrict public access it's recommended to use the staticToken option.
-const directusServer = createDirectus<Schema>(directusUrl as string, {
+// Server-side reads use DIRECTUS_SERVER_TOKEN (same as the Next.js starter) so licensed
+// translation deep queries work.
+let directusServer = createDirectus<Schema>(directusUrl as string, {
 	globals: {
 		fetch: $fetch,
 	},
 }).with(rest());
-// .with(staticToken(directusServerToken as string));
+
+if (directusServerToken) {
+	directusServer = directusServer.with(staticToken(directusServerToken as string));
+}
 
 export {
 	directusServer,

@@ -221,11 +221,11 @@ export function buildPageFields(includeTranslations: boolean) {
 	];
 
 	return [
-		'title',
 		'id',
+		'title',
+		'seo',
 		...withTrans,
 		{
-			seo: ['title', 'meta_description', 'og_image', ...withTrans],
 			blocks: [
 				'id',
 				'background',
@@ -263,9 +263,9 @@ export function buildPostFields(includeTranslations: boolean) {
 		'image',
 		'description',
 		'slug',
+		'seo',
 		...withTrans,
 		{
-			seo: ['title', 'meta_description', 'og_image', ...withTrans],
 			author: ['id', 'first_name', 'last_name', 'avatar'],
 		},
 	];
