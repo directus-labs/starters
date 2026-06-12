@@ -37,7 +37,7 @@ export async function generateRedirects(): Promise<NextRedirect[]> {
 		} else {
 			console.error('Error generating redirects:', error);
 		}
-		
-return [];
+
+		return [];
 	}
 }
