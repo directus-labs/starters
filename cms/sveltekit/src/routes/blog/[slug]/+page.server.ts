@@ -13,8 +13,8 @@ export const load = (async (event) => {
 	const token = preview ? DIRECTUS_SERVER_TOKEN : undefined;
 	const slug = event.params.slug;
 
-	// Live preview adds version = main which is not required when fetching the main version.
-	version = version !== 'main' ? version : undefined;
+	// Live preview adds version=published ('main' before Directus 12) which is not required when fetching the published version.
+	version = version !== 'main' && version !== 'published' ? version : undefined;
 
 	const isDraft = preview || (!!version && version !== 'published');
 

@@ -25,26 +25,40 @@
 	let isSubmitted = $state(false);
 	let error = $state<string | null>(null);
 
-	const handleSubmit = async (data: Record<string, any>) => {
+	const handleSubmit = async (data: Record<string, unknown>) => {
+		error = null;
 		try {
-			const fieldsWithNames = form.fields.map((field) => ({
+			const fieldsPayload = form.fields.map((field) => ({
 				id: field.id,
 				name: field.name || '',
-				type: field.type || ''
+				type: field.type || '',
+				label: field.label,
+				required: field.required,
+				validation: field.validation
 			}));
 
 			const formData = new FormData();
 			formData.append('formId', form.id);
-			formData.append('fields', JSON.stringify(fieldsWithNames));
-			for (const field of fieldsWithNames) {
+			formData.append('fields', JSON.stringify(fieldsPayload));
+
+			for (const field of fieldsPayload) {
 				const value = data[field.name];
-				if (value !== undefined && value !== null) {
+				if (value === undefined || value === null) continue;
+
+				if (value instanceof File) {
 					formData.append(field.name, value);
+				} else if (Array.isArray(value)) {
+					formData.append(field.name, JSON.stringify(value));
+				} else {
+					formData.append(field.name, String(value));
 				}
 			}
 
 			const response = await fetch('/api/forms/submit', { method: 'POST', body: formData });
-			if (!response.ok) throw new Error('Form submission failed');
+			if (!response.ok) {
+				const body = await response.json().catch(() => ({}));
+				throw new Error(typeof body.error === 'string' ? body.error : 'Form submission failed');
+			}
 
 			if (form.on_success === 'redirect' && form.success_redirect_url) {
 				if (form.success_redirect_url.startsWith('/')) {
@@ -57,7 +71,7 @@
 			}
 		} catch (err) {
 			console.error('Error submitting form:', err);
-			error = 'Failed to submit the form. Please try again later.';
+			error = err instanceof Error ? err.message : 'Failed to submit the form. Please try again later.';
 		}
 	};
 </script>

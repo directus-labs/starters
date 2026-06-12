@@ -2,33 +2,7 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { useDirectus } from '$lib/directus/directus';
 import { DIRECTUS_SERVER_TOKEN } from '$env/static/private';
-
-type FormField = { id: string; name: string; type: string };
-
-function isFormField(f: unknown): f is FormField {
-	return (
-		typeof f === 'object' &&
-		f !== null &&
-		typeof (f as FormField).id === 'string' &&
-		typeof (f as FormField).name === 'string' &&
-		typeof (f as FormField).type === 'string'
-	);
-}
-
-function parseFields(raw: string): FormField[] | Response {
-	try {
-		const parsed = JSON.parse(raw);
-		if (!Array.isArray(parsed)) {
-			return json({ error: 'fields must be an array' }, { status: 400 });
-		}
-		if (!parsed.every(isFormField)) {
-			return json({ error: 'Each field must have id, name, and type (strings)' }, { status: 400 });
-		}
-		return parsed;
-	} catch {
-		return json({ error: 'Invalid fields JSON' }, { status: 400 });
-	}
-}
+import { parseFormFieldsJson, validateFormSubmission } from '$lib/directus/validateFormSubmission';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const { getDirectus, uploadFiles, createItem, withToken } = useDirectus();
@@ -53,17 +27,25 @@ export const POST: RequestHandler = async ({ request }) => {
 		if (typeof fieldsRaw !== 'string') {
 			return json({ error: 'Missing or invalid fields' }, { status: 400 });
 		}
-		const fieldsResult = parseFields(fieldsRaw);
-		if (fieldsResult instanceof Response) return fieldsResult;
-		const fields = fieldsResult;
+
+		const parsedFields = parseFormFieldsJson(fieldsRaw);
+		if ('error' in parsedFields) {
+			return json({ error: parsedFields.error }, { status: 400 });
+		}
+
+		const validation = validateFormSubmission(parsedFields, formData);
+		if (!validation.success) {
+			return json({ error: validation.error }, { status: 400 });
+		}
 
 		const submissionValues: { field: string; value?: string; file?: string }[] = [];
 
-		for (const field of fields) {
-			const value = formData.get(field.name);
-			if (value === null || value === undefined) continue;
+		for (const field of parsedFields) {
+			if (!field.name) continue;
+			const value = validation.data[field.name];
+			if (value === undefined || value === null) continue;
 
-			if (value instanceof File && value.size > 0) {
+			if (field.type === 'file' && value instanceof File) {
 				const uploadFormData = new FormData();
 				uploadFormData.append('file', value);
 
@@ -71,8 +53,8 @@ export const POST: RequestHandler = async ({ request }) => {
 				if (uploadedFile && 'id' in uploadedFile) {
 					submissionValues.push({ field: field.id, file: (uploadedFile as { id: string }).id });
 				}
-			} else if (typeof value === 'string') {
-				submissionValues.push({ field: field.id, value });
+			} else {
+				submissionValues.push({ field: field.id, value: String(value) });
 			}
 		}
 
