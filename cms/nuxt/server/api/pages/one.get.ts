@@ -124,8 +124,8 @@ export default defineEventHandler(async (event) => {
 	const query = getQuery(event);
 
 	const { preview, permalink: rawPermalink, id } = query;
-	// Handle Live Preview adding version=published ('main' before Directus 12) which is not required when fetching the published version.
-	const version = String(query.version) !== 'main' && String(query.version) !== 'published' ? query.version : undefined;
+	// Live preview adds version=published which is not required when fetching the published version.
+	const version = String(query.version) !== 'published' ? query.version : undefined;
 
 	// Normalize permalink: ensure it starts with / and doesn't end with /
 	// This handles various URL formats consistently
