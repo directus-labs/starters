@@ -1,6 +1,6 @@
 {
   "id": 1,
-  "project_name": "Directus",
+  "project_name": "CMS",
   "project_url": null,
   "project_color": "#6644FF",
   "project_logo": null,
@@ -231,138 +231,12 @@
     },
     {
       "url": "http://localhost:3000/blog?visual-editing=true"
-    },
-    {
-      "url": "http://localhost:3000?visual-editing=true"
-    },
-    {
-      "url": "http://localhost:3000/blog?visual-editing=true"
-    },
-    {
-      "url": "http://localhost:3000?visual-editing=true"
-    },
-    {
-      "url": "http://localhost:3000/blog?visual-editing=true"
     }
   ],
-  "project_id": "019b4795-b081-729b-868b-19431e8ccbcf",
+  "accepted_terms": true,
   "mcp_enabled": true,
   "mcp_allow_deletes": false,
   "mcp_prompts_collection": "ai_prompts",
   "mcp_system_prompt_enabled": true,
-  "mcp_system_prompt": null,
-  "command_palette_settings": {
-    "searchMode": "as_you_type",
-    "collections": [
-      {
-        "collection": "pages",
-        "displayTemplate": "{{title}}",
-        "descriptionField": "permalink",
-        "fields": [
-          "title",
-          "permalink"
-        ],
-        "limit": 10,
-        "availableGlobally": false
-      },
-      {
-        "collection": "posts",
-        "displayTemplate": "{{title}}",
-        "descriptionField": "description",
-        "fields": [
-          "title",
-          "description"
-        ],
-        "limit": 10,
-        "availableGlobally": true
-      },
-      {
-        "collection": "forms",
-        "displayTemplate": "{{title}}",
-        "descriptionField": null,
-        "fields": [
-          "values.field_name",
-          "title"
-        ],
-        "limit": 10,
-        "availableGlobally": false
-      },
-      {
-        "collection": "pages",
-        "displayTemplate": "{{title}}",
-        "descriptionField": "permalink",
-        "fields": [
-          "title",
-          "permalink"
-        ],
-        "limit": 10,
-        "availableGlobally": false
-      },
-      {
-        "collection": "posts",
-        "displayTemplate": "{{title}}",
-        "descriptionField": "description",
-        "fields": [
-          "title",
-          "description"
-        ],
-        "limit": 10,
-        "availableGlobally": true
-      },
-      {
-        "collection": "forms",
-        "displayTemplate": "{{title}}",
-        "descriptionField": null,
-        "fields": [
-          "values.field_name",
-          "title"
-        ],
-        "limit": 10,
-        "availableGlobally": false
-      },
-      {
-        "collection": "pages",
-        "displayTemplate": "{{title}}",
-        "descriptionField": "permalink",
-        "fields": [
-          "title",
-          "permalink"
-        ],
-        "limit": 10,
-        "availableGlobally": false
-      },
-      {
-        "collection": "posts",
-        "displayTemplate": "{{title}}",
-        "descriptionField": "description",
-        "fields": [
-          "title",
-          "description"
-        ],
-        "limit": 10,
-        "availableGlobally": true
-      },
-      {
-        "collection": "forms",
-        "displayTemplate": "{{title}}",
-        "descriptionField": null,
-        "fields": [
-          "values.field_name",
-          "title"
-        ],
-        "limit": 10,
-        "availableGlobally": false
-      }
-    ],
-    "triggerRate": 250,
-    "commandPaletteEnabled": true
-  },
-  "project_owner": null,
-  "project_usage": null,
-  "org_name": null,
-  "product_updates": null,
-  "project_status": null,
-  "ai_openai_api_key": "**********",
-  "ai_anthropic_api_key": null,
-  "ai_system_prompt": null
+  "mcp_system_prompt": null
 }

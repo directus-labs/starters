@@ -97,6 +97,35 @@ function validateDirectusTemplate(template) {
   if (!existsSync(templatePkg)) {
     warn(template.name, 'Missing directus/template/package.json')
   }
+
+  validateSingletonContent(template.name, srcPath)
+}
+
+// Singleton collections load after regular collections in directus-template-cli.
+// Translation rows for a singleton must be nested in its content file, not a separate *_translations.json.
+function validateSingletonContent(templateName, srcPath) {
+  const contentDir = join(srcPath, 'content')
+  if (!existsSync(contentDir)) return
+
+  const collections = readJson(join(srcPath, 'collections.json'))
+  if (!collections) return
+
+  const contentFiles = new Set(
+    readdirSync(contentDir)
+      .filter((file) => file.endsWith('.json'))
+      .map((file) => file.replace(/\.json$/, '')),
+  )
+
+  for (const { collection, meta } of collections) {
+    if (!meta?.singleton) continue
+    const translationsFile = `${collection}_translations`
+    if (contentFiles.has(translationsFile)) {
+      error(
+        templateName,
+        `content/${translationsFile}.json must not exist — nest translations inside content/${collection}.json (template-cli loads singletons last)`,
+      )
+    }
+  }
 }
 
 // Validate Docker scaffolding

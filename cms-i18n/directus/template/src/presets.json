@@ -39,45 +39,6 @@
     "color": null
   },
   {
-    "bookmark": "1. Workflow",
-    "user": null,
-    "role": null,
-    "collection": "posts",
-    "search": null,
-    "layout": "kanban",
-    "layout_query": {
-      "tabular": {
-        "fields": [
-          "status",
-          "image",
-          "title",
-          "date_published"
-        ],
-        "sort": [
-          "-date_published"
-        ],
-        "page": 1
-      }
-    },
-    "layout_options": {
-      "kanban": {
-        "titleField": "title",
-        "showUngrouped": false,
-        "dateField": "published_at",
-        "textField": "description",
-        "crop": true,
-        "groupField": "status",
-        "groupTitle": null,
-        "userField": "author",
-        "tagsField": null
-      }
-    },
-    "refresh_interval": null,
-    "filter": null,
-    "icon": "view_kanban",
-    "color": null
-  },
-  {
     "bookmark": null,
     "user": null,
     "role": null,

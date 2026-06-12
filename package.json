@@ -4,6 +4,9 @@
   "type": "module",
   "scripts": {
     "validate": "node _scripts/validate-templates.js",
+    "rbac:codegen": "node _scripts/rbac-codegen.js",
+    "rbac:codegen:check": "node _scripts/rbac-codegen.js --check",
+    "rbac:sync-licensed": "node _scripts/sync-licensed-permissions.js",
     "sync-release-config": "node _scripts/sync-release-config.js"
   }
 }

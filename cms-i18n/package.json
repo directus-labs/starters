@@ -8,6 +8,8 @@
   "directus:template": {
     "name": "CMS - i18n",
     "description": "A ready-to-use CMS with i18n support, block builder, visual editing, and integration with your favorite framework. ",
+    "tier": "team",
+    "requiresLicense": true,
     "template": "./directus/template",
     "frontends": {
       "nextjs": {

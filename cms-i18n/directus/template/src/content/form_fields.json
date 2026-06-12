@@ -13,9 +13,9 @@
     "sort": 1,
     "required": true,
     "date_created": "2025-05-07T01:02:23.666Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_created": null,
     "date_updated": "2025-12-22T19:53:39.324Z",
-    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_updated": null,
     "translations": [
       "a5dae4bf-1e2c-4aea-81d7-3dea1350da6e",
       "ab099552-7c59-4e17-8da7-7d3ee8ec2bc3"
@@ -35,9 +35,9 @@
     "sort": 5,
     "required": false,
     "date_created": "2025-05-07T01:02:23.666Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_created": null,
     "date_updated": "2025-12-22T19:53:39.329Z",
-    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_updated": null,
     "translations": [
       "ab6f4ab4-e69f-4943-a89e-00ad9c944d65",
       "9994072a-e134-4fbb-be3d-69e9c26f7bac"
@@ -57,9 +57,9 @@
     "sort": 3,
     "required": true,
     "date_created": "2025-05-07T01:02:23.666Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_created": null,
     "date_updated": "2025-12-22T19:53:39.336Z",
-    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_updated": null,
     "translations": [
       "73483946-9975-4f50-9df8-45964ccbfd9a",
       "fa490558-9bc1-40c9-b07d-727d24dce330"
@@ -88,7 +88,7 @@
     "sort": 4,
     "required": false,
     "date_created": "2025-05-07T01:02:23.666Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_created": null,
     "date_updated": "2025-12-22T22:58:07.763Z",
     "user_updated": null,
     "translations": [
@@ -110,9 +110,9 @@
     "sort": 2,
     "required": true,
     "date_created": "2025-05-07T01:02:23.666Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_created": null,
     "date_updated": "2025-12-22T19:53:39.344Z",
-    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_updated": null,
     "translations": [
       "d00a881b-1427-4b02-ac0b-a662f3d53e00",
       "71e85e6e-ce5e-4064-a2fb-96d74fc3adc6"
@@ -132,9 +132,9 @@
     "sort": 2,
     "required": true,
     "date_created": "2025-05-07T01:02:23.666Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_created": null,
     "date_updated": "2025-12-22T19:53:39.347Z",
-    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_updated": null,
     "translations": [
       "186ccdb9-a689-48ab-87c5-4e8e4d59a879",
       "daf64642-1017-4c08-8df2-71e881d7f2ac"
@@ -154,9 +154,9 @@
     "sort": 1,
     "required": true,
     "date_created": "2025-05-07T01:02:23.666Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_created": null,
     "date_updated": "2025-12-22T19:53:39.350Z",
-    "user_updated": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a",
+    "user_updated": null,
     "translations": [
       "54471931-d5d9-4977-875f-f6cf2202a1c8",
       "3eb364e9-3c75-491d-aa93-f8d816d13c15"
