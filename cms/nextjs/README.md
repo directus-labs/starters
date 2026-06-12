@@ -30,6 +30,14 @@ CMS-powered web applications.
 Directus allows you to work on unpublished content using **Draft Mode**. This Next.js template is configured to support
 Directus Draft Mode out of the box, enabling live previews of unpublished or draft content as you make changes.
 
+### **Content Versioning in Directus 12**
+
+In Directus 12, the published content version is called `published` (formerly `main`), and every versioned item
+automatically gets a `draft` version. Published items are locked in the Studio — edits happen on the draft version and
+are promoted to publish. This template handles both keys: preview URLs with `version=published` (or the legacy
+`version=main`) load the live content, while `version=draft` (or any custom version key) fetches that version from the
+API.
+
 ### **Live Preview Setup**
 
 [Directus Live Preview](https://docs.directus.io/guides/headless-cms/live-preview/nextjs.html)
@@ -78,7 +86,7 @@ To get started, you need to configure environment variables. Follow these steps:
 2. **Update the following variables in your `.env` file:**
 
    - **`NEXT_PUBLIC_DIRECTUS_URL`**: URL of your Directus instance.
-   - **`DIRECTUS_SERVER_TOKEN`**: Token from the **Webmaster** account in Directus. Used server-side for preview, draft content, and form submissions.
+   - **`DIRECTUS_SERVER_TOKEN`**: Static token from your Directus **admin account** (created during first-launch onboarding). Used server-side for preview, draft content, and form submissions.
    - **`DIRECTUS_ADMIN_TOKEN`**: Admin token for local type generation only. Never used at runtime.
    - **`NEXT_PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
    - **`NEXT_PUBLIC_ENABLE_VISUAL_EDITING`**: Visual editing is enabled by default. Set to `false` to disable.
