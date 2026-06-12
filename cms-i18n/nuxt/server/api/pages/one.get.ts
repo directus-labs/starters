@@ -109,6 +109,7 @@ export default defineEventHandler(async (event) => {
 									version: String(version),
 									// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 									fields: pageFields,
+									// @ts-expect-error same as above
 									deep: buildDeepQuery(),
 								}),
 							)
@@ -116,11 +117,12 @@ export default defineEventHandler(async (event) => {
 								version: String(version),
 								// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 								fields: pageFields,
+								// @ts-expect-error same as above
 								deep: buildDeepQuery(),
 							}),
 				);
-			} catch {
-				// If version fetch fails, throw error
+			} catch (error) {
+				if (error && typeof error === 'object' && 'statusCode' in error) throw error;
 				throw createError({ statusCode: 404, statusMessage: 'Page version not found' });
 			}
 		} else {
@@ -140,6 +142,7 @@ export default defineEventHandler(async (event) => {
 								limit: 1,
 								// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 								fields: pageFields,
+								// @ts-expect-error same as above
 								deep: buildDeepQuery(),
 							}),
 						)
@@ -151,6 +154,7 @@ export default defineEventHandler(async (event) => {
 							limit: 1,
 							// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 							fields: pageFields,
+							// @ts-expect-error same as above
 							deep: buildDeepQuery(),
 						}),
 			);
@@ -211,7 +215,7 @@ export default defineEventHandler(async (event) => {
 
 		return page;
 	} catch (error) {
-		console.error('Error fetching page:', error);
+		if (error && typeof error === 'object' && 'statusCode' in error) throw error;
 		throw createError({ statusCode: 404, statusMessage: 'Page not found' });
 	}
 });

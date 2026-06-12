@@ -163,6 +163,7 @@ export default defineEventHandler(async (event) => {
 		// Return both the main post and related posts for the frontend
 		return { post, relatedPosts };
 	} catch (error) {
-		throw createError({ statusCode: 500, message: `Failed to fetch post: ${slug}`, data: error });
+		if (error && typeof error === 'object' && 'statusCode' in error) throw error;
+		throw createError({ statusCode: 500, message: `Failed to fetch post: ${slug}` });
 	}
 });
