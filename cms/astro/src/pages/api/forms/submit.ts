@@ -6,7 +6,7 @@ export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
   const formData = await request.formData();
-  const formId = formData.get('formId');
+  const formId = formData.get('_formId');
 
   if (typeof formId !== 'string' || !formId.trim()) {
     return new Response(JSON.stringify({ error: 'Missing or invalid formId' }), {
@@ -15,7 +15,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const fieldsRaw = formData.get('fields');
+  const fieldsRaw = formData.get('_fields');
   if (typeof fieldsRaw !== 'string') {
     return new Response(JSON.stringify({ error: 'Missing or invalid fields' }), {
       status: 400,
@@ -47,12 +47,14 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     await submitForm(formId.trim(), fieldsForSubmit, validation.data);
-    return new Response(JSON.stringify({ success: true }), {
+    
+return new Response(JSON.stringify({ success: true }), {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error('Error submitting form:', error);
-    return new Response(JSON.stringify({ error: 'Failed to submit form' }), {
+    
+return new Response(JSON.stringify({ error: 'Failed to submit form' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });

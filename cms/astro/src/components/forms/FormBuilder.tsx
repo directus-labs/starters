@@ -39,8 +39,8 @@ const FormBuilder = ({ form, className }: FormBuilderProps) => {
       }));
 
       const formData = new FormData();
-      formData.append('formId', form.id);
-      formData.append('fields', JSON.stringify(fieldsPayload));
+      formData.append('_formId', form.id);
+      formData.append('_fields', JSON.stringify(fieldsPayload));
 
       for (const field of fieldsPayload) {
         const value = data[field.name];
