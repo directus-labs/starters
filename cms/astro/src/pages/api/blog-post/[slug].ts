@@ -7,9 +7,9 @@ export const GET: APIRoute = async ({ request }) => {
 
   const slug = pathname.replace('/api/blog-post/', '').trim();
   const id = searchParams.get('id');
-  // Live preview adds version = main which is not required when fetching the main version.
+  // Live preview adds version=published ('main' before Directus 12) which is not required when fetching the published version.
   const rawVersion = searchParams.get('version') || '';
-  const version = rawVersion !== 'main' ? rawVersion : null;
+  const version = rawVersion !== 'main' && rawVersion !== 'published' ? rawVersion : null;
   const preview = searchParams.get('preview') === 'true';
   const isEditing = searchParams.get('visual-editing') === 'true';
   const token = preview ? import.meta.env.DIRECTUS_SERVER_TOKEN : undefined;
