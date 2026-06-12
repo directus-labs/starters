@@ -22,9 +22,9 @@ const { permalink } = Astro.params;
 const query = Astro.url.searchParams;
 
 const id = query.get('id') || '';
-// Live preview adds version=published ('main' before Directus 12) which is not required when fetching the published version.
+// Live preview adds version=published which is not required when fetching the published version.
 const rawVersion = query.get('version') || '';
-const version = rawVersion !== 'main' && rawVersion !== 'published' ? rawVersion : '';
+const version = rawVersion !== 'published' ? rawVersion : '';
 const preview = query.get('preview') === 'true';
 const token = preview ? import.meta.env.DIRECTUS_SERVER_TOKEN || '' : '';
 
