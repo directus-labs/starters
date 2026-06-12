@@ -26,14 +26,10 @@
       "permissions": "$trigger",
       "emitEvents": false,
       "query": {
-        "fields": [
-          "item_duplication_fields"
-        ]
+        "fields": ["item_duplication_fields"]
       },
       "collection": "directus_collections",
-      "key": [
-        "{{$trigger.body.collection}}"
-      ]
+      "key": ["{{$trigger.body.collection}}"]
     },
     "resolve": "c02bfa07-a395-48df-a0c9-e5acace6da40",
     "reject": null,
@@ -132,14 +128,9 @@
     "position_y": 1,
     "options": {
       "collection": "forms",
-      "key": [
-        "{{$trigger.payload.form}}"
-      ],
+      "key": ["{{$trigger.payload.form}}"],
       "query": {
-        "fields": [
-          "*",
-          "fields.*"
-        ]
+        "fields": ["*", "fields.*"]
       },
       "permissions": "$full"
     },
@@ -317,7 +308,7 @@
     "resolve": "f6b8abc3-20bd-4d05-9bec-b7c759559e13",
     "reject": null,
     "flow": "c62ceaa5-bd09-4158-8329-98792debc5d5",
-    "date_created": "2025-06-12T17:55:00.000Z",
+    "date_created": "2025-05-04T17:21:59.280Z",
     "user_created": null
   },
   {
