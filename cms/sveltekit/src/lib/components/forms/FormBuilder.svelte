@@ -64,7 +64,7 @@
 				if (form.success_redirect_url.startsWith('/')) {
 					goto(form.success_redirect_url);
 				} else {
-					window.location.href = form.success_redirect_url; // TODO check if internal or external
+					window.location.href = form.success_redirect_url;
 				}
 			} else {
 				isSubmitted = true;

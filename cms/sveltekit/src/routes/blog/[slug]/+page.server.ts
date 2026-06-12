@@ -8,13 +8,13 @@ import { DIRECTUS_SERVER_TOKEN } from '$env/static/private';
 
 export const load = (async (event) => {
 	const id = event.url.searchParams.get('id') || '';
-	let version = event.url.searchParams.get('version') || '' || undefined;
+	let version = event.url.searchParams.get('version') || undefined;
 	const preview = event.url.searchParams.get('preview') === 'true';
 	const token = preview ? DIRECTUS_SERVER_TOKEN : undefined;
 	const slug = event.params.slug;
 
-	// Live preview adds version=published ('main' before Directus 12) which is not required when fetching the published version.
-	version = version !== 'main' && version !== 'published' ? version : undefined;
+	// Live preview adds version=published which is not required when fetching the published version.
+	version = version !== 'published' ? version : undefined;
 
 	const isDraft = preview || (!!version && version !== 'published');
 
