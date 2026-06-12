@@ -70,21 +70,23 @@ const handleSubmit = async (data: Record<string, any>) => {
 
 <template>
 	<div v-if="form.is_active" :class="['space-y-6 border border-input p-8 rounded-lg', className]">
-		<div v-if="error" class="p-4 text-red-500 bg-red-100 rounded-md">
-			<strong>Error:</strong>
-			{{ error }}
-		</div>
-		<div v-if="isSubmitted" class="flex flex-col items-center justify-center space-y-4 p-6 text-center" v>
+		<div v-if="isSubmitted" class="flex flex-col items-center justify-center space-y-4 p-6 text-center">
 			<CheckCircle className="size-12 text-green-500" />
 			<p class="text-gray-600">
 				{{ form.success_message || 'Your form has been submitted successfully.' }}
 			</p>
 		</div>
-		<DynamicForm
-			:fields="form.fields"
-			:onSubmit="handleSubmit"
-			:submitLabel="form.submit_label || 'Submit'"
-			:formId="form.id"
-		/>
+		<template v-else>
+			<div v-if="error" class="p-4 text-red-500 bg-red-100 rounded-md">
+				<strong>Error:</strong>
+				{{ error }}
+			</div>
+			<DynamicForm
+				:fields="form.fields"
+				:onSubmit="handleSubmit"
+				:submitLabel="form.submit_label || 'Submit'"
+				:formId="form.id"
+			/>
+		</template>
 	</div>
 </template>

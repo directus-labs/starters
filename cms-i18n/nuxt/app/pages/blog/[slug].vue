@@ -24,12 +24,8 @@ const {
 	public: { siteUrl },
 } = runtimeConfig;
 
-// Handle Live Preview adding version=main which is not required when fetching the main version.
-// Live preview adds version=published ('main' before Directus 12) which is not required when fetching the published version.
-const version =
-	route.query.version === 'main' || route.query.version === 'published'
-		? undefined
-		: (route.query.version as string);
+// Live preview adds version=published which is not required when fetching the published version.
+const version = route.query.version === 'published' ? undefined : (route.query.version as string);
 
 const { data, error, refresh } = await useFetch<{
 	post: Post;

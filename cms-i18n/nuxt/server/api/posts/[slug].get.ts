@@ -29,8 +29,8 @@ export default defineEventHandler(async (event) => {
 	const query = getQuery(event);
 	const { preview, id, version: rawVersion } = query;
 
-	// Live preview adds version=published ('main' before Directus 12) — strip both; only real versions like 'draft' pass through.
-	const version = String(rawVersion) !== 'main' && String(rawVersion) !== 'published' ? rawVersion : undefined;
+	// Live preview adds version=published which is not required when fetching the published version.
+	const version = String(rawVersion) !== 'published' ? rawVersion : undefined;
 
 	// Get locale from event (set by middleware or query param)
 	const locale = getLocaleFromEvent(event);
