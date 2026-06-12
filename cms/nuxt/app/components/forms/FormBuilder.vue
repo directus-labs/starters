@@ -26,21 +26,29 @@ const error = ref<string | null>(null);
 const handleSubmit = async (data: Record<string, any>) => {
 	error.value = null;
 	try {
-		const fieldsWithNames = props.form.fields.map((field) => ({
+		const fieldsPayload = props.form.fields.map((field) => ({
 			id: field.id,
 			name: field.name || '',
 			type: field.type || '',
+			label: field.label,
+			required: field.required,
+			validation: field.validation,
 		}));
 
 		const formData = new FormData();
 		formData.append('formId', props.form.id);
-		formData.append('fields', JSON.stringify(fieldsWithNames));
+		formData.append('fields', JSON.stringify(fieldsPayload));
 
-		for (const key in data) {
-			if (data[key] instanceof File) {
-				formData.append(key, data[key]);
+		for (const field of fieldsPayload) {
+			const value = data[field.name];
+			if (value === undefined || value === null) continue;
+
+			if (value instanceof File) {
+				formData.append(field.name, value);
+			} else if (Array.isArray(value)) {
+				formData.append(field.name, JSON.stringify(value));
 			} else {
-				formData.append(key, data[key]?.toString() || '');
+				formData.append(field.name, String(value));
 			}
 		}
 

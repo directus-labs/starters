@@ -48,8 +48,8 @@ export default defineEventHandler(async (event) => {
 
 	const query = getQuery(event);
 	const { preview, id } = query;
-	// Handle Live Preview adding version=main which is not required when fetching the main version.
-	const version = String(query.version) !== 'main' ? query.version : undefined;
+	// Handle Live Preview adding version=published ('main' before Directus 12) which is not required when fetching the published version.
+	const version = String(query.version) !== 'main' && String(query.version) !== 'published' ? query.version : undefined;
 
 	// Use the server token from runtimeConfig when preview mode is enabled
 	const config = useRuntimeConfig();
