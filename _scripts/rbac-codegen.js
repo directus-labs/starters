@@ -159,8 +159,7 @@ function syncI18nPermissions() {
   if (CHECK) {
     const currentPerms = readJson(i18nPermsPath);
     if (JSON.stringify(currentPerms) !== JSON.stringify(merged)) {
-      console.error('cms-i18n permissions.json
- drift — run: pnpm rbac:codegen');
+      console.error('cms-i18n permissions.json drift — run: pnpm rbac:codegen');
       process.exit(1);
     }
     const currentPolicies = readJson(join(I18N_TEMPLATE, 'src/policies.json'));
@@ -206,8 +205,7 @@ if (!CHECK) {
 }
 syncI18nPermissions();
 
-i
-f (CHECK) {
+if (CHECK) {
   checkLicensedTemplate(licensedPerms);
   console.log('RBAC outputs in sync.');
 } else {
