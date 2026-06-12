@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { CheckCircle } from 'lucide-react';
 import DynamicForm from './DynamicForm';
-import { submitForm } from '@/lib/directus/forms';
 import { FormField } from '@/types/directus-schema';
 import { cn } from '@/lib/utils';
 
@@ -29,16 +28,40 @@ const FormBuilder = ({ form, className }: FormBuilderProps) => {
 
 	if (!form.is_active) return null;
 
-	const handleSubmit = async (data: Record<string, any>) => {
+	const handleSubmit = async (data: Record<string, unknown>) => {
 		setError(null);
 		try {
-			const fieldsWithNames = form.fields.map((field) => ({
+			const fieldsPayload = form.fields.map((field) => ({
 				id: field.id,
 				name: field.name || '',
 				type: field.type || '',
+				label: field.label,
+				required: field.required,
+				validation: field.validation,
 			}));
 
-			await submitForm(form.id, fieldsWithNames, data);
+			const formData = new FormData();
+			formData.append('formId', form.id);
+			formData.append('fields', JSON.stringify(fieldsPayload));
+
+			for (const field of fieldsPayload) {
+				const value = data[field.name];
+				if (value === undefined || value === null) continue;
+
+				if (value instanceof File) {
+					formData.append(field.name, value);
+				} else if (Array.isArray(value)) {
+					formData.append(field.name, JSON.stringify(value));
+				} else {
+					formData.append(field.name, String(value));
+				}
+			}
+
+			const response = await fetch('/api/forms/submit', { method: 'POST', body: formData });
+			if (!response.ok) {
+				const body = await response.json().catch(() => ({}));
+				throw new Error(typeof body.error === 'string' ? body.error : 'Form submission failed');
+			}
 
 			if (form.on_success === 'redirect' && form.success_redirect_url) {
 				window.location.href = form.success_redirect_url;
@@ -47,7 +70,7 @@ const FormBuilder = ({ form, className }: FormBuilderProps) => {
 			}
 		} catch (err) {
 			console.error('Error submitting form:', err);
-			setError('Failed to submit the form. Please try again later.');
+			setError(err instanceof Error ? err.message : 'Failed to submit the form. Please try again later.');
 		}
 	};
 

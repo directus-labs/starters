@@ -82,8 +82,8 @@ export default async function Page({
 	const id = typeof searchParamsResolved.id === 'string' ? searchParamsResolved.id : '';
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
 	const preview = searchParamsResolved.preview === 'true';
-	// Live preview adds version = main which is not required when fetching the main version.
-	const fixedVersion = version != 'main' ? version : undefined;
+	// Live preview adds version=published ('main' before Directus 12) which is not required when fetching the published version.
+	const fixedVersion = version !== 'main' && version !== 'published' ? version : undefined;
 
 	const locale = await getLocaleFromHeaders();
 
