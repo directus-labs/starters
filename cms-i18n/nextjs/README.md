@@ -45,9 +45,8 @@ Directus Draft Mode out of the box, enabling live previews of unpublished or dra
 
 In Directus 12, the published content version is called `published` (formerly `main`), and every versioned item
 automatically gets a `draft` version. Published items are locked in the Studio — edits happen on the draft version and
-are promoted to publish. This template handles both keys: preview URLs with `version=published` (or the legacy
-`version=main`) load the live content, while `version=draft` (or any custom version key) fetches that version from the
-API.
+are promoted to publish. This template handles both: preview URLs with `version=published` load the live content (no extra API call needed),
+while `version=draft` (or any custom version key) fetches that version from the API.
 
 ### **Live Preview Setup**
 

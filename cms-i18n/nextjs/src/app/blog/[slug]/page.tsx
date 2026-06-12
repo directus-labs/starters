@@ -16,8 +16,7 @@ export default async function BlogPostPage({
 	const isDraft = preview === 'true' || (!!version && version !== 'published');
 	const locale = await getLocaleFromHeaders();
 
-	// Live preview adds version=published ('main' before Directus 12) which is not required when fetching the published version.
-	const fixedVersion = version !== 'main' && version !== 'published' ? version : undefined;
+	const fixedVersion = version === 'published' ? undefined : version;
 	try {
 		let postId = id;
 		let post: Post | null;
