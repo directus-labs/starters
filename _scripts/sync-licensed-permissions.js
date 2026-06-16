@@ -60,9 +60,8 @@ const DIRECTUS_URL = (
   'http://localhost:8055'
 ).replace(/\/$/, '');
 
-// DIRECTUS_SERVER_TOKEN is the webmaster/frontend-bot token and does NOT have
-// permission to PATCH permission rows. Use a static admin token here.
-const TOKEN = process.env.DIRECTUS_ADMIN_TOKEN || process.env.DIRECTUS_SERVER_TOKEN;
+// DIRECTUS_SERVER_TOKEN does not have permission to PATCH permission rows. Requires an admin token.
+const TOKEN = process.env.DIRECTUS_ADMIN_TOKEN;
 
 if (!TOKEN) {
   console.error('Missing admin token.');

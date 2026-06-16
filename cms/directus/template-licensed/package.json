@@ -5,7 +5,7 @@
   "files": [
     "src"
   ],
-  "name": "directus-template-cms",
-  "templateName": "CMS",
+  "name": "directus-template-cms-licensed",
+  "templateName": "CMS — Licensed",
   "version": "1.0.0"
 }
