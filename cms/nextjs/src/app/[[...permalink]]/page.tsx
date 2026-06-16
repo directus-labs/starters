@@ -64,8 +64,9 @@ export default async function Page({
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
 	const preview = searchParamsResolved.preview === 'true';
 	const token = preview ? process.env.DIRECTUS_SERVER_TOKEN : undefined;
-	// Live preview adds version=published which is not required when fetching the published version.
-	const fixedVersion = version !== 'published' ? version : undefined;
+	// version=published is the live key in Directus v12+; version=main was used by older Directus versions.
+	// Both represent published content and don't require an explicit version parameter.
+	const fixedVersion = version !== 'published' && version !== 'main' ? version : undefined;
 
 	try {
 		let page: Page;
