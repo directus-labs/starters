@@ -7,7 +7,8 @@ export const GET: APIRoute = async ({ request }) => {
 
   const slug = pathname.replace('/api/blog-post/', '').trim();
   const id = searchParams.get('id');
-  // Live preview adds version=published ('main' before Directus 12) which is not required when fetching the published version.
+  // Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
+  // Neither key requires an explicit version parameter — strip both to fetch the default published version.
   const rawVersion = searchParams.get('version') || '';
   const version = rawVersion !== 'main' && rawVersion !== 'published' ? rawVersion : null;
   const preview = searchParams.get('preview') === 'true';
