@@ -2,10 +2,11 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { useDirectus } from '$lib/directus/directus';
 import { DIRECTUS_SERVER_TOKEN } from '$env/static/private';
-import { parseFormFieldsJson, validateFormSubmission } from '$lib/directus/validateFormSubmission';
+import { validateFormSubmission } from '$lib/directus/validateFormSubmission';
+import type { FormField } from '$lib/types/directus-schema';
 
 export const POST: RequestHandler = async ({ request }) => {
-	const { getDirectus, uploadFiles, createItem, withToken } = useDirectus();
+	const { getDirectus, uploadFiles, createItem, withToken, readItem } = useDirectus();
 	const directus = getDirectus();
 	const TOKEN = DIRECTUS_SERVER_TOKEN;
 
@@ -23,24 +24,29 @@ export const POST: RequestHandler = async ({ request }) => {
 			return json({ error: 'Missing or invalid formId' }, { status: 400 });
 		}
 
-		const fieldsRaw = formData.get('fields');
-		if (typeof fieldsRaw !== 'string') {
-			return json({ error: 'Missing or invalid fields' }, { status: 400 });
+		// Fetch the authoritative form field definitions from Directus server-side.
+		// This ensures validation rules (required, validation patterns) come from the
+		// source of truth rather than client-provided data.
+		let fields: FormField[];
+		try {
+			const form = await directus.request(
+				withToken(TOKEN, readItem('forms', formId.trim(), {
+					fields: [{ fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }]
+				} as any))
+			);
+			fields = ((form as any).fields as FormField[]) || [];
+		} catch {
+			return json({ error: 'Form not found' }, { status: 404 });
 		}
 
-		const parsedFields = parseFormFieldsJson(fieldsRaw);
-		if ('error' in parsedFields) {
-			return json({ error: parsedFields.error }, { status: 400 });
-		}
-
-		const validation = validateFormSubmission(parsedFields, formData);
+		const validation = validateFormSubmission(fields, formData);
 		if (!validation.success) {
 			return json({ error: validation.error }, { status: 400 });
 		}
 
 		const submissionValues: { field: string; value?: string; file?: string }[] = [];
 
-		for (const field of parsedFields) {
+		for (const field of fields) {
 			if (!field.name) continue;
 			const value = validation.data[field.name];
 			if (value === undefined || value === null) continue;
