@@ -13,10 +13,12 @@ export default async function BlogPostPage({
 }) {
 	const { slug } = await params;
 	const { id, version, preview } = await searchParams;
-	const isDraft = preview === 'true' || (!!version && version !== 'published');
+	// version=published is the live key in Directus v12+; version=main was used by older Directus versions.
+	// Both represent published content and don't require an explicit version parameter.
+	const isDraft = preview === 'true' || (!!version && version !== 'published' && version !== 'main');
 	const locale = await getLocaleFromHeaders();
 
-	const fixedVersion = version === 'published' ? undefined : version;
+	const fixedVersion = version === 'published' || version === 'main' ? undefined : version;
 	try {
 		let postId = id;
 		let post: Post | null;

@@ -82,7 +82,9 @@ export default async function Page({
 	const id = typeof searchParamsResolved.id === 'string' ? searchParamsResolved.id : '';
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
 	const preview = searchParamsResolved.preview === 'true';
-	const fixedVersion = version === 'published' ? undefined : version;
+	// version=published is the live key in Directus v12+; version=main was used by older Directus versions.
+	// Both represent published content and don't require an explicit version parameter.
+	const fixedVersion = version === 'published' || version === 'main' ? undefined : version;
 
 	const locale = await getLocaleFromHeaders();
 
