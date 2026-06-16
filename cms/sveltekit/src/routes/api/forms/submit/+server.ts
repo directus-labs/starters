@@ -54,7 +54,7 @@ export const POST: RequestHandler = async ({ request }) => {
 					submissionValues.push({ field: field.id, file: (uploadedFile as { id: string }).id });
 				}
 			} else {
-				submissionValues.push({ field: field.id, value: String(value) });
+				submissionValues.push({ field: field.id, value: Array.isArray(value) ? JSON.stringify(value) : String(value) });
 			}
 		}
 
