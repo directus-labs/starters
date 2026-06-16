@@ -37,8 +37,14 @@ try {
   }
 
   if (postId && version) {
-    const result = await fetchPostByIdAndVersion(postId, version, slug as string, token || undefined);
-    post = result.post;
+    try {
+      const result = await fetchPostByIdAndVersion(postId, version, slug as string, token || undefined);
+      post = result.post;
+    } catch {
+      // Versioned fetch failed (e.g. draft revision not yet created) — serve current content
+      // so the page renders without a 404; BlogPostClient will fetch draft via SWR.
+      post = await fetchPostBySlug(slug as string, isDraft, token || undefined);
+    }
   } else {
     post = await fetchPostBySlug(slug as string, isDraft, token || undefined);
   }

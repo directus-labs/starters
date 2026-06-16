@@ -15,7 +15,9 @@ export const GET: APIRoute = async ({ request }) => {
   const isEditing = searchParams.get('visual-editing') === 'true';
   const token = preview ? import.meta.env.DIRECTUS_SERVER_TOKEN : undefined;
 
-  if (!isEditing) {
+  // Only serve data for visual editing or live preview with an explicit version (draft/custom).
+  // All other requests get an empty post so BlogPostClient falls back to initialPost.
+  if (!isEditing && !(preview && !!version)) {
     return new Response(JSON.stringify({ post: null }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },

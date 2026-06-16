@@ -64,7 +64,7 @@ export default function BlogPostClient({
     },
   );
 
-  const post = isVisualEditingEnabled ? (swrData?.post ?? initialPost) : initialPost;
+  const post = shouldFetchLive ? (swrData?.post ?? initialPost) : initialPost;
 
   useEffect(() => {
     if (isVisualEditingEnabled) {
