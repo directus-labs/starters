@@ -9,8 +9,9 @@ const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
 
 const permalink = withoutTrailingSlash(withLeadingSlash(route.path));
 
-// Live preview adds version=published which is not required when fetching the published version.
-const version = route.query.version !== 'published' ? (route.query.version as string) : undefined;
+// Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
+// Neither key requires an explicit version parameter — strip both to fetch the default published version.
+const version = route.query.version !== 'published' && route.query.version !== 'main' ? (route.query.version as string) : undefined;
 
 const {
 	data: page,
