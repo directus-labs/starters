@@ -26,20 +26,11 @@ const error = ref<string | null>(null);
 const handleSubmit = async (data: Record<string, any>) => {
 	error.value = null;
 	try {
-		const fieldsPayload = props.form.fields.map((field) => ({
-			id: field.id,
-			name: field.name || '',
-			type: field.type || '',
-			label: field.label,
-			required: field.required,
-			validation: field.validation,
-		}));
-
 		const formData = new FormData();
 		formData.append('formId', props.form.id);
-		formData.append('fields', JSON.stringify(fieldsPayload));
 
-		for (const field of fieldsPayload) {
+		for (const field of props.form.fields) {
+			if (!field.name) continue;
 			const value = data[field.name];
 			if (value === undefined || value === null) continue;
 

@@ -1,8 +1,5 @@
-import {
-	multipartToFormData,
-	parseFormFieldsJson,
-	validateFormSubmission,
-} from '@@/app/lib/directus/validateFormSubmission';
+import { multipartToFormData, validateFormSubmission } from '@@/app/lib/directus/validateFormSubmission';
+import type { FormField } from '@@/shared/types/schema';
 
 interface SubmissionValue {
 	field: string;
@@ -31,13 +28,10 @@ export default defineEventHandler(async (event) => {
 	}
 
 	let formId = '';
-	let fieldsRaw = '';
 
 	for (const field of formData) {
 		if (field.name === 'formId') {
 			formId = field.data.toString();
-		} else if (field.name === 'fields') {
-			fieldsRaw = field.data.toString();
 		}
 	}
 
@@ -48,16 +42,30 @@ export default defineEventHandler(async (event) => {
 		});
 	}
 
-	const parsedFields = parseFormFieldsJson(fieldsRaw);
-	if ('error' in parsedFields) {
+	// Fetch the authoritative form field definitions from Directus server-side.
+	// This ensures validation rules (required, validation patterns) come from the
+	// source of truth rather than client-provided data.
+	let fields: FormField[];
+
+	try {
+		const form = await directusServer.request(
+			withToken(
+				TOKEN,
+				readItem('forms', formId.trim(), {
+					fields: [{ fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }],
+				} as any),
+			),
+		);
+		fields = ((form as any).fields as FormField[]) || [];
+	} catch {
 		throw createError({
-			statusCode: 400,
-			statusMessage: parsedFields.error,
+			statusCode: 404,
+			statusMessage: 'Form not found',
 		});
 	}
 
 	const bodyFormData = multipartToFormData(formData);
-	const validation = validateFormSubmission(parsedFields, bodyFormData);
+	const validation = validateFormSubmission(fields, bodyFormData);
 
 	if (!validation.success) {
 		throw createError({
@@ -69,7 +77,7 @@ export default defineEventHandler(async (event) => {
 	try {
 		const submissionValues: SubmissionValue[] = [];
 
-		for (const field of parsedFields) {
+		for (const field of fields) {
 			if (!field.name) continue;
 			const value = validation.data[field.name];
 			if (value === undefined || value === null) continue;

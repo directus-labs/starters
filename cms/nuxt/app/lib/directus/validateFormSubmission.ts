@@ -4,41 +4,19 @@ import type { FormField } from '@@/shared/types/schema';
 /** Matches licensed template Forms policy file upload limit (5 MB). */
 export const MAX_FORM_FILE_BYTES = 5 * 1024 * 1024;
 
-export type FormFieldPayload = Pick<FormField, 'id' | 'name' | 'type' | 'label' | 'required' | 'validation'>;
-
-export function parseFormFieldsJson(raw: string): FormFieldPayload[] | { error: string } {
-	try {
-		const parsed = JSON.parse(raw);
-		if (!Array.isArray(parsed)) {
-			return { error: 'fields must be an array' };
-		}
-		for (const field of parsed) {
-			if (
-				typeof field !== 'object' ||
-				field === null ||
-				typeof field.id !== 'string' ||
-				typeof field.name !== 'string' ||
-				typeof field.type !== 'string'
-			) {
-				return { error: 'Each field must include id, name, and type' };
-			}
-		}
-		return parsed as FormFieldPayload[];
-	} catch {
-		return { error: 'Invalid fields JSON' };
-	}
-}
-
-function parseFieldValue(field: FormFieldPayload, raw: FormDataEntryValue): unknown {
+function parseFieldValue(field: FormField, raw: FormDataEntryValue): unknown {
 	if (field.type === 'file') {
 		return raw instanceof File ? raw : undefined;
 	}
+
 	if (typeof raw !== 'string') {
 		return undefined;
 	}
+
 	if (field.type === 'checkbox') {
 		return raw === 'true';
 	}
+
 	if (field.type === 'checkbox_group') {
 		try {
 			const parsed = JSON.parse(raw);
@@ -47,6 +25,7 @@ function parseFieldValue(field: FormFieldPayload, raw: FormDataEntryValue): unkn
 			return [];
 		}
 	}
+
 	return raw;
 }
 
@@ -56,7 +35,7 @@ export function multipartToFormData(
 	const formData = new FormData();
 
 	for (const part of parts) {
-		if (!part.name || part.name === 'formId' || part.name === 'fields') continue;
+		if (!part.name || part.name === 'formId') continue;
 
 		if (part.filename) {
 			formData.append(
@@ -72,7 +51,7 @@ export function multipartToFormData(
 }
 
 export function validateFormSubmission(
-	fields: FormFieldPayload[],
+	fields: FormField[],
 	formData: FormData,
 ): { success: true; data: Record<string, unknown> } | { success: false; error: string } {
 	const data: Record<string, unknown> = {};
@@ -89,19 +68,22 @@ export function validateFormSubmission(
 					error: `${field.label || field.name} must be ${MAX_FORM_FILE_BYTES / (1024 * 1024)} MB or smaller`,
 				};
 			}
+
 			if (raw.size > 0) {
 				data[field.name] = raw;
 			}
+
 			continue;
 		}
 
 		const value = parseFieldValue(field, raw);
+
 		if (value !== undefined) {
 			data[field.name] = value;
 		}
 	}
 
-	const schema = buildZodSchema(fields as FormField[]);
+	const schema = buildZodSchema(fields);
 	const result = schema.safeParse(data);
 
 	if (!result.success) {
