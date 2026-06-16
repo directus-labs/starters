@@ -23,6 +23,9 @@ export function useVisualEditing() {
 		if (typeof window === 'undefined') return;
 
 		const param = searchParams.get('visual-editing');
+		// Enable when Directus sends ?preview=true (live preview tab) even without
+		// ?visual-editing=true — both indicate an admin-controlled iframe.
+		const isPreview = searchParams.get('preview') === 'true';
 
 		if (!enableVisualEditingEnv) {
 			if (param === 'true') {
@@ -45,9 +48,10 @@ export function useVisualEditing() {
 		}
 
 		const persisted = localStorage.getItem('visual-editing') === 'true';
-		setIsVisualEditingEnabled(persisted);
+		const shouldEnable = persisted || isPreview;
+		setIsVisualEditingEnabled(shouldEnable);
 
-		if (persisted && param !== 'true') {
+		if (shouldEnable && param !== 'true') {
 			const newParams = new URLSearchParams(searchParams.toString());
 			newParams.set('visual-editing', 'true');
 
