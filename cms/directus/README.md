@@ -134,8 +134,6 @@ For Cloud previews, use an HTTPS tunnel (ngrok, etc.). See the [Visual Editor do
 
 **Frontend blank / infinite redirect on `/`** — Usually circular redirects in Directus (`/` → `/`). Run `pnpm rbac:sync-licensed` from the repo root (Path 2 upgrade), or delete them in **Content → Redirects**, then restart the frontend dev server.
 
-**Duplicate Webmaster user** — Delete it; onboarding admin is the operator.
-
 **Database migration errors** — `docker compose down -v`, remove `data/database`, `docker compose up -d` (destroys local data).
 
 ## Resources

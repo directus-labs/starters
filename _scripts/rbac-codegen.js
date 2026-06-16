@@ -38,8 +38,7 @@ function loadLicensedPermissions() {
 
   if (existsSync(modulesDir)) {
     return LICENSED_MODULES.flatMap((name) => readJson(join(modulesDir, `${name}.json`)));
-  
-}
+  }
   return readJson(join(RBAC, 'licensed/permissions.json'));
 }
 
@@ -79,8 +78,7 @@ function syncLicensedTemplate() {
   writeJson(join(licensedSrc, 'permissions.json'), licensedPerms);
 
   // Update licensed template README
-  const licensedReadme = join(CMS_LICENSED, 'README.md'
-);
+  const licensedReadme = join(CMS_LICENSED, 'README.md');
   if (existsSync(licensedReadme)) {
     writeFileSync(
       licensedReadme,
@@ -99,10 +97,12 @@ function syncCorePermissions() {
   const corePath = join(CMS_TEMPLATE, 'src/permissions.json');
   const current = readJson(corePath);
 
-  // Preserve core skeleton files from disk (may include manual tweaks); sync skeleton copies
-  for (const file of ['roles.json', 'policies.json', 'access.json']) {
-    const src = join(CMS_TEMPLATE, 'src', file);
-    writeJson(join(RBAC, 'core-skeleton', file), readJson(src));
+  if (!CHECK) {
+    // Preserve core skeleton files from disk (may include manual tweaks); sync skeleton copies
+    for (const file of ['roles.json', 'policies.json', 'access.json']) {
+      const src = join(CMS_TEMPLATE, 'src', file);
+      writeJson(join(RBAC, 'core-skeleton', file), readJson(src));
+    }
   }
 
   if (CHECK) {
@@ -130,8 +130,7 @@ function syncI18nPermissions() {
 
     for (const row of delta) {
       map.set(key(row), row);
-   
- }
+    }
     merged = [...map.values()];
   } else if (existsSync(i18nPermsPath)) {
     // Build delta from current i18n minus licensed collections on first run
@@ -139,8 +138,9 @@ function syncI18nPermissions() {
 
     const licensedKeys = new Set(licensedPerms.map((r) => `${r.policy}|${r.collection}|${r.action}`));
     const delta = current.filter((r) => !licensedKeys.has(`${r.policy}|${r.collection}|${r.action}`));
-   
- writeJson(i18nDeltaPath, delta);
+    if (!CHECK) {
+      writeJson(i18nDeltaPath, delta);
+    }
     merged = [...licensedPerms, ...delta];
   }
 
@@ -149,11 +149,12 @@ function syncI18nPermissions() {
   const publicPolicy = i18nPolicies.find((p) => p.id === 'abf8a154-5b1c-4a46-ac9c-7300570f4f17');
   if (publicPolicy) {
     publicPolicy.name = '$t:public_label';
-
   }
 
-  for (const file of ['roles.json', 'access.json']) {
-    writeJson(join(I18N_TEMPLATE, 'src', file), readJson(join(RBAC, 'core-skeleton', file)));
+  if (!CHECK) {
+    for (const file of ['roles.json', 'access.json']) {
+      writeJson(join(I18N_TEMPLATE, 'src', file), readJson(join(RBAC, 'core-skeleton', file)));
+    }
   }
 
   if (CHECK) {
@@ -164,9 +165,7 @@ function syncI18nPermissions() {
     }
     const currentPolicies = readJson(join(I18N_TEMPLATE, 'src/policies.json'));
     if (JSON.stringify(currentPolicies) !== JSON.stringify(i18nPolicies)) {
-
-      console.error('cms-i18n policies.json drift — run: pnpm rbac:codegen')
-;
+      console.error('cms-i18n policies.json drift — run: pnpm rbac:codegen');
       process.exit(1);
     }
   } else {
@@ -186,9 +185,7 @@ function checkLicensedTemplate(licensedPerms) {
     const actual = readJson(join(CMS_LICENSED, 'src', file));
     if (JSON.stringify(actual) !== JSON.stringify(expected)) {
       console.error(`template-licensed/src/${file} drift — run: pnpm rbac:codegen`);
-
       process.exit(1);
-
     }
   }
 }
@@ -201,7 +198,6 @@ syncCorePermissions();
 if (!CHECK) {
   writeJson(join(RBAC, 'licensed/permissions.json'), licensedPerms);
   syncLicensedTemplate();
-
 }
 syncI18nPermissions();
 
