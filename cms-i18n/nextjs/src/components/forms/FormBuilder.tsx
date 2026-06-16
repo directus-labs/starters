@@ -31,20 +31,11 @@ const FormBuilder = ({ form, className }: FormBuilderProps) => {
 	const handleSubmit = async (data: Record<string, unknown>) => {
 		setError(null);
 		try {
-			const fieldsPayload = form.fields.map((field) => ({
-				id: field.id,
-				name: field.name || '',
-				type: field.type || '',
-				label: field.label,
-				required: field.required,
-				validation: field.validation,
-			}));
-
 			const formData = new FormData();
 			formData.append('formId', form.id);
-			formData.append('fields', JSON.stringify(fieldsPayload));
 
-			for (const field of fieldsPayload) {
+			for (const field of form.fields) {
+				if (!field.name) continue;
 				const value = data[field.name];
 				if (value === undefined || value === null) continue;
 
