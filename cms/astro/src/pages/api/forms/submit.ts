@@ -47,14 +47,14 @@ export const POST: APIRoute = async ({ request }) => {
 
   try {
     await submitForm(formId.trim(), fieldsForSubmit, validation.data);
-    
-return new Response(JSON.stringify({ success: true }), {
+
+    return new Response(JSON.stringify({ success: true }), {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
     console.error('Error submitting form:', error);
-    
-return new Response(JSON.stringify({ error: 'Failed to submit form' }), {
+
+    return new Response(JSON.stringify({ error: 'Failed to submit form' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
