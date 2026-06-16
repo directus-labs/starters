@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
-import { submitForm } from '@/lib/directus/forms';
-import { parseFormFieldsJson, validateFormSubmission } from '@/lib/directus/validateFormSubmission';
+import { submitForm, getFormFields } from '@/lib/directus/forms';
+import { validateFormSubmission } from '@/lib/directus/validateFormSubmission';
 
 export const prerender = false;
 
@@ -15,23 +15,20 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const fieldsRaw = formData.get('_fields');
-  if (typeof fieldsRaw !== 'string') {
-    return new Response(JSON.stringify({ error: 'Missing or invalid fields' }), {
-      status: 400,
+  // Fetch the authoritative form field definitions from Directus server-side.
+  // This ensures validation rules (required, validation patterns) come from the
+  // source of truth rather than client-provided data.
+  let fields;
+  try {
+    fields = await getFormFields(formId.trim());
+  } catch {
+    return new Response(JSON.stringify({ error: 'Form not found' }), {
+      status: 404,
       headers: { 'Content-Type': 'application/json' },
     });
   }
 
-  const parsedFields = parseFormFieldsJson(fieldsRaw);
-  if ('error' in parsedFields) {
-    return new Response(JSON.stringify({ error: parsedFields.error }), {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  const validation = validateFormSubmission(parsedFields, formData);
+  const validation = validateFormSubmission(fields, formData);
   if (!validation.success) {
     return new Response(JSON.stringify({ error: validation.error }), {
       status: 400,
@@ -39,7 +36,7 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const fieldsForSubmit = parsedFields.map((field) => ({
+  const fieldsForSubmit = fields.map((field) => ({
     id: field.id,
     name: field.name || '',
     type: field.type || '',

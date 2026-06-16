@@ -1,5 +1,26 @@
 import { useDirectus } from './directus';
-import type { FormSubmissionValue } from '@/types/directus-schema';
+import type { FormField, FormSubmissionValue } from '@/types/directus-schema';
+
+/** Server-only — fetches the canonical field definitions for a form from Directus. */
+export const getFormFields = async (formId: string): Promise<FormField[]> => {
+  const { directus, readItem, withToken } = useDirectus();
+  const TOKEN = import.meta.env.DIRECTUS_SERVER_TOKEN;
+
+  if (!TOKEN) {
+    throw new Error('DIRECTUS_SERVER_TOKEN is not defined. Check your .env file.');
+  }
+
+  const form = await directus.request(
+    withToken(
+      TOKEN,
+      readItem('forms', formId, {
+        fields: [{ fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }],
+      } as any),
+    ),
+  );
+
+  return ((form as any).fields as FormField[]) || [];
+};
 
 /** Server-only — call from API routes, not client components. */
 export const submitForm = async (
