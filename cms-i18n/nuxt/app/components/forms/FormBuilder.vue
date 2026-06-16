@@ -71,7 +71,7 @@ const handleSubmit = async (data: Record<string, any>) => {
 <template>
 	<div v-if="form.is_active" :class="['space-y-6 border border-input p-8 rounded-lg', className]">
 		<div v-if="isSubmitted" class="flex flex-col items-center justify-center space-y-4 p-6 text-center">
-			<CheckCircle className="size-12 text-green-500" />
+			<CheckCircle class="size-12 text-green-500" />
 			<p class="text-gray-600">
 				{{ form.success_message || 'Your form has been submitted successfully.' }}
 			</p>
