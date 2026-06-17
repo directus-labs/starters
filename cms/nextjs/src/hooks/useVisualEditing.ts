@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
-import { apply as applyVisualEditing, setAttr } from '@directus/visual-editing';
+import { apply as applyVisualEditing } from '@directus/visual-editing';
+import { setAttr } from '@/lib/directus/visualEditing';
 
 interface ApplyOptions {
 	elements?: HTMLElement[] | HTMLElement;

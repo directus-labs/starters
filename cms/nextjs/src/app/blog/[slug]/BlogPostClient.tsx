@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { setAttr } from '@directus/visual-editing';
+import { setAttr } from '@/lib/directus/visualEditing';
 import { useVisualEditing } from '@/hooks/useVisualEditing';
 import DirectusImage from '@/components/shared/DirectusImage';
 import BaseText from '@/components/ui/Text';

@@ -97,7 +97,7 @@ export default async function Page({
 
 		const blocks: PageBlock[] = (page.blocks as PageBlock[]) || [];
 
-		return <PageClient sections={blocks} pageId={page.id} />;
+		return <PageClient sections={blocks} pageId={page.id} contentVersion={fixedVersion} />;
 	} catch (error) {
 		console.error('Error loading page:', error);
 		notFound();
