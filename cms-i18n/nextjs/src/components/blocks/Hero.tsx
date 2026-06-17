@@ -6,7 +6,7 @@ import BaseText from '@/components/ui/Text';
 import DirectusImage from '@/components/shared/DirectusImage';
 import ButtonGroup from '@/components/blocks/ButtonGroup';
 import { cn } from '@/lib/utils';
-import { setAttr } from '@directus/visual-editing';
+import { getIsDraftPreview, setBlockAttr } from '@/lib/directus/visualEditing';
 
 interface HeroProps {
 	data: {
@@ -33,6 +33,7 @@ interface HeroProps {
 
 export default function Hero({ data }: HeroProps) {
 	const { id, layout, tagline, headline, description, image, button_group } = data;
+	const isDraftPreview = getIsDraftPreview();
 
 	return (
 		<section
@@ -53,18 +54,18 @@ export default function Hero({ data }: HeroProps) {
 			>
 				<Tagline
 					tagline={tagline}
-					data-directus={setAttr({
-						collection: 'block_hero',
-						item: id,
+					data-directus={setBlockAttr({
+						blockCollection: 'block_hero',
+						blockItemId: id,
 						fields: 'tagline',
 						mode: 'popover',
 					})}
 				/>
 				<Headline
 					headline={headline}
-					data-directus={setAttr({
-						collection: 'block_hero',
-						item: id,
+					data-directus={setBlockAttr({
+						blockCollection: 'block_hero',
+						blockItemId: id,
 						fields: 'headline',
 						mode: 'popover',
 					})}
@@ -72,9 +73,9 @@ export default function Hero({ data }: HeroProps) {
 				{description && (
 					<BaseText
 						content={description}
-						data-directus={setAttr({
-							collection: 'block_hero',
-							item: id,
+						data-directus={setBlockAttr({
+							blockCollection: 'block_hero',
+							blockItemId: id,
 							fields: 'description',
 							mode: 'popover',
 						})}
@@ -83,12 +84,21 @@ export default function Hero({ data }: HeroProps) {
 				{button_group && button_group.buttons.length > 0 && (
 					<div
 						className={cn(layout === 'image_center' && 'flex justify-center', 'mt-6')}
-						data-directus={setAttr({
-							collection: 'block_button_group',
-							item: button_group.id,
-							fields: 'buttons',
-							mode: 'modal',
-						})}
+						data-directus={setBlockAttr(
+							isDraftPreview
+								? {
+										blockCollection: 'block_hero',
+										blockItemId: id,
+										fields: 'button_group',
+										mode: 'modal',
+									}
+								: {
+										blockCollection: 'block_button_group',
+										blockItemId: button_group.id,
+										fields: 'buttons',
+										mode: 'modal',
+									},
+						)}
 					>
 						<ButtonGroup buttons={button_group.buttons} />
 					</div>
@@ -100,9 +110,9 @@ export default function Hero({ data }: HeroProps) {
 						'relative w-full',
 						layout === 'image_center' ? 'md:w-3/4 xl:w-2/3 h-[400px]' : 'md:w-1/2 h-[562px]',
 					)}
-					data-directus={setAttr({
-						collection: 'block_hero',
-						item: id,
+					data-directus={setBlockAttr({
+						blockCollection: 'block_hero',
+						blockItemId: id,
 						fields: ['image', 'layout'],
 						mode: 'modal',
 					})}
