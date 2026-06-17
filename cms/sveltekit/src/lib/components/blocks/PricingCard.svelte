@@ -1,8 +1,9 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import { CheckCircle2 } from '@lucide/svelte';
 	import { Badge } from '../ui/badge';
 	import { Separator } from '../ui/separator';
-	import setAttr from '$lib/directus/visualEditing';
+	import { setBlockAttr } from '$lib/directus/visualEditing';
 	import Button from './Button.svelte';
 	import type { ButtonVariant } from '../ui/button';
 
@@ -25,6 +26,17 @@
 	}
 
 	let { card }: PricingCardProps = $props();
+	const isDraftPreview = $derived(!!page.data.contentVersion);
+
+	// Published: target the card item. Draft: pageFields gives setBlockAttr the nested M2A path.
+	const pricingCardField = (field: string) =>
+		setBlockAttr({
+			blockCollection: 'block_pricing_cards',
+			blockItemId: card.id,
+			pageFields: `blocks.item:block_pricing.pricing_cards.${field}`,
+			fields: [field],
+			mode: 'popover'
+		});
 </script>
 
 <div
@@ -35,15 +47,7 @@
 	<!-- {/* Title and Badge */} -->
 	<div class="mb-4 flex items-start justify-between gap-2">
 		{#if card.title}
-			<h3
-				class="font-heading text-xl text-foreground"
-				data-directus={setAttr({
-					collection: 'block_pricing_cards',
-					item: card.id,
-					fields: ['title'],
-					mode: 'popover'
-				})}
-			>
+			<h3 class="font-heading text-xl text-foreground" data-directus={pricingCardField('title')}>
 				{card.title}
 			</h3>
 		{/if}
@@ -52,12 +56,7 @@
 				<Badge
 					variant={card.is_highlighted ? 'secondary' : 'default'}
 					class="text-xs font-medium uppercase"
-					data-directus={setAttr({
-						collection: 'block_pricing_cards',
-						item: card.id,
-						fields: ['badge'],
-						mode: 'popover'
-					})}
+					data-directus={pricingCardField('badge')}
 				>
 					{card.badge}
 				</Badge>
@@ -66,28 +65,12 @@
 	</div>
 
 	{#if card.price}
-		<p
-			data-directus={setAttr({
-				collection: 'block_pricing_cards',
-				item: card.id,
-				fields: ['price'],
-				mode: 'popover'
-			})}
-			class="mt-2 text-h2 font-semibold"
-		>
+		<p data-directus={pricingCardField('price')} class="mt-2 text-h2 font-semibold">
 			{card.price}
 		</p>
 	{/if}
 	{#if card.description}
-		<p
-			data-directus={setAttr({
-				collection: 'block_pricing_cards',
-				item: card.id,
-				fields: ['description'],
-				mode: 'popover'
-			})}
-			class="mt-2 line-clamp-2 text-description"
-		>
+		<p data-directus={pricingCardField('description')} class="mt-2 line-clamp-2 text-description">
 			{card.description}
 		</p>
 	{/if}
@@ -96,15 +79,7 @@
 
 	{#if card.features && Array.isArray(card.features)}
 		<div class="flex-grow">
-			<ul
-				class="space-y-4"
-				data-directus={setAttr({
-					collection: 'block_pricing_cards',
-					item: card.id,
-					fields: ['features'],
-					mode: 'popover'
-				})}
-			>
+			<ul class="space-y-4" data-directus={pricingCardField('features')}>
 				{#each card.features as feature, i (i)}
 					<li class="flex items-center gap-3 text-regular">
 						<div class="mt-1">
@@ -118,13 +93,24 @@
 	{/if}
 	<div class="mt-auto pt-4">
 		{#if card.button}
+			<!-- Published: edit block_button directly. Draft: nested path via block_pricing. -->
 			<div
-				data-directus={setAttr({
-					collection: 'block_button',
-					item: card.button.id,
-					fields: ['type', 'label', 'variant', 'url', 'page', 'post'],
-					mode: 'popover'
-				})}
+				data-directus={setBlockAttr(
+					isDraftPreview
+						? {
+								blockCollection: 'block_pricing',
+								blockItemId: card.id,
+								pageFields: 'blocks.item:block_pricing.pricing_cards.button',
+								fields: ['type', 'label', 'variant', 'url', 'page', 'post'],
+								mode: 'popover'
+							}
+						: {
+								blockCollection: 'block_button',
+								blockItemId: card.button.id,
+								fields: ['type', 'label', 'variant', 'url', 'page', 'post'],
+								mode: 'popover'
+							}
+				)}
 			>
 				<Button
 					id={card.button.id}

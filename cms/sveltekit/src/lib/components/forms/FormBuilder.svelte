@@ -7,6 +7,8 @@
 
 	interface FormBuilderProps {
 		class?: string;
+		/** block_form id — passed to DynamicForm for draft visual editing paths */
+		blockFormId?: string;
 		form: {
 			id: string;
 			on_success?: 'redirect' | 'message' | null;
@@ -20,7 +22,7 @@
 		};
 	}
 
-	const { form, class: className }: FormBuilderProps = $props();
+	const { form, class: className, blockFormId }: FormBuilderProps = $props();
 
 	let isSubmitted = $state(false);
 	let error = $state<string | null>(null);
@@ -88,6 +90,7 @@
 				onSubmit={handleSubmit}
 				submitLabel={form.submit_label || 'Submit'}
 				id={form.id}
+				{blockFormId}
 			/>
 		</div>
 	{/if}
