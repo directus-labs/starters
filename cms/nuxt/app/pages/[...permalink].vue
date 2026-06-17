@@ -1,17 +1,21 @@
 <script setup lang="ts">
 import type { Page, PageBlock } from '#shared/types/schema';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
+import { getPageIdForEditing, setAttr, setVisualEditingPageContext } from '~/utils/visualEditing';
 
 const route = useRoute();
 const { enabled } = useLivePreview();
 const pageUrl = useRequestURL();
-const { isVisualEditingEnabled, apply, setAttr } = useVisualEditing();
+const { isVisualEditingEnabled, apply } = useVisualEditing();
 
 const permalink = withoutTrailingSlash(withLeadingSlash(route.path));
 
 // Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
 // Neither key requires an explicit version parameter — strip both to fetch the default published version.
-const version = route.query.version !== 'published' && route.query.version !== 'main' ? (route.query.version as string) : undefined;
+const contentVersion =
+	route.query.version !== 'published' && route.query.version !== 'main'
+		? (route.query.version as string)
+		: undefined;
 
 const {
 	data: page,
@@ -23,7 +27,7 @@ const {
 		permalink,
 		preview: enabled.value ? true : undefined,
 		id: route.query.id as string,
-		version,
+		version: contentVersion,
 	},
 });
 
@@ -32,6 +36,14 @@ if (!page.value || error.value) {
 }
 
 const pageBlocks = computed(() => (page.value?.blocks as PageBlock[]) || []);
+const pageRoot = ref<HTMLElement | null>(null);
+
+watchEffect(() => {
+	const id = (route.query.id as string) || page.value?.id;
+	if (id) {
+		setVisualEditingPageContext(id, contentVersion);
+	}
+});
 
 useSeoMeta({
 	title: page.value?.seo?.title || page.value?.title || '',
@@ -41,9 +53,11 @@ useSeoMeta({
 	ogUrl: pageUrl.toString(),
 });
 
-// Helper functions for Visual Editing
-function applyVisualEditing() {
+function applyPageVisualEditing() {
+	if (!pageRoot.value) return;
+
 	apply({
+		elements: pageRoot.value,
 		onSaved: async () => {
 			await refresh();
 		},
@@ -51,38 +65,52 @@ function applyVisualEditing() {
 }
 
 function applyVisualEditingButton() {
+	const editButton = pageRoot.value?.querySelector('#visual-editing-button') as HTMLElement | null;
+	if (!editButton) return;
+
 	apply({
-		elements: document.querySelector('#visual-editing-button') as HTMLElement,
+		elements: editButton,
 		customClass: 'visual-editing-button-class',
 		onSaved: async () => {
 			await refresh();
-			// This makes sure the visual editor elements are updated after the page is refreshed. In case you've added new blocks to the page.
 			await nextTick();
-			applyVisualEditing();
+			applyPageVisualEditing();
 		},
 	});
 }
 
+watch(pageBlocks, async () => {
+	if (!isVisualEditingEnabled.value) return;
+	await nextTick();
+	applyPageVisualEditing();
+	applyVisualEditingButton();
+});
+
 onMounted(() => {
 	if (!isVisualEditingEnabled.value) return;
 	applyVisualEditingButton();
-	applyVisualEditing();
+	applyPageVisualEditing();
 });
 </script>
 
 <template>
-	<div class="relative">
+	<div ref="pageRoot" class="relative">
 		<PageBuilder v-if="pageBlocks" :sections="pageBlocks" />
 		<div
 			v-if="isVisualEditingEnabled && page"
 			class="fixed z-[60] w-full bottom-4 left-0 right-0 p-4 flex justify-center items-center gap-2"
 		>
-			<!-- If you're not using the visual editor it's safe to remove this element. Just a helper to let editors add edit / add new blocks to a page. -->
+			<!-- Opens the page blocks builder — the versioned entry point for M2A content on pages. -->
 			<Button
 				id="visual-editing-button"
 				variant="secondary"
 				:data-directus="
-					setAttr({ collection: 'pages', item: page.id, fields: ['blocks', 'meta_m2a_button'], mode: 'modal' })
+					setAttr({
+						collection: 'pages',
+						item: getPageIdForEditing(),
+						fields: ['blocks', 'meta_m2a_button'],
+						mode: 'modal',
+					})
 				"
 			>
 				<Icon name="lucide:pencil" />
@@ -94,7 +122,6 @@ onMounted(() => {
 
 <style>
 .directus-visual-editing-overlay.visual-editing-button-class .directus-visual-editing-edit-button {
-	/* Not using style scoped because the visual editor adds it's own elements to the page. Safe to remove this if you're not using the visual editor. */
 	position: absolute;
 	inset: 0;
 	width: 100%;
@@ -102,12 +129,10 @@ onMounted(() => {
 	transform: none;
 	background: transparent;
 }
-/* Hide the rectangle but keep the overlay above the button so it can receive clicks */
 .directus-visual-editing-overlay.visual-editing-button-class {
 	opacity: 0 !important;
 	z-index: 70 !important;
 }
-/* Ensure Visual Editor rectangles appear below header and buttons */
 .directus-visual-editing-overlay {
 	z-index: 40 !important;
 }

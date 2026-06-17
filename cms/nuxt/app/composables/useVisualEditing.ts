@@ -1,5 +1,6 @@
-import { apply as applyVisualEditing, setAttr } from '@directus/visual-editing';
+import { apply as applyVisualEditing } from '@directus/visual-editing';
 import type { PrimaryKey } from '@directus/types';
+import { setAttr } from '~/utils/visualEditing';
 
 interface ApplyOptions {
 	directusUrl: string;
@@ -7,8 +8,8 @@ interface ApplyOptions {
 	onSaved?: (data: { collection?: string; item?: PrimaryKey | null; payload?: Record<string, unknown> }) => void;
 	customClass?: string;
 }
+
 export default function useVisualEditing() {
-	// Use useState for state that persists across navigation
 	const isVisualEditingEnabled = useState('visual-editing-enabled', () => false);
 	const route = useRoute();
 	const {

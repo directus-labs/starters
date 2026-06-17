@@ -18,6 +18,7 @@ interface CustomFormData {
 const props = defineProps<{
 	form: CustomFormData;
 	className?: string;
+	blockFormId?: string;
 }>();
 
 const isSubmitted = ref(false);
@@ -77,6 +78,7 @@ const handleSubmit = async (data: Record<string, any>) => {
 				:onSubmit="handleSubmit"
 				:submitLabel="form.submit_label || 'Submit'"
 				:formId="form.id"
+				:blockFormId="blockFormId"
 			/>
 		</template>
 	</div>
