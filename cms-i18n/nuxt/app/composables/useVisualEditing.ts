@@ -1,4 +1,5 @@
-import { apply as applyVisualEditing, setAttr } from '@directus/visual-editing';
+import { apply as applyVisualEditing } from '@directus/visual-editing';
+import { setAttr } from '~/utils/visualEditing';
 import type { PrimaryKey } from '@directus/types';
 
 interface ApplyOptions {
