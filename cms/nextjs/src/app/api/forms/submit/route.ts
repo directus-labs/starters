@@ -49,9 +49,11 @@ export async function POST(request: Request) {
 
 	try {
 		await submitForm(formId.trim(), fieldsForSubmit, validation.data);
+
 		return NextResponse.json({ success: true });
 	} catch (error) {
 		console.error('Error submitting form:', error);
+
 		return NextResponse.json({ error: 'Failed to submit form' }, { status: 500 });
 	}
 }

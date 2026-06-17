@@ -38,7 +38,10 @@ export function getIsDraftPreview(): boolean {
 }
 
 function isVisualEditingActive() {
-	if (typeof window === 'undefined') return false;
+	if (typeof window === 'undefined') {
+		return false;
+	}
+
 	return localStorage.getItem('visual-editing') === 'true';
 }
 
@@ -54,10 +57,13 @@ function toPageBlockFields(
 	fields: string | string[],
 	pageFields?: string | string[],
 ): string | string[] {
-	if (pageFields) return pageFields;
+	if (pageFields) {
+		return pageFields;
+	}
 
 	const list = Array.isArray(fields) ? fields : [fields];
 	const paths = list.map((field) => `blocks.item:${blockCollection}.${field}`);
+
 	return paths.length === 1 ? paths[0] : paths;
 }
 
