@@ -1,13 +1,13 @@
 'use client';
 
 import useSWR from 'swr';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useVisualEditing } from '@/hooks/useVisualEditing';
 import PageBuilder from '@/components/layout/PageBuilder';
 import type { PageBlock } from '@/types/directus-schema';
 import { Button } from '@/components/ui/button';
 import { Pencil } from 'lucide-react';
-import { setAttr } from '@directus/visual-editing';
+import { getPageIdForEditing, setAttr, setVisualEditingPageContext } from '@/lib/directus/visualEditing';
 
 interface PageClientProps {
   initialSections: PageBlock[];
@@ -21,6 +21,16 @@ interface VisualEditingOptions {
   elements?: HTMLElement;
 }
 
+const isLivePreview = () => {
+  if (typeof window === 'undefined') return false;
+
+  const params = new URLSearchParams(window.location.search);
+
+  return (
+    params.get('preview') === 'true' || !!params.get('version') || !!params.get('id')
+  );
+};
+
 const fetchBlocks = async (permalink: string, params: URLSearchParams): Promise<PageBlock[]> => {
   const queryString = params.toString();
   const url = `/api/page-blocks?permalink=${encodeURIComponent(permalink)}${queryString ? `&${queryString}` : ''}`;
@@ -33,18 +43,23 @@ const fetchBlocks = async (permalink: string, params: URLSearchParams): Promise<
 
 export default function PageClient({ initialSections, permalink, pageId }: PageClientProps) {
   const { isVisualEditingEnabled, apply } = useVisualEditing();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [livePreview, setLivePreview] = useState(isLivePreview);
 
-  const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
-  const [hasVersioningParams, setHasVersioningParams] = useState(false);
+  setVisualEditingPageContext(pageId);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setIsPreviewEnabled(params.get('preview') === 'true');
-    setHasVersioningParams(!!params.get('version') || !!params.get('id'));
+    const sync = () => setLivePreview(isLivePreview());
+    sync();
+    document.addEventListener('astro:after-swap', sync);
+
+    return () => document.removeEventListener('astro:after-swap', sync);
   }, []);
 
-  const shouldFetchLive = isVisualEditingEnabled || isPreviewEnabled || hasVersioningParams;
-  const swrKey = shouldFetchLive ? `${permalink}-${new URLSearchParams(window.location.search).toString()}` : null;
+  const swrKey =
+    (isVisualEditingEnabled || livePreview) && typeof window !== 'undefined'
+      ? `${permalink}-${new URLSearchParams(window.location.search).toString()}`
+      : null;
 
   const { data: sections = initialSections, mutate } = useSWR(
     swrKey,
@@ -56,35 +71,37 @@ export default function PageClient({ initialSections, permalink, pageId }: PageC
   );
 
   useEffect(() => {
-    if (isVisualEditingEnabled) {
-      apply({
-        onSaved: () => {
-          mutate();
-        },
-      } as VisualEditingOptions);
+    if (!isVisualEditingEnabled || !rootRef.current) return;
 
+    // Scope apply to this island — nav/footer overlays live in VisualEditingLayout.
+    apply({
+      elements: rootRef.current,
+      onSaved: () => mutate(),
+    } as VisualEditingOptions);
+
+    const editButton = rootRef.current.querySelector('#visual-editing-button') as HTMLElement | null;
+    if (editButton) {
       apply({
-        elements: document.querySelector('#visual-editing-button') as HTMLElement,
+        elements: editButton,
         customClass: 'visual-editing-button-class',
-        onSaved: () => {
-          mutate();
-        },
+        onSaved: () => mutate(),
       } as VisualEditingOptions);
     }
-  }, [isVisualEditingEnabled, apply, mutate]);
+  }, [isVisualEditingEnabled, apply, mutate, sections]);
 
   return (
-    <div className="relative">
+    <div ref={rootRef} className="relative">
       <PageBuilder sections={sections} />
       {isVisualEditingEnabled && (
         <div className="fixed z-[60] w-full bottom-4 inset-x-0 p-4 flex justify-center items-center gap-2">
+          {/* Opens the page blocks builder — the versioned entry point for M2A content on pages. */}
           <Button
             id="visual-editing-button"
             variant="secondary"
             className="visual-editing-button-class"
             data-directus={setAttr({
               collection: 'pages',
-              item: pageId,
+              item: getPageIdForEditing(),
               fields: ['blocks', 'meta_m2a_button'],
               mode: 'modal',
             })}
@@ -104,12 +121,10 @@ export default function PageClient({ initialSections, permalink, pageId }: PageC
             transform: none;
             background: transparent;
           }
-          /* Hide the rectangle but keep the overlay above the button so it can receive clicks */
           .directus-visual-editing-overlay.visual-editing-button-class {
             opacity: 0 !important;
             z-index: 70 !important;
           }
-          /* Ensure Visual Editor rectangles appear below header and buttons */
           .directus-visual-editing-overlay {
             z-index: 40 !important;
           }

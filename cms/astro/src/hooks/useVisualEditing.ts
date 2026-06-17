@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { apply as applyVisualEditing, setAttr } from '@directus/visual-editing';
+import { apply as applyVisualEditing } from '@directus/visual-editing';
+import { setAttr } from '@/lib/directus/visualEditing';
 
 interface ApplyOptions {
   elements?: HTMLElement[] | HTMLElement;
@@ -43,6 +44,10 @@ export function useVisualEditing() {
     const persisted = localStorage.getItem('visual-editing') === 'true';
     const shouldEnable = persisted || isPreview;
     setIsVisualEditingEnabled(shouldEnable);
+
+    if (shouldEnable) {
+      localStorage.setItem('visual-editing', 'true');
+    }
 
     if (shouldEnable && param !== 'true') {
       searchParams.set('visual-editing', 'true');

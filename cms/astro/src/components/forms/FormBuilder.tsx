@@ -6,6 +6,8 @@ import { cn } from '@/lib/utils';
 
 interface FormBuilderProps {
   className?: string;
+  /** block_form id — passed to DynamicForm for draft visual editing paths */
+  blockFormId?: string;
   form: {
     id: string;
     on_success?: 'redirect' | 'message' | null;
@@ -19,7 +21,7 @@ interface FormBuilderProps {
   };
 }
 
-const FormBuilder = ({ form, className }: FormBuilderProps) => {
+const FormBuilder = ({ form, className, blockFormId }: FormBuilderProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -87,6 +89,7 @@ const FormBuilder = ({ form, className }: FormBuilderProps) => {
         onSubmit={handleSubmit}
         submitLabel={form.submit_label || 'Submit'}
         id={form.id}
+        blockFormId={blockFormId}
       />
     </div>
   );

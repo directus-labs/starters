@@ -1,7 +1,7 @@
 import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import Text from '@/components/ui/Text';
-import { setAttr } from '@directus/visual-editing';
+import { setBlockAttr } from '@/lib/directus/visualEditing';
 
 interface RichTextProps {
   data: {
@@ -22,9 +22,9 @@ const RichText = ({ data, className }: RichTextProps) => {
       {tagline && (
         <Tagline
           tagline={tagline}
-          data-directus={setAttr({
-            collection: 'block_richtext',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_richtext',
+            blockItemId: id,
             fields: 'tagline',
             mode: 'popover',
           })}
@@ -33,9 +33,9 @@ const RichText = ({ data, className }: RichTextProps) => {
       {headline && (
         <Headline
           headline={headline}
-          data-directus={setAttr({
-            collection: 'block_richtext',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_richtext',
+            blockItemId: id,
             fields: 'headline',
             mode: 'popover',
           })}
@@ -44,9 +44,9 @@ const RichText = ({ data, className }: RichTextProps) => {
       {content && (
         <Text
           content={content}
-          data-directus={setAttr({
-            collection: 'block_richtext',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_richtext',
+            blockItemId: id,
             fields: 'content',
             mode: 'drawer',
           })}
