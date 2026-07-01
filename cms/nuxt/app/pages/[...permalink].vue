@@ -40,6 +40,7 @@ const pageRoot = ref<HTMLElement | null>(null);
 
 watchEffect(() => {
 	const id = (route.query.id as string) || page.value?.id;
+
 	if (id) {
 		setVisualEditingPageContext(id, contentVersion);
 	}

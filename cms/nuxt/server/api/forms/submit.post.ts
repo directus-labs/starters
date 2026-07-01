@@ -1,5 +1,5 @@
 import { multipartToFormData, validateFormSubmission } from '@@/app/lib/directus/validateFormSubmission';
-import type { FormField } from '@@/shared/types/schema';
+import type { Form, FormField } from '@@/shared/types/schema';
 
 interface SubmissionValue {
 	field: string;
@@ -48,19 +48,24 @@ export default defineEventHandler(async (event) => {
 	let fields: FormField[];
 
 	try {
-		const form = await directusServer.request(
+		const form = (await directusServer.request(
 			withToken(
 				TOKEN,
 				readItem('forms', formId.trim(), {
-					fields: [{ fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }],
+					fields: ['is_active', { fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }],
 				} as any),
 			),
-		);
-		fields = ((form as any).fields as FormField[]) || [];
+		)) as unknown as Form;
+
+		if (!form.is_active || !Array.isArray(form.fields)) {
+			throw new Error('Invalid form');
+		}
+
+		fields = form.fields.filter((field): field is FormField => typeof field !== 'string');
 	} catch {
 		throw createError({
-			statusCode: 404,
-			statusMessage: 'Form not found',
+			statusCode: 400,
+			statusMessage: 'Missing or invalid form',
 		});
 	}
 
