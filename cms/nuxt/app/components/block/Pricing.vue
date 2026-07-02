@@ -21,7 +21,8 @@ interface PricingProps {
 		}>;
 	};
 }
-const { setAttr } = useVisualEditing();
+import { setBlockAttr } from '~/utils/visualEditing';
+
 defineProps<PricingProps>();
 </script>
 
@@ -31,9 +32,9 @@ defineProps<PricingProps>();
 			v-if="data.tagline"
 			:tagline="data.tagline"
 			:data-directus="
-				setAttr({
-					collection: 'block_pricing',
-					item: data.id,
+				setBlockAttr({
+					blockCollection: 'block_pricing',
+					blockItemId: data.id,
 					fields: 'tagline',
 					mode: 'popover',
 				})
@@ -43,9 +44,9 @@ defineProps<PricingProps>();
 			v-if="data.headline"
 			:headline="data.headline"
 			:data-directus="
-				setAttr({
-					collection: 'block_pricing',
-					item: data.id,
+				setBlockAttr({
+					blockCollection: 'block_pricing',
+					blockItemId: data.id,
 					fields: 'headline',
 					mode: 'popover',
 				})
@@ -60,9 +61,9 @@ defineProps<PricingProps>();
 				'grid-cols-1 sm:grid-cols-2': data.pricing_cards.length % 3 !== 0 && data.pricing_cards.length !== 1,
 			}"
 			:data-directus="
-				setAttr({
-					collection: 'block_pricing',
-					item: data.id,
+				setBlockAttr({
+					blockCollection: 'block_pricing',
+					blockItemId: data.id,
 					fields: ['pricing_cards'],
 					mode: 'modal',
 				})
