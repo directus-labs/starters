@@ -19,7 +19,7 @@
 		"generate:types": "node ./scripts/generate-types.js"
 	},
 	"devDependencies": {
-		"@directus/types": "13.3.1",
+		"@directus/types": "16.0.0",
 		"@nuxt/devtools": "4.0.0-alpha.3",
 		"@nuxt/eslint": "1.12.1",
 		"@tailwindcss/typography": "0.5.16",
@@ -27,7 +27,7 @@
 		"@typescript-eslint/parser": "8.29.1",
 		"defu": "6.1.4",
 		"destr": "2.0.5",
-		"directus-sdk-typegen": "0.2.0",
+		"directus-sdk-typegen": "0.2.1",
 		"dotenv": "16.4.7",
 		"eslint": "9.39.2",
 		"eslint-config-prettier": "10.1.1",
@@ -40,8 +40,8 @@
 		"vue-tsc": "3.2.2"
 	},
 	"dependencies": {
-		"@directus/sdk": "20.0.3",
-		"@directus/visual-editing": "2.0.0",
+		"@directus/sdk": "22.0.0",
+		"@directus/visual-editing": "2.1.0",
 		"@formkit/auto-animate": "0.8.2",
 		"@hookform/resolvers": "5.0.1",
 		"@iconify/utils": "3.1.0",
