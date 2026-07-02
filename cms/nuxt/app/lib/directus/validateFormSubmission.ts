@@ -1,0 +1,95 @@
+import { buildZodSchema } from '@@/app/lib/zodSchemaBuilder';
+import type { FormField } from '@@/shared/types/schema';
+
+/** Matches licensed template Forms policy file upload limit (5 MB). */
+export const MAX_FORM_FILE_BYTES = 5 * 1024 * 1024;
+
+function parseFieldValue(field: FormField, raw: FormDataEntryValue): unknown {
+	if (field.type === 'file') {
+		return raw instanceof File ? raw : undefined;
+	}
+
+	if (typeof raw !== 'string') {
+		return undefined;
+	}
+
+	if (field.type === 'checkbox') {
+		return raw === 'true';
+	}
+
+	if (field.type === 'checkbox_group') {
+		try {
+			const parsed = JSON.parse(raw);
+			return Array.isArray(parsed) ? parsed : [];
+		} catch {
+			return [];
+		}
+	}
+
+	return raw;
+}
+
+export function multipartToFormData(
+	parts: { name?: string; data: Buffer; filename?: string; type?: string }[],
+): FormData {
+	const formData = new FormData();
+
+	for (const part of parts) {
+		if (!part.name || part.name === 'formId') continue;
+
+		if (part.filename) {
+			formData.append(
+				part.name,
+				new File([part.data], part.filename, { type: part.type || 'application/octet-stream' }),
+			);
+		} else {
+			formData.append(part.name, part.data.toString());
+		}
+	}
+
+	return formData;
+}
+
+export function validateFormSubmission(
+	fields: FormField[],
+	formData: FormData,
+): { success: true; data: Record<string, unknown> } | { success: false; error: string } {
+	const data: Record<string, unknown> = {};
+
+	for (const field of fields) {
+		if (!field.name) continue;
+		const raw = formData.get(field.name);
+		if (raw === null) continue;
+
+		if (field.type === 'file' && raw instanceof File) {
+			if (raw.size > MAX_FORM_FILE_BYTES) {
+				return {
+					success: false,
+					error: `${field.label || field.name} must be ${MAX_FORM_FILE_BYTES / (1024 * 1024)} MB or smaller`,
+				};
+			}
+
+			if (raw.size > 0) {
+				data[field.name] = raw;
+			}
+
+			continue;
+		}
+
+		const value = parseFieldValue(field, raw);
+
+		if (value !== undefined) {
+			data[field.name] = value;
+		}
+	}
+
+	const schema = buildZodSchema(fields);
+	const result = schema.safeParse(data);
+
+	if (!result.success) {
+		const first = result.error.issues[0];
+		return { success: false, error: first?.message || 'Validation failed' };
+	}
+
+	return { success: true, data: result.data as Record<string, unknown> };
+}

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { setBlockAttr } from '~/utils/visualEditing';
+
 interface CustomFormData {
 	id: string;
 	tagline: string | null;
@@ -17,7 +19,6 @@ interface CustomForm {
 	fields: FormField[];
 }
 
-const { setAttr } = useVisualEditing();
 defineProps<{ data: CustomFormData }>();
 </script>
 
@@ -27,9 +28,9 @@ defineProps<{ data: CustomFormData }>();
 			v-if="data.tagline"
 			:tagline="data.tagline"
 			:data-directus="
-				setAttr({
-					collection: 'block_form',
-					item: data.id,
+				setBlockAttr({
+					blockCollection: 'block_form',
+					blockItemId: data.id,
 					fields: 'tagline',
 					mode: 'popover',
 				})
@@ -40,9 +41,9 @@ defineProps<{ data: CustomFormData }>();
 			v-if="data.headline"
 			:headline="data.headline"
 			:data-directus="
-				setAttr({
-					collection: 'block_form',
-					item: data.id,
+				setBlockAttr({
+					blockCollection: 'block_form',
+					blockItemId: data.id,
 					fields: 'headline',
 					mode: 'popover',
 				})
@@ -51,15 +52,15 @@ defineProps<{ data: CustomFormData }>();
 
 		<div
 			:data-directus="
-				setAttr({
-					collection: 'block_form',
-					item: data.id,
+				setBlockAttr({
+					blockCollection: 'block_form',
+					blockItemId: data.id,
 					fields: ['form'],
 					mode: 'popover',
 				})
 			"
 		>
-			<FormBuilder :form="data.form" class="mt-8" />
+			<FormBuilder :form="data.form" :block-form-id="data.id" class="mt-8" />
 		</div>
 	</section>
 </template>

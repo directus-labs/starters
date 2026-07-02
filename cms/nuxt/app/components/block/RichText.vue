@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Text from '~/components/base/Text.vue';
+import { setBlockAttr } from '~/utils/visualEditing';
 
 interface RichTextProps {
 	data: {
@@ -18,7 +19,6 @@ withDefaults(defineProps<RichTextProps>(), {
 	}),
 });
 
-const { setAttr } = useVisualEditing();
 </script>
 
 <template>
@@ -37,9 +37,9 @@ const { setAttr } = useVisualEditing();
 			v-if="data.tagline"
 			:tagline="data.tagline"
 			:data-directus="
-				setAttr({
-					collection: 'block_richtext',
-					item: data.id,
+				setBlockAttr({
+					blockCollection: 'block_richtext',
+					blockItemId: data.id,
 					fields: 'tagline',
 					mode: 'popover',
 				})
@@ -49,9 +49,9 @@ const { setAttr } = useVisualEditing();
 			v-if="data.headline"
 			:headline="data.headline"
 			:data-directus="
-				setAttr({
-					collection: 'block_richtext',
-					item: data.id,
+				setBlockAttr({
+					blockCollection: 'block_richtext',
+					blockItemId: data.id,
 					fields: 'headline',
 					mode: 'popover',
 				})
@@ -61,9 +61,9 @@ const { setAttr } = useVisualEditing();
 			v-if="data.content"
 			:content="data.content"
 			:data-directus="
-				setAttr({
-					collection: 'block_richtext',
-					item: data.id,
+				setBlockAttr({
+					blockCollection: 'block_richtext',
+					blockItemId: data.id,
 					fields: 'content',
 					mode: 'drawer',
 				})
