@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ZoomIn, ArrowLeft, ArrowRight, X } from 'lucide-vue-next';
+import { setBlockAttr } from '~/utils/visualEditing';
 
 interface GalleryItem {
 	id: string;
@@ -69,8 +70,6 @@ function handleKeyDown(e: KeyboardEvent) {
 	}
 }
 
-const { setAttr } = useVisualEditing();
-
 onMounted(() => {
 	window.addEventListener('keydown', handleKeyDown);
 });
@@ -85,18 +84,18 @@ onUnmounted(() => {
 		<Tagline
 			v-if="data.tagline"
 			:tagline="data.tagline"
-			:data-directus="setAttr({ collection: 'block_gallery', item: data.id, fields: 'tagline', mode: 'popover' })"
+			:data-directus="setBlockAttr({ blockCollection: 'block_gallery', blockItemId: data.id, fields: 'tagline', mode: 'popover' })"
 		/>
 		<Headline
 			v-if="data.headline"
 			:headline="data.headline"
-			:data-directus="setAttr({ collection: 'block_gallery', item: data.id, fields: 'headline', mode: 'popover' })"
+			:data-directus="setBlockAttr({ blockCollection: 'block_gallery', blockItemId: data.id, fields: 'headline', mode: 'popover' })"
 		/>
 
 		<div
 			v-if="sortedItems.length"
 			class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-			:data-directus="setAttr({ collection: 'block_gallery', item: data.id, fields: 'items', mode: 'modal' })"
+			:data-directus="setBlockAttr({ blockCollection: 'block_gallery', blockItemId: data.id, fields: 'items', mode: 'modal' })"
 		>
 			<div
 				v-for="(item, index) in sortedItems"
