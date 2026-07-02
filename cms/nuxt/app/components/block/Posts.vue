@@ -56,7 +56,7 @@ function handlePageChange(page: number) {
 	}
 }
 
-const { setAttr } = useVisualEditing();
+import { setBlockAttr } from '~/utils/visualEditing';
 </script>
 
 <template>
@@ -65,9 +65,9 @@ const { setAttr } = useVisualEditing();
 			v-if="data.tagline"
 			:tagline="data.tagline"
 			:data-directus="
-				setAttr({
-					collection: 'block_posts',
-					item: data.id,
+				setBlockAttr({
+					blockCollection: 'block_posts',
+					blockItemId: data.id,
 					fields: 'tagline',
 					mode: 'popover',
 				})
@@ -76,15 +76,15 @@ const { setAttr } = useVisualEditing();
 		<Headline
 			v-if="data.headline"
 			:headline="data.headline"
-			:data-directus="setAttr({ collection: 'block_posts', item: data.id, fields: 'headline', mode: 'popover' })"
+			:data-directus="setBlockAttr({ blockCollection: 'block_posts', blockItemId: data.id, fields: 'headline', mode: 'popover' })"
 		/>
 
 		<div
 			class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
 			:data-directus="
-				setAttr({
-					collection: 'block_posts',
-					item: data.id,
+				setBlockAttr({
+					blockCollection: 'block_posts',
+					blockItemId: data.id,
 					fields: ['collection', 'limit'],
 					mode: 'popover',
 				})

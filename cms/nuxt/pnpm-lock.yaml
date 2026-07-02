@@ -37,11 +37,11 @@ importers:
   .:
     dependencies:
       '@directus/sdk':
-        specifier: 20.0.3
-        version: 20.0.3
+        specifier: 22.0.0
+        version: 22.0.0
       '@directus/visual-editing':
-        specifier: 2.0.0
-        version: 2.0.0
+        specifier: 2.1.0
+        version: 2.1.0
       '@formkit/auto-animate':
         specifier: 0.8.2
         version: 0.8.2
@@ -131,8 +131,8 @@ importers:
         version: 3.24.2
     devDependencies:
       '@directus/types':
-        specifier: 13.3.1
-        version: 13.3.1(knex@3.1.0)(sharp@0.34.3)(vue@3.5.32(typescript@5.8.3))(ws@8.20.0)
+        specifier: 16.0.0
+        version: 16.0.0(knex@3.1.0)(sharp@0.34.3)(vue@3.5.32(typescript@5.8.3))(ws@8.20.0)
       '@nuxt/devtools':
         specifier: 4.0.0-alpha.3
         version: 4.0.0-alpha.3(@pnpm/logger@1001.0.1)(db0@0.3.4)(ioredis@5.9.2)(typescript@5.8.3)(vite@7.3.1(@types/node@25.1.0)(jiti@2.6.1)(lightningcss@1.32.0)(terser@5.46.0)(yaml@2.8.3))(vue@3.5.32(typescript@5.8.3))
@@ -155,8 +155,8 @@ importers:
         specifier: 2.0.5
         version: 2.0.5
       directus-sdk-typegen:
-        specifier: 0.2.0
-        version: 0.2.0
+        specifier: 0.2.1
+        version: 0.2.1
       dotenv:
         specifier: 16.4.7
         version: 16.4.7
@@ -557,28 +557,31 @@ packages:
     peerDependencies:
       postcss-selector-parser: ^7.0.0
 
-  '@directus/constants@14.0.0':
-    resolution: {integrity: sha512-l4gsGIiZBV5WYkNTv3+HjxDBZJEkwPSo5tYpJ3fk6xOr7b2Km60aq8LOBmfuKwlLGLnvUzD4Y4S3ebgrwBE2iQ==}
+  '@directus/ai@1.3.2':
+    resolution: {integrity: sha512-HUCU24/MGcUP25T1O72IQM21vUqsA4/SjG83CmdpVfz9MJJGfq61qdi0ImLFMNsYSKE10lHhGwlRGsE+NejKUA==}
 
-  '@directus/schema@13.0.4':
-    resolution: {integrity: sha512-CANZ1vI+0kSjbqeKS9I4aysTPit9IP8ALSPXc93JpzSKGWMvEdCbaQAyoAIEgRAP9owysUjC6YVUdQpkRFl5sw==}
+  '@directus/constants@14.4.0':
+    resolution: {integrity: sha512-5/B6XccEc8ml3UZoKpihitrEk7XY1Rwx0QSoAOuvxBzwbTtBahKhY9OnTTIWt8h47Pc5j2djn85S6W+xhzAOXg==}
 
-  '@directus/sdk@20.0.3':
-    resolution: {integrity: sha512-PFTYx8QxYi36L9zjOVldwZ88Iln9pBGtEamEjLGFuYqy1jk5jKJ7qA7827KfeZJkz3EtNNZM6J605I7s/ayD2g==}
+  '@directus/schema@14.0.0':
+    resolution: {integrity: sha512-b0QiePeIxHeAa9gZxv7rxC+YpiL41SldR18xtasKw3xiHjsAhgLIXudjvg15xF7bBFv136mv5r7mNslaTe/lDA==}
+
+  '@directus/sdk@22.0.0':
+    resolution: {integrity: sha512-1D3cgjg2jnA7S1LXwKoYSw7yyJCs/DyKUOUDMLbvLtljafWJ5KOef7O8bVDPuQkVw6Bvoo6GUCbAMYI6Ff8Igg==}
     engines: {node: '>=22'}
 
-  '@directus/types@13.3.1':
-    resolution: {integrity: sha512-duMG4zuZiWibcAmc4rXjbx1ypwNY1ZDxgSJPMVd/L59HxbKpgfT5nJlduMPVlFBkgeVgQvVPynhCthJVy6gJmA==}
+  '@directus/types@16.0.0':
+    resolution: {integrity: sha512-qWI/ZgbzpHt1exQw3LpV+eFpYCmAflLRf9yW0CRnQZ03fFFypEp14Ja5ZD3tcvpXeOuXqejGyxTI5OkM1aBnAw==}
     peerDependencies:
       deep-diff: 1.0.2
       express: 4.21.2
-      graphql: 16.11.0
+      graphql: 16.12.0
       knex: 3.1.0
-      nodemailer: 7.0.10
+      nodemailer: 8.0.5
       openapi3-ts: 4.5.0
       pino: 9.7.0
-      sharp: 0.34.4
-      vue: 3.5.22
+      sharp: 0.34.5
+      vue: 3.5.24
       vue-router: 4.6.3
       ws: 8.18.3
     peerDependenciesMeta:
@@ -605,9 +608,8 @@ packages:
       ws:
         optional: true
 
-  '@directus/visual-editing@2.0.0':
-    resolution: {integrity: sha512-cPcMEPiFVdVO6KeC3OcuZPRoiYHxeATBJSflbewhcwGuG0Qze6ybKL+WWtCgV+mS4DCFbPd/7+ctQPu/JL60RQ==}
-    engines: {node: '>=22.12.0'}
+  '@directus/visual-editing@2.1.0':
+    resolution: {integrity: sha512-zYjbsoHZFE2WK6WXu/3uFJ8/ZiCNkIBsEIZjju3AOHzw1VU+Vc1jbD8Q73o+r8HNfwBmQ7qlkZ91Bh0jLO323w==}
 
   '@dxup/nuxt@0.4.0':
     resolution: {integrity: sha512-28LDotpr9G2knUse3cQYsOo6NJq5yhABv4ByRVRYJUmzf9Q31DI7rpRek4POlKy1aAcYyKgu5J2616pyqLohYg==}
@@ -2543,9 +2545,6 @@ packages:
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
 
-  '@sinclair/typebox@0.34.41':
-    resolution: {integrity: sha512-6gS8pZzSXdyRHTIqoqSVknxolr1kzfy4/CeDnrzsVz8TTIWUbOBr6gnzOmTYJ3eXQNh4IYHIGi5aIL7sOZ2G/g==}
-
   '@sindresorhus/base62@1.0.0':
     resolution: {integrity: sha512-TeheYy0ILzBEI/CO55CP6zJCSdSWeRtGnHy8U8dWSUH4I68iqTsy7HkMktR4xakThc9jotkPQUXT4ITdbV7cHA==}
     engines: {node: '>=18'}
@@ -3092,6 +3091,9 @@ packages:
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
 
+  '@types/archiver@7.0.0':
+    resolution: {integrity: sha512-/3vwGwx9n+mCQdYZ2IKGGHEFL30I96UgBlk8EtRDDFQ9uxM1l4O5Ci6r00EMAkiDaTqD9DQ6nVrWRICnBPtzzg==}
+
   '@types/body-parser@1.19.6':
     resolution: {integrity: sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g==}
 
@@ -3145,6 +3147,9 @@ packages:
 
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
+
+  '@types/readdir-glob@1.1.5':
+    resolution: {integrity: sha512-raiuEPUYqXu+nvtY2Pe8s8FEmZ3x5yAH4VkLdihcPdalvsHltomrRC9BzuStrJ9yk06470hS0Crw0f1pXqD+Hg==}
 
   '@types/resolve@1.20.2':
     resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
@@ -4329,8 +4334,8 @@ packages:
     resolution: {integrity: sha512-DPi0FmjiSU5EvQV0++GFDOJ9ASQUVFh5kD+OzOnYdi7n3Wpm9hWWGfB/O2blfHcMVTL5WkQXSnRiK9makhrcnw==}
     engines: {node: '>=0.3.1'}
 
-  directus-sdk-typegen@0.2.0:
-    resolution: {integrity: sha512-H9A3EaKSPbhL2vLslSrVq3xw5IHWLGM64vmT/wMtsb5DgSNVEYipFb7skuB2nKhP39Md2zYGTNHzjnwqydUI5A==}
+  directus-sdk-typegen@0.2.1:
+    resolution: {integrity: sha512-a0tcgCa4p2kAO8AJ+SBC97legirxdC3An6VztsvoZwtttFilI8YmCgCM4TfgDtCR/sh+QrpPPgh/Tae7mDxYfw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -6867,9 +6872,6 @@ packages:
   strip-literal@3.1.0:
     resolution: {integrity: sha512-8r3mkIM/2+PpjHoOtiAW8Rg3jJLHaV7xPwG+YRGrv6FP0wwk/toTpATxWYOW0BKdWwl82VT2tFYi5DlROa0Mxg==}
 
-  strnum@2.1.2:
-    resolution: {integrity: sha512-l63NF9y/cLROq/yqKXSLtcMeeyOfnSQlfMSlzFt/K73oIaD8DGaQWd7Z34X9GPiKqP5rbSh84Hl4bOlLcjiSrQ==}
-
   strnum@2.2.2:
     resolution: {integrity: sha512-DnR90I+jtXNSTXWdwrEy9FakW7UX+qUZg28gj5fk2vxxl7uS/3bpI4fjFYVmdK9etptYBPNkpahuQnEwhwECqA==}
 
@@ -7709,6 +7711,9 @@ packages:
   zod@3.24.2:
     resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
 
+  zod@4.1.12:
+    resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -8448,9 +8453,11 @@ snapshots:
     dependencies:
       postcss-selector-parser: 7.1.1
 
-  '@directus/constants@14.0.0': {}
+  '@directus/ai@1.3.2': {}
 
-  '@directus/schema@13.0.4':
+  '@directus/constants@14.4.0': {}
+
+  '@directus/schema@14.0.0':
     dependencies:
       knex: 3.1.0
     transitivePeerDependencies:
@@ -8463,17 +8470,19 @@ snapshots:
       - supports-color
       - tedious
 
-  '@directus/sdk@20.0.3': {}
+  '@directus/sdk@22.0.0': {}
 
-  '@directus/types@13.3.1(knex@3.1.0)(sharp@0.34.3)(vue@3.5.32(typescript@5.8.3))(ws@8.20.0)':
+  '@directus/types@16.0.0(knex@3.1.0)(sharp@0.34.3)(vue@3.5.32(typescript@5.8.3))(ws@8.20.0)':
     dependencies:
-      '@directus/constants': 14.0.0
-      '@directus/schema': 13.0.4
-      '@sinclair/typebox': 0.34.41
+      '@directus/ai': 1.3.2
+      '@directus/constants': 14.4.0
+      '@directus/schema': 14.0.0
+      '@types/archiver': 7.0.0
       '@types/express': 4.17.21
       '@types/geojson': 7946.0.16
       '@types/nodemailer': 7.0.3
       '@types/ws': 8.18.1
+      zod: 4.1.12
     optionalDependencies:
       knex: 3.1.0
       sharp: 0.34.3
@@ -8490,7 +8499,7 @@ snapshots:
       - supports-color
       - tedious
 
-  '@directus/visual-editing@2.0.0':
+  '@directus/visual-editing@2.1.0':
     dependencies:
       '@reach/observe-rect': 1.2.0
 
@@ -11044,8 +11053,6 @@ snapshots:
 
   '@shikijs/vscode-textmate@10.0.2': {}
 
-  '@sinclair/typebox@0.34.41': {}
-
   '@sindresorhus/base62@1.0.0': {}
 
   '@sindresorhus/is@7.2.0': {}
@@ -11686,6 +11693,10 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
+  '@types/archiver@7.0.0':
+    dependencies:
+      '@types/readdir-glob': 1.1.5
+
   '@types/body-parser@1.19.6':
     dependencies:
       '@types/connect': 3.4.38
@@ -11750,6 +11761,10 @@ snapshots:
   '@types/qs@6.14.0': {}
 
   '@types/range-parser@1.2.7': {}
+
+  '@types/readdir-glob@1.1.5':
+    dependencies:
+      '@types/node': 25.1.0
 
   '@types/resolve@1.20.2': {}
 
@@ -13091,7 +13106,7 @@ snapshots:
 
   diff@8.0.4: {}
 
-  directus-sdk-typegen@0.2.0:
+  directus-sdk-typegen@0.2.1:
     dependencies:
       commander: 8.3.0
 
@@ -13541,7 +13556,7 @@ snapshots:
 
   fast-xml-parser@5.2.5:
     dependencies:
-      strnum: 2.1.2
+      strnum: 2.2.2
 
   fast-xml-parser@5.5.10:
     dependencies:
@@ -16655,8 +16670,6 @@ snapshots:
     dependencies:
       js-tokens: 9.0.1
 
-  strnum@2.1.2: {}
-
   strnum@2.2.2: {}
 
   structured-clone-es@2.0.0: {}
@@ -17473,5 +17486,7 @@ snapshots:
       readable-stream: 4.7.0
 
   zod@3.24.2: {}
+
+  zod@4.1.12: {}
 
   zwitch@2.0.4: {}
