@@ -42,7 +42,13 @@ function isVisualEditingActive() {
 		return false;
 	}
 
-	return localStorage.getItem('visual-editing') === 'true';
+	const params = new URLSearchParams(window.location.search);
+
+	return (
+		params.get('visual-editing') === 'true' ||
+		params.get('preview') === 'true' ||
+		localStorage.getItem('visual-editing') === 'true'
+	);
 }
 
 export const setAttr = (options: ApplyOptions) => {

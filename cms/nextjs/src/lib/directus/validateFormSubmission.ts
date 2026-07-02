@@ -23,8 +23,8 @@ function parseFieldValue(field: FormField, raw: FormDataEntryValue): unknown {
 			return [];
 		}
 	}
-	
-return raw;
+
+	return raw;
 }
 
 export function validateFormSubmission(
@@ -62,8 +62,8 @@ export function validateFormSubmission(
 
 	if (!result.success) {
 		const first = result.error.issues[0];
-		
-return { success: false, error: first?.message || 'Validation failed' };
+
+		return { success: false, error: first?.message || 'Validation failed' };
 	}
 
 	return { success: true, data: result.data as Record<string, unknown> };

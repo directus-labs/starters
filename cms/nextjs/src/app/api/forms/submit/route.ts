@@ -27,10 +27,13 @@ export async function POST(request: Request) {
 			withToken(
 				TOKEN,
 				readItem('forms', formId.trim(), {
-					fields: [{ fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }],
+					fields: ['id', 'is_active', { fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }],
 				} as any),
 			),
 		);
+		if (!(form as any).is_active) {
+			return NextResponse.json({ error: 'Form not found' }, { status: 404 });
+		}
 		fields = ((form as any).fields as FormField[]) || [];
 	} catch {
 		return NextResponse.json({ error: 'Form not found' }, { status: 404 });
