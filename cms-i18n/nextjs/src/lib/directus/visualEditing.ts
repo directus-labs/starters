@@ -27,6 +27,7 @@ type PageVisualEditingContext = {
 };
 
 let pageContext: PageVisualEditingContext = {};
+let visualEditingAttrsEnabled = false;
 
 /** Set from PageClient so setBlockAttr() can route through the versioned pages item. */
 export function setVisualEditingPageContext(ctx: PageVisualEditingContext) {
@@ -37,13 +38,12 @@ export function getIsDraftPreview(): boolean {
 	return !!pageContext.contentVersion;
 }
 
-function isVisualEditingActive() {
-	if (typeof window === 'undefined') return false;
-	return localStorage.getItem('visual-editing') === 'true';
+export function setVisualEditingAttrsEnabled(enabled: boolean) {
+	visualEditingAttrsEnabled = enabled;
 }
 
 export const setAttr = (options: ApplyOptions) => {
-	if (isVisualEditingActive()) {
+	if (visualEditingAttrsEnabled) {
 		return baseSetAttr({ ...options });
 	}
 };
@@ -54,10 +54,13 @@ function toPageBlockFields(
 	fields: string | string[],
 	pageFields?: string | string[],
 ): string | string[] {
-	if (pageFields) return pageFields;
+	if (pageFields) {
+		return pageFields;
+	}
 
 	const list = Array.isArray(fields) ? fields : [fields];
 	const paths = list.map((field) => `blocks.item:${blockCollection}.${field}`);
+
 	return paths.length === 1 ? paths[0] : paths;
 }
 

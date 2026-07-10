@@ -27,13 +27,18 @@ export async function POST(request: Request) {
 			withToken(
 				TOKEN,
 				readItem('forms', formId.trim(), {
-					fields: [{ fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }],
+					fields: ['is_active', { fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }],
 				} as any),
 			),
 		);
-		fields = ((form as any).fields as FormField[]) || [];
+
+		if (!(form as any).is_active || !Array.isArray((form as any).fields)) {
+			return NextResponse.json({ error: 'Missing or invalid form' }, { status: 400 });
+		}
+
+		fields = ((form as any).fields as FormField[]).filter((field): field is FormField => typeof field !== 'string');
 	} catch {
-		return NextResponse.json({ error: 'Form not found' }, { status: 404 });
+		return NextResponse.json({ error: 'Missing or invalid form' }, { status: 400 });
 	}
 
 	const validation = validateFormSubmission(fields, formData);
@@ -49,9 +54,11 @@ export async function POST(request: Request) {
 
 	try {
 		await submitForm(formId.trim(), fieldsForSubmit, validation.data);
+
 		return NextResponse.json({ success: true });
 	} catch (error) {
 		console.error('Error submitting form:', error);
+
 		return NextResponse.json({ error: 'Failed to submit form' }, { status: 500 });
 	}
 }

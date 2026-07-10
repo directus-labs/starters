@@ -17,11 +17,13 @@ function parseFieldValue(field: FormField, raw: FormDataEntryValue): unknown {
 	if (field.type === 'checkbox_group') {
 		try {
 			const parsed = JSON.parse(raw);
+
 			return Array.isArray(parsed) ? parsed : [];
 		} catch {
 			return [];
 		}
 	}
+
 	return raw;
 }
 
@@ -60,6 +62,7 @@ export function validateFormSubmission(
 
 	if (!result.success) {
 		const first = result.error.issues[0];
+
 		return { success: false, error: first?.message || 'Validation failed' };
 	}
 

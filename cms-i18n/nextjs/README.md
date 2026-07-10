@@ -79,7 +79,7 @@ npx directus-template-cli@latest apply <path-to-template>
 
 To set up this template, ensure you have the following:
 
-- **Node.js** (16.x or newer)
+- **Node.js** (22.x or newer)
 - **npm** or **pnpm**
 - Access to a **Directus** instance ([cloud or self-hosted](../../README.md))
 
