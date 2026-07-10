@@ -1,5 +1,6 @@
 <script lang="ts">
-	import setAttr from '$lib/directus/visualEditing';
+	import { page } from '$app/state';
+	import { setBlockAttr } from '$lib/directus/visualEditing';
 	import type { FormField as FormFieldType } from '$lib/types/directus-schema';
 	import { buildZodSchema } from '$lib/zodSchemaBuilder';
 	import Button from '../blocks/Button.svelte';
@@ -12,9 +13,12 @@
 		onSubmit: (data: Record<string, any>) => void;
 		submitLabel: string;
 		id: string;
+		blockFormId?: string;
 	}
 
-	const { fields, onSubmit, submitLabel, id }: DynamicFormProps = $props();
+	const { fields, onSubmit, submitLabel, id, blockFormId }: DynamicFormProps = $props();
+	// Published: edit the forms item. Draft: route through block_form on the versioned page.
+	const isDraftPreview = $derived(!!page.data.contentVersion);
 
 	const sortedFields = [...fields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
 	const formSchema = buildZodSchema(fields);
@@ -60,12 +64,21 @@
 	method="POST"
 	use:enhance
 	onsubmit={onsubmit}
-	data-directus={setAttr({
-		collection: 'forms',
-		item: id,
-		fields: 'fields',
-		mode: 'popover'
-	})}
+	data-directus={setBlockAttr(
+		isDraftPreview && blockFormId
+			? {
+					blockCollection: 'block_form',
+					blockItemId: blockFormId,
+					fields: 'form',
+					mode: 'modal'
+				}
+			: {
+					blockCollection: 'forms',
+					blockItemId: id,
+					fields: 'fields',
+					mode: 'popover'
+				}
+	)}
 >
 	{#each sortedFields as field (field.id)}
 		<Field {field} {form} />
@@ -73,12 +86,21 @@
 
 	<div class="w-full">
 		<div
-			data-directus={setAttr({
-				collection: 'forms',
-				item: id,
-				fields: 'submit_label',
-				mode: 'popover'
-			})}
+			data-directus={setBlockAttr(
+				isDraftPreview && blockFormId
+					? {
+							blockCollection: 'block_form',
+							blockItemId: blockFormId,
+							fields: 'form',
+							mode: 'popover'
+						}
+					: {
+							blockCollection: 'forms',
+							blockItemId: id,
+							fields: 'submit_label',
+							mode: 'popover'
+						}
+			)}
 		>
 			<Button
 				type="submit"

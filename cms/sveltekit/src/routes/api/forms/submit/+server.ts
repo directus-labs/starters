@@ -2,36 +2,11 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { useDirectus } from '$lib/directus/directus';
 import { DIRECTUS_SERVER_TOKEN } from '$env/static/private';
-
-type FormField = { id: string; name: string; type: string };
-
-function isFormField(f: unknown): f is FormField {
-	return (
-		typeof f === 'object' &&
-		f !== null &&
-		typeof (f as FormField).id === 'string' &&
-		typeof (f as FormField).name === 'string' &&
-		typeof (f as FormField).type === 'string'
-	);
-}
-
-function parseFields(raw: string): FormField[] | Response {
-	try {
-		const parsed = JSON.parse(raw);
-		if (!Array.isArray(parsed)) {
-			return json({ error: 'fields must be an array' }, { status: 400 });
-		}
-		if (!parsed.every(isFormField)) {
-			return json({ error: 'Each field must have id, name, and type (strings)' }, { status: 400 });
-		}
-		return parsed;
-	} catch {
-		return json({ error: 'Invalid fields JSON' }, { status: 400 });
-	}
-}
+import { validateFormSubmission } from '$lib/directus/validateFormSubmission';
+import type { FormField } from '$lib/types/directus-schema';
 
 export const POST: RequestHandler = async ({ request }) => {
-	const { getDirectus, uploadFiles, createItem, withToken } = useDirectus();
+	const { getDirectus, uploadFiles, createItem, withToken, readItem } = useDirectus();
 	const directus = getDirectus();
 	const TOKEN = DIRECTUS_SERVER_TOKEN;
 
@@ -49,21 +24,45 @@ export const POST: RequestHandler = async ({ request }) => {
 			return json({ error: 'Missing or invalid formId' }, { status: 400 });
 		}
 
-		const fieldsRaw = formData.get('fields');
-		if (typeof fieldsRaw !== 'string') {
-			return json({ error: 'Missing or invalid fields' }, { status: 400 });
+		// Fetch the authoritative form field definitions from Directus server-side.
+		// This ensures validation rules (required, validation patterns) come from the
+		// source of truth rather than client-provided data.
+		let fields: FormField[];
+		try {
+			const form = (await directus.request(
+				withToken(
+					TOKEN,
+					readItem('forms', formId.trim(), {
+						fields: [
+							'is_active',
+							{ fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }
+						]
+					} as any)
+				)
+			)) as { is_active?: boolean | null; fields?: FormField[] };
+
+			if (!form.is_active) {
+				return json({ error: 'Form not found' }, { status: 404 });
+			}
+
+			fields = form.fields || [];
+		} catch {
+			return json({ error: 'Form not found' }, { status: 404 });
 		}
-		const fieldsResult = parseFields(fieldsRaw);
-		if (fieldsResult instanceof Response) return fieldsResult;
-		const fields = fieldsResult;
+
+		const validation = validateFormSubmission(fields, formData);
+		if (!validation.success) {
+			return json({ error: validation.error }, { status: 400 });
+		}
 
 		const submissionValues: { field: string; value?: string; file?: string }[] = [];
 
 		for (const field of fields) {
-			const value = formData.get(field.name);
-			if (value === null || value === undefined) continue;
+			if (!field.name) continue;
+			const value = validation.data[field.name];
+			if (value === undefined || value === null) continue;
 
-			if (value instanceof File && value.size > 0) {
+			if (field.type === 'file' && value instanceof File) {
 				const uploadFormData = new FormData();
 				uploadFormData.append('file', value);
 
@@ -71,13 +70,19 @@ export const POST: RequestHandler = async ({ request }) => {
 				if (uploadedFile && 'id' in uploadedFile) {
 					submissionValues.push({ field: field.id, file: (uploadedFile as { id: string }).id });
 				}
-			} else if (typeof value === 'string') {
-				submissionValues.push({ field: field.id, value });
+			} else {
+				submissionValues.push({
+					field: field.id,
+					value: Array.isArray(value) ? JSON.stringify(value) : String(value)
+				});
 			}
 		}
 
 		await directus.request(
-			withToken(TOKEN, createItem('form_submissions', { form: formId.trim(), values: submissionValues }))
+			withToken(
+				TOKEN,
+				createItem('form_submissions', { form: formId.trim(), values: submissionValues })
+			)
 		);
 
 		return json({ success: true });
