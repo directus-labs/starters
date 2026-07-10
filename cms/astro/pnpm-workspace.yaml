@@ -1,7 +1,0 @@
-overrides:
-  tar: ^7.5.4
-
-allowBuilds:
-  "@biomejs/biome": true
-  esbuild: true
-  sharp: true
