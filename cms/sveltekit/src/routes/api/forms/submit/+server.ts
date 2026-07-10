@@ -29,12 +29,23 @@ export const POST: RequestHandler = async ({ request }) => {
 		// source of truth rather than client-provided data.
 		let fields: FormField[];
 		try {
-			const form = await directus.request(
-				withToken(TOKEN, readItem('forms', formId.trim(), {
-					fields: [{ fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }]
-				} as any))
-			);
-			fields = ((form as any).fields as FormField[]) || [];
+			const form = (await directus.request(
+				withToken(
+					TOKEN,
+					readItem('forms', formId.trim(), {
+						fields: [
+							'is_active',
+							{ fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }
+						]
+					} as any)
+				)
+			)) as { is_active?: boolean | null; fields?: FormField[] };
+
+			if (!form.is_active) {
+				return json({ error: 'Form not found' }, { status: 404 });
+			}
+
+			fields = form.fields || [];
 		} catch {
 			return json({ error: 'Form not found' }, { status: 404 });
 		}
@@ -60,12 +71,18 @@ export const POST: RequestHandler = async ({ request }) => {
 					submissionValues.push({ field: field.id, file: (uploadedFile as { id: string }).id });
 				}
 			} else {
-				submissionValues.push({ field: field.id, value: Array.isArray(value) ? JSON.stringify(value) : String(value) });
+				submissionValues.push({
+					field: field.id,
+					value: Array.isArray(value) ? JSON.stringify(value) : String(value)
+				});
 			}
 		}
 
 		await directus.request(
-			withToken(TOKEN, createItem('form_submissions', { form: formId.trim(), values: submissionValues }))
+			withToken(
+				TOKEN,
+				createItem('form_submissions', { form: formId.trim(), values: submissionValues })
+			)
 		);
 
 		return json({ success: true });
