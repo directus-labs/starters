@@ -1,6 +1,6 @@
-import { browser } from '$app/environment';
-import { page } from '$app/state';
-import { setAttr as basesetAttr } from '@directus/visual-editing';
+'use client';
+
+import { setAttr as baseSetAttr } from '@directus/visual-editing';
 
 interface ApplyOptions {
 	collection: string;
@@ -21,14 +21,30 @@ export type SetBlockAttrOptions = {
 	pageFields?: string | string[];
 };
 
-function isVisualEditingActive() {
-	if (page.data.visualEditingEnabled) return true;
-	return browser && sessionStorage.getItem('visual-editing') === 'true';
+type PageVisualEditingContext = {
+	contentVersion?: string;
+	pageId?: string;
+};
+
+let pageContext: PageVisualEditingContext = {};
+let visualEditingAttrsEnabled = false;
+
+/** Set from PageClient so setBlockAttr() can route through the versioned pages item. */
+export function setVisualEditingPageContext(ctx: PageVisualEditingContext) {
+	pageContext = ctx;
+}
+
+export function getIsDraftPreview(): boolean {
+	return !!pageContext.contentVersion;
+}
+
+export function setVisualEditingAttrsEnabled(enabled: boolean) {
+	visualEditingAttrsEnabled = enabled;
 }
 
 export const setAttr = (options: ApplyOptions) => {
-	if (isVisualEditingActive()) {
-		return basesetAttr({ ...options });
+	if (visualEditingAttrsEnabled) {
+		return baseSetAttr({ ...options });
 	}
 };
 
@@ -36,12 +52,15 @@ export const setAttr = (options: ApplyOptions) => {
 function toPageBlockFields(
 	blockCollection: string,
 	fields: string | string[],
-	pageFields?: string | string[]
+	pageFields?: string | string[],
 ): string | string[] {
-	if (pageFields) return pageFields;
+	if (pageFields) {
+		return pageFields;
+	}
 
 	const list = Array.isArray(fields) ? fields : [fields];
 	const paths = list.map((field) => `blocks.item:${blockCollection}.${field}`);
+
 	return paths.length === 1 ? paths[0] : paths;
 }
 
@@ -57,15 +76,14 @@ function toPageBlockFields(
  */
 export const setBlockAttr = (options: SetBlockAttrOptions) => {
 	const { blockCollection, blockItemId, fields, mode, pageFields } = options;
-	const contentVersion = page.data.contentVersion as string | undefined;
-	const pageId = page.data.id as string | undefined;
+	const { contentVersion, pageId } = pageContext;
 
 	if (contentVersion && pageId) {
 		return setAttr({
 			collection: 'pages',
 			item: pageId,
 			fields: toPageBlockFields(blockCollection, fields, pageFields),
-			mode: 'modal'
+			mode: 'modal',
 		});
 	}
 
@@ -73,14 +91,6 @@ export const setBlockAttr = (options: SetBlockAttrOptions) => {
 		collection: blockCollection,
 		item: blockItemId,
 		fields,
-		mode
+		mode,
 	});
 };
-
-export const enableVisualEditing = () => {
-	if (browser && page.data.visualEditingEnabled) {
-		sessionStorage.setItem('visual-editing', 'true');
-	}
-};
-
-export default setAttr;

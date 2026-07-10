@@ -1,6 +1,4 @@
-import { DirectusFile } from '@/types/directus-schema';
-
-export function getDirectusAssetURL(fileOrString: string | DirectusFile | null | undefined): string {
+export function getDirectusAssetURL(fileOrString: string | { id: string } | null | undefined): string {
 	if (!fileOrString) return '';
 
 	if (typeof fileOrString === 'string') {
