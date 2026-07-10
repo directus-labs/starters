@@ -4,7 +4,7 @@ import { FormField } from '@/types/directus-schema';
 import Tagline from '@/components/ui/Tagline';
 import FormBuilder from '../forms/FormBuilder';
 import Headline from '@/components/ui/Headline';
-import { setAttr } from '@directus/visual-editing';
+import { setBlockAttr } from '@/lib/directus/visualEditing';
 
 interface FormBlockProps {
 	data: {
@@ -39,9 +39,9 @@ const FormBlock = ({ data }: FormBlockProps) => {
 			{tagline && (
 				<Tagline
 					tagline={tagline}
-					data-directus={setAttr({
-						collection: 'block_form',
-						item: data.id,
+					data-directus={setBlockAttr({
+						blockCollection: 'block_form',
+						blockItemId: data.id,
 						fields: 'tagline',
 						mode: 'popover',
 					})}
@@ -51,9 +51,9 @@ const FormBlock = ({ data }: FormBlockProps) => {
 			{headline && (
 				<Headline
 					headline={headline}
-					data-directus={setAttr({
-						collection: 'block_form',
-						item: data.id,
+					data-directus={setBlockAttr({
+						blockCollection: 'block_form',
+						blockItemId: data.id,
 						fields: 'headline',
 						mode: 'popover',
 					})}
@@ -61,14 +61,14 @@ const FormBlock = ({ data }: FormBlockProps) => {
 			)}
 
 			<div
-				data-directus={setAttr({
-					collection: 'block_form',
-					item: data.id,
+				data-directus={setBlockAttr({
+					blockCollection: 'block_form',
+					blockItemId: data.id,
 					fields: ['form'],
 					mode: 'popover',
 				})}
 			>
-				<FormBuilder form={form} className="mt-8" />
+				<FormBuilder form={form} blockFormId={data.id} className="mt-8" />
 			</div>
 		</section>
 	);

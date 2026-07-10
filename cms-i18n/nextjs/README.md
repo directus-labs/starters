@@ -13,6 +13,8 @@ applications.
 > **Note**: This is the i18n-enabled version of the Next.js CMS template. For a single-language version, see the
 > [standard Next.js CMS template](../../cms/nextjs/README.md).
 
+> **License required**: See the [cms-i18n README](../README.md) for Directus setup.
+
 ## **Features**
 
 - **Next.js App Router**: Uses the latest Next.js routing architecture for layouts and dynamic routes.
@@ -38,6 +40,13 @@ applications.
 
 Directus allows you to work on unpublished content using **Draft Mode**. This Next.js template is configured to support
 Directus Draft Mode out of the box, enabling live previews of unpublished or draft content as you make changes.
+
+### **Content Versioning in Directus 12**
+
+In Directus 12, the published content version is called `published` (formerly `main`), and every versioned item
+automatically gets a `draft` version. Published items are locked in the Studio — edits happen on the draft version and
+are promoted to publish. This template handles both: preview URLs with `version=published` load the live content (no extra API call needed),
+while `version=draft` (or any custom version key) fetches that version from the API.
 
 ### **Live Preview Setup**
 
@@ -70,7 +79,7 @@ npx directus-template-cli@latest apply <path-to-template>
 
 To set up this template, ensure you have the following:
 
-- **Node.js** (16.x or newer)
+- **Node.js** (22.x or newer)
 - **npm** or **pnpm**
 - Access to a **Directus** instance ([cloud or self-hosted](../../README.md))
 
@@ -103,7 +112,8 @@ To get started, you need to configure environment variables. Follow these steps:
 
    - **`NEXT_PUBLIC_DIRECTUS_URL`**: URL of your Directus instance.
    - **`DIRECTUS_SERVER_TOKEN`**: Server-side token for accessing content, preview, and form submissions. Use the token
-     from the **Webmaster** account.
+     from your Directus **admin account** (created during first-launch onboarding). With a licensed instance, you can
+     instead use a token from a user assigned only the **Content - Live Preview** and **Forms - Submission** policies.
    - **`DIRECTUS_ADMIN_TOKEN`**: Admin token for local type generation only. Never used at runtime.
    - **`NEXT_PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
    - **`NEXT_PUBLIC_ENABLE_VISUAL_EDITING`**: Visual editing is enabled by default. Set to `false` to disable.
