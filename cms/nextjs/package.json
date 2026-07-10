@@ -71,11 +71,6 @@
 		"typescript": "5.8.3",
 		"typescript-eslint": "8.29.1"
 	},
-	"pnpm": {
-		"overrides": {
-			"tar": "^7.5.4"
-		}
-	},
 	"overrides": {
 		"tar": "^7.5.4"
 	}
