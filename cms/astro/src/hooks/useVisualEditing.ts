@@ -39,17 +39,16 @@ export function useVisualEditing() {
       const cleanUrl = window.location.pathname + (searchParams.toString() ? `?${searchParams.toString()}` : '');
 
       window.history.replaceState({}, '', cleanUrl);
+      setIsVisualEditingEnabled(false);
+
+      return;
     }
 
     const persisted = localStorage.getItem('visual-editing') === 'true';
     const shouldEnable = persisted || isPreview;
     setIsVisualEditingEnabled(shouldEnable);
 
-    if (shouldEnable) {
-      localStorage.setItem('visual-editing', 'true');
-    }
-
-    if (shouldEnable && param !== 'true') {
+    if (persisted && param !== 'true') {
       searchParams.set('visual-editing', 'true');
 
       const updatedUrl = window.location.pathname + (searchParams.toString() ? `?${searchParams.toString()}` : '');

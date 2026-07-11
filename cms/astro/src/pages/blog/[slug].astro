@@ -11,6 +11,7 @@ import {
   fetchRelatedPosts,
   getPostIdBySlug,
 } from '@/lib/directus/fetchers';
+import { getDirectusErrorStatus } from '@/lib/directus/errors';
 import type { DirectusUser, Post } from '@/types/directus-schema';
 
 const slugParam = Astro.params.slug;
@@ -40,7 +41,9 @@ try {
     try {
       const result = await fetchPostByIdAndVersion(postId, version, slug as string, token || undefined);
       post = result.post;
-    } catch {
+    } catch (error) {
+      if (getDirectusErrorStatus(error) !== 404) throw error;
+
       // Versioned fetch failed (e.g. draft revision not yet created) — serve current content
       // so the page renders without a 404; BlogPostClient will fetch draft via SWR.
       post = await fetchPostBySlug(slug as string, isDraft, token || undefined);
@@ -57,7 +60,7 @@ if (!post) {
   return Astro.redirect('/404');
 }
 
-const relatedPosts = await fetchRelatedPosts(post.id);
+const relatedPosts = await fetchRelatedPosts(post.id).catch(() => []);
 const author = post.author && typeof post.author === 'object' ? (post.author as DirectusUser) : null;
 const authorName = [author?.first_name, author?.last_name].filter(Boolean).join(' ');
 const siteURL = import.meta.env.PUBLIC_SITE_URL || '';

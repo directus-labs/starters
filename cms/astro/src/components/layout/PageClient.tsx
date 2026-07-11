@@ -18,7 +18,7 @@ interface PageClientProps {
 interface VisualEditingOptions {
   customClass?: string;
   onSaved?: () => void;
-  elements?: HTMLElement;
+  elements?: HTMLElement | HTMLElement[];
 }
 
 const isLivePreview = () => {
@@ -26,9 +26,7 @@ const isLivePreview = () => {
 
   const params = new URLSearchParams(window.location.search);
 
-  return (
-    params.get('preview') === 'true' || !!params.get('version') || !!params.get('id')
-  );
+  return params.get('preview') === 'true' || !!params.get('version') || !!params.get('id');
 };
 
 const fetchBlocks = async (permalink: string, params: URLSearchParams): Promise<PageBlock[]> => {
@@ -45,11 +43,13 @@ export default function PageClient({ initialSections, permalink, pageId }: PageC
   const { isVisualEditingEnabled, apply } = useVisualEditing();
   const rootRef = useRef<HTMLDivElement>(null);
   const [livePreview, setLivePreview] = useState(isLivePreview);
+  const [isHydrated, setIsHydrated] = useState(false);
 
-  setVisualEditingPageContext(pageId);
+  setVisualEditingPageContext(pageId, isHydrated);
 
   useEffect(() => {
     const sync = () => setLivePreview(isLivePreview());
+    setIsHydrated(true);
     sync();
     document.addEventListener('astro:after-swap', sync);
 
@@ -73,13 +73,18 @@ export default function PageClient({ initialSections, permalink, pageId }: PageC
   useEffect(() => {
     if (!isVisualEditingEnabled || !rootRef.current) return;
 
-    // Scope apply to this island — nav/footer overlays live in VisualEditingLayout.
-    apply({
-      elements: rootRef.current,
-      onSaved: () => mutate(),
-    } as VisualEditingOptions);
-
     const editButton = rootRef.current.querySelector('#visual-editing-button') as HTMLElement | null;
+    const editableElements = Array.from(rootRef.current.querySelectorAll<HTMLElement>('[data-directus]')).filter(
+      (element) => element !== editButton,
+    );
+
+    if (editableElements.length > 0) {
+      apply({
+        elements: editableElements,
+        onSaved: () => mutate(),
+      } as VisualEditingOptions);
+    }
+
     if (editButton) {
       apply({
         elements: editButton,

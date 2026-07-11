@@ -551,37 +551,31 @@ export const fetchPostByIdAndVersion = async (
     throw new Error('Invalid slug: slug must be a non-empty string');
   }
 
-  try {
-    const postFields = [
-      'id',
-      'title',
-      'content',
-      'status',
-      'published_at',
-      'image',
-      'description',
-      'slug',
-      'seo',
-      {
-        author: ['id', 'first_name', 'last_name', 'avatar'],
-      },
-    ] as const;
+  const postFields = [
+    'id',
+    'title',
+    'content',
+    'status',
+    'published_at',
+    'image',
+    'description',
+    'slug',
+    'seo',
+    {
+      author: ['id', 'first_name', 'last_name', 'avatar'],
+    },
+  ] as const;
 
-    const [postData, relatedPosts] = await Promise.all([
-      directus.request(
-        withToken(
-          token as string,
-          readItem('posts', id, {
-            version,
-            fields: postFields,
-          }),
-        ),
-      ),
-      fetchRelatedPosts(id),
-    ]);
+  const postData = await directus.request(
+    withToken(
+      token as string,
+      readItem('posts', id, {
+        version,
+        fields: postFields,
+      }),
+    ),
+  );
+  const relatedPosts = await fetchRelatedPosts(id).catch(() => []);
 
-    return { post: postData as Post, relatedPosts };
-  } catch {
-    throw new Error('Failed to fetch versioned post');
-  }
+  return { post: postData as Post, relatedPosts };
 };

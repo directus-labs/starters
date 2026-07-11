@@ -75,9 +75,8 @@ const metadata = page
 
 <Layout metadata={metadata}>
   {page ? (
-    <!-- client:only — preview query params are not available when pages are prerendered -->
     <PageClient
-      client:only="react"
+      client:load
       permalink={resolvedPermalink}
       initialSections={blocks}
       pageId={page.id}

@@ -1,8 +1,19 @@
 import { buildZodSchema } from '@/lib/zodSchemaBuilder';
 import type { FormField } from '@/types/directus-schema';
+import { z } from 'zod';
 
-/** Matches licensed template Forms policy file upload limit (5 MB). */
-export const MAX_FORM_FILE_BYTES = 5 * 1024 * 1024;
+/** Leaves room for multipart overhead below Vercel's 4.5 MB request limit. */
+export const MAX_FORM_FILE_BYTES = 4 * 1024 * 1024;
+
+const formIdSchema = z.uuid();
+
+/** Returns a canonical Directus UUID or null for untrusted form input. */
+export function parseFormId(value: FormDataEntryValue | null): string | null {
+  if (typeof value !== 'string') return null;
+  const result = formIdSchema.safeParse(value.trim());
+
+  return result.success ? result.data : null;
+}
 
 function parseFieldValue(field: FormField, raw: FormDataEntryValue): unknown {
   if (field.type === 'file') {
@@ -32,6 +43,14 @@ export function validateFormSubmission(
   formData: FormData,
 ): { success: true; data: Record<string, unknown> } | { success: false; error: string } {
   const data: Record<string, unknown> = {};
+  const totalFileBytes = Array.from(formData.values()).reduce(
+    (total, value) => total + (value instanceof File ? value.size : 0),
+    0,
+  );
+
+  if (totalFileBytes > MAX_FORM_FILE_BYTES) {
+    return { success: false, error: 'Combined file uploads must be 4 MB or smaller' };
+  }
 
   for (const field of fields) {
     if (!field.name) continue;

@@ -25,13 +25,15 @@ type PagePreviewContext = {
 };
 
 let pageId = '';
+let browserContextEnabled = false;
 
 /**
  * Set from PageClient. Provides the page id when the preview URL omits `?id=`.
  * Version is always read from the URL at runtime — see resolvePageContext().
  */
-export function setVisualEditingPageContext(id: string) {
+export function setVisualEditingPageContext(id: string, enableBrowserContext = false) {
 	pageId = id;
+	browserContextEnabled = enableBrowserContext;
 }
 
 /**
@@ -39,7 +41,7 @@ export function setVisualEditingPageContext(id: string) {
  * version/id must be read from the live URL when generating attrs.
  */
 function resolvePageContext(): PagePreviewContext {
-	if (typeof window === 'undefined') {
+	if (typeof window === 'undefined' || !browserContextEnabled) {
 		return { pageId };
 	}
 
@@ -76,6 +78,7 @@ function toPageBlockFields(
 
 	const list = Array.isArray(fields) ? fields : [fields];
 	const paths = list.map((field) => `blocks.item:${blockCollection}.${field}`);
+
 	return paths.length === 1 ? paths[0] : paths;
 }
 

@@ -10,7 +10,7 @@ import type { FormField as FormFieldType } from '@/types/directus-schema';
 
 interface DynamicFormProps {
   fields: FormFieldType[];
-  onSubmit: (data: Record<string, unknown>) => void;
+  onSubmit: (data: Record<string, unknown>) => Promise<void> | void;
   submitLabel: string;
   id: string;
   blockFormId?: string;
@@ -92,7 +92,14 @@ const DynamicForm = ({ fields, onSubmit, submitLabel, id, blockFormId }: Dynamic
                   },
             )}
           >
-            <Button type="submit" label={submitLabel} icon="arrow" iconPosition="right" id={`submit-${id || 'form'}`} />
+            <Button
+              type="submit"
+              label={submitLabel}
+              icon="arrow"
+              iconPosition="right"
+              id={`submit-${id || 'form'}`}
+              disabled={form.formState.isSubmitting}
+            />
           </div>
         </div>
       </form>

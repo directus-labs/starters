@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "preview": "astro preview",
     "start": "astro dev",
+    "test": "tsx --test src/lib/*.test.ts",
     "format": "biome format --write .",
     "lint": "eslint --cache .",
     "lint:fix": "eslint --fix .",
