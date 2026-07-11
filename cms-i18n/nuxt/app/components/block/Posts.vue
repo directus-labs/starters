@@ -2,7 +2,6 @@
 import type { Post } from '#shared/types/schema';
 import { ChevronsLeft, ChevronsRight, ChevronLeft, ChevronRight } from 'lucide-vue-next';
 import { localizeLink } from '~/lib/i18n/utils';
-import { setBlockAttr } from '~/utils/visualEditing';
 
 interface PostsProps {
 	data: {
@@ -15,6 +14,7 @@ interface PostsProps {
 }
 
 const props = defineProps<PostsProps>();
+const { setBlockAttr } = useVisualEditingAttrs();
 
 const route = useRoute();
 const router = useRouter();

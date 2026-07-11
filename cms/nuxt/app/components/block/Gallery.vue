@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ZoomIn, ArrowLeft, ArrowRight, X } from 'lucide-vue-next';
-import { setBlockAttr } from '~/utils/visualEditing';
 
 interface GalleryItem {
 	id: string;
@@ -18,6 +17,7 @@ interface GalleryProps {
 }
 
 const props = defineProps<GalleryProps>();
+const { setBlockAttr } = useVisualEditingAttrs();
 
 const isLightboxOpen = ref(false);
 const currentIndex = ref(0);

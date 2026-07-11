@@ -32,14 +32,19 @@ export default defineEventHandler(async (event) => {
 	// Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
 	// Neither key requires an explicit version parameter — strip both to fetch the default published version.
 	const version = String(rawVersion) !== 'published' && String(rawVersion) !== 'main' ? rawVersion : undefined;
+	const isPreview = preview === 'true';
 
 	// Get locale from event (set by middleware or query param)
 	const locale = getLocaleFromEvent(event);
 	const includeTranslations = locale !== DEFAULT_LOCALE;
 
-	// Use the server token from runtimeConfig when preview mode is enabled
-	const config = useRuntimeConfig();
-	const token = preview === 'true' ? (config.directusServerToken as string) || null : null;
+	if (version && !isPreview) {
+		throw createError({ statusCode: 404, message: `Post not found: ${slug}` });
+	}
+
+	// Use the server token explicitly so licensed translation deep queries work without
+	// making the shared Directus client privileged by default.
+	const token = getDirectusServerToken();
 
 	// Build post fields with translation support
 	const postFields = buildPostFields(includeTranslations);
@@ -56,7 +61,7 @@ export default defineEventHandler(async (event) => {
 		if (version && !postId) {
 			// Look up post ID by slug - this is needed because Directus version API requires an ID
 			const postIdLookup = await directusServer.request(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItems('posts', {
@@ -85,7 +90,7 @@ export default defineEventHandler(async (event) => {
 			// Version-specific request: Use readItem with specific version
 			// This is used when we have both a postId and want a specific version (draft, published, etc.)
 			post = await directusServer.request<Post>(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItem('posts', postId, {
@@ -108,12 +113,11 @@ export default defineEventHandler(async (event) => {
 			// - If preview mode: fetch any status (to show draft content)
 			// - If not preview: only fetch published content (for public viewing)
 			const postsData = await directusServer.request<Post[]>(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItems('posts', {
-								filter:
-									preview === 'true' ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
+								filter: isPreview ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
 								limit: 1,
 								// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 								fields: postFields,
@@ -121,8 +125,7 @@ export default defineEventHandler(async (event) => {
 							}),
 						)
 					: readItems('posts', {
-							filter:
-								preview === 'true' ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
+							filter: isPreview ? { slug: { _eq: slug } } : { slug: { _eq: slug }, status: { _eq: 'published' } },
 							limit: 1,
 							// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 							fields: postFields,
@@ -146,14 +149,26 @@ export default defineEventHandler(async (event) => {
 		// Always fetch published posts only (no preview mode for related content)
 		// Excludes the current post and limits to 2 related posts
 		let relatedPosts = await directusServer.request<Post[]>(
-			readItems('posts', {
-				filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
-				fields: includeTranslations
-					? ['id', 'title', 'image', 'slug', { translations: ['*'] }]
-					: ['id', 'title', 'image', 'slug'],
-				limit: 2,
-				...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
-			}),
+			token
+				? withToken(
+						token,
+						readItems('posts', {
+							filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
+							fields: includeTranslations
+								? ['id', 'title', 'image', 'slug', { translations: ['*'] }]
+								: ['id', 'title', 'image', 'slug'],
+							limit: 2,
+							...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+						}),
+					)
+				: readItems('posts', {
+						filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
+						fields: includeTranslations
+							? ['id', 'title', 'image', 'slug', { translations: ['*'] }]
+							: ['id', 'title', 'image', 'slug'],
+						limit: 2,
+						...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+					}),
 		);
 
 		// Merge translations for related posts if needed

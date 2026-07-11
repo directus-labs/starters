@@ -9,7 +9,6 @@ import {
 	readSingleton,
 	createItem,
 	updateItem,
-	staticToken,
 	uploadFiles,
 	readMe,
 	withToken,
@@ -19,23 +18,25 @@ import {
 
 const {
 	public: { directusUrl },
-	directusServerToken,
 } = useRuntimeConfig();
 
-// Server-side reads use DIRECTUS_SERVER_TOKEN (same as the Next.js starter) so licensed
-// translation deep queries work.
-let directusServer = createDirectus<Schema>(directusUrl as string, {
+// Server reads default to Public permissions. Routes that need privileged reads
+// should wrap individual requests with DIRECTUS_SERVER_TOKEN.
+const directusServer = createDirectus<Schema>(directusUrl as string, {
 	globals: {
 		fetch: $fetch,
 	},
 }).with(rest());
 
-if (directusServerToken) {
-	directusServer = directusServer.with(staticToken(directusServerToken as string));
+function getDirectusServerToken() {
+	const config = useRuntimeConfig();
+
+	return ((config.directusServerToken as string | undefined) || '').trim() || null;
 }
 
 export {
 	directusServer,
+	getDirectusServerToken,
 	readItem,
 	readItems,
 	readMe,

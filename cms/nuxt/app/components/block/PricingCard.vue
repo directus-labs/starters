@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Button from '../base/BaseButton.vue';
 import { CheckCircle2 } from 'lucide-vue-next';
-import { getIsDraftPreview, setBlockAttr } from '~/utils/visualEditing';
 
 interface PricingCardProps {
 	card: {
@@ -23,7 +22,7 @@ interface PricingCardProps {
 
 const props = defineProps<PricingCardProps>();
 
-const isDraftPreview = computed(() => getIsDraftPreview());
+const { isDraftPreview, setBlockAttr } = useVisualEditingAttrs();
 
 const pricingCardField = (field: string) =>
 	setBlockAttr({

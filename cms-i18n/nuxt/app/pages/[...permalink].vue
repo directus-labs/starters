@@ -4,7 +4,7 @@ import type { SiteData } from '#shared/types/site-data';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
 import { addLocaleToPath, getNotFoundMessage } from '~/lib/i18n/utils';
 import { DEFAULT_LOCALE } from '~/lib/i18n/config';
-import { getPageIdForEditing, setAttr, setVisualEditingPageContext } from '~/utils/visualEditing';
+import { provideVisualEditingPageContext, setAttr } from '~/utils/visualEditing';
 
 const route = useRoute();
 const { enabled } = useLivePreview();
@@ -20,10 +20,11 @@ const permalink = withoutTrailingSlash(withLeadingSlash(pathNoLocale.value));
 
 // Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
 // Neither key requires an explicit version parameter — strip both to fetch the default published version.
-const contentVersion =
+const contentVersion = computed(() =>
 	route.query.version !== 'published' && route.query.version !== 'main'
 		? (route.query.version as string)
-		: undefined;
+		: undefined,
+);
 
 const {
 	public: { siteUrl },
@@ -43,7 +44,7 @@ const {
 		permalink,
 		preview: enabled.value ? true : undefined,
 		id: route.query.id as string,
-		version: contentVersion,
+		version: contentVersion.value,
 		locale,
 	},
 });
@@ -55,12 +56,11 @@ if (!page.value || pageError.value) {
 
 const pageBlocks = computed(() => (page.value?.blocks as PageBlock[]) || []);
 const pageRoot = ref<HTMLElement | null>(null);
+const editingPageId = computed(() => (route.query.id as string) || page.value?.id || '');
 
-watchEffect(() => {
-	const id = (route.query.id as string) || page.value?.id;
-	if (id) {
-		setVisualEditingPageContext(id, contentVersion);
-	}
+provideVisualEditingPageContext({
+	pageId: editingPageId,
+	contentVersion,
 });
 
 // Reuse site data (locales) from layout to avoid refetching
@@ -158,7 +158,7 @@ const notFoundMessage = computed(() => getNotFoundMessage(locale, 'page'));
 				:data-directus="
 					setAttr({
 						collection: 'pages',
-						item: getPageIdForEditing(),
+						item: editingPageId,
 						fields: ['blocks', 'meta_m2a_button'],
 						mode: 'modal',
 					})

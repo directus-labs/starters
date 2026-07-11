@@ -1,4 +1,6 @@
 import { setAttr as baseSetAttr } from '@directus/visual-editing';
+import { provide } from 'vue';
+import type { ComputedRef, InjectionKey, Ref } from 'vue';
 
 interface ApplyOptions {
 	collection: string;
@@ -9,7 +11,7 @@ interface ApplyOptions {
 
 export type SetBlockAttrOptions = {
 	blockCollection: string;
-	blockItemId: string | number;
+	blockItemId?: string | number;
 	fields: string | string[];
 	mode?: 'modal' | 'popover' | 'drawer';
 	/**
@@ -19,29 +21,23 @@ export type SetBlockAttrOptions = {
 	pageFields?: string | string[];
 };
 
-let pageId = '';
-let contentVersion: string | undefined;
+export type VisualEditingPageContext = {
+	pageId: Ref<string> | ComputedRef<string>;
+	contentVersion: Ref<string | undefined> | ComputedRef<string | undefined>;
+};
+
+export const visualEditingPageContextKey: InjectionKey<VisualEditingPageContext> = Symbol('visualEditingPageContext');
 
 /** Set from the page route — provides id/version for setBlockAttr(). */
-export function setVisualEditingPageContext(id: string, version?: string) {
-	pageId = id;
-	contentVersion = version;
-}
-
-export function getIsDraftPreview(): boolean {
-	return !!contentVersion;
-}
-
-/** Page id for attrs — prefers `?id=` from the preview URL when set in context. */
-export function getPageIdForEditing(): string {
-	return pageId;
+export function provideVisualEditingPageContext(context: VisualEditingPageContext) {
+	provide(visualEditingPageContextKey, context);
 }
 
 export const setAttr = (options: ApplyOptions) => {
 	return baseSetAttr({ ...options });
 };
 
-function toPageBlockFields(
+export function toPageBlockFields(
 	blockCollection: string,
 	fields: string | string[],
 	pageFields?: string | string[],
@@ -50,33 +46,5 @@ function toPageBlockFields(
 
 	const list = Array.isArray(fields) ? fields : [fields];
 	const paths = list.map((field) => `blocks.item:${blockCollection}.${field}`);
-	return paths.length === 1 ? paths[0] : paths;
+	return paths.length === 1 ? paths[0]! : paths;
 }
-
-/**
- * Visual editing attrs for page-builder blocks.
- *
- * Published/live preview: target the block collection directly for field-level popovers.
- *
- * Content versions (e.g. ?version=draft): route through the versioned `pages`
- * item with nested `blocks.item:…` paths and modal mode.
- */
-export const setBlockAttr = (options: SetBlockAttrOptions) => {
-	const { blockCollection, blockItemId, fields, mode, pageFields } = options;
-
-	if (contentVersion && pageId) {
-		return setAttr({
-			collection: 'pages',
-			item: pageId,
-			fields: toPageBlockFields(blockCollection, fields, pageFields),
-			mode: 'modal',
-		});
-	}
-
-	return setAttr({
-		collection: blockCollection,
-		item: blockItemId,
-		fields,
-		mode,
-	});
-};

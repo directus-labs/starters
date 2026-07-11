@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Page, PageBlock } from '#shared/types/schema';
 import { withLeadingSlash, withoutTrailingSlash } from 'ufo';
-import { getPageIdForEditing, setAttr, setVisualEditingPageContext } from '~/utils/visualEditing';
+import { provideVisualEditingPageContext, setAttr } from '~/utils/visualEditing';
 
 const route = useRoute();
 const { enabled } = useLivePreview();
@@ -12,10 +12,9 @@ const permalink = withoutTrailingSlash(withLeadingSlash(route.path));
 
 // Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
 // Neither key requires an explicit version parameter — strip both to fetch the default published version.
-const contentVersion =
-	route.query.version !== 'published' && route.query.version !== 'main'
-		? (route.query.version as string)
-		: undefined;
+const contentVersion = computed(() =>
+	route.query.version !== 'published' && route.query.version !== 'main' ? (route.query.version as string) : undefined,
+);
 
 const {
 	data: page,
@@ -27,7 +26,7 @@ const {
 		permalink,
 		preview: enabled.value ? true : undefined,
 		id: route.query.id as string,
-		version: contentVersion,
+		version: contentVersion.value,
 	},
 });
 
@@ -37,13 +36,11 @@ if (!page.value || error.value) {
 
 const pageBlocks = computed(() => (page.value?.blocks as PageBlock[]) || []);
 const pageRoot = ref<HTMLElement | null>(null);
+const editingPageId = computed(() => (route.query.id as string) || page.value?.id || '');
 
-watchEffect(() => {
-	const id = (route.query.id as string) || page.value?.id;
-
-	if (id) {
-		setVisualEditingPageContext(id, contentVersion);
-	}
+provideVisualEditingPageContext({
+	pageId: editingPageId,
+	contentVersion,
 });
 
 useSeoMeta({
@@ -108,7 +105,7 @@ onMounted(() => {
 				:data-directus="
 					setAttr({
 						collection: 'pages',
-						item: getPageIdForEditing(),
+						item: editingPageId,
 						fields: ['blocks', 'meta_m2a_button'],
 						mode: 'modal',
 					})

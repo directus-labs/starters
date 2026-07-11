@@ -21,9 +21,9 @@ interface PricingProps {
 		}>;
 	};
 }
-import { setBlockAttr } from '~/utils/visualEditing';
 
 defineProps<PricingProps>();
+const { setBlockAttr } = useVisualEditingAttrs();
 </script>
 
 <template>
