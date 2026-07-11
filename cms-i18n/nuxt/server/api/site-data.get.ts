@@ -10,14 +10,23 @@ import type { Globals, Language, Navigation } from '#shared/types/schema';
 export default defineEventHandler(async (event) => {
 	const locale = getLocaleFromEvent(event);
 	const includeTranslations = locale !== DEFAULT_LOCALE;
+	const token = getDirectusServerToken();
 
 	try {
 		// Fetch languages first so we can build locale map
 		const languages = (await directusServer.request(
-			readItems('languages', {
-				fields: ['code', 'name', 'direction'],
-				sort: ['code'],
-			}),
+			token
+				? withToken(
+						token,
+						readItems('languages', {
+							fields: ['code', 'name', 'direction'],
+							sort: ['code'],
+						}),
+					)
+				: readItems('languages', {
+						fields: ['code', 'name', 'direction'],
+						sort: ['code'],
+					}),
 		)) as Language[];
 
 		const localeMap = buildLocaleMap(languages);
@@ -48,45 +57,92 @@ export default defineEventHandler(async (event) => {
 		// Fetch globals and navigation with translations if needed
 		const [globalsRaw, headerNavigationRaw, footerNavigationRaw] = await Promise.all([
 			directusServer.request<Globals>(
-				readSingleton('globals', {
-					// @ts-expect-error - Directus SDK has strict field typing that doesn't support dynamic fields
-					fields: globalsFields,
-					...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
-				}),
+				token
+					? withToken(
+							token,
+							readSingleton('globals', {
+								// @ts-expect-error - Directus SDK has strict field typing that doesn't support dynamic fields
+								fields: globalsFields,
+								...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+							}),
+						)
+					: readSingleton('globals', {
+							// @ts-expect-error - Directus SDK has strict field typing that doesn't support dynamic fields
+							fields: globalsFields,
+							...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+						}),
 			),
 			directusServer.request<Navigation>(
-				readItem('navigation', 'main', {
-					// @ts-expect-error - Directus SDK has strict field typing that doesn't support dynamic fields
-					fields: navigationFields,
-					deep: {
-						items: {
-							_sort: ['sort'],
-							...(includeTranslations ? buildTranslationsDeep(locale) : {}),
-							children: {
-								_sort: ['sort'],
+				token
+					? withToken(
+							token,
+							readItem('navigation', 'main', {
+								// @ts-expect-error - Directus SDK has strict field typing that doesn't support dynamic fields
+								fields: navigationFields,
+								deep: {
+									items: {
+										_sort: ['sort'],
+										...(includeTranslations ? buildTranslationsDeep(locale) : {}),
+										children: {
+											_sort: ['sort'],
+											...(includeTranslations ? buildTranslationsDeep(locale) : {}),
+										},
+									},
+									...(includeTranslations ? buildTranslationsDeep(locale) : {}),
+								},
+							}),
+						)
+					: readItem('navigation', 'main', {
+							// @ts-expect-error - Directus SDK has strict field typing that doesn't support dynamic fields
+							fields: navigationFields,
+							deep: {
+								items: {
+									_sort: ['sort'],
+									...(includeTranslations ? buildTranslationsDeep(locale) : {}),
+									children: {
+										_sort: ['sort'],
+										...(includeTranslations ? buildTranslationsDeep(locale) : {}),
+									},
+								},
 								...(includeTranslations ? buildTranslationsDeep(locale) : {}),
 							},
-						},
-						...(includeTranslations ? buildTranslationsDeep(locale) : {}),
-					},
-				}),
+						}),
 			),
 			directusServer.request<Navigation>(
-				readItem('navigation', 'footer', {
-					// @ts-expect-error - Directus SDK has strict field typing that doesn't support dynamic fields
-					fields: navigationFields,
-					deep: {
-						items: {
-							_sort: ['sort'],
-							...(includeTranslations ? buildTranslationsDeep(locale) : {}),
-							children: {
-								_sort: ['sort'],
+				token
+					? withToken(
+							token,
+							readItem('navigation', 'footer', {
+								// @ts-expect-error - Directus SDK has strict field typing that doesn't support dynamic fields
+								fields: navigationFields,
+								deep: {
+									items: {
+										_sort: ['sort'],
+										...(includeTranslations ? buildTranslationsDeep(locale) : {}),
+										children: {
+											_sort: ['sort'],
+											...(includeTranslations ? buildTranslationsDeep(locale) : {}),
+										},
+									},
+									...(includeTranslations ? buildTranslationsDeep(locale) : {}),
+								},
+							}),
+						)
+					: readItem('navigation', 'footer', {
+							// @ts-expect-error - Directus SDK has strict field typing that doesn't support dynamic fields
+							fields: navigationFields,
+							deep: {
+								items: {
+									_sort: ['sort'],
+									...(includeTranslations ? buildTranslationsDeep(locale) : {}),
+									children: {
+										_sort: ['sort'],
+										...(includeTranslations ? buildTranslationsDeep(locale) : {}),
+									},
+								},
 								...(includeTranslations ? buildTranslationsDeep(locale) : {}),
 							},
-						},
-						...(includeTranslations ? buildTranslationsDeep(locale) : {}),
-					},
-				}),
+						}),
 			),
 		]);
 

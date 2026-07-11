@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Text from '~/components/base/Text.vue';
-import { setBlockAttr } from '~/utils/visualEditing';
 
 interface RichTextProps {
 	data: {
@@ -19,6 +18,7 @@ withDefaults(defineProps<RichTextProps>(), {
 	}),
 });
 
+const { setBlockAttr } = useVisualEditingAttrs();
 </script>
 
 <template>

@@ -9,7 +9,7 @@ import ShareDialog from '@/components/ui/ShareDialog';
 import Headline from '@/components/ui/Headline';
 import Container from '@/components/ui/Container';
 import type { Post, DirectusUser } from '@/types/directus-schema';
-import { setAttr } from '@directus/visual-editing';
+import { setAttr } from '@/lib/directus/visualEditing';
 import { useVisualEditing } from '@/hooks/useVisualEditing';
 
 interface BlogPostClientProps {
@@ -64,7 +64,7 @@ export default function BlogPostClient({
     },
   );
 
-  const post = isVisualEditingEnabled ? (swrData?.post ?? initialPost) : initialPost;
+  const post = shouldFetchLive ? (swrData?.post ?? initialPost) : initialPost;
 
   useEffect(() => {
     if (isVisualEditingEnabled) {

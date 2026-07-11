@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import Button from '@/components/blocks/Button';
 import { CheckCircle2 } from 'lucide-react';
-import { setAttr } from '@directus/visual-editing';
+import { getIsDraftPreview, setBlockAttr } from '@/lib/directus/visualEditing';
 import type { VariantProps } from 'class-variance-authority';
 import type { buttonVariants } from '@/components/ui/button';
 
@@ -25,6 +25,18 @@ export interface PricingCardProps {
 }
 
 const PricingCard = ({ card }: PricingCardProps) => {
+  const isDraftPreview = getIsDraftPreview();
+
+  // Published: target the card item. Draft: pageFields gives setBlockAttr the nested M2A path.
+  const pricingCardField = (field: string) =>
+    setBlockAttr({
+      blockCollection: 'block_pricing_cards',
+      blockItemId: card.id,
+      pageFields: `blocks.item:block_pricing.pricing_cards.${field}`,
+      fields: [field],
+      mode: 'popover',
+    });
+
   return (
     <div
       className={`flex flex-col max-w-[600px] md:min-h-[424px] border rounded-lg p-6 ${
@@ -32,15 +44,7 @@ const PricingCard = ({ card }: PricingCardProps) => {
       }`}
     >
       <div className="flex justify-between items-start gap-2 mb-4">
-        <h3
-          className="text-xl font-heading text-foreground"
-          data-directus={setAttr({
-            collection: 'block_pricing_cards',
-            item: card.id,
-            fields: ['title'],
-            mode: 'popover',
-          })}
-        >
+        <h3 className="text-xl font-heading text-foreground" data-directus={pricingCardField('title')}>
           {card.title}
         </h3>
         <div className="flex-shrink-0">
@@ -48,12 +52,7 @@ const PricingCard = ({ card }: PricingCardProps) => {
             <Badge
               variant={card.is_highlighted ? 'secondary' : 'default'}
               className="text-xs font-medium uppercase"
-              data-directus={setAttr({
-                collection: 'block_pricing_cards',
-                item: card.id,
-                fields: ['badge'],
-                mode: 'popover',
-              })}
+              data-directus={pricingCardField('badge')}
             >
               {card.badge}
             </Badge>
@@ -61,28 +60,12 @@ const PricingCard = ({ card }: PricingCardProps) => {
         </div>
       </div>
       {card.price && (
-        <p
-          className="text-h2 mt-2 font-semibold"
-          data-directus={setAttr({
-            collection: 'block_pricing_cards',
-            item: card.id,
-            fields: ['price'],
-            mode: 'popover',
-          })}
-        >
+        <p className="text-h2 mt-2 font-semibold" data-directus={pricingCardField('price')}>
           {card.price}
         </p>
       )}
       {card.description && (
-        <p
-          className="text-description mt-2 line-clamp-2"
-          data-directus={setAttr({
-            collection: 'block_pricing_cards',
-            item: card.id,
-            fields: ['description'],
-            mode: 'popover',
-          })}
-        >
+        <p className="text-description mt-2 line-clamp-2" data-directus={pricingCardField('description')}>
           {card.description}
         </p>
       )}
@@ -91,15 +74,7 @@ const PricingCard = ({ card }: PricingCardProps) => {
 
       <div className="flex-grow">
         {card.features && Array.isArray(card.features) && (
-          <ul
-            className="space-y-4"
-            data-directus={setAttr({
-              collection: 'block_pricing_cards',
-              item: card.id,
-              fields: ['features'],
-              mode: 'popover',
-            })}
-          >
+          <ul className="space-y-4" data-directus={pricingCardField('features')}>
             {card.features.map((feature, index) => (
               <li key={index} className="flex items-center gap-3 text-regular">
                 <div className="mt-1">
@@ -115,12 +90,22 @@ const PricingCard = ({ card }: PricingCardProps) => {
         {card.button && (
           <Button
             id={card.button.id}
-            data-directus={setAttr({
-              collection: 'block_button',
-              item: card.button.id,
-              fields: ['type', 'label', 'variant', 'url', 'page', 'post'],
-              mode: 'popover',
-            })}
+            data-directus={setBlockAttr(
+              isDraftPreview
+                ? {
+                    blockCollection: 'block_pricing',
+                    blockItemId: card.id,
+                    pageFields: 'blocks.item:block_pricing.pricing_cards.button',
+                    fields: ['type', 'label', 'variant', 'url', 'page', 'post'],
+                    mode: 'popover',
+                  }
+                : {
+                    blockCollection: 'block_button',
+                    blockItemId: card.button.id,
+                    fields: ['type', 'label', 'variant', 'url', 'page', 'post'],
+                    mode: 'popover',
+                  },
+            )}
             label={card.button.label}
             variant={
               ['link', 'default', 'destructive', 'outline', 'secondary', 'ghost'].includes(card.button.variant || '')

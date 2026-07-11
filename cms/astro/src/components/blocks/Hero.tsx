@@ -4,7 +4,7 @@ import BaseText from '@/components/ui/Text';
 import DirectusImage from '@/components/shared/DirectusImage';
 import ButtonGroup from '@/components/blocks/ButtonGroup';
 import { cn } from '@/lib/utils';
-import { setAttr } from '@directus/visual-editing';
+import { getIsDraftPreview, setBlockAttr } from '@/lib/directus/visualEditing';
 import type { ButtonProps } from '@/components/blocks/Button';
 
 type LayoutOption = 'image_left' | 'image_center' | 'image_right';
@@ -46,24 +46,25 @@ export default function Hero({ data }: HeroProps) {
   const { id, layout, tagline, headline, description, image, button_group } = data;
   const styles = layoutStyles[layout] ?? layoutStyles.image_left;
   const hasButtons = !!button_group?.buttons?.length;
+  const isDraftPreview = getIsDraftPreview();
 
   return (
     <section className={cn('relative w-full mx-auto flex flex-col gap-6 md:gap-12', styles.layout)}>
       <div className={cn('flex flex-col gap-4 w-full', styles.content)}>
         <Tagline
           tagline={tagline}
-          data-directus={setAttr({
-            collection: 'block_hero',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_hero',
+            blockItemId: id,
             fields: 'tagline',
             mode: 'popover',
           })}
         />
         <Headline
           headline={headline}
-          data-directus={setAttr({
-            collection: 'block_hero',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_hero',
+            blockItemId: id,
             fields: 'headline',
             mode: 'popover',
           })}
@@ -71,9 +72,9 @@ export default function Hero({ data }: HeroProps) {
         {description && (
           <BaseText
             content={description}
-            data-directus={setAttr({
-              collection: 'block_hero',
-              item: id,
+            data-directus={setBlockAttr({
+              blockCollection: 'block_hero',
+              blockItemId: id,
               fields: 'description',
               mode: 'popover',
             })}
@@ -82,23 +83,32 @@ export default function Hero({ data }: HeroProps) {
         {hasButtons && (
           <div
             className={cn(layout === 'image_center' && 'flex justify-center', 'mt-6')}
-            data-directus={setAttr({
-              collection: 'block_button_group',
-              item: button_group.id,
-              fields: 'buttons',
-              mode: 'modal',
-            })}
+            data-directus={setBlockAttr(
+              isDraftPreview
+                ? {
+                    blockCollection: 'block_hero',
+                    blockItemId: id,
+                    fields: 'button_group',
+                    mode: 'modal',
+                  }
+                : {
+                    blockCollection: 'block_button_group',
+                    blockItemId: button_group!.id,
+                    fields: 'buttons',
+                    mode: 'modal',
+                  },
+            )}
           >
-            <ButtonGroup buttons={button_group.buttons!} />
+            <ButtonGroup buttons={button_group!.buttons!} />
           </div>
         )}
       </div>
       {image && (
         <div
           className={cn('relative w-full', styles.image)}
-          data-directus={setAttr({
-            collection: 'block_hero',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_hero',
+            blockItemId: id,
             fields: ['image', 'layout'],
             mode: 'modal',
           })}

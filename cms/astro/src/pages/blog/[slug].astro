@@ -11,6 +11,7 @@ import {
   fetchRelatedPosts,
   getPostIdBySlug,
 } from '@/lib/directus/fetchers';
+import { getDirectusErrorStatus } from '@/lib/directus/errors';
 import type { DirectusUser, Post } from '@/types/directus-schema';
 
 const slugParam = Astro.params.slug;
@@ -19,9 +20,10 @@ const slug = Array.isArray(slugParam) ? slugParam.join('/') : typeof slugParam =
 const query = Astro.url.searchParams;
 
 const id = query.get('id') || '';
-// Live preview adds version = main which is not required when fetching the main version.
+// Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
+// Neither key requires an explicit version parameter — strip both to fetch the default published version.
 const rawVersion = query.get('version') || '';
-const version = rawVersion !== 'main' ? rawVersion : '';
+const version = rawVersion !== 'published' && rawVersion !== 'main' ? rawVersion : '';
 const preview = query.get('preview') === 'true';
 const token = preview ? import.meta.env.DIRECTUS_SERVER_TOKEN || '' : '';
 
@@ -36,8 +38,16 @@ try {
   }
 
   if (postId && version) {
-    const result = await fetchPostByIdAndVersion(postId, version, slug as string, token || undefined);
-    post = result.post;
+    try {
+      const result = await fetchPostByIdAndVersion(postId, version, slug as string, token || undefined);
+      post = result.post;
+    } catch (error) {
+      if (getDirectusErrorStatus(error) !== 404) throw error;
+
+      // Versioned fetch failed (e.g. draft revision not yet created) — serve current content
+      // so the page renders without a 404; BlogPostClient will fetch draft via SWR.
+      post = await fetchPostBySlug(slug as string, isDraft, token || undefined);
+    }
   } else {
     post = await fetchPostBySlug(slug as string, isDraft, token || undefined);
   }
@@ -50,7 +60,7 @@ if (!post) {
   return Astro.redirect('/404');
 }
 
-const relatedPosts = await fetchRelatedPosts(post.id);
+const relatedPosts = await fetchRelatedPosts(post.id).catch(() => []);
 const author = post.author && typeof post.author === 'object' ? (post.author as DirectusUser) : null;
 const authorName = [author?.first_name, author?.last_name].filter(Boolean).join(' ');
 const siteURL = import.meta.env.PUBLIC_SITE_URL || '';
