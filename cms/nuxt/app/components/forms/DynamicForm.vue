@@ -5,7 +5,6 @@ import { buildZodSchema } from '~/lib/zodSchemaBuilder';
 import type { FormField } from '#shared/types/schema';
 import BaseFormField from './BaseFormField.vue';
 import BaseButton from '../base/BaseButton.vue';
-import { getIsDraftPreview, setBlockAttr } from '~/utils/visualEditing';
 
 const props = defineProps<{
 	fields: FormField[];
@@ -16,7 +15,7 @@ const props = defineProps<{
 }>();
 
 const isSubmitting = ref(false);
-const isDraftPreview = computed(() => getIsDraftPreview());
+const { isDraftPreview, setBlockAttr } = useVisualEditingAttrs();
 
 const sortedFields = computed(() => [...props.fields].sort((a, b) => (a.sort || 0) - (b.sort || 0)));
 

@@ -9,7 +9,6 @@ import {
 	readSingleton,
 	createItem,
 	updateItem,
-	// staticToken,
 	uploadFiles,
 	readMe,
 	withToken,
@@ -19,19 +18,25 @@ import {
 
 const {
 	public: { directusUrl },
-	// directusServerToken,
 } = useRuntimeConfig();
 
-// By default, we use the Public permissions to fetch content (even on the server side). If you want to restrict public access it's recommended to use the staticToken option.
+// Server reads default to Public permissions. Routes that need privileged reads
+// should wrap individual requests with DIRECTUS_SERVER_TOKEN.
 const directusServer = createDirectus<Schema>(directusUrl as string, {
 	globals: {
 		fetch: $fetch,
 	},
 }).with(rest());
-// .with(staticToken(directusServerToken as string));
+
+function getDirectusServerToken() {
+	const config = useRuntimeConfig();
+
+	return ((config.directusServerToken as string | undefined) || '').trim() || null;
+}
 
 export {
 	directusServer,
+	getDirectusServerToken,
 	readItem,
 	readItems,
 	readMe,

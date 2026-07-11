@@ -13,6 +13,7 @@ interface PostsProps {
 }
 
 const props = defineProps<PostsProps>();
+const { setBlockAttr } = useVisualEditingAttrs();
 
 const route = useRoute();
 const router = useRouter();
@@ -55,8 +56,6 @@ function handlePageChange(page: number) {
 		router.push({ query: { page } });
 	}
 }
-
-import { setBlockAttr } from '~/utils/visualEditing';
 </script>
 
 <template>

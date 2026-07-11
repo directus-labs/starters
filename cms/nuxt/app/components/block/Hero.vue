@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { getIsDraftPreview, setBlockAttr } from '~/utils/visualEditing';
-
 interface HeroProps {
 	data: {
 		id: string;
@@ -26,7 +24,7 @@ interface HeroProps {
 
 defineProps<HeroProps>();
 
-const isDraftPreview = computed(() => getIsDraftPreview());
+const { isDraftPreview, setBlockAttr } = useVisualEditingAttrs();
 </script>
 
 <template>

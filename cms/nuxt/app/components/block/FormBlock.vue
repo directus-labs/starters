@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { setBlockAttr } from '~/utils/visualEditing';
-
 interface CustomFormData {
 	id: string;
 	tagline: string | null;
@@ -20,6 +18,7 @@ interface CustomForm {
 }
 
 defineProps<{ data: CustomFormData }>();
+const { setBlockAttr } = useVisualEditingAttrs();
 </script>
 
 <template>

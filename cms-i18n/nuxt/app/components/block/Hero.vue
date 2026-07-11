@@ -8,6 +8,7 @@ interface HeroProps {
 		layout: 'image_image_left' | 'image_center' | 'image_left';
 		image: string;
 		button_group?: {
+			id: string;
 			buttons: Array<{
 				id: string;
 				label: string | null;
@@ -21,8 +22,9 @@ interface HeroProps {
 	};
 }
 
-const { setAttr } = useVisualEditing();
 defineProps<HeroProps>();
+
+const { isDraftPreview, setBlockAttr } = useVisualEditingAttrs();
 </script>
 
 <template>
@@ -43,16 +45,37 @@ defineProps<HeroProps>();
 		>
 			<Tagline
 				:tagline="data.tagline"
-				:data-directus="setAttr({ collection: 'block_hero', item: data.id, fields: 'tagline', mode: 'popover' })"
+				:data-directus="
+					setBlockAttr({
+						blockCollection: 'block_hero',
+						blockItemId: data.id,
+						fields: 'tagline',
+						mode: 'popover',
+					})
+				"
 			/>
 			<Headline
 				:headline="data.headline"
-				:data-directus="setAttr({ collection: 'block_hero', item: data.id, fields: 'headline', mode: 'popover' })"
+				:data-directus="
+					setBlockAttr({
+						blockCollection: 'block_hero',
+						blockItemId: data.id,
+						fields: 'headline',
+						mode: 'popover',
+					})
+				"
 			/>
 			<Text
 				v-if="data.description"
 				:content="data.description"
-				:data-directus="setAttr({ collection: 'block_hero', item: data.id, fields: 'description', mode: 'popover' })"
+				:data-directus="
+					setBlockAttr({
+						blockCollection: 'block_hero',
+						blockItemId: data.id,
+						fields: 'description',
+						mode: 'popover',
+					})
+				"
 			/>
 
 			<div
@@ -63,7 +86,21 @@ defineProps<HeroProps>();
 				<ButtonGroup
 					:buttons="data.button_group.buttons"
 					:data-directus="
-						setAttr({ collection: 'block_button_group', item: data.button_group?.id, fields: 'buttons', mode: 'modal' })
+						setBlockAttr(
+							isDraftPreview
+								? {
+										blockCollection: 'block_hero',
+										blockItemId: data.id,
+										fields: 'button_group',
+										mode: 'modal',
+									}
+								: {
+										blockCollection: 'block_button_group',
+										blockItemId: data.button_group.id,
+										fields: 'buttons',
+										mode: 'modal',
+									},
+						)
 					"
 				/>
 			</div>
@@ -84,7 +121,12 @@ defineProps<HeroProps>();
 				:sizes="data.layout === 'image_center' ? '100vw' : '(max-width: 768px) 100vw, 50vw'"
 				class="object-contain"
 				:data-directus="
-					setAttr({ collection: 'block_hero', item: data.id, fields: ['image', 'layout'], mode: 'modal' })
+					setBlockAttr({
+						blockCollection: 'block_hero',
+						blockItemId: data.id,
+						fields: ['image', 'layout'],
+						mode: 'modal',
+					})
 				"
 			/>
 		</div>
