@@ -50,8 +50,8 @@
 		"vite": "8.0.3"
 	},
 	"dependencies": {
-		"@directus/sdk": "20.0.3",
-		"@directus/visual-editing": "2.0.0",
+		"@directus/sdk": "22.0.0",
+		"@directus/visual-editing": "2.1.0",
 		"@lucide/svelte": "0.525.0",
 		"@sveltejs/adapter-vercel": "6.3.3",
 		"@tailwindcss/container-queries": "0.1.1",
@@ -63,15 +63,6 @@
 		"p-queue": "8.1.0",
 		"yaml": "^2.8.3",
 		"zod": "3.25.76"
-	},
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"esbuild"
-		],
-		"overrides": {
-			"rollup": "^4.59.0",
-			"tar": "^7.5.11"
-		}
 	},
 	"overrides": {
 		"rollup": "^4.59.0",

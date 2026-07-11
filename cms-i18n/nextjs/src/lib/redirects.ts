@@ -20,6 +20,7 @@ export async function generateRedirects(): Promise<NextRedirect[]> {
 				(redirect): redirect is { url_from: string; url_to: string; response_code: '301' | '302' } =>
 					typeof redirect.url_from === 'string' &&
 					typeof redirect.url_to === 'string' &&
+					redirect.url_from !== redirect.url_to &&
 					(redirect.response_code === '301' || redirect.response_code === '302'),
 			)
 			.map((redirect) => ({

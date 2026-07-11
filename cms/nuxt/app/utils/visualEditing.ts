@@ -1,6 +1,4 @@
-import { browser } from '$app/environment';
-import { page } from '$app/state';
-import { setAttr as basesetAttr } from '@directus/visual-editing';
+import { setAttr as baseSetAttr } from '@directus/visual-editing';
 
 interface ApplyOptions {
 	collection: string;
@@ -21,22 +19,32 @@ export type SetBlockAttrOptions = {
 	pageFields?: string | string[];
 };
 
-function isVisualEditingActive() {
-	if (page.data.visualEditingEnabled) return true;
-	return browser && sessionStorage.getItem('visual-editing') === 'true';
+let pageId = '';
+let contentVersion: string | undefined;
+
+/** Set from the page route — provides id/version for setBlockAttr(). */
+export function setVisualEditingPageContext(id: string, version?: string) {
+	pageId = id;
+	contentVersion = version;
+}
+
+export function getIsDraftPreview(): boolean {
+	return !!contentVersion;
+}
+
+/** Page id for attrs — prefers `?id=` from the preview URL when set in context. */
+export function getPageIdForEditing(): string {
+	return pageId;
 }
 
 export const setAttr = (options: ApplyOptions) => {
-	if (isVisualEditingActive()) {
-		return basesetAttr({ ...options });
-	}
+	return baseSetAttr({ ...options });
 };
 
-/** Maps block field names to the M2A path on a versioned `pages` item. */
 function toPageBlockFields(
 	blockCollection: string,
 	fields: string | string[],
-	pageFields?: string | string[]
+	pageFields?: string | string[],
 ): string | string[] {
 	if (pageFields) return pageFields;
 
@@ -48,24 +56,20 @@ function toPageBlockFields(
 /**
  * Visual editing attrs for page-builder blocks.
  *
- * Page blocks are M2A items (`page_blocks` → `block_hero`, etc.). On published/live
- * preview, target the block collection directly for field-level popovers.
+ * Published/live preview: target the block collection directly for field-level popovers.
  *
- * When a content version is active (e.g. `?version=draft`), edits belong to the
- * versioned `pages` item — so attrs route through that parent with nested
- * `blocks.item:…` paths and open in modal mode.
+ * Content versions (e.g. ?version=draft): route through the versioned `pages`
+ * item with nested `blocks.item:…` paths and modal mode.
  */
 export const setBlockAttr = (options: SetBlockAttrOptions) => {
 	const { blockCollection, blockItemId, fields, mode, pageFields } = options;
-	const contentVersion = page.data.contentVersion as string | undefined;
-	const pageId = page.data.id as string | undefined;
 
 	if (contentVersion && pageId) {
 		return setAttr({
 			collection: 'pages',
 			item: pageId,
 			fields: toPageBlockFields(blockCollection, fields, pageFields),
-			mode: 'modal'
+			mode: 'modal',
 		});
 	}
 
@@ -73,14 +77,6 @@ export const setBlockAttr = (options: SetBlockAttrOptions) => {
 		collection: blockCollection,
 		item: blockItemId,
 		fields,
-		mode
+		mode,
 	});
 };
-
-export const enableVisualEditing = () => {
-	if (browser && page.data.visualEditingEnabled) {
-		sessionStorage.setItem('visual-editing', 'true');
-	}
-};
-
-export default setAttr;

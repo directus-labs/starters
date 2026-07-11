@@ -7,6 +7,8 @@
 
 	interface FormBuilderProps {
 		class?: string;
+		/** block_form id — passed to DynamicForm for draft visual editing paths */
+		blockFormId?: string;
 		form: {
 			id: string;
 			on_success?: 'redirect' | 'message' | null;
@@ -20,44 +22,49 @@
 		};
 	}
 
-	const { form, class: className }: FormBuilderProps = $props();
+	const { form, class: className, blockFormId }: FormBuilderProps = $props();
 
 	let isSubmitted = $state(false);
 	let error = $state<string | null>(null);
 
-	const handleSubmit = async (data: Record<string, any>) => {
+	const handleSubmit = async (data: Record<string, unknown>) => {
+		error = null;
 		try {
-			const fieldsWithNames = form.fields.map((field) => ({
-				id: field.id,
-				name: field.name || '',
-				type: field.type || ''
-			}));
-
 			const formData = new FormData();
 			formData.append('formId', form.id);
-			formData.append('fields', JSON.stringify(fieldsWithNames));
-			for (const field of fieldsWithNames) {
+
+			for (const field of form.fields) {
+				if (!field.name) continue;
 				const value = data[field.name];
-				if (value !== undefined && value !== null) {
+				if (value === undefined || value === null) continue;
+
+				if (value instanceof File) {
 					formData.append(field.name, value);
+				} else if (Array.isArray(value)) {
+					formData.append(field.name, JSON.stringify(value));
+				} else {
+					formData.append(field.name, String(value));
 				}
 			}
 
 			const response = await fetch('/api/forms/submit', { method: 'POST', body: formData });
-			if (!response.ok) throw new Error('Form submission failed');
+			if (!response.ok) {
+				const body = await response.json().catch(() => ({}));
+				throw new Error(typeof body.error === 'string' ? body.error : 'Form submission failed');
+			}
 
 			if (form.on_success === 'redirect' && form.success_redirect_url) {
 				if (form.success_redirect_url.startsWith('/')) {
 					goto(form.success_redirect_url);
 				} else {
-					window.location.href = form.success_redirect_url; // TODO check if internal or external
+					window.location.href = form.success_redirect_url;
 				}
 			} else {
 				isSubmitted = true;
 			}
 		} catch (err) {
 			console.error('Error submitting form:', err);
-			error = 'Failed to submit the form. Please try again later.';
+			error = err instanceof Error ? err.message : 'Failed to submit the form. Please try again later.';
 		}
 	};
 </script>
@@ -83,6 +90,7 @@
 				onSubmit={handleSubmit}
 				submitLabel={form.submit_label || 'Submit'}
 				id={form.id}
+				{blockFormId}
 			/>
 		</div>
 	{/if}

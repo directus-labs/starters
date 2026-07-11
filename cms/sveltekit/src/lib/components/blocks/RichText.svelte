@@ -1,5 +1,5 @@
 <script lang="ts">
-	import setAttr from '$lib/directus/visualEditing';
+	import { setBlockAttr } from '$lib/directus/visualEditing';
 	import { cn } from '$lib/utils';
 	import Headline from '../ui/Headline.svelte';
 	import Tagline from '../ui/Tagline.svelte';
@@ -31,9 +31,9 @@
 	{#if tagline}
 		<Tagline
 			{tagline}
-			data-directus={setAttr({
-				collection: 'block_richtext',
-				item: id,
+			data-directus={setBlockAttr({
+				blockCollection: 'block_richtext',
+				blockItemId: id,
 				fields: 'tagline',
 				mode: 'popover'
 			})}
@@ -42,9 +42,9 @@
 	{#if headline}
 		<Headline
 			{headline}
-			data-directus={setAttr({
-				collection: 'block_richtext',
-				item: id,
+			data-directus={setBlockAttr({
+				blockCollection: 'block_richtext',
+				blockItemId: id,
 				fields: 'headline',
 				mode: 'popover'
 			})}
@@ -53,9 +53,9 @@
 	{#if content}
 		<Text
 			{content}
-			data-directus={setAttr({
-				collection: 'block_richtext',
-				item: id,
+			data-directus={setBlockAttr({
+				blockCollection: 'block_richtext',
+				blockItemId: id,
 				fields: 'content',
 				mode: 'drawer'
 			})}

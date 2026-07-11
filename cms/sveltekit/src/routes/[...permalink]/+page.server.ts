@@ -8,8 +8,9 @@ export const load = (async (event) => {
 	const preview = event.url.searchParams.get('preview') === 'true';
 	const token = preview ? DIRECTUS_SERVER_TOKEN : undefined;
 
-	// Live preview adds version = main which is not required when fetching the main version.
-	version = version !== 'main' ? version : undefined;
+	// Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
+	// Neither key requires an explicit version parameter — strip both to fetch the default published version.
+	version = version !== 'published' && version !== 'main' ? version : undefined;
 
 	try {
 		let pageId = id;

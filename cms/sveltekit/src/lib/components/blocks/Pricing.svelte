@@ -1,5 +1,5 @@
 <script lang="ts">
-	import setAttr from '$lib/directus/visualEditing';
+	import { setBlockAttr } from '$lib/directus/visualEditing';
 	import Headline from '../ui/Headline.svelte';
 	import Tagline from '../ui/Tagline.svelte';
 	import PricingCard from './PricingCard.svelte';
@@ -51,9 +51,9 @@
 		{#if tagline}
 			<Tagline
 				{tagline}
-				data-directus={setAttr({
-					collection: 'block_pricing',
-					item: id,
+				data-directus={setBlockAttr({
+					blockCollection: 'block_pricing',
+					blockItemId: id,
 					fields: 'tagline',
 					mode: 'popover'
 				})}
@@ -62,9 +62,9 @@
 		{#if headline}
 			<Headline
 				{headline}
-				data-directus={setAttr({
-					collection: 'block_pricing',
-					item: id,
+				data-directus={setBlockAttr({
+					blockCollection: 'block_pricing',
+					blockItemId: id,
 					fields: 'headline',
 					mode: 'popover'
 				})}
@@ -73,9 +73,9 @@
 
 		<div
 			class={`grid gap-6 ${gridClasses} ${containerStyles}`}
-			data-directus={setAttr({
-				collection: 'block_pricing',
-				item: id,
+			data-directus={setBlockAttr({
+				blockCollection: 'block_pricing',
+				blockItemId: id,
 				fields: ['pricing_cards'],
 				mode: 'modal'
 			})}
