@@ -1,7 +1,7 @@
 import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import PricingCard from '@/components/blocks/PricingCard';
-import { setAttr } from '@directus/visual-editing';
+import { setBlockAttr } from '@/lib/directus/visualEditing';
 
 interface PricingCardType {
   id: string;
@@ -49,9 +49,9 @@ const Pricing = ({ data }: PricingProps) => {
       {tagline && (
         <Tagline
           tagline={tagline}
-          data-directus={setAttr({
-            collection: 'block_pricing',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_pricing',
+            blockItemId: id,
             fields: 'tagline',
             mode: 'popover',
           })}
@@ -60,9 +60,9 @@ const Pricing = ({ data }: PricingProps) => {
       {headline && (
         <Headline
           headline={headline}
-          data-directus={setAttr({
-            collection: 'block_pricing',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_pricing',
+            blockItemId: id,
             fields: 'headline',
             mode: 'popover',
           })}
@@ -70,9 +70,9 @@ const Pricing = ({ data }: PricingProps) => {
       )}
       <div
         className={`grid gap-6 mt-8 ${gridClasses}`}
-        data-directus={setAttr({
-          collection: 'block_pricing',
-          item: id,
+        data-directus={setBlockAttr({
+          blockCollection: 'block_pricing',
+          blockItemId: id,
           fields: ['pricing_cards'],
           mode: 'modal',
         })}

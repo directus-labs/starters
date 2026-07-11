@@ -18,7 +18,8 @@
       "**/pnpm-lock.yaml",
       "**/.netlify/",
       "**/.astro/",
-      "**/.github/"
+      "**/.github/",
+      "**/src/types/directus-schema.ts"
     ]
   },
   "organizeImports": { "enabled": true },
