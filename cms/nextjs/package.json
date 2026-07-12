@@ -75,6 +75,11 @@
 	"engines": {
 		"node": ">=22"
 	},
+	"pnpm": {
+		"overrides": {
+			"tar": "^7.5.4"
+		}
+	},
 	"overrides": {
 		"tar": "^7.5.4"
 	}
