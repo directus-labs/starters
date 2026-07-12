@@ -31,20 +31,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 		const pageUrls = pages
 			.filter((page: { permalink: string; published_at: string | null | undefined }) => page.permalink)
 			.map((page: { permalink: string; published_at: string | null | undefined }) => ({
-				url: `${process.env.NEXT_PUBLIC_SITE_URL}${page.permalink}`,
+				url: `${siteUrl}${page.permalink}`,
 				lastModified: page.published_at || new Date().toISOString(),
 			}));
 
 		const postUrls = posts
 			.filter((post: { slug: string | null | undefined; published_at: string | null | undefined }) => post.slug)
 			.map((post: { slug: string | null | undefined; published_at: string | null | undefined }) => ({
-				url: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${post.slug}`,
+				url: `${siteUrl}/blog/${post.slug}`,
 				lastModified: post.published_at || new Date().toISOString(),
 			}));
 
 		return [...pageUrls, ...postUrls];
 	} catch (error) {
-		console.error('Error generating sitemap:', error);
-		throw new Error('Failed to generate sitemap');
+		console.warn('Could not load sitemap content from Directus during build', error);
+
+		return [];
 	}
 }

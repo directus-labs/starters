@@ -1,0 +1,7 @@
+overrides:
+  tar: ^7.5.4
+
+allowBuilds:
+  esbuild: true
+  msw: true
+  sharp: true
