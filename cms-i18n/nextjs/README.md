@@ -118,6 +118,9 @@ To get started, you need to configure environment variables. Follow these steps:
    - **`NEXT_PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
    - **`NEXT_PUBLIC_ENABLE_VISUAL_EDITING`**: Visual editing is enabled by default. Set to `false` to disable.
 
+The form API limits multipart request size and field count. Add rate limiting or bot protection at your hosting edge before
+launching a public form.
+
 ## **Running the Application**
 
 ### Local Development

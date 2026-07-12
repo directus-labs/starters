@@ -20,6 +20,7 @@ export async function generateRedirects(): Promise<NextRedirect[]> {
 				(redirect): redirect is { url_from: string; url_to: string; response_code: '301' | '302' } =>
 					typeof redirect.url_from === 'string' &&
 					typeof redirect.url_to === 'string' &&
+					redirect.url_from !== redirect.url_to &&
 					(redirect.response_code === '301' || redirect.response_code === '302'),
 			)
 			.map((redirect) => ({
@@ -32,11 +33,13 @@ export async function generateRedirects(): Promise<NextRedirect[]> {
 		// Log as warning instead of error to avoid failing builds
 		const isBuildPhase = process.env.npm_lifecycle_event === 'build' || process.env.NEXT_BUILD === 'true';
 		if (isBuildPhase) {
-			console.warn('Could not load redirects from Directus during build (this is normal if Directus is not configured/running)');
+			console.warn(
+				'Could not load redirects from Directus during build (this is normal if Directus is not configured/running)',
+			);
 		} else {
 			console.error('Error generating redirects:', error);
 		}
-		
-return [];
+
+		return [];
 	}
 }

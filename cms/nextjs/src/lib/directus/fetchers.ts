@@ -2,6 +2,7 @@ import { BlockPost, Page, PageBlock, Post, Redirect, Schema } from '@/types/dire
 import { useDirectus } from './directus';
 import { readItems, aggregate, readItem, readSingleton, withToken, QueryFilter } from '@directus/sdk';
 import { RedirectError } from '../redirects';
+import { formatDirectusRequestError } from './directus-utils';
 
 /**
  * Page fields configuration for Directus queries
@@ -169,7 +170,7 @@ export const fetchPageData = async (permalink: string, postPage = 1, token?: str
 		return page;
 	} catch (error) {
 		console.error('Error fetching page data:', error);
-		throw new Error('Failed to fetch page data');
+		throw new Error(formatDirectusRequestError(error, 'Failed to fetch page data'));
 	}
 };
 
