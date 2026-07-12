@@ -1,11 +1,16 @@
 import { NextResponse } from 'next/server';
 import { submitForm } from '@/lib/directus/forms';
-import { validateFormSubmission } from '@/lib/directus/validateFormSubmission';
+import { parseFormRequest, validateFormSubmission } from '@/lib/directus/validateFormSubmission';
 import { useDirectus } from '@/lib/directus/directus';
 import type { FormField } from '@/types/directus-schema';
 
 export async function POST(request: Request) {
-	const formData = await request.formData();
+	const parsedRequest = await parseFormRequest(request);
+	if (!parsedRequest.success) {
+		return NextResponse.json({ error: parsedRequest.error }, { status: parsedRequest.status });
+	}
+
+	const formData = parsedRequest.data;
 	const formId = formData.get('formId');
 
 	if (typeof formId !== 'string' || !formId.trim()) {
@@ -20,16 +25,14 @@ export async function POST(request: Request) {
 	// Fetch the authoritative form field definitions from Directus server-side.
 	// This ensures validation rules (required, validation patterns) come from the
 	// source of truth rather than client-provided data.
-	const { directus, readItem, withToken } = useDirectus();
+	const { directus, readItem } = useDirectus();
 	let fields: FormField[];
 	try {
+		// Public policy restricts this read to active forms; the server token only needs submission permissions.
 		const form = await directus.request(
-			withToken(
-				TOKEN,
-				readItem('forms', formId.trim(), {
-					fields: ['is_active', { fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }],
-				} as any),
-			),
+			readItem('forms', formId.trim(), {
+				fields: ['is_active', { fields: ['id', 'name', 'type', 'label', 'required', 'validation', 'choices'] }],
+			} as any),
 		);
 
 		if (!(form as any).is_active || !Array.isArray((form as any).fields)) {

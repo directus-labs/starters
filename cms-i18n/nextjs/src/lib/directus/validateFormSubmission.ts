@@ -2,7 +2,42 @@ import { buildZodSchema } from '@/lib/zodSchemaBuilder';
 import type { FormField } from '@/types/directus-schema';
 
 /** Matches licensed template Forms policy file upload limit (5 MB). */
-export const MAX_FORM_FILE_BYTES = 5 * 1024 * 1024;
+export const MAX_FORM_FILE_BYTES = 5_000_000;
+
+/** Allows up to five maximum-sized files plus multipart field overhead. */
+export const MAX_FORM_REQUEST_BYTES = MAX_FORM_FILE_BYTES * 5 + 1_000_000;
+export const MAX_FORM_REQUEST_ENTRIES = 100;
+
+type ParseFormRequestResult =
+	| { success: true; data: FormData }
+	| { success: false; error: string; status: 400 | 413 };
+
+export async function parseFormRequest(request: Request): Promise<ParseFormRequestResult> {
+	const contentLength = Number(request.headers.get('content-length'));
+	if (Number.isFinite(contentLength) && contentLength > MAX_FORM_REQUEST_BYTES) {
+		return { success: false, error: 'Form submission is too large', status: 413 };
+	}
+
+	let formData: FormData;
+	try {
+		formData = await request.formData();
+	} catch {
+		return { success: false, error: 'Invalid form submission', status: 400 };
+	}
+
+	let entryCount = 0;
+	let payloadBytes = 0;
+	for (const [, value] of formData) {
+		entryCount++;
+		payloadBytes += typeof value === 'string' ? new TextEncoder().encode(value).byteLength : value.size;
+
+		if (entryCount > MAX_FORM_REQUEST_ENTRIES || payloadBytes > MAX_FORM_REQUEST_BYTES) {
+			return { success: false, error: 'Form submission is too large', status: 413 };
+		}
+	}
+
+	return { success: true, data: formData };
+}
 
 function parseFieldValue(field: FormField, raw: FormDataEntryValue): unknown {
 	if (field.type === 'file') {
@@ -42,7 +77,7 @@ export function validateFormSubmission(
 			if (raw.size > MAX_FORM_FILE_BYTES) {
 				return {
 					success: false,
-					error: `${field.label || field.name} must be ${MAX_FORM_FILE_BYTES / (1024 * 1024)} MB or smaller`,
+					error: `${field.label || field.name} must be 5 MB or smaller`,
 				};
 			}
 			if (raw.size > 0) {

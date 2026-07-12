@@ -27,6 +27,7 @@ type PageVisualEditingContext = {
 };
 
 let pageContext: PageVisualEditingContext = {};
+let visualEditingAttrsEnabled = false;
 
 /** Set from PageClient so setBlockAttr() can route through the versioned pages item. */
 export function setVisualEditingPageContext(ctx: PageVisualEditingContext) {
@@ -37,22 +38,12 @@ export function getIsDraftPreview(): boolean {
 	return !!pageContext.contentVersion;
 }
 
-function isVisualEditingActive() {
-	if (typeof window === 'undefined') {
-		return false;
-	}
-
-	const params = new URLSearchParams(window.location.search);
-
-	return (
-		params.get('visual-editing') === 'true' ||
-		params.get('preview') === 'true' ||
-		localStorage.getItem('visual-editing') === 'true'
-	);
+export function setVisualEditingAttrsEnabled(enabled: boolean) {
+	visualEditingAttrsEnabled = enabled;
 }
 
 export const setAttr = (options: ApplyOptions) => {
-	if (isVisualEditingActive()) {
+	if (visualEditingAttrsEnabled) {
 		return baseSetAttr({ ...options });
 	}
 };

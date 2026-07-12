@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { apply as applyVisualEditing } from '@directus/visual-editing';
-import { setAttr } from '@/lib/directus/visualEditing';
+import { setAttr, setVisualEditingAttrsEnabled } from '@/lib/directus/visualEditing';
 
 interface ApplyOptions {
 	elements?: HTMLElement[] | HTMLElement;
@@ -20,6 +20,26 @@ export function useVisualEditing() {
 	const enableVisualEditingEnv = process.env.NEXT_PUBLIC_ENABLE_VISUAL_EDITING !== 'false';
 	const directusUrl = process.env.NEXT_PUBLIC_DIRECTUS_URL || '';
 
+	const readPersistedVisualEditing = () => {
+		try {
+			return localStorage.getItem('visual-editing') === 'true';
+		} catch {
+			return false;
+		}
+	};
+
+	const writePersistedVisualEditing = (enabled: boolean) => {
+		try {
+			if (enabled) {
+				localStorage.setItem('visual-editing', 'true');
+			} else {
+				localStorage.removeItem('visual-editing');
+			}
+		} catch {
+			// Storage can be unavailable in restrictive browser contexts.
+		}
+	};
+
 	useEffect(() => {
 		if (typeof window === 'undefined') return;
 
@@ -29,6 +49,9 @@ export function useVisualEditing() {
 		const isPreview = searchParams.get('preview') === 'true';
 
 		if (!enableVisualEditingEnv) {
+			setVisualEditingAttrsEnabled(false);
+			setIsVisualEditingEnabled(false);
+
 			if (param === 'true') {
 				console.warn('Visual editing is not enabled in this environment.');
 			}
@@ -37,9 +60,9 @@ export function useVisualEditing() {
 		}
 
 		if (param === 'true') {
-			localStorage.setItem('visual-editing', 'true');
+			writePersistedVisualEditing(true);
 		} else if (param === 'false') {
-			localStorage.removeItem('visual-editing');
+			writePersistedVisualEditing(false);
 
 			const newParams = new URLSearchParams(searchParams.toString());
 			newParams.delete('visual-editing');
@@ -48,8 +71,9 @@ export function useVisualEditing() {
 			window.history.replaceState({}, '', cleanUrl);
 		}
 
-		const persisted = localStorage.getItem('visual-editing') === 'true';
+		const persisted = readPersistedVisualEditing();
 		const shouldEnable = persisted || isPreview;
+		setVisualEditingAttrsEnabled(shouldEnable);
 		setIsVisualEditingEnabled(shouldEnable);
 
 		if (shouldEnable && param !== 'true') {
