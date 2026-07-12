@@ -6,7 +6,18 @@ import { fetchSiteData } from '@/lib/directus/fetchers';
 import '@/styles/global.css';
 import '@/styles/fonts.css';
 
-const { globals, headerNavigation, footerNavigation } = await fetchSiteData();
+const fallbackSiteData = {
+  globals: {},
+  headerNavigation: { id: '', items: [] },
+  footerNavigation: { id: '', items: [] },
+};
+
+const { globals, headerNavigation, footerNavigation } = await fetchSiteData().catch((error) => {
+  const detail = error instanceof Error ? error.message : String(error);
+  console.warn(`[directus] Could not load site data (${detail}). Continuing with fallback site chrome.`);
+
+  return fallbackSiteData;
+});
 
 const siteTitle = globals?.title || 'Simple CMS';
 const siteDescription = globals?.description || 'A starter CMS template powered by Directus and Astro.';

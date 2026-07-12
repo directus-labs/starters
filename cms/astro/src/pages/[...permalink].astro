@@ -7,7 +7,12 @@ import PageClient from '@/components/layout/PageClient';
 import type { Page, PageBlock } from '@/types/directus-schema';
 
 export async function getStaticPaths() {
-  const pages = await fetchAllPages();
+  const pages = await fetchAllPages().catch((error) => {
+    const detail = error instanceof Error ? error.message : String(error);
+    console.warn(`[directus] Could not load pages for prerender (${detail}). Continuing with no prerendered pages.`);
+
+    return [];
+  });
 
   return pages.map((page) => {
     const cleaned = page.permalink.replace(/^\/+|\/+$/g, '');
