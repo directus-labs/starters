@@ -162,6 +162,31 @@ function validateDocker(template) {
       error(template.name, `Missing ${file} in directus/`)
     }
   }
+
+  validateDirectusAdminEnv(template.name, directusDir)
+}
+
+function validateDirectusAdminEnv(templateName, directusDir) {
+  const envPath = join(directusDir, '.env.example')
+  const composePath = join(directusDir, 'docker-compose.yaml')
+  if (!existsSync(envPath) || !existsSync(composePath)) return
+
+  const env = readFileSync(envPath, 'utf8')
+  const compose = readFileSync(composePath, 'utf8')
+  const requiredEnv = {
+    ADMIN_EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    ADMIN_PASSWORD: /.+/,
+  }
+
+  for (const [key, pattern] of Object.entries(requiredEnv)) {
+    const match = env.match(new RegExp(`^${key}=(.*)$`, 'm'))
+    if (!match || !pattern.test(match[1])) {
+      error(templateName, `directus/.env.example must define ${key}`)
+    }
+    if (!compose.includes(`${key}: \${${key}}`)) {
+      error(templateName, `directus/docker-compose.yaml must pass ${key} to Directus`)
+    }
+  }
 }
 
 // Validate frontend directories
