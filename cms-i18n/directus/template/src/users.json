@@ -3,7 +3,7 @@
     "id": "88a6e8cf-f0f8-41db-a3a2-8a9741c086cc",
     "first_name": "Frontend",
     "last_name": "Bot",
-    "email": null,
+    "email": "frontend-bot@example.com",
     "password": null,
     "location": null,
     "title": "For server-to-server communication",
