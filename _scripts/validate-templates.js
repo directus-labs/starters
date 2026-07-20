@@ -89,6 +89,7 @@ function validateTemplateDir(templateName, basePath, templateRelPath, label) {
   }
 
   validateSingletonContent(templateName, srcPath)
+  validateUsers(templateName, srcPath, label)
 }
 
 // Validate Directus template files
@@ -133,6 +134,17 @@ function validateSingletonContent(templateName, srcPath) {
         templateName,
         `content/${translationsFile}.json must not exist — nest translations inside content/${collection}.json (template-cli loads singletons last)`,
       )
+    }
+  }
+}
+
+function validateUsers(templateName, srcPath, label) {
+  const users = readJson(join(srcPath, 'users.json'))
+  if (!users) return
+
+  for (const user of users) {
+    if (typeof user.email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) {
+      error(templateName, `${label}/src/users.json user ${user.id || '<unknown>'} must have a valid email`)
     }
   }
 }
