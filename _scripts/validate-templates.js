@@ -143,7 +143,7 @@ function validateUsers(templateName, srcPath, label) {
   if (!users) return
 
   for (const user of users) {
-    if (typeof user.email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) {
+    if (user.email != null && (typeof user.email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email))) {
       error(templateName, `${label}/src/users.json user ${user.id || '<unknown>'} must have a valid email`)
     }
   }
