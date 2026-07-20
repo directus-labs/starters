@@ -8,7 +8,16 @@
     "directus:template": {
         "name": "CMS",
         "description": "A ready-to-use CMS with block builder, visual editing, and integration with your favorite framework. ",
+        "tier": "core",
         "template": "./directus/template",
+        "variants": {
+            "licensed": {
+                "name": "CMS — Full RBAC",
+                "template": "./directus/template-licensed",
+                "requiresLicense": true,
+                "description": "Same CMS with enforceable Public, Writer self-access, Editor roles, and form scoping"
+            }
+        },
         "frontends": {
             "nextjs": {
                 "name": "Next.js",

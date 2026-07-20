@@ -31,7 +31,7 @@ export async function fetchRedirects(directusUrl: string): Promise<AstroRedirect
     const processedRedirects: AstroRedirect[] = [];
 
     for (const redirect of redirects) {
-      if (!redirect.url_from || !redirect.url_to) {
+      if (!redirect.url_from || !redirect.url_to || redirect.url_from === redirect.url_to) {
         continue;
       }
 

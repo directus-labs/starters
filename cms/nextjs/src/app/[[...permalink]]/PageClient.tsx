@@ -7,11 +7,12 @@ import { useVisualEditing } from '@/hooks/useVisualEditing';
 import { PageBlock } from '@/types/directus-schema';
 import { Button } from '@/components/ui/button';
 import { Pencil } from 'lucide-react';
-import { setAttr } from '@directus/visual-editing';
+import { setAttr, setVisualEditingPageContext } from '@/lib/directus/visualEditing';
 
 interface PageClientProps {
 	sections: PageBlock[];
 	pageId?: string;
+	contentVersion?: string;
 }
 
 interface VisualEditingOptions {
@@ -19,9 +20,11 @@ interface VisualEditingOptions {
 	onSaved?: () => void;
 }
 
-export default function PageClient({ sections, pageId }: PageClientProps) {
+export default function PageClient({ sections, pageId, contentVersion }: PageClientProps) {
 	const { isVisualEditingEnabled, apply } = useVisualEditing();
 	const router = useRouter();
+
+	setVisualEditingPageContext({ pageId, contentVersion });
 
 	useEffect(() => {
 		if (isVisualEditingEnabled) {
@@ -46,7 +49,7 @@ export default function PageClient({ sections, pageId }: PageClientProps) {
 			<PageBuilder sections={sections} />
 			{isVisualEditingEnabled && pageId && (
 				<div className="fixed z-[60] w-full bottom-4 inset-x-0 p-4 flex justify-center items-center gap-2">
-					{/* If you're not using the visual editor it's safe to remove this element. Just a helper to let editors add edit / add new blocks to a page. */}
+					{/* Opens the page blocks builder — the versioned entry point for M2A content on pages. */}
 					<Button
 						id="visual-editing-button"
 						variant="secondary"

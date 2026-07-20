@@ -1,7 +1,7 @@
 import { useDirectus } from './directus';
 import type { FormSubmission, FormSubmissionValue } from '@/types/directus-schema';
 
-
+/** Server-only — call from API routes, not client components. */
 export const submitForm = async (
 	formId: string,
 	fields: { id: string; name: string; type: string }[],

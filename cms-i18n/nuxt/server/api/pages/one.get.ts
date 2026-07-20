@@ -27,8 +27,10 @@ export default defineEventHandler(async (event) => {
 
 	const { preview, permalink: rawPermalink, id, version: rawVersion } = query;
 
-	// 'main' is not a real Directus content version — strip it (it's a live preview indicator)
-	const version = String(rawVersion) !== 'main' ? rawVersion : undefined;
+	// Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
+	// Neither key requires an explicit version parameter — strip both to fetch the default published version.
+	const version = String(rawVersion) !== 'published' && String(rawVersion) !== 'main' ? rawVersion : undefined;
+	const isPreview = preview === 'true';
 
 	// Get locale from event (set by middleware or query param)
 	const locale = getLocaleFromEvent(event);
@@ -38,58 +40,55 @@ export default defineEventHandler(async (event) => {
 	// This handles various URL formats consistently
 	const permalink = withoutTrailingSlash(withLeadingSlash(String(rawPermalink)));
 
-	// Use the server token from runtimeConfig when preview mode is enabled
-	const config = useRuntimeConfig();
-	const token = preview === 'true' ? (config.directusServerToken as string) || null : null;
+	if (version && !isPreview) {
+		throw createError({ statusCode: 404, statusMessage: 'Page version not found' });
+	}
+
+	// Use the server token explicitly so licensed translation deep queries work without
+	// making the shared Directus client privileged by default.
+	const token = getDirectusServerToken();
 
 	// Build page fields with translation support
 	const pageFields = buildPageFields(includeTranslations);
 
-	// Build deep query with translations
-	const buildDeepQuery = () => {
-		const baseDeep: Record<string, unknown> = {
-			blocks: {
-				_sort: ['sort'],
-				_filter: { hide_block: { _neq: true } },
-				...(includeTranslations
-					? {
-							item: {
-								block_form: {
+	// Build deep query with translations (aligned with Next.js fetchers)
+	const buildDeepQuery = () => ({
+		blocks: {
+			_sort: ['sort'],
+			_filter: { hide_block: { _neq: true } },
+			...(includeTranslations
+				? {
+						item: {
+							block_form: {
+								...buildTranslationsDeep(locale),
+								form: {
+									_filter: { is_active: { _eq: true } },
 									...buildTranslationsDeep(locale),
-									form: {
-										_filter: { is_active: { _eq: true } },
-										...buildTranslationsDeep(locale),
-										fields: buildTranslationsDeep(locale),
-									},
+									fields: buildTranslationsDeep(locale),
 								},
-								block_hero: {
-									...buildTranslationsDeep(locale),
-									button_group: {
-										buttons: buildTranslationsDeep(locale),
-									},
-								},
-								block_pricing: {
-									...buildTranslationsDeep(locale),
-									pricing_cards: {
-										...buildTranslationsDeep(locale),
-										button: buildTranslationsDeep(locale),
-									},
-								},
-								block_richtext: buildTranslationsDeep(locale),
-								block_gallery: buildTranslationsDeep(locale),
-								block_posts: buildTranslationsDeep(locale),
 							},
-						}
-					: {}),
-			},
-		};
-
-		if (includeTranslations) {
-			return { ...baseDeep, ...buildTranslationsDeep(locale) };
-		}
-
-		return baseDeep;
-	};
+							block_hero: {
+								...buildTranslationsDeep(locale),
+								button_group: {
+									buttons: buildTranslationsDeep(locale),
+								},
+							},
+							block_pricing: {
+								...buildTranslationsDeep(locale),
+								pricing_cards: {
+									...buildTranslationsDeep(locale),
+									button: buildTranslationsDeep(locale),
+								},
+							},
+							block_richtext: buildTranslationsDeep(locale),
+							block_gallery: buildTranslationsDeep(locale),
+							block_posts: buildTranslationsDeep(locale),
+						},
+					}
+				: {}),
+		},
+		...(includeTranslations ? buildTranslationsDeep(locale) : {}),
+	});
 
 	try {
 		let page: Page;
@@ -103,7 +102,7 @@ export default defineEventHandler(async (event) => {
 		if (version && !pageId) {
 			// Look up page ID by permalink - this is needed because Directus version API requires an ID
 			const pageIdLookup = await directusServer.request(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItems('pages', { filter: { permalink: { _eq: permalink } }, limit: 1, fields: ['id'] }),
@@ -125,13 +124,14 @@ export default defineEventHandler(async (event) => {
 			// This is used when we have both a pageId and want a specific version (draft, published, etc.)
 			try {
 				page = await directusServer.request<Page>(
-					token && token.trim()
+					token
 						? withToken(
 								token,
 								readItem('pages', pageId, {
 									version: String(version),
 									// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 									fields: pageFields,
+									// @ts-expect-error same as above
 									deep: buildDeepQuery(),
 								}),
 							)
@@ -139,11 +139,12 @@ export default defineEventHandler(async (event) => {
 								version: String(version),
 								// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 								fields: pageFields,
+								// @ts-expect-error same as above
 								deep: buildDeepQuery(),
 							}),
 				);
-			} catch {
-				// If version fetch fails, throw error
+			} catch (error) {
+				if (error && typeof error === 'object' && 'statusCode' in error) throw error;
 				throw createError({ statusCode: 404, statusMessage: 'Page version not found' });
 			}
 		} else {
@@ -152,28 +153,28 @@ export default defineEventHandler(async (event) => {
 			// - If preview mode: fetch any status (to show draft content)
 			// - If not preview: only fetch published content (for public viewing)
 			const pageData = await directusServer.request<Page[]>(
-				token && token.trim()
+				token
 					? withToken(
 							token,
 							readItems('pages', {
-								filter:
-									preview === 'true'
-										? { permalink: { _eq: permalink } }
-										: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+								filter: isPreview
+									? { permalink: { _eq: permalink } }
+									: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
 								limit: 1,
 								// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 								fields: pageFields,
+								// @ts-expect-error same as above
 								deep: buildDeepQuery(),
 							}),
 						)
 					: readItems('pages', {
-							filter:
-								preview === 'true'
-									? { permalink: { _eq: permalink } }
-									: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
+							filter: isPreview
+								? { permalink: { _eq: permalink } }
+								: { permalink: { _eq: permalink }, status: { _eq: 'published' } },
 							limit: 1,
 							// @ts-expect-error Directus SDK strict typing doesn't support dynamic i18n field arrays
 							fields: pageFields,
+							// @ts-expect-error same as above
 							deep: buildDeepQuery(),
 						}),
 			);
@@ -210,15 +211,28 @@ export default defineEventHandler(async (event) => {
 					// Fetch the actual posts data for this block
 					// Always fetch published posts only (no preview mode for dynamic content)
 					let posts = await directusServer.request<Post[]>(
-						readItems('posts', {
-							fields: includeTranslations
-								? ['id', 'title', 'description', 'slug', 'image', 'published_at', { translations: ['*'] }]
-								: ['id', 'title', 'description', 'slug', 'image', 'published_at'],
-							filter: { status: { _eq: 'published' } },
-							sort: ['-published_at'],
-							limit,
-							...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
-						}),
+						token
+							? withToken(
+									token,
+									readItems('posts', {
+										fields: includeTranslations
+											? ['id', 'title', 'description', 'slug', 'image', 'published_at', { translations: ['*'] }]
+											: ['id', 'title', 'description', 'slug', 'image', 'published_at'],
+										filter: { status: { _eq: 'published' } },
+										sort: ['-published_at'],
+										limit,
+										...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+									}),
+								)
+							: readItems('posts', {
+									fields: includeTranslations
+										? ['id', 'title', 'description', 'slug', 'image', 'published_at', { translations: ['*'] }]
+										: ['id', 'title', 'description', 'slug', 'image', 'published_at'],
+									filter: { status: { _eq: 'published' } },
+									sort: ['-published_at'],
+									limit,
+									...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+								}),
 					);
 
 					// Merge translations for posts if needed
@@ -233,7 +247,8 @@ export default defineEventHandler(async (event) => {
 		}
 
 		return page;
-	} catch {
-		throw createError({ statusCode: 500, statusMessage: 'Page not found' });
+	} catch (error) {
+		if (error && typeof error === 'object' && 'statusCode' in error) throw error;
+		throw createError({ statusCode: 404, statusMessage: 'Page not found' });
 	}
 });

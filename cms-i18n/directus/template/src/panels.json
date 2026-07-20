@@ -37,7 +37,7 @@
       "valueField": "id"
     },
     "date_created": "2025-12-22T19:48:34.294Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
+    "user_created": null
   },
   {
     "id": "19b3d901-aa7c-4a04-bc9a-800e43510e69",
@@ -60,7 +60,7 @@
       "displayTemplate": "{{timestamp}} • {{values}} • {{form}}"
     },
     "date_created": "2025-12-22T19:48:34.398Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
+    "user_created": null
   },
   {
     "id": "3861ceb1-11ff-4e9d-a985-60d862d90aa3",
@@ -85,7 +85,7 @@
       }
     },
     "date_created": "2025-12-22T19:48:34.500Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
+    "user_created": null
   },
   {
     "id": "53575d2f-e3a0-4532-a176-d047cbbc11a7",
@@ -117,7 +117,7 @@
       }
     },
     "date_created": "2025-12-22T19:48:34.601Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
+    "user_created": null
   },
   {
     "id": "8cb3b63c-d8e3-4078-9160-096e32b9fcb0",
@@ -139,7 +139,7 @@
       "sortField": null
     },
     "date_created": "2025-12-22T19:48:34.700Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
+    "user_created": null
   },
   {
     "id": "b770ea7e-1b49-441f-ba6f-2d4b90e08070",
@@ -158,7 +158,7 @@
       "text": "Form Dashboard"
     },
     "date_created": "2025-12-22T19:48:34.797Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
+    "user_created": null
   },
   {
     "id": "dc01026c-1728-4e71-ab45-7cea9fc4751c",
@@ -183,6 +183,6 @@
       }
     },
     "date_created": "2025-12-22T19:48:34.900Z",
-    "user_created": "7f18b5cd-67a9-4ffb-8ffc-4e922dd2906a"
+    "user_created": null
   }
 ]

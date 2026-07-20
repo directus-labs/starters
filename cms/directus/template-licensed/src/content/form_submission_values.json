@@ -1,0 +1,20 @@
+[
+  {
+    "id": "28f8820f-def4-4b3b-b35d-b79fc7f731a1",
+    "form_submission": "3805e2c0-ebba-4070-a1b3-b39ba1b4932b",
+    "field": "0f3deba1-9d6b-44a0-aa87-a9b38e834beb",
+    "value": "Steve",
+    "sort": 1,
+    "file": null,
+    "timestamp": null
+  },
+  {
+    "id": "54e554ef-82e7-463e-8542-624352cdb5ca",
+    "form_submission": "3805e2c0-ebba-4070-a1b3-b39ba1b4932b",
+    "field": "a3d87bc0-f143-44ca-bea0-9eaf56b67783",
+    "value": "steve@example.com",
+    "sort": 2,
+    "file": null,
+    "timestamp": null
+  }
+]

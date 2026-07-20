@@ -31,7 +31,7 @@ export async function fetchRedirects(): Promise<SvelteRedirect[]> {
 		const processedRedirects: SvelteRedirect[] = [];
 
 		for (const redirect of redirects) {
-			if (!redirect.url_from || !redirect.url_to) {
+			if (!redirect.url_from || !redirect.url_to || redirect.url_from === redirect.url_to) {
 				continue;
 			}
 

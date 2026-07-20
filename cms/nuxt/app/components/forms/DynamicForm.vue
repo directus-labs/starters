@@ -11,11 +11,11 @@ const props = defineProps<{
 	onSubmit: (data: Record<string, any>) => Promise<void> | void;
 	submitLabel: string;
 	formId?: string;
+	blockFormId?: string;
 }>();
 
 const isSubmitting = ref(false);
-
-const { setAttr } = useVisualEditing();
+const { isDraftPreview, setBlockAttr } = useVisualEditingAttrs();
 
 const sortedFields = computed(() => [...props.fields].sort((a, b) => (a.sort || 0) - (b.sort || 0)));
 
@@ -87,19 +87,46 @@ const onSubmitForm = handleSubmit(async (formValues) => {
 		:validation-schema="schema"
 		:initial-values="initialValues"
 		:data-directus="
-			setAttr({
-				collection: 'forms',
-				item: props.formId,
-				fields: 'fields',
-				mode: 'popover',
-			})
+			setBlockAttr(
+				isDraftPreview && blockFormId
+					? {
+							blockCollection: 'block_form',
+							blockItemId: blockFormId,
+							fields: 'form',
+							mode: 'modal',
+						}
+					: {
+							blockCollection: 'forms',
+							blockItemId: formId!,
+							fields: 'fields',
+							mode: 'popover',
+						},
+			)
 		"
 		@submit.prevent="onSubmitForm"
 	>
 		<div class="flex flex-wrap gap-4">
 			<BaseFormField v-for="field in validFields" :key="field.id" :field="field" :model-value="values[field.name]" />
 			<div class="w-full">
-				<div>
+				<div
+					:data-directus="
+						setBlockAttr(
+							isDraftPreview && blockFormId
+								? {
+										blockCollection: 'block_form',
+										blockItemId: blockFormId,
+										fields: 'form',
+										mode: 'popover',
+									}
+								: {
+										blockCollection: 'forms',
+										blockItemId: formId!,
+										fields: 'submit_label',
+										mode: 'popover',
+									},
+						)
+					"
+				>
 					<BaseButton
 						:id="`submit-${submitLabel.replace(/\s+/g, '-').toLowerCase()}`"
 						type="submit"

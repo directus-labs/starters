@@ -6,6 +6,8 @@ export const buildZodSchema = (fields: FormField[]) => {
 
 	fields.forEach((field) => {
 		let fieldSchema: z.ZodTypeAny;
+		const fieldLabel = field.label || field.name;
+		const choiceValues = field.choices?.map((choice) => choice.value) || [];
 
 		switch (field.type) {
 			case 'checkbox':
@@ -83,12 +85,30 @@ export const buildZodSchema = (fields: FormField[]) => {
 		}
 
 		if (field.required) {
-			if (fieldSchema instanceof z.ZodString) {
-				fieldSchema = fieldSchema.nonempty(`${field.label || field.name} is required`);
+			if (field.type === 'checkbox') {
+				fieldSchema = fieldSchema.refine((value) => value === true, `${fieldLabel} is required`);
+			} else if (field.type === 'checkbox_group') {
+				fieldSchema = fieldSchema.refine((value) => value.length > 0, `${fieldLabel} is required`);
+			} else if (fieldSchema instanceof z.ZodString) {
+				fieldSchema = fieldSchema.nonempty(`${fieldLabel} is required`);
 			}
 		} else {
 			// Allow empty strings or undefined for optional fields
 			fieldSchema = fieldSchema.or(z.literal('')).or(z.undefined());
+		}
+
+		if (choiceValues.length > 0) {
+			if (field.type === 'checkbox_group') {
+				fieldSchema = fieldSchema.refine(
+					(value) => value === '' || value === undefined || value.every((choice: string) => choiceValues.includes(choice)),
+					`${fieldLabel} contains an invalid option`,
+				);
+			} else if (field.type === 'radio' || field.type === 'select') {
+				fieldSchema = fieldSchema.refine(
+					(value) => value === '' || value === undefined || choiceValues.includes(value),
+					`${fieldLabel} must be a configured option`,
+				);
+			}
 		}
 
 		if (field.name) {

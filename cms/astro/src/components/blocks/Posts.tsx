@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/pagination';
 import type { Post } from '@/types/directus-schema';
 import { fetchPaginatedPosts } from '@/lib/directus/fetchers';
-import { setAttr } from '@directus/visual-editing';
+import { setBlockAttr } from '@/lib/directus/visualEditing';
 
 interface PostsProps {
   data: {
@@ -109,9 +109,9 @@ const Posts = ({ data }: PostsProps) => {
       {tagline && (
         <Tagline
           tagline={tagline}
-          data-directus={setAttr({
-            collection: 'block_posts',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_posts',
+            blockItemId: id,
             fields: 'tagline',
             mode: 'popover',
           })}
@@ -120,9 +120,9 @@ const Posts = ({ data }: PostsProps) => {
       {headline && (
         <Headline
           headline={headline}
-          data-directus={setAttr({
-            collection: 'block_posts',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_posts',
+            blockItemId: id,
             fields: 'headline',
             mode: 'popover',
           })}
@@ -131,9 +131,9 @@ const Posts = ({ data }: PostsProps) => {
 
       <div
         className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-        data-directus={setAttr({
-          collection: 'block_posts',
-          item: id,
+        data-directus={setBlockAttr({
+          blockCollection: 'block_posts',
+          blockItemId: id,
           fields: ['collection', 'limit'],
           mode: 'popover',
         })}

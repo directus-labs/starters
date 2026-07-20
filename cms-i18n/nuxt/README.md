@@ -13,6 +13,8 @@ CMS-powered web applications.
 > **Note**: This is the i18n-enabled version of the Nuxt CMS template. For a single-language version, see the
 > [standard Nuxt CMS template](../nuxt/README.md).
 
+> **License required**: See the [cms-i18n README](../README.md) for Directus setup.
+
 ## **Features**
 
 - **Nuxt 4 File-Based Routing**: Uses Nuxt's built-in routing system with dynamic page handling.
@@ -38,6 +40,14 @@ CMS-powered web applications.
 
 Directus allows you to work on unpublished content using **Draft Mode**. This Nuxt 4 template is configured to support
 Directus Draft Mode out of the box, enabling live previews of unpublished or draft content as you make changes.
+
+### **Content Versioning in Directus 12**
+
+In Directus 12, the published content version is called `published` (formerly `main`), and every versioned item
+automatically gets a `draft` version. Published items are locked in the Studio — edits happen on the draft version and
+are promoted to publish. This template handles both keys: preview URLs with `version=published` (or the legacy
+`version=main`) load the live content, while `version=draft` (or any custom version key) fetches that version from the
+API.
 
 ### **Live Preview Setup**
 
@@ -116,7 +126,8 @@ To get started, you need to configure environment variables. Follow these steps:
 
    - **`DIRECTUS_URL`**: URL of your Directus instance.
    - **`DIRECTUS_SERVER_TOKEN`**: Server-side token for accessing content, preview, and form submissions. Use the token
-     from the **Webmaster** account.
+     from your Directus **admin account** (created during first-launch onboarding). With a licensed instance, you can
+     instead use a token from a user assigned only the **Content - Live Preview** and **Forms - Submission** policies.
    - **`DIRECTUS_ADMIN_TOKEN`**: Admin token for local type generation only. Never used at runtime.
    - **`NUXT_PUBLIC_SITE_URL`**: The public URL of your site. This is used for SEO metadata and blog post routing.
    - **`NUXT_PUBLIC_ENABLE_VISUAL_EDITING`**: Visual editing is enabled by default. Set to `false` to disable.

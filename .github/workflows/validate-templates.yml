@@ -20,6 +20,9 @@ jobs:
       - name: Validate templates
         run: node _scripts/validate-templates.js
 
+      - name: Check RBAC codegen outputs
+        run: node _scripts/rbac-codegen.js --check
+
   build-frontends:
     name: Build ${{ matrix.template }}/${{ matrix.frontend }}
     runs-on: ubuntu-latest

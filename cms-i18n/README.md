@@ -4,6 +4,9 @@ Welcome to the **CMS Starter Templates with Internationalization (i18n) Support*
 CMS starters with built-in multilingual support. Each subfolder is a framework-specific implementation with locale-based
 routing, Directus translation integration, and a language switcher.
 
+> [!IMPORTANT]
+> **This starter requires a Directus license** (Team tier or [Open Innovation Grant](https://directus.io/docs/licensing/overview)). Add your `LICENSE_KEY` before applying the template — see [Directus setup](#directus-setup).
+
 ## **Templates**
 
 | Framework   | Description                                    | Links                               |
@@ -36,20 +39,43 @@ These templates also include all CMS starter features:
 - Draft content support
 - SEO metadata management
 
-## **Directus Setup**
+## **Directus setup**
 
-The i18n schema (languages collection, translation tables, etc.) is included in the Directus template located in
-`directus/template/`. Apply it to your Directus instance using the
-[Directus Template CLI](https://github.com/directus/template-cli):
+From `cms-i18n/directus/`:
 
-```bash
-npx directus-template-cli@latest apply <path-to-template>
-```
+1. `cp .env.example .env` — set `LICENSE_KEY`, then start Directus:
 
-## **Local Setup (with CLI)**
+   ```bash
+   docker compose up -d
+   ```
 
-Run this in your terminal:
+   Or add your key during admin onboarding or in **Settings → License**. If you change `LICENSE_KEY` in `.env` later, run `docker compose up -d --force-recreate directus`.
 
-```bash
-npx directus-template-cli@latest init
-```
+2. Open `http://localhost:8055`, complete onboarding, and create your admin account.
+
+3. Generate a static token on that admin user (Users Directory → Token → **Save**). Use it for template apply and `DIRECTUS_SERVER_TOKEN` in your frontend `.env`.
+
+4. Apply the template:
+
+   ```bash
+   npx directus-template-cli@latest apply
+   ```
+
+   - **Template Source:** Local directory  
+   - **Template Location:** `./template`  
+   - **Directus URL:** `http://localhost:8055`  
+   - **Token:** your admin static token  
+
+   Programmatic apply:
+
+   ```bash
+   npx directus-template-cli@latest apply -p \
+     --directusUrl="http://localhost:8055" \
+     --directusToken="YOUR_ADMIN_TOKEN" \
+     --templateLocation="./template" \
+     --templateType="local"
+   ```
+
+5. Connect a frontend ([Next.js](./nextjs) or [Nuxt](./nuxt)): copy its `.env.example`, set the Directus URL, `DIRECTUS_SERVER_TOKEN`, and site URL.
+
+After apply you should see **3 users**: your admin, Frontend Bot, and Content Writer (`writer@example.com`).

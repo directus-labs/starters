@@ -22,9 +22,14 @@ All templates include:
 - **Blog**: Dynamic blog post listing and detail pages
 - **Dynamic Forms**: Form builder with validation and Directus form submission storage
 - **Live Preview & Visual Editing**: Real-time content preview and in-context editing via the Directus visual editor
-- **Draft Content Support**: Preview unpublished content versions
+- **Draft Content Support**: Preview unpublished content via Directus 12's `draft` versions (`version=published` is the
+  live content; the legacy `version=main` key still works)
 - **SEO**: Per-page metadata management
 - **Dark Mode**: Built-in theme toggling
+
+## **Directus Version**
+
+These templates target **Directus 12** and run on the free core tier out of the box. Licensing and RBAC: [`directus/README.md`](./directus/README.md).
 
 ## **Folder Structure**
 

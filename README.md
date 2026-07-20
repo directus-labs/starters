@@ -10,6 +10,22 @@ Each template is designed to be:
 
 ---
 
+## **Directus Version & Licensing**
+
+These starters run on **Directus 12**. Directus 12 introduces [licensing tiers](https://directus.io/docs/licensing/overview): the free **core** tier has limits on users, collections, flows, and features like custom permission rules. A `LICENSE_KEY` raises those limits and unlocks licensed capabilities — which starter you pick determines whether core is enough (see table below).
+
+| Starter      | Default tier | Without a license                                                                  | With a `LICENSE_KEY`                                                        |
+| ------------ | ------------ | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| **cms**      | Core (free)  | `template/` — full RBAC skeleton, flat permission rules (3 seed users)            | Apply `template-licensed/` for enforceable filters, validation, field lists   |
+| **cms-i18n** | Team         | Requires a `LICENSE_KEY` (schema exceeds core tier limits)                         | Licensed RBAC + i18n permission deltas                                      |
+| **blank**    | Core (free)  | Works out of the box                                                                | Same unlocks as cms                                                          |
+
+RBAC and licensed setup: [`cms/directus/README.md`](cms/directus/README.md).
+
+Directus 12 uses `version=published` for live content (formerly `main`); every versioned item also has a `draft` version. Frontends here handle both keys.
+
+---
+
 ## **Available Templates**
 
 ### CMS
@@ -44,7 +60,7 @@ language switcher.
 ## **Required Environment Variables**
 
 Each framework requires your Directus URL, a server-side token, and a site URL. The token (`DIRECTUS_SERVER_TOKEN`)
-comes from your **Webmaster** account and is used server-side for content access, preview, and form submissions. See the
+comes from your **admin account** (the one you create during Directus first-launch onboarding) and is used server-side for content access, preview, and form submissions. See the
 individual template README for full setup details.
 
 ### CMS — Next.js
@@ -121,9 +137,10 @@ NUXT_PUBLIC_ENABLE_VISUAL_EDITING=true
 
    - Log in to your project using the URL provided in your email or from the Directus Cloud Dashboard.
 
-3. **Create accounts and generate tokens**:
+3. **Generate a server token**:
 
-   - Go to the **Users Directory** and create a **Webmaster** user account.
+   - Go to the **Users Directory** and open your admin account.
+   - For local Docker, this is the admin account you created during first-launch onboarding.
    - Scroll down to the **Token** field, generate a static token, and save it — this is your `DIRECTUS_SERVER_TOKEN`.
    - For local type generation, you can also generate a token on the **Admin** user — this is your
      `DIRECTUS_ADMIN_TOKEN` (never exposed at runtime).
@@ -145,7 +162,7 @@ Prefer to self-host? You can deploy Directus with the CMS schema pre-loaded dire
 This sets up a hosted Directus instance with the CMS template already applied. Once deployed:
 
 1. Open your Railway project and grab the public URL for your Directus service — this is your `DIRECTUS_URL`.
-2. Log in to Directus, go to the **Users Directory**, and create a **Webmaster** user.
+2. Log in to Directus, go to the **Users Directory**, and open your admin account.
 3. Generate a static token for that user — this is your `DIRECTUS_SERVER_TOKEN`.
 4. Choose a frontend starter from the table above and follow the setup instructions in its README.
 
@@ -184,7 +201,7 @@ This sets up a local project with Docker-based Directus + frontend integration.
 
 - This will start Directus on [http://localhost:8055](http://localhost:8055)
 - On first launch, you'll be prompted to complete the admin setup
-- After setup, create a **Webmaster** user and generate a static token for `DIRECTUS_SERVER_TOKEN`
+- After setup, generate a static token on your admin account for `DIRECTUS_SERVER_TOKEN`
 - Optionally generate a token on the Admin user for `DIRECTUS_ADMIN_TOKEN` (type generation only)
 
 ---
@@ -228,4 +245,6 @@ Directories prefixed with `_` or `.` are internal and excluded from the template
 
 ### Validation
 
-Run `node _scripts/validate-templates.js` to check all templates have the required structure and metadata.
+Run `node _scripts/validate-templates.js` to check template structure.
+
+**RBAC changes (maintainers):** Edit `_shared/rbac/`, run `pnpm rbac:codegen`, commit outputs. CI enforces with `pnpm rbac:codegen:check`. See [`_shared/rbac/README.md`](_shared/rbac/README.md) for why codegen exists and how it differs from `rbac:sync-licensed` (user upgrade tool).

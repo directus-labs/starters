@@ -67,6 +67,30 @@ function validateMetadata(template) {
   }
 }
 
+// Validate a single Directus template directory
+function validateTemplateDir(templateName, basePath, templateRelPath, label) {
+  const templatePath = join(basePath, templateRelPath.replace(/^\.\//, ''))
+  const srcPath = join(templatePath, 'src')
+
+  if (!existsSync(templatePath)) {
+    error(templateName, `Template path does not exist: ${label}`)
+    return
+  }
+
+  const requiredFiles = ['collections.json', 'fields.json']
+  for (const file of requiredFiles) {
+    if (!existsSync(join(srcPath, file))) {
+      error(templateName, `Missing required file: ${label}/src/${file}`)
+    }
+  }
+
+  if (!existsSync(join(templatePath, 'package.json'))) {
+    warn(templateName, `Missing package.json in template: ${label}`)
+  }
+
+  validateSingletonContent(templateName, srcPath)
+}
+
 // Validate Directus template files
 function validateDirectusTemplate(template) {
   const config = template.pkg['directus:template']
@@ -74,28 +98,42 @@ function validateDirectusTemplate(template) {
   // Blank templates (template: null) don't need directus files
   if (config.template === null) return
 
-  const templatePath = join(template.path, config.template.replace(/^\.\//, ''))
-  const srcPath = join(templatePath, 'src')
+  validateTemplateDir(template.name, template.path, config.template, config.template)
 
-  // Check template directory exists
-  if (!existsSync(templatePath)) {
-    error(template.name, `Template path does not exist: ${config.template}`)
-    return
-  }
-
-  // Check required schema files
-  const requiredFiles = ['collections.json', 'fields.json']
-  for (const file of requiredFiles) {
-    const filePath = join(srcPath, file)
-    if (!existsSync(filePath)) {
-      error(template.name, `Missing required file: ${config.template}/src/${file}`)
+  // Validate variant template paths
+  if (config.variants) {
+    for (const [variantKey, variant] of Object.entries(config.variants)) {
+      if (variant.template) {
+        validateTemplateDir(template.name, template.path, variant.template, `${variant.template} (variant: ${variantKey})`)
+      }
     }
   }
+}
 
-  // Check template package.json
-  const templatePkg = join(templatePath, 'package.json')
-  if (!existsSync(templatePkg)) {
-    warn(template.name, 'Missing directus/template/package.json')
+// Singleton collections load after regular collections in directus-template-cli.
+// Translation rows for a singleton must be nested in its content file, not a separate *_translations.json.
+function validateSingletonContent(templateName, srcPath) {
+  const contentDir = join(srcPath, 'content')
+  if (!existsSync(contentDir)) return
+
+  const collections = readJson(join(srcPath, 'collections.json'))
+  if (!collections) return
+
+  const contentFiles = new Set(
+    readdirSync(contentDir)
+      .filter((file) => file.endsWith('.json'))
+      .map((file) => file.replace(/\.json$/, '')),
+  )
+
+  for (const { collection, meta } of collections) {
+    if (!meta?.singleton) continue
+    const translationsFile = `${collection}_translations`
+    if (contentFiles.has(translationsFile)) {
+      error(
+        templateName,
+        `content/${translationsFile}.json must not exist — nest translations inside content/${collection}.json (template-cli loads singletons last)`,
+      )
+    }
   }
 }
 

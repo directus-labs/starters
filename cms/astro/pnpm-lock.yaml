@@ -18,11 +18,11 @@ importers:
         specifier: 10.0.2
         version: 10.0.2(astro@6.0.8(@types/node@22.19.15)(@vercel/functions@3.4.3)(jiti@1.21.7)(rollup@4.57.0)(tsx@4.21.0)(typescript@5.8.3)(yaml@2.8.2))(react@19.2.4)(rollup@4.57.0)
       '@directus/sdk':
-        specifier: 20.0.3
-        version: 20.0.3
+        specifier: 22.0.0
+        version: 22.0.0
       '@directus/visual-editing':
-        specifier: 2.0.0
-        version: 2.0.0
+        specifier: 2.1.0
+        version: 2.1.0
       '@hookform/resolvers':
         specifier: 5.2.2
         version: 5.2.2(react-hook-form@7.72.0(react@19.2.4))
@@ -635,13 +635,12 @@ packages:
     peerDependencies:
       postcss: ^8.4
 
-  '@directus/sdk@20.0.3':
-    resolution: {integrity: sha512-PFTYx8QxYi36L9zjOVldwZ88Iln9pBGtEamEjLGFuYqy1jk5jKJ7qA7827KfeZJkz3EtNNZM6J605I7s/ayD2g==}
+  '@directus/sdk@22.0.0':
+    resolution: {integrity: sha512-1D3cgjg2jnA7S1LXwKoYSw7yyJCs/DyKUOUDMLbvLtljafWJ5KOef7O8bVDPuQkVw6Bvoo6GUCbAMYI6Ff8Igg==}
     engines: {node: '>=22'}
 
-  '@directus/visual-editing@2.0.0':
-    resolution: {integrity: sha512-cPcMEPiFVdVO6KeC3OcuZPRoiYHxeATBJSflbewhcwGuG0Qze6ybKL+WWtCgV+mS4DCFbPd/7+ctQPu/JL60RQ==}
-    engines: {node: '>=22.12.0'}
+  '@directus/visual-editing@2.1.0':
+    resolution: {integrity: sha512-zYjbsoHZFE2WK6WXu/3uFJ8/ZiCNkIBsEIZjju3AOHzw1VU+Vc1jbD8Q73o+r8HNfwBmQ7qlkZ91Bh0jLO323w==}
 
   '@emnapi/runtime@1.8.1':
     resolution: {integrity: sha512-mehfKSMWjjNol8659Z8KxEMrdSJDDot5SXMq00dM8BN4o+CLNXQ0xH2V7EchNHV4RmbZLmmPdEaXZc5H2FXmDg==}
@@ -4804,9 +4803,9 @@ snapshots:
     dependencies:
       postcss: 8.5.8
 
-  '@directus/sdk@20.0.3': {}
+  '@directus/sdk@22.0.0': {}
 
-  '@directus/visual-editing@2.0.0':
+  '@directus/visual-editing@2.1.0':
     dependencies:
       '@reach/observe-rect': 1.2.0
 

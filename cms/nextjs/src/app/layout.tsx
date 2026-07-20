@@ -8,8 +8,24 @@ import { ThemeProvider } from '@/components/ui/ThemeProvider';
 import { fetchSiteData } from '@/lib/directus/fetchers';
 import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
 
+const fallbackSiteData = {
+	globals: null,
+	headerNavigation: { id: '', items: [] },
+	footerNavigation: { id: '', items: [] },
+};
+
+async function getSiteData() {
+	try {
+		return await fetchSiteData();
+	} catch (error) {
+		console.warn('Could not load site data from Directus during build', error);
+
+		return fallbackSiteData;
+	}
+}
+
 export async function generateMetadata(): Promise<Metadata> {
-	const { globals } = await fetchSiteData();
+	const { globals } = await getSiteData();
 
 	const siteTitle = globals?.title || 'Simple CMS';
 	const siteDescription = globals?.description || 'A starter CMS template powered by Next.js and Directus.';
@@ -28,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
-	const { globals, headerNavigation, footerNavigation } = await fetchSiteData();
+	const { globals, headerNavigation, footerNavigation } = await getSiteData();
 	const accentColor = globals?.accent_color || '#6644ff';
 
 	return (

@@ -7,14 +7,17 @@ export const GET: APIRoute = async ({ request }) => {
 
   const slug = pathname.replace('/api/blog-post/', '').trim();
   const id = searchParams.get('id');
-  // Live preview adds version = main which is not required when fetching the main version.
+  // Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
+  // Neither key requires an explicit version parameter — strip both to fetch the default published version.
   const rawVersion = searchParams.get('version') || '';
-  const version = rawVersion !== 'main' ? rawVersion : null;
+  const version = rawVersion !== 'main' && rawVersion !== 'published' ? rawVersion : null;
   const preview = searchParams.get('preview') === 'true';
   const isEditing = searchParams.get('visual-editing') === 'true';
   const token = preview ? import.meta.env.DIRECTUS_SERVER_TOKEN : undefined;
 
-  if (!isEditing) {
+  // Only serve data for visual editing or live preview with an explicit version (draft/custom).
+  // All other requests get an empty post so BlogPostClient falls back to initialPost.
+  if (!isEditing && !(preview && !!version)) {
     return new Response(JSON.stringify({ post: null }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
