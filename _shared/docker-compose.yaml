@@ -41,6 +41,8 @@ services:
         condition: service_healthy
     environment:
       SECRET: ${DIRECTUS_SECRET}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
       LICENSE_KEY: ${LICENSE_KEY:-}
       NODE_ENV: ${NODE_ENV:-production}
 
