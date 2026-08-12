@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/directus-labs/starters/compare/cms-v1.0.1...cms-v1.1.0) (2026-08-12)
+
+
+### Features
+
+* **v12:** Directus foundation ([#121](https://github.com/directus-labs/starters/issues/121)) ([7cd8651](https://github.com/directus-labs/starters/commit/7cd86516248c3fffc33bd91427d871f8a7ce8058))
+
+
+### Bug Fixes
+
+* add frontend bot email ([#130](https://github.com/directus-labs/starters/issues/130)) ([6886590](https://github.com/directus-labs/starters/commit/688659039666515c2a477f1a96d8e4f648e18ce2))
+
 ## [1.0.1](https://github.com/directus-labs/starters/compare/cms-v1.0.0...cms-v1.0.1) (2026-05-13)
 
 
