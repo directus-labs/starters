@@ -28,7 +28,7 @@ services:
       start_period: 30s
 
   directus:
-    image: directus/directus:12.2.0
+    image: directus/directus:12.3.0
     ports:
       - ${DIRECTUS_PORT}:8055
     volumes:
