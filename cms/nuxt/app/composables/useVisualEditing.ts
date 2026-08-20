@@ -1,5 +1,6 @@
-import { apply as applyVisualEditing, setAttr } from '@directus/visual-editing';
+import { apply as applyVisualEditing } from '@directus/visual-editing';
 import type { PrimaryKey } from '@directus/types';
+import { setAttr } from '~/utils/visualEditing';
 
 interface ApplyOptions {
 	directusUrl: string;
@@ -7,16 +8,17 @@ interface ApplyOptions {
 	onSaved?: (data: { collection?: string; item?: PrimaryKey | null; payload?: Record<string, unknown> }) => void;
 	customClass?: string;
 }
+
 export default function useVisualEditing() {
-	// Use useState for state that persists across navigation
 	const isVisualEditingEnabled = useState('visual-editing-enabled', () => false);
 	const route = useRoute();
 	const {
 		public: { enableVisualEditing, directusUrl },
 	} = useRuntimeConfig();
 
-	// Check query param on composable initialization.
-	if (route.query['visual-editing'] === 'true' && enableVisualEditing) {
+	// Enable when Directus sends ?visual-editing=true (visual editing tab) or
+	// ?preview=true (live preview tab) — both indicate an admin-controlled iframe.
+	if ((route.query['visual-editing'] === 'true' || route.query['preview'] === 'true') && enableVisualEditing) {
 		isVisualEditingEnabled.value = true;
 	} else if (route.query['visual-editing'] === 'false') {
 		isVisualEditingEnabled.value = false;

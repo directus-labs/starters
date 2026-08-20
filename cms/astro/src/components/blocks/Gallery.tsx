@@ -4,7 +4,7 @@ import Tagline from '@/components/ui/Tagline';
 import Headline from '@/components/ui/Headline';
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogClose } from '@/components/ui/dialog';
 import { ArrowLeft, ArrowRight, ZoomIn, X } from 'lucide-react';
-import { setAttr } from '@directus/visual-editing';
+import { setBlockAttr } from '@/lib/directus/visualEditing';
 
 interface GalleryItem {
   id: string;
@@ -79,9 +79,9 @@ const Gallery = ({ data }: GalleryProps) => {
       {tagline && (
         <Tagline
           tagline={tagline}
-          data-directus={setAttr({
-            collection: 'block_gallery',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_gallery',
+            blockItemId: id,
             fields: 'tagline',
             mode: 'popover',
           })}
@@ -90,9 +90,9 @@ const Gallery = ({ data }: GalleryProps) => {
       {headline && (
         <Headline
           headline={headline}
-          data-directus={setAttr({
-            collection: 'block_gallery',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_gallery',
+            blockItemId: id,
             fields: 'headline',
             mode: 'popover',
           })}
@@ -102,9 +102,9 @@ const Gallery = ({ data }: GalleryProps) => {
       {sortedItems.length > 0 && (
         <div
           className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-          data-directus={setAttr({
-            collection: 'block_gallery',
-            item: id,
+          data-directus={setBlockAttr({
+            blockCollection: 'block_gallery',
+            blockItemId: id,
             fields: 'items',
             mode: 'modal',
           })}

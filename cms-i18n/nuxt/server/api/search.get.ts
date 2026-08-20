@@ -23,6 +23,7 @@ export default defineCachedEventHandler(
 		// Get locale from event (set by middleware or query param)
 		const locale = getLocaleFromEvent(event);
 		const includeTranslations = locale !== DEFAULT_LOCALE;
+		const token = getDirectusServerToken();
 
 		if (!search || search.length < 3) {
 			throw createError({ statusCode: 400, message: 'Query must be at least 3 characters.' });
@@ -44,38 +45,75 @@ export default defineCachedEventHandler(
 
 			const [pagesData, postsData] = await Promise.all([
 				directusServer.request<Page[]>(
-					readItems('pages', {
-						filter: {
-							_and: [
-								{ status: { _eq: 'published' } },
-								{
-									_or: [{ title: { _contains: search } }, { permalink: { _contains: search } }],
+					token
+						? withToken(
+								token,
+								readItems('pages', {
+									filter: {
+										_and: [
+											{ status: { _eq: 'published' } },
+											{
+												_or: [{ title: { _contains: search } }, { permalink: { _contains: search } }],
+											},
+										],
+									},
+									fields: includeTranslations ? PAGE_FIELDS_WITH_TRANSLATIONS : PAGE_FIELDS,
+									...(includeTranslations ? { deep: translationsDeep } : {}),
+								}),
+							)
+						: readItems('pages', {
+								filter: {
+									_and: [
+										{ status: { _eq: 'published' } },
+										{
+											_or: [{ title: { _contains: search } }, { permalink: { _contains: search } }],
+										},
+									],
 								},
-							],
-						},
-						fields: includeTranslations ? PAGE_FIELDS_WITH_TRANSLATIONS : PAGE_FIELDS,
-						...(includeTranslations ? { deep: translationsDeep } : {}),
-					}),
+								fields: includeTranslations ? PAGE_FIELDS_WITH_TRANSLATIONS : PAGE_FIELDS,
+								...(includeTranslations ? { deep: translationsDeep } : {}),
+							}),
 				),
 
 				directusServer.request<Post[]>(
-					readItems('posts', {
-						filter: {
-							_and: [
-								{ status: { _eq: 'published' } },
-								{
-									_or: [
-										{ title: { _contains: search } },
-										{ description: { _contains: search } },
-										{ slug: { _contains: search } },
-										{ content: { _contains: search } },
+					token
+						? withToken(
+								token,
+								readItems('posts', {
+									filter: {
+										_and: [
+											{ status: { _eq: 'published' } },
+											{
+												_or: [
+													{ title: { _contains: search } },
+													{ description: { _contains: search } },
+													{ slug: { _contains: search } },
+													{ content: { _contains: search } },
+												],
+											},
+										],
+									},
+									fields: includeTranslations ? POST_FIELDS_WITH_TRANSLATIONS : POST_FIELDS,
+									...(includeTranslations ? { deep: translationsDeep } : {}),
+								}),
+							)
+						: readItems('posts', {
+								filter: {
+									_and: [
+										{ status: { _eq: 'published' } },
+										{
+											_or: [
+												{ title: { _contains: search } },
+												{ description: { _contains: search } },
+												{ slug: { _contains: search } },
+												{ content: { _contains: search } },
+											],
+										},
 									],
 								},
-							],
-						},
-						fields: includeTranslations ? POST_FIELDS_WITH_TRANSLATIONS : POST_FIELDS,
-						...(includeTranslations ? { deep: translationsDeep } : {}),
-					}),
+								fields: includeTranslations ? POST_FIELDS_WITH_TRANSLATIONS : POST_FIELDS,
+								...(includeTranslations ? { deep: translationsDeep } : {}),
+							}),
 				),
 			]);
 

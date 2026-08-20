@@ -1,33 +1,42 @@
 {
-  "name": "directus-cms-starter",
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "directus:template": {
-    "name": "CMS",
-    "description": "A ready-to-use CMS with block builder, visual editing, and integration with your favorite framework. ",
-    "template": "./directus/template",
-    "frontends": {
-        "nextjs": {
-            "name": "Next.js",
-            "path": "./nextjs"
+    "name": "directus-cms-starter",
+    "version": "1.1.0",
+    "description": "",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "directus:template": {
+        "name": "CMS",
+        "description": "A ready-to-use CMS with block builder, visual editing, and integration with your favorite framework. ",
+        "tier": "core",
+        "template": "./directus/template",
+        "variants": {
+            "licensed": {
+                "name": "CMS — Full RBAC",
+                "template": "./directus/template-licensed",
+                "requiresLicense": true,
+                "description": "Same CMS with enforceable Public, Writer self-access, Editor roles, and form scoping"
+            }
         },
-        "nuxt": {
-            "name": "Nuxt",
-            "path": "./nuxt"
-        },
-        "astro": {
-            "name": "Astro",
-            "path": "./astro"
-        },
-        "svelte": {
-            "name": "Svelte",
-            "path": "./sveltekit"
+        "frontends": {
+            "nextjs": {
+                "name": "Next.js",
+                "path": "./nextjs"
+            },
+            "nuxt": {
+                "name": "Nuxt",
+                "path": "./nuxt"
+            },
+            "astro": {
+                "name": "Astro",
+                "path": "./astro"
+            },
+            "svelte": {
+                "name": "Svelte",
+                "path": "./sveltekit"
+            }
         }
-    }
-  },
-  "keywords": [],
-  "author": ""
+    },
+    "keywords": [],
+    "author": ""
 }

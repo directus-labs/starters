@@ -10645,54 +10645,6 @@
     }
   },
   {
-    "collection": "directus_settings",
-    "field": "command_palette_settings",
-    "type": "json",
-    "schema": {
-      "name": "command_palette_settings",
-      "table": "directus_settings",
-      "data_type": "json",
-      "default_value": {},
-      "generation_expression": null,
-      "max_length": null,
-      "numeric_precision": null,
-      "numeric_scale": null,
-      "is_generated": false,
-      "is_nullable": true,
-      "is_unique": false,
-      "is_indexed": false,
-      "is_primary_key": false,
-      "has_auto_increment": false,
-      "foreign_key_schema": null,
-      "foreign_key_table": null,
-      "foreign_key_column": null,
-      "comment": null
-    },
-    "meta": {
-      "collection": "directus_settings",
-      "field": "command_palette_settings",
-      "special": [
-        "cast-json"
-      ],
-      "interface": "input-code",
-      "options": null,
-      "display": "raw",
-      "display_options": null,
-      "readonly": false,
-      "hidden": true,
-      "sort": 1,
-      "width": "full",
-      "translations": null,
-      "note": "Settings for the Command Palette Module.",
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
     "collection": "form_fields",
     "field": "id",
     "type": "uuid",
@@ -14899,58 +14851,6 @@
       "conditions": null,
       "required": false,
       "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
-    "collection": "globals",
-    "field": "openai_api_key",
-    "type": "string",
-    "schema": {
-      "name": "openai_api_key",
-      "table": "globals",
-      "data_type": "character varying",
-      "default_value": null,
-      "generation_expression": null,
-      "max_length": 255,
-      "numeric_precision": null,
-      "numeric_scale": null,
-      "is_generated": false,
-      "is_nullable": true,
-      "is_unique": false,
-      "is_indexed": false,
-      "is_primary_key": false,
-      "has_auto_increment": false,
-      "foreign_key_schema": null,
-      "foreign_key_table": null,
-      "foreign_key_column": null,
-      "comment": null
-    },
-    "meta": {
-      "collection": "globals",
-      "field": "openai_api_key",
-      "special": null,
-      "interface": "input",
-      "options": {
-        "trim": true,
-        "iconLeft": "vpn_key_alert",
-        "masked": true
-      },
-      "display": "formatted-value",
-      "display_options": {
-        "masked": true
-      },
-      "readonly": false,
-      "hidden": false,
-      "sort": 2,
-      "width": "half",
-      "translations": null,
-      "note": "Secret OpenAI API key. Don't share with anyone outside your team.",
-      "conditions": null,
-      "required": false,
-      "group": "meta_credentials",
       "validation": null,
       "validation_message": null,
       "searchable": true
@@ -19841,10 +19741,10 @@
       "collection": "posts",
       "field": "slug",
       "special": null,
-      "interface": "extension-wpslug",
+      "interface": "input",
       "options": {
         "font": "monospace",
-        "template": "{{title}}",
+        "slug": true,
         "placeholder": null
       },
       "display": "formatted-value",
@@ -21144,10 +21044,10 @@
       "collection": "posts_translations",
       "field": "slug",
       "special": null,
-      "interface": "extension-wpslug",
+      "interface": "input",
       "options": {
         "font": "monospace",
-        "template": "{{title}}",
+        "slug": true,
         "placeholder": null
       },
       "display": "formatted-value",
@@ -22338,7 +22238,6 @@
       "options": {
         "title": "{{title}}",
         "help": "<h2>Understanding Forms</h2>\n<p>Forms are reusable components that you create once and can place anywhere on your site using Form blocks. Think of the Forms collection as your form template library - you build the forms here, then use Form blocks to display them on your pages.</p>\n<h3>The Forms &amp; Form Blocks Relationship</h3>\n<ol>\n<li>First, create and configure your form in the Forms collection</li>\n<li>Then, add a Form block to any page where you want the form to appear</li>\n<li>Select your form from the dropdown in the Form block settings</li>\n<li>Customize the block's headline and tagline to match your page context</li>\n</ol>\n<p>This approach lets you:</p>\n<ul>\n<li>Reuse the same form across multiple pages</li>\n<li>Update the form once to change it everywhere</li>\n<li>Maintain consistent data collection</li>\n<li>Track submissions from all instances of the form</li>\n</ul>\n<h2>Creating Forms</h2>\n<h3>Basic Settings</h3>\n<h4>Form Title</h4>\n<p>Internal name to identify your form in the admin panel. Choose something descriptive like:</p>\n<ul>\n<li>\"Newsletter Signup 2024\"</li>\n<li>\"Contact Form - Main\"</li>\n<li>\"Event Registration Form\"</li>\n</ul>\n<h4>Submit Button</h4>\n<p>Customize the text on your submit button. Use action-oriented phrases like:</p>\n<ul>\n<li>\"Send Message\"</li>\n<li>\"Sign Up Now\"</li>\n<li>\"Register Today\"</li>\n</ul>\n<h4>Success Handling</h4>\n<p>Choose what happens after submission:</p>\n<p><strong>Show Message</strong></p>\n<ul>\n<li>Display a custom thank you message</li>\n<li>Confirm the submission was received</li>\n<li>Set expectations for next steps</li>\n</ul>\n<p><strong>Redirect</strong></p>\n<ul>\n<li>Send users to a specific thank you page</li>\n<li>Guide them to relevant content</li>\n<li>Start the next step in their journey</li>\n</ul>\n<h4>Email Notifications</h4>\n<p>Configure automated emails for form submissions:</p>\n<ul>\n<li>Add multiple recipient email addresses</li>\n<li>Customize subject lines and messages</li>\n<li>Include form submission details in the email</li>\n</ul>\n<h4>Active Status</h4>\n<p>Control form availability:</p>\n<ul>\n<li>Enable/disable without deleting</li>\n<li>Temporarily pause data collection</li>\n<li>Test before making public</li>\n</ul>\n<h3>Building Your Form</h3>\n<h4>Available Field Types</h4>\n<ul>\n<li><strong>Text</strong>: Single line text input</li>\n<li><strong>Textarea</strong>: Multi-line text input</li>\n<li><strong>Checkbox</strong>: Single yes/no option</li>\n<li><strong>Checkbox Group</strong>: Multiple selectable options</li>\n<li><strong>Radio</strong>: Single choice from options</li>\n<li><strong>Select</strong>: Dropdown menu</li>\n<li><strong>File</strong>: File upload capability</li>\n<li><strong>Hidden</strong>: Invisible fields for tracking</li>\n</ul>\n<h4>Field Configuration</h4>\n<p><strong>Label</strong> The visible field name shown to users</p>\n<p><strong>Placeholder</strong> Optional hint text inside empty fields</p>\n<p><strong>Help Text</strong> Additional instructions below the field</p>\n<p><strong>Required Fields</strong> Mark essential fields that must be filled out</p>\n<p><strong>Width Options</strong> Control field layout:</p>\n<ul>\n<li>Full width (100%)</li>\n<li>Two-thirds (67%)</li>\n<li>Half (50%)</li>\n<li>One-third (33%)</li>\n</ul>\n<p><strong>Validation:</strong> Here's the available rules</p>\n<ul>\n<li>Email format: <code>email</code></li>\n<li>URL format: <code>url</code></li>\n<li>Minimum length: <code>min:5</code> (replace 5 with desired length)</li>\n<li>Maximum length: <code>max:20</code> (replace 20 with desired length)</li>\n<li>Exact length: <code>length:10</code> (replace 10 with desired length)</li>\n<li>Required fields: Set \"Required\" toggle to true</li>\n</ul>\n<p>You can combine rules with pipes: <code>email|max:255</code></p>\n<h2>Using Forms with Form Blocks</h2>\n<h3>Adding Forms to Pages</h3>\n<ol>\n<li>Add a Form block to your page</li>\n<li>Select your form from the dropdown</li>\n<li>Add an optional headline and tagline</li>\n<li>Preview to check the layout</li>\n</ol>\n<h3>Form Block Customization</h3>\n<ul>\n<li>Add context with a headline</li>\n<li>Provide instructions in the tagline</li>\n<li>Match the form to your page content</li>\n<li>Ensure the form fits your layout</li>\n</ul>\n<h2>Best Practices</h2>\n<h3>Form Design &amp; Experience</h3>\n<ul>\n<li>Keep forms as short as possible - only include essential fields</li>\n<li>Group related fields together logically</li>\n<li>Use clear labels and mark required fields</li>\n<li>Ensure error messages are helpful and specific</li>\n<li>Test on both desktop and mobile devices</li>\n</ul>\n<h3>Data Collection</h3>\n<ul>\n<li>Only collect information you'll actually use</li>\n<li>Follow data protection guidelines</li>\n<li>Review submissions regularly</li>\n</ul>\n<h2>Managing Form Submissions</h2>\n<p>All submissions are stored in the <a href=\"/admin/content/form_submissions\">Form Submissions collection</a>.</p>\n<ul>\n<li>Export data as needed</li>\n<li>Configure email notifications</li>\n<li>Track submission sources</li>\n<li>Monitor submission trends</li>\n</ul>",
-        "actions": [],
         "helpDisplayMode": "modal"
       },
       "display": null,
@@ -23845,16 +23744,6 @@
             "type": "normal",
             "actionType": "link",
             "url": "/admin/visual/http://localhost:3000/blog/{{slug}}?visual-editing=true"
-          },
-          {
-            "label": "Request Review",
-            "icon": "approval_delegation",
-            "type": "normal",
-            "actionType": "flow",
-            "flow": {
-              "key": "3172d021-0b0f-4d4d-bcca-c5c46eb8fadf",
-              "collection": "directus_flows"
-            }
           }
         ],
         "helpDisplayMode": "modal"
@@ -23963,19 +23852,7 @@
       "options": {
         "title": "Image",
         "icon": "image",
-        "help": "<p><strong>Need inspiration?</strong> Use Flows like AI Image Generator to generate on-brand images for your post using AI.</p>\n<p><em>Note: This uses OpenAI so you'll need to add your API key in the&nbsp;<a href=\"/admin/content/globals\">Globals</a> collection first.</em></p>",
-        "actions": [
-          {
-            "label": "AI Image Generator",
-            "icon": "image",
-            "type": "normal",
-            "actionType": "flow",
-            "flow": {
-              "key": "d4bbac48-a444-49e0-aedb-9af5273b88df",
-              "collection": "directus_flows"
-            }
-          }
-        ]
+        "help": "<p><strong>Need inspiration?</strong> Use the built-in AI Assistant to generate on-brand images for your post.</p>\n<p><em>Note: Configure an AI provider under Settings &rarr; AI first.</em></p>"
       },
       "display": null,
       "display_options": null,
@@ -24009,19 +23886,7 @@
       "options": {
         "title": "Content",
         "icon": "text_snippet",
-        "help": "<p><strong>Need inspiration?</strong> Use Flows like AI Ghostwriter to help draft your content.</p>\n<p><em>Note: This uses OpenAI so you'll need to add your API key in the&nbsp;<a href=\"/admin/content/globals\">Globals</a> collection first.</em></p>",
-        "actions": [
-          {
-            "label": "AI Ghostwriter",
-            "icon": "text_increase",
-            "type": "normal",
-            "actionType": "flow",
-            "flow": {
-              "key": "5915dd55-fff8-4d47-b48c-a0e42e5033c1",
-              "collection": "directus_flows"
-            }
-          }
-        ]
+        "help": "<p><strong>Need inspiration?</strong> Use the built-in AI Assistant to help draft your content.</p>\n<p><em>Note: Configure an AI provider under Settings &rarr; AI first.</em></p>"
       },
       "display": null,
       "display_options": null,

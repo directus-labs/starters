@@ -10,16 +10,6 @@
     "app_access": false
   },
   {
-    "id": "50c057b7-4d1d-46c7-b441-ca4c65f0b43a",
-    "name": "Administrator",
-    "icon": "verified",
-    "description": "$t:admin_description",
-    "ip_access": null,
-    "enforce_tfa": false,
-    "admin_access": true,
-    "app_access": true
-  },
-  {
     "id": "52598a64-071d-4071-96fa-4b620d6189b5",
     "name": "Team - App Access",
     "icon": "badge",
@@ -58,16 +48,6 @@
     "enforce_tfa": false,
     "admin_access": false,
     "app_access": false
-  },
-  {
-    "id": "ea6ff38d-214f-44df-aca6-138c91cd31c6",
-    "name": "Administrator",
-    "icon": "verified",
-    "description": "$t:admin_description",
-    "ip_access": null,
-    "enforce_tfa": false,
-    "admin_access": true,
-    "app_access": true
   },
   {
     "id": "ee1055a2-7c03-4b0b-9b65-ca68491b6329",

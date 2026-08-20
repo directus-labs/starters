@@ -1,8 +1,11 @@
 .env
 .DS_Store
+.claude/
+.cursor/
 node_modules
 .vscode
 **/logs/
 .backups
 .pnpm-store
+**/*.tsbuildinfo
 

@@ -12,7 +12,7 @@
 	import { ArrowLeft, ArrowRight, ZoomIn, X } from '@lucide/svelte';
 	import Headline from '../ui/Headline.svelte';
 	import Tagline from '../ui/Tagline.svelte';
-	import setAttr from '$lib/directus/visualEditing';
+	import { setBlockAttr } from '$lib/directus/visualEditing';
 
 	interface GalleryProps {
 		data: {
@@ -63,9 +63,9 @@
 	{#if tagline}
 		<Tagline
 			{tagline}
-			data-directus={setAttr({
-				collection: 'block_gallery',
-				item: id,
+			data-directus={setBlockAttr({
+				blockCollection: 'block_gallery',
+				blockItemId: id,
 				fields: 'tagline',
 				mode: 'popover'
 			})}
@@ -74,9 +74,9 @@
 	{#if headline}
 		<Headline
 			{headline}
-			data-directus={setAttr({
-				collection: 'block_gallery',
-				item: id,
+			data-directus={setBlockAttr({
+				blockCollection: 'block_gallery',
+				blockItemId: id,
 				fields: 'headline',
 				mode: 'popover'
 			})}
@@ -86,9 +86,9 @@
 	{#if sortedItems.length > 0}
 		<div
 			class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3"
-			data-directus={setAttr({
-				collection: 'block_gallery',
-				item: id,
+			data-directus={setBlockAttr({
+				blockCollection: 'block_gallery',
+				blockItemId: id,
 				fields: 'items',
 				mode: 'modal'
 			})}

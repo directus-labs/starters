@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { apply as applyVisualEditing, setAttr } from '@directus/visual-editing';
+import { apply as applyVisualEditing } from '@directus/visual-editing';
+import { setAttr } from '@/lib/directus/visualEditing';
 
 interface ApplyOptions {
   elements?: HTMLElement[] | HTMLElement;
@@ -17,6 +18,9 @@ export function useVisualEditing() {
     const isEnvEnabled = import.meta.env.PUBLIC_ENABLE_VISUAL_EDITING !== 'false';
     const searchParams = new URLSearchParams(window.location.search);
     const param = searchParams.get('visual-editing');
+    // Enable when Directus sends ?preview=true (live preview tab) even without
+    // ?visual-editing=true — both indicate an admin-controlled iframe.
+    const isPreview = searchParams.get('preview') === 'true';
 
     if (!isEnvEnabled) {
       if (param === 'true') {
@@ -35,10 +39,14 @@ export function useVisualEditing() {
       const cleanUrl = window.location.pathname + (searchParams.toString() ? `?${searchParams.toString()}` : '');
 
       window.history.replaceState({}, '', cleanUrl);
+      setIsVisualEditingEnabled(false);
+
+      return;
     }
 
     const persisted = localStorage.getItem('visual-editing') === 'true';
-    setIsVisualEditingEnabled(persisted);
+    const shouldEnable = persisted || isPreview;
+    setIsVisualEditingEnabled(shouldEnable);
 
     if (persisted && param !== 'true') {
       searchParams.set('visual-editing', 'true');

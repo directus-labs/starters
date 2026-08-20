@@ -5,7 +5,8 @@
 	import ButtonGroup from './ButtonGroup.svelte';
 	import Headline from '../ui/Headline.svelte';
 	import Tagline from '../ui/Tagline.svelte';
-	import setAttr from '$lib/directus/visualEditing';
+	import { page } from '$app/state';
+	import { setBlockAttr } from '$lib/directus/visualEditing';
 	interface Props {
 		data: {
 			id: string;
@@ -34,6 +35,7 @@
 	let { data }: Props = $props();
 	const { alignment, headline, description, image, button_group, tagline, layout, id } =
 		$derived(data);
+	const isDraftPreview = $derived(!!page.data.contentVersion);
 </script>
 
 <section
@@ -54,9 +56,9 @@
 	>
 		<Tagline
 			{tagline}
-			data-directus={setAttr({
-				collection: 'block_hero',
-				item: id,
+			data-directus={setBlockAttr({
+				blockCollection: 'block_hero',
+				blockItemId: id,
 				fields: 'tagline',
 				mode: 'popover'
 			})}
@@ -65,9 +67,9 @@
 		{#if headline}
 			<Headline
 				{headline}
-				data-directus={setAttr({
-					collection: 'block_hero',
-					item: id,
+				data-directus={setBlockAttr({
+					blockCollection: 'block_hero',
+					blockItemId: id,
 					fields: 'headline',
 					mode: 'popover'
 				})}
@@ -76,23 +78,33 @@
 		{#if description}
 			<BaseText
 				content={description}
-				data-directus={setAttr({
-					collection: 'block_hero',
-					item: id,
+				data-directus={setBlockAttr({
+					blockCollection: 'block_hero',
+					blockItemId: id,
 					fields: 'description',
 					mode: 'popover'
 				})}
 			/>
 		{/if}
 		{#if button_group && button_group.buttons.length > 0}
+			<!-- Published: edit the related button group. Draft: route via block_hero (setBlockAttr rewrites to pages). -->
 			<div
 				class={cn(alignment === 'center' && 'flex justify-center', 'mt-6')}
-				data-directus={setAttr({
-					collection: 'block_button_group',
-					item: button_group.id,
-					fields: 'buttons',
-					mode: 'modal'
-				})}
+				data-directus={setBlockAttr(
+					isDraftPreview
+						? {
+								blockCollection: 'block_hero',
+								blockItemId: id,
+								fields: 'button_group',
+								mode: 'modal'
+							}
+						: {
+								blockCollection: 'block_button_group',
+								blockItemId: button_group.id,
+								fields: 'buttons',
+								mode: 'modal'
+							}
+				)}
 			>
 				<ButtonGroup buttons={button_group.buttons} />
 			</div>
@@ -104,9 +116,9 @@
 				'relative w-full',
 				layout === 'center' ? 'h-[400px] md:w-3/4 xl:w-2/3' : 'h-[562px] md:w-1/2'
 			)}
-			data-directus={setAttr({
-				collection: 'block_hero',
-				item: id,
+			data-directus={setBlockAttr({
+				blockCollection: 'block_hero',
+				blockItemId: id,
 				fields: ['image', 'layout'],
 				mode: 'modal'
 			})}

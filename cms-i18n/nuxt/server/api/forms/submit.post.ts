@@ -1,3 +1,6 @@
+import { multipartToFormData, validateFormSubmission } from '@@/app/lib/directus/validateFormSubmission';
+import type { Form, FormField } from '@@/shared/types/schema';
+
 interface SubmissionValue {
 	field: string;
 	value?: string;
@@ -24,31 +27,66 @@ export default defineEventHandler(async (event) => {
 		});
 	}
 
-	try {
-		const submissionValues: SubmissionValue[] = [];
-		let formId = '';
-		let fields = [];
+	let formId = '';
 
-		for (const field of formData) {
-			if (field.name === 'formId') {
-				formId = field.data.toString();
-			} else if (field.name === 'fields') {
-				fields = JSON.parse(field.data.toString());
-			}
+	for (const field of formData) {
+		if (field.name === 'formId') {
+			formId = field.data.toString();
+		}
+	}
+
+	if (!formId.trim()) {
+		throw createError({
+			statusCode: 400,
+			statusMessage: 'Missing or invalid formId',
+		});
+	}
+
+	let fields: FormField[];
+
+	try {
+		const form = (await directusServer.request(
+			withToken(
+				TOKEN,
+				readItem('forms', formId.trim(), {
+					fields: ['is_active', { fields: ['id', 'name', 'type', 'label', 'required', 'validation'] }],
+				}),
+			),
+		)) as unknown as Form;
+
+		if (!form.is_active || !Array.isArray(form.fields)) {
+			throw new Error('Invalid form');
 		}
 
-		for (const field of formData) {
-			if (!field.name || !field.data) continue;
-			if (field.name === 'formId' || field.name === 'fields') continue;
+		fields = form.fields.filter((field): field is FormField => typeof field !== 'string');
+	} catch {
+		throw createError({
+			statusCode: 400,
+			statusMessage: 'Missing or invalid form',
+		});
+	}
 
-			const matchingField = fields.find((f: { name: string | undefined }) => f.name === field.name);
-			if (!matchingField) continue;
+	const bodyFormData = multipartToFormData(formData);
+	const validation = validateFormSubmission(fields, bodyFormData);
 
-			if (field.filename) {
-				const blob = new Blob([field.data], { type: field.type });
+	if (!validation.success) {
+		throw createError({
+			statusCode: 400,
+			statusMessage: validation.error,
+		});
+	}
 
+	try {
+		const submissionValues: SubmissionValue[] = [];
+
+		for (const field of fields) {
+			if (!field.name) continue;
+			const value = validation.data[field.name];
+			if (value === undefined || value === null) continue;
+
+			if (field.type === 'file' && value instanceof File) {
 				const uploadFormData = new FormData();
-				uploadFormData.append('file', blob, field.filename);
+				uploadFormData.append('file', value);
 
 				const uploadedFile = (await directusServer.request(withToken(TOKEN, uploadFiles(uploadFormData)))) as {
 					id?: string;
@@ -56,20 +94,20 @@ export default defineEventHandler(async (event) => {
 
 				if (uploadedFile?.id) {
 					submissionValues.push({
-						field: matchingField.id,
+						field: field.id,
 						file: uploadedFile.id,
 					});
 				}
 			} else {
 				submissionValues.push({
-					field: matchingField.id,
-					value: field.data.toString(),
+					field: field.id,
+					value: String(value),
 				});
 			}
 		}
 
 		const payload = {
-			form: formId,
+			form: formId.trim(),
 			values: submissionValues,
 		};
 

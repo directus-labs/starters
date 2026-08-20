@@ -1,7 +1,7 @@
 name: directus-cms-template
 services:
   database:
-    image: postgis/postgis:13-master
+    image: postgis/postgis:16-master
     platform: linux/amd64
     volumes:
       - ./data/database:/var/lib/postgresql/data
@@ -28,7 +28,7 @@ services:
       start_period: 30s
 
   directus:
-    image: directus/directus:11.17.2
+    image: directus/directus:12.3.0
     ports:
       - ${DIRECTUS_PORT}:8055
     volumes:
@@ -41,6 +41,8 @@ services:
         condition: service_healthy
     environment:
       SECRET: ${DIRECTUS_SECRET}
+      LICENSE_KEY: ${LICENSE_KEY:-}
+      NODE_ENV: ${NODE_ENV:-production}
 
       DB_CLIENT: 'pg'
       DB_HOST: 'database'
@@ -57,13 +59,14 @@ services:
       WEBSOCKETS_ENABLED: ${WEBSOCKETS_ENABLED}
 
       PUBLIC_URL: ${PUBLIC_URL}
+      IP_TRUST_PROXY: 'true'
 
       CORS_ENABLED: ${CORS_ENABLED}
       CORS_ORIGIN: ${CORS_ORIGIN}
 
       REFRESH_TOKEN_COOKIE_SECURE: ${REFRESH_TOKEN_COOKIE_SECURE}
       REFRESH_TOKEN_COOKIE_SAME_SITE: ${REFRESH_TOKEN_COOKIE_SAME_SITE}
-      REFRESH_TOKEN_DOMAIN: ${REFRESH_TOKEN_COOKIE_DOMAIN}
+      REFRESH_TOKEN_COOKIE_DOMAIN: ${REFRESH_TOKEN_COOKIE_DOMAIN}
 
       SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE}
       SESSION_COOKIE_SAME_SITE: ${SESSION_COOKIE_SAME_SITE}

@@ -8,6 +8,7 @@
 	import { page } from '$app/state';
 	import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 	import { afterNavigate, invalidateAll } from '$app/navigation';
+	import { tick } from 'svelte';
 	import { enableVisualEditing } from '$lib/directus/visualEditing';
 	import { apply } from '@directus/visual-editing';
 
@@ -25,6 +26,8 @@
 	enableVisualEditing();
 
 	afterNavigate(async () => {
+		// Wait for Svelte reactive DOM updates (e.g. data-directus attrs) before scanning
+		await tick();
 		// First apply: all [data-directus] elements get overlays
 		await apply({
 			directusUrl: PUBLIC_DIRECTUS_URL,

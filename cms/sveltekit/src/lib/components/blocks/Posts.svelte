@@ -3,7 +3,7 @@
 	import { fetchPaginatedPosts, fetchTotalPostCount } from '$lib/directus/fetchers';
 	import * as Pagination from '$lib/components/ui/pagination/index.js';
 
-	import setAttr from '$lib/directus/visualEditing';
+	import { setBlockAttr } from '$lib/directus/visualEditing';
 	import type { Post } from '$lib/types/directus-schema';
 	import DirectusImage from '../shared/DirectusImage.svelte';
 	import Headline from '../ui/Headline.svelte';
@@ -72,9 +72,9 @@
 <div>
 	<Tagline
 		{tagline}
-		data-directus={setAttr({
-			collection: 'block_posts',
-			item: id,
+		data-directus={setBlockAttr({
+			blockCollection: 'block_posts',
+			blockItemId: id,
 			fields: 'tagline',
 			mode: 'popover'
 		})}
@@ -82,9 +82,9 @@
 	{#if headline}
 		<Headline
 			{headline}
-			data-directus={setAttr({
-				collection: 'block_posts',
-				item: id,
+			data-directus={setBlockAttr({
+				blockCollection: 'block_posts',
+				blockItemId: id,
 				fields: 'headline',
 				mode: 'popover'
 			})}
@@ -93,9 +93,9 @@
 
 	<div
 		class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3"
-		data-directus={setAttr({
-			collection: 'block_posts',
-			item: id,
+		data-directus={setBlockAttr({
+			blockCollection: 'block_posts',
+			blockItemId: id,
 			fields: ['collection', 'limit'],
 			mode: 'popover'
 		})}

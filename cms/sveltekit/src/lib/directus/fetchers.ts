@@ -15,7 +15,6 @@ import {
 	withToken,
 	readItems
 } from '@directus/sdk';
-
 /**
  * Page fields configuration for Directus queries
  *
@@ -254,13 +253,14 @@ export const fetchPageDataById = async (
 
 	const { getDirectus } = useDirectus();
 	const directus = getDirectus();
+
 	try {
 		return (await directus.request(
 			withToken(
 				token as string,
 				readItem('pages', id, {
 					version,
-					fields: pageFields,
+					fields: pageFields as any,
 					deep: {
 						blocks: { _sort: ['sort'], _filter: { hide_block: { _neq: true } } }
 					}

@@ -19,26 +19,49 @@ export default defineEventHandler(async (event) => {
 	// Get locale from event (set by middleware or query param)
 	const locale = getLocaleFromEvent(event);
 	const includeTranslations = locale !== DEFAULT_LOCALE;
+	const token = getDirectusServerToken();
 
 	try {
 		const postsPromise = directusServer.request(
-			readItems('posts', {
-				limit,
-				page,
-				sort: ['-published_at'],
-				fields: includeTranslations
-					? ['id', 'title', 'description', 'slug', 'image', 'published_at', { translations: ['*'] }]
-					: ['id', 'title', 'description', 'slug', 'image', 'published_at'],
-				filter: { status: { _eq: 'published' } },
-				...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
-			}),
+			token
+				? withToken(
+						token,
+						readItems('posts', {
+							limit,
+							page,
+							sort: ['-published_at'],
+							fields: includeTranslations
+								? ['id', 'title', 'description', 'slug', 'image', 'published_at', { translations: ['*'] }]
+								: ['id', 'title', 'description', 'slug', 'image', 'published_at'],
+							filter: { status: { _eq: 'published' } },
+							...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+						}),
+					)
+				: readItems('posts', {
+						limit,
+						page,
+						sort: ['-published_at'],
+						fields: includeTranslations
+							? ['id', 'title', 'description', 'slug', 'image', 'published_at', { translations: ['*'] }]
+							: ['id', 'title', 'description', 'slug', 'image', 'published_at'],
+						filter: { status: { _eq: 'published' } },
+						...(includeTranslations ? { deep: buildTranslationsDeep(locale) } : {}),
+					}),
 		);
 
 		const countPromise = directusServer.request(
-			readItems('posts', {
-				aggregate: { count: '*' },
-				filter: { status: { _eq: 'published' } },
-			}),
+			token
+				? withToken(
+						token,
+						readItems('posts', {
+							aggregate: { count: '*' },
+							filter: { status: { _eq: 'published' } },
+						}),
+					)
+				: readItems('posts', {
+						aggregate: { count: '*' },
+						filter: { status: { _eq: 'published' } },
+					}),
 		);
 
 		const [postsRaw, countRaw] = await Promise.all([postsPromise, countPromise]);

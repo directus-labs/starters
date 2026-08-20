@@ -82,8 +82,9 @@ export default async function Page({
 	const id = typeof searchParamsResolved.id === 'string' ? searchParamsResolved.id : '';
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
 	const preview = searchParamsResolved.preview === 'true';
-	// Live preview adds version = main which is not required when fetching the main version.
-	const fixedVersion = version != 'main' ? version : undefined;
+	// version=published is the live key in Directus v12+; version=main was used by older Directus versions.
+	// Both represent published content and don't require an explicit version parameter.
+	const fixedVersion = version === 'published' || version === 'main' ? undefined : version;
 
 	const locale = await getLocaleFromHeaders();
 
@@ -91,7 +92,7 @@ export default async function Page({
 		let page: Page;
 
 		// Version-specific content handling:
-		// When a version is requested (e.g., "draft", "published"), we need to:
+		// When a non-published version is requested (e.g., "draft"), we need to:
 		// 1. Look up the page ID by permalink if not provided directly
 		// 2. Fetch the specific version of that page
 		// 3. Fail gracefully if the page doesn't exist for that version
@@ -115,7 +116,7 @@ export default async function Page({
 
 		const blocks: PageBlock[] = (page.blocks as PageBlock[]) || [];
 
-		return <PageClient sections={blocks} pageId={page.id} />;
+		return <PageClient sections={blocks} pageId={page.id} contentVersion={fixedVersion} />;
 	} catch (error) {
 		console.error('Error loading page:', error);
 		notFound();

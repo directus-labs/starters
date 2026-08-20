@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "directus": "11.14.0",
+  "directus": "12.0.0",
   "vendor": "postgres",
   "collections": [
     {
@@ -10,6 +10,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "ai_prompts",
         "color": null,
@@ -23,6 +24,7 @@
         "singleton": false,
         "sort": 8,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -38,6 +40,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_button",
         "color": null,
@@ -59,6 +62,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": "sort",
+        "status": "active",
         "translations": [
           {
             "language": "en-US",
@@ -81,6 +85,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_button_group",
         "color": null,
@@ -103,6 +108,7 @@
         "singleton": false,
         "sort": 8,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "ar-SA",
@@ -167,6 +173,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_button_translations",
         "color": null,
@@ -180,6 +187,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -195,6 +203,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_form",
         "color": null,
@@ -212,6 +221,7 @@
         "singleton": false,
         "sort": 3,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "ar-SA",
@@ -276,6 +286,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_form_translations",
         "color": null,
@@ -289,6 +300,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -304,6 +316,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_gallery",
         "color": null,
@@ -323,6 +336,7 @@
         "singleton": false,
         "sort": 5,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "ar-SA",
@@ -387,6 +401,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_gallery_items",
         "color": null,
@@ -400,6 +415,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "en-US",
@@ -420,6 +436,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_gallery_translations",
         "color": null,
@@ -433,6 +450,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -448,6 +466,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_hero",
         "color": null,
@@ -475,6 +494,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "ar-SA",
@@ -539,6 +559,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_hero_translations",
         "color": null,
@@ -552,6 +573,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -567,6 +589,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_posts",
         "color": null,
@@ -585,6 +608,7 @@
         "singleton": false,
         "sort": 4,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "ar-SA",
@@ -649,6 +673,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_posts_translations",
         "color": null,
@@ -662,6 +687,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -677,6 +703,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_pricing",
         "color": null,
@@ -707,6 +734,7 @@
         "singleton": false,
         "sort": 7,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "ar-SA",
@@ -771,6 +799,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_pricing_cards",
         "color": null,
@@ -784,6 +813,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "en-US",
@@ -804,6 +834,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_pricing_cards_translations",
         "color": null,
@@ -817,6 +848,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -832,6 +864,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_pricing_translations",
         "color": null,
@@ -845,6 +878,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -860,6 +894,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_richtext",
         "color": null,
@@ -878,6 +913,7 @@
         "singleton": false,
         "sort": 2,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "ar-SA",
@@ -942,6 +978,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "block_richtext_translations",
         "color": null,
@@ -955,6 +992,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -970,6 +1008,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "closed",
         "collection": "blocks",
         "color": null,
@@ -983,6 +1022,7 @@
         "singleton": false,
         "sort": 2,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -995,6 +1035,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "form_fields",
         "color": null,
@@ -1008,6 +1049,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -1023,6 +1065,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "form_fields_translations",
         "color": null,
@@ -1036,6 +1079,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -1051,6 +1095,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "form_submission_values",
         "color": null,
@@ -1064,6 +1109,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "en-US",
@@ -1084,6 +1130,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "form_submissions",
         "color": null,
@@ -1097,6 +1144,7 @@
         "singleton": false,
         "sort": 4,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -1112,6 +1160,7 @@
         "archive_app_filter": true,
         "archive_field": "is_active",
         "archive_value": "false",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "forms",
         "color": null,
@@ -1134,6 +1183,7 @@
         "singleton": false,
         "sort": 3,
         "sort_field": "sort",
+        "status": "active",
         "translations": [
           {
             "language": "ar-SA",
@@ -1198,6 +1248,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "forms_translations",
         "color": null,
@@ -1211,6 +1262,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -1226,6 +1278,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "globals",
         "color": null,
@@ -1239,6 +1292,7 @@
         "singleton": true,
         "sort": 6,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "ar-SA",
@@ -1303,6 +1357,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "globals_translations",
         "color": null,
@@ -1316,6 +1371,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -1331,6 +1387,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "languages",
         "color": null,
@@ -1344,6 +1401,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -1359,6 +1417,7 @@
         "archive_app_filter": true,
         "archive_field": "is_active",
         "archive_value": "false",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "navigation",
         "color": null,
@@ -1382,6 +1441,7 @@
         "singleton": false,
         "sort": 5,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "ar-SA",
@@ -1446,6 +1506,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "navigation_items",
         "color": null,
@@ -1472,6 +1533,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -1487,6 +1549,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "navigation_items_translations",
         "color": null,
@@ -1500,6 +1563,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -1515,6 +1579,7 @@
         "archive_app_filter": false,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "page_blocks",
         "color": null,
@@ -1575,6 +1640,7 @@
         "singleton": false,
         "sort": 3,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -1590,6 +1656,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "pages",
         "color": null,
@@ -1660,6 +1727,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": "sort",
+        "status": "active",
         "translations": [
           {
             "language": "ar-SA",
@@ -1724,6 +1792,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "pages_translations",
         "color": null,
@@ -1737,6 +1806,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -1752,6 +1822,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "posts",
         "color": null,
@@ -1774,6 +1845,7 @@
         "singleton": false,
         "sort": 2,
         "sort_field": "sort",
+        "status": "active",
         "translations": [
           {
             "language": "ar-SA",
@@ -1838,6 +1910,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "posts_translations",
         "color": null,
@@ -1851,6 +1924,7 @@
         "singleton": false,
         "sort": null,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -1866,6 +1940,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "redirects",
         "color": null,
@@ -1879,6 +1954,7 @@
         "singleton": false,
         "sort": 7,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -1894,6 +1970,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "website",
         "color": null,
@@ -1907,6 +1984,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -12784,52 +12862,6 @@
       }
     },
     {
-      "collection": "directus_settings",
-      "field": "command_palette_settings",
-      "type": "json",
-      "meta": {
-        "collection": "directus_settings",
-        "conditions": null,
-        "display": "raw",
-        "display_options": null,
-        "field": "command_palette_settings",
-        "group": null,
-        "hidden": true,
-        "interface": "input-code",
-        "note": "Settings for the Command Palette Module.",
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 1,
-        "special": [
-          "cast-json"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "command_palette_settings",
-        "table": "directus_settings",
-        "data_type": "json",
-        "default_value": {},
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
       "collection": "directus_users",
       "field": "posts",
       "type": "alias",
@@ -15580,7 +15612,6 @@
         "interface": "super-header",
         "note": null,
         "options": {
-          "actions": [],
           "help": "<h2>Understanding Forms</h2>\n<p>Forms are reusable components that you create once and can place anywhere on your site using Form blocks. Think of the Forms collection as your form template library - you build the forms here, then use Form blocks to display them on your pages.</p>\n<h3>The Forms &amp; Form Blocks Relationship</h3>\n<ol>\n<li>First, create and configure your form in the Forms collection</li>\n<li>Then, add a Form block to any page where you want the form to appear</li>\n<li>Select your form from the dropdown in the Form block settings</li>\n<li>Customize the block's headline and tagline to match your page context</li>\n</ol>\n<p>This approach lets you:</p>\n<ul>\n<li>Reuse the same form across multiple pages</li>\n<li>Update the form once to change it everywhere</li>\n<li>Maintain consistent data collection</li>\n<li>Track submissions from all instances of the form</li>\n</ul>\n<h2>Creating Forms</h2>\n<h3>Basic Settings</h3>\n<h4>Form Title</h4>\n<p>Internal name to identify your form in the admin panel. Choose something descriptive like:</p>\n<ul>\n<li>\"Newsletter Signup 2024\"</li>\n<li>\"Contact Form - Main\"</li>\n<li>\"Event Registration Form\"</li>\n</ul>\n<h4>Submit Button</h4>\n<p>Customize the text on your submit button. Use action-oriented phrases like:</p>\n<ul>\n<li>\"Send Message\"</li>\n<li>\"Sign Up Now\"</li>\n<li>\"Register Today\"</li>\n</ul>\n<h4>Success Handling</h4>\n<p>Choose what happens after submission:</p>\n<p><strong>Show Message</strong></p>\n<ul>\n<li>Display a custom thank you message</li>\n<li>Confirm the submission was received</li>\n<li>Set expectations for next steps</li>\n</ul>\n<p><strong>Redirect</strong></p>\n<ul>\n<li>Send users to a specific thank you page</li>\n<li>Guide them to relevant content</li>\n<li>Start the next step in their journey</li>\n</ul>\n<h4>Email Notifications</h4>\n<p>Configure automated emails for form submissions:</p>\n<ul>\n<li>Add multiple recipient email addresses</li>\n<li>Customize subject lines and messages</li>\n<li>Include form submission details in the email</li>\n</ul>\n<h4>Active Status</h4>\n<p>Control form availability:</p>\n<ul>\n<li>Enable/disable without deleting</li>\n<li>Temporarily pause data collection</li>\n<li>Test before making public</li>\n</ul>\n<h3>Building Your Form</h3>\n<h4>Available Field Types</h4>\n<ul>\n<li><strong>Text</strong>: Single line text input</li>\n<li><strong>Textarea</strong>: Multi-line text input</li>\n<li><strong>Checkbox</strong>: Single yes/no option</li>\n<li><strong>Checkbox Group</strong>: Multiple selectable options</li>\n<li><strong>Radio</strong>: Single choice from options</li>\n<li><strong>Select</strong>: Dropdown menu</li>\n<li><strong>File</strong>: File upload capability</li>\n<li><strong>Hidden</strong>: Invisible fields for tracking</li>\n</ul>\n<h4>Field Configuration</h4>\n<p><strong>Label</strong> The visible field name shown to users</p>\n<p><strong>Placeholder</strong> Optional hint text inside empty fields</p>\n<p><strong>Help Text</strong> Additional instructions below the field</p>\n<p><strong>Required Fields</strong> Mark essential fields that must be filled out</p>\n<p><strong>Width Options</strong> Control field layout:</p>\n<ul>\n<li>Full width (100%)</li>\n<li>Two-thirds (67%)</li>\n<li>Half (50%)</li>\n<li>One-third (33%)</li>\n</ul>\n<p><strong>Validation:</strong> Here's the available rules</p>\n<ul>\n<li>Email format: <code>email</code></li>\n<li>URL format: <code>url</code></li>\n<li>Minimum length: <code>min:5</code> (replace 5 with desired length)</li>\n<li>Maximum length: <code>max:20</code> (replace 20 with desired length)</li>\n<li>Exact length: <code>length:10</code> (replace 10 with desired length)</li>\n<li>Required fields: Set \"Required\" toggle to true</li>\n</ul>\n<p>You can combine rules with pipes: <code>email|max:255</code></p>\n<h2>Using Forms with Form Blocks</h2>\n<h3>Adding Forms to Pages</h3>\n<ol>\n<li>Add a Form block to your page</li>\n<li>Select your form from the dropdown</li>\n<li>Add an optional headline and tagline</li>\n<li>Preview to check the layout</li>\n</ol>\n<h3>Form Block Customization</h3>\n<ul>\n<li>Add context with a headline</li>\n<li>Provide instructions in the tagline</li>\n<li>Match the form to your page content</li>\n<li>Ensure the form fits your layout</li>\n</ul>\n<h2>Best Practices</h2>\n<h3>Form Design &amp; Experience</h3>\n<ul>\n<li>Keep forms as short as possible - only include essential fields</li>\n<li>Group related fields together logically</li>\n<li>Use clear labels and mark required fields</li>\n<li>Ensure error messages are helpful and specific</li>\n<li>Test on both desktop and mobile devices</li>\n</ul>\n<h3>Data Collection</h3>\n<ul>\n<li>Only collect information you'll actually use</li>\n<li>Follow data protection guidelines</li>\n<li>Review submissions regularly</li>\n</ul>\n<h2>Managing Form Submissions</h2>\n<p>All submissions are stored in the <a href=\"/admin/content/form_submissions\">Form Submissions collection</a>.</p>\n<ul>\n<li>Export data as needed</li>\n<li>Configure email notifications</li>\n<li>Track submission sources</li>\n<li>Monitor submission trends</li>\n</ul>",
           "helpDisplayMode": "modal",
           "title": "{{title}}"
@@ -15592,6 +15623,40 @@
         "special": [
           "alias",
           "no-data"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "forms",
+      "field": "translations",
+      "type": "alias",
+      "meta": {
+        "collection": "forms",
+        "conditions": null,
+        "display": "translations",
+        "display_options": {
+          "languageField": "name",
+          "template": "{{title}}"
+        },
+        "field": "translations",
+        "group": null,
+        "hidden": false,
+        "interface": "translations",
+        "note": null,
+        "options": {
+          "defaultOpenSplitView": true,
+          "userLanguage": true
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 13,
+        "special": [
+          "translations"
         ],
         "translations": null,
         "validation": null,
@@ -16257,40 +16322,6 @@
             "translation": "Submissions"
           }
         ],
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "forms",
-      "field": "translations",
-      "type": "alias",
-      "meta": {
-        "collection": "forms",
-        "conditions": null,
-        "display": "translations",
-        "display_options": {
-          "languageField": "name",
-          "template": "{{title}}"
-        },
-        "field": "translations",
-        "group": null,
-        "hidden": false,
-        "interface": "translations",
-        "note": null,
-        "options": {
-          "defaultOpenSplitView": true,
-          "userLanguage": true
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 13,
-        "special": [
-          "translations"
-        ],
-        "translations": null,
         "validation": null,
         "validation_message": null,
         "width": "full"
@@ -17995,56 +18026,6 @@
     },
     {
       "collection": "globals",
-      "field": "openai_api_key",
-      "type": "string",
-      "meta": {
-        "collection": "globals",
-        "conditions": null,
-        "display": "formatted-value",
-        "display_options": {
-          "masked": true
-        },
-        "field": "openai_api_key",
-        "group": "meta_credentials",
-        "hidden": false,
-        "interface": "input",
-        "note": "Secret OpenAI API key. Don't share with anyone outside your team.",
-        "options": {
-          "iconLeft": "vpn_key_alert",
-          "masked": true,
-          "trim": true
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 2,
-        "special": null,
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "openai_api_key",
-        "table": "globals",
-        "data_type": "character varying",
-        "default_value": null,
-        "max_length": 255,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "globals",
       "field": "directus_url",
       "type": "string",
       "meta": {
@@ -18597,7 +18578,7 @@
         "max_length": 255,
         "numeric_precision": null,
         "numeric_scale": null,
-        "is_nullable": false,
+        "is_nullable": true,
         "is_unique": false,
         "is_indexed": false,
         "is_primary_key": false,
@@ -23199,16 +23180,6 @@
               "label": "Open in Visual Editor",
               "type": "normal",
               "url": "/admin/visual/http://localhost:3000/blog/{{slug}}?visual-editing=true"
-            },
-            {
-              "actionType": "flow",
-              "flow": {
-                "collection": "directus_flows",
-                "key": "3172d021-0b0f-4d4d-bcca-c5c46eb8fadf"
-              },
-              "icon": "approval_delegation",
-              "label": "Request Review",
-              "type": "normal"
             }
           ],
           "help": "<h2>Managing Blog Posts</h2>\n<p>Blog posts are a powerful way to share your content, news, and updates with your audience. Each post can include rich text content, images, and metadata to help with organization and discovery.</p>\n<h3>Post Settings</h3>\n<h4>Title</h4>\n<p>The main headline of your blog post. This appears at the top of the post and in preview cards across your site. Make it:</p>\n<ul>\n<li>Engaging and descriptive</li>\n<li>Clear about the post's content</li>\n<li>Optimized for search engines (aim for 50-60 characters)</li>\n</ul>\n<h4>Description</h4>\n<p>A brief preview of your post that appears in blog listings and search results. Write 1-2 compelling sentences that:</p>\n<ul>\n<li>Summarize the main point of your article</li>\n<li>Entice readers to click through</li>\n<li>Include relevant keywords naturally</li>\n</ul>\n<h4>Featured Image</h4>\n<p>The main visual for your post that appears:</p>\n<ul>\n<li>At the top of the post</li>\n<li>In preview cards across your site</li>\n<li>When sharing on social media Use high-quality, relevant images that capture attention and support your content.</li>\n</ul>\n<h4>URL Slug</h4>\n<p>The unique portion of the URL for this post. For example, in \"yoursite.com/posts/my-first-post\", \"my-first-post\" is the slug.</p>\n<ul>\n<li>Use lowercase letters and hyphens</li>\n<li>Keep it short but descriptive</li>\n<li>Include relevant keywords when possible</li>\n<li>Avoid special characters</li>\n</ul>\n<h4>Content</h4>\n<p>The main body of your post, supporting rich text formatting including:</p>\n<ul>\n<li>Headings and subheadings</li>\n<li>Paragraphs with formatting (bold, italic, etc.)</li>\n<li>Links to other content</li>\n<li>Bulleted and numbered lists</li>\n<li>Images and media</li>\n</ul>\n<h4>Author</h4>\n<p>Select the team member who wrote the post. This helps:</p>\n<ul>\n<li>Give credit to your writers</li>\n<li>Build authority for your content</li>\n<li>Allow readers to find more posts by the same author</li>\n</ul>\n<h4>Publishing Options</h4>\n<ul>\n<li><strong>Draft</strong>: Work on the post privately</li>\n<li><strong>In Review</strong>: Submit for team review</li>\n<li><strong>Published</strong>: Make the post public</li>\n<li><strong>Schedule</strong>: Set a future publication date and time</li>\n</ul>\n<h3>Best Practices for Blog Posts</h3>\n<h4>Writing Tips</h4>\n<ul>\n<li>Start with a strong opening paragraph</li>\n<li>Use subheadings to break up long content</li>\n<li>Keep paragraphs short (3-4 sentences)</li>\n<li>Include relevant internal and external links</li>\n<li>End with a clear conclusion or call to action</li>\n</ul>\n<h4>SEO Considerations</h4>\n<ul>\n<li>Include your main keyword in the title</li>\n<li>Use descriptive alt text for images</li>\n<li>Write naturally for your audience</li>\n<li>Link to related content on your site</li>\n<li>Use appropriate heading hierarchy</li>\n</ul>\n<h4>Image Guidelines</h4>\n<ul>\n<li>Choose relevant, high-quality featured images</li>\n<li>Optimize images for web performance</li>\n<li>Use consistent image sizes</li>\n<li>Include descriptive alt text</li>\n<li>Consider image placement within content</li>\n</ul>",
@@ -23432,12 +23403,12 @@
         "field": "slug",
         "group": "meta_content",
         "hidden": false,
-        "interface": "extension-wpslug",
+        "interface": "input",
         "note": "Unique URL for this post (e.g., `yoursite.com/posts/{{your-slug}}`)",
         "options": {
           "font": "monospace",
           "placeholder": null,
-          "template": "{{title}}"
+          "slug": true
         },
         "readonly": false,
         "required": false,
@@ -23911,19 +23882,7 @@
         "interface": "super-header",
         "note": null,
         "options": {
-          "actions": [
-            {
-              "actionType": "flow",
-              "flow": {
-                "collection": "directus_flows",
-                "key": "d4bbac48-a444-49e0-aedb-9af5273b88df"
-              },
-              "icon": "image",
-              "label": "AI Image Generator",
-              "type": "normal"
-            }
-          ],
-          "help": "<p><strong>Need inspiration?</strong> Use Flows like AI Image Generator to generate on-brand images for your post using AI.</p>\n<p><em>Note: This uses OpenAI so you'll need to add your API key in the&nbsp;<a href=\"/admin/content/globals\">Globals</a> collection first.</em></p>",
+          "help": "<p><strong>Need inspiration?</strong> Use the built-in AI Assistant to generate on-brand images for your post.</p>\n<p><em>Note: Configure an AI provider under Settings &rarr; AI first.</em></p>",
           "icon": "image",
           "title": "Image"
         },
@@ -23956,19 +23915,7 @@
         "interface": "super-header",
         "note": null,
         "options": {
-          "actions": [
-            {
-              "actionType": "flow",
-              "flow": {
-                "collection": "directus_flows",
-                "key": "5915dd55-fff8-4d47-b48c-a0e42e5033c1"
-              },
-              "icon": "text_increase",
-              "label": "AI Ghostwriter",
-              "type": "normal"
-            }
-          ],
-          "help": "<p><strong>Need inspiration?</strong> Use Flows like AI Ghostwriter to help draft your content.</p>\n<p><em>Note: This uses OpenAI so you'll need to add your API key in the&nbsp;<a href=\"/admin/content/globals\">Globals</a> collection first.</em></p>",
+          "help": "<p><strong>Need inspiration?</strong> Use the built-in AI Assistant to help draft your content.</p>\n<p><em>Note: Configure an AI provider under Settings &rarr; AI first.</em></p>",
           "icon": "text_snippet",
           "title": "Content"
         },
@@ -24679,12 +24626,12 @@
         "field": "slug",
         "group": null,
         "hidden": false,
-        "interface": "extension-wpslug",
+        "interface": "input",
         "note": "Unique URL for this post (e.g., `yoursite.com/posts/{{your-slug}}`)",
         "options": {
           "font": "monospace",
           "placeholder": null,
-          "template": "{{title}}"
+          "slug": true
         },
         "readonly": false,
         "required": false,
@@ -25323,8 +25270,78 @@
       }
     },
     {
+      "collection": "directus_oauth_clients",
+      "field": "date_created",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_codes",
+      "field": "expires_at",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_codes",
+      "field": "used_at",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_consents",
+      "field": "client",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_tokens",
+      "field": "code_hash",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_tokens",
+      "field": "expires_at",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_tokens",
+      "field": "previous_session",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_tokens",
+      "field": "session",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_revisions",
+      "field": "activity",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
       "collection": "directus_revisions",
       "field": "parent",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_sessions",
+      "field": "oauth_client",
       "schema": {
         "is_indexed": true
       }
@@ -27533,31 +27550,6 @@
     },
     {
       "collection": "globals_translations",
-      "field": "languages_code",
-      "related_collection": "languages",
-      "meta": {
-        "junction_field": "globals",
-        "many_collection": "globals_translations",
-        "many_field": "languages_code",
-        "one_allowed_collections": null,
-        "one_collection": "languages",
-        "one_collection_field": null,
-        "one_deselect_action": "nullify",
-        "one_field": null,
-        "sort_field": "sort"
-      },
-      "schema": {
-        "table": "globals_translations",
-        "column": "languages_code",
-        "foreign_key_table": "languages",
-        "foreign_key_column": "code",
-        "constraint_name": "globals_translations_languages_code_foreign",
-        "on_update": "NO ACTION",
-        "on_delete": "SET NULL"
-      }
-    },
-    {
-      "collection": "globals_translations",
       "field": "globals",
       "related_collection": "globals",
       "meta": {
@@ -27577,6 +27569,31 @@
         "foreign_key_table": "globals",
         "foreign_key_column": "id",
         "constraint_name": "globals_translations_globals_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "globals_translations",
+      "field": "languages_code",
+      "related_collection": "languages",
+      "meta": {
+        "junction_field": "globals",
+        "many_collection": "globals_translations",
+        "many_field": "languages_code",
+        "one_allowed_collections": null,
+        "one_collection": "languages",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": "sort"
+      },
+      "schema": {
+        "table": "globals_translations",
+        "column": "languages_code",
+        "foreign_key_table": "languages",
+        "foreign_key_column": "code",
+        "constraint_name": "globals_translations_languages_code_foreign",
         "on_update": "NO ACTION",
         "on_delete": "SET NULL"
       }

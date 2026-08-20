@@ -64,8 +64,9 @@ export default async function Page({
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
 	const preview = searchParamsResolved.preview === 'true';
 	const token = preview ? process.env.DIRECTUS_SERVER_TOKEN : undefined;
-	// Live preview adds version = main which is not required when fetching the main version.
-	const fixedVersion = version !== 'main' ? version : undefined;
+	// version=published is the live key in Directus v12+; version=main was used by older Directus versions.
+	// Both represent published content and don't require an explicit version parameter.
+	const fixedVersion = version !== 'published' && version !== 'main' ? version : undefined;
 
 	try {
 		let page: Page;
@@ -96,7 +97,7 @@ export default async function Page({
 
 		const blocks: PageBlock[] = (page.blocks as PageBlock[]) || [];
 
-		return <PageClient sections={blocks} pageId={page.id} />;
+		return <PageClient sections={blocks} pageId={page.id} contentVersion={fixedVersion} />;
 	} catch (error) {
 		console.error('Error loading page:', error);
 		notFound();

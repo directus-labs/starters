@@ -18,7 +18,7 @@ import { ChevronDown, Menu } from 'lucide-react';
 import ThemeToggle from '../ui/ThemeToggle';
 import SearchModal from '@/components/ui/SearchModal';
 import Container from '@/components/ui/container';
-import { setAttr } from '@directus/visual-editing';
+import { setAttr } from '@/lib/directus/visualEditing';
 
 interface NavigationBarProps {
 	navigation: any;

@@ -6,29 +6,45 @@ export const buildZodSchema = (fields: FormField[]) => {
 
   for (const field of fields) {
     let fieldSchema: z.ZodTypeAny;
+    const label = field.label || field.name;
+    const allowedChoices = new Set(field.choices?.map((choice) => choice.value) ?? []);
 
     switch (field.type) {
       case 'checkbox':
         fieldSchema = z.boolean().default(false);
+        if (field.required) {
+          fieldSchema = fieldSchema.refine((value) => value === true, `${label} is required`);
+        }
         break;
 
       case 'checkbox_group':
         fieldSchema = z.array(z.string()).default([]);
+        if (field.required) {
+          fieldSchema = fieldSchema.refine((value) => Array.isArray(value) && value.length > 0, `${label} is required`);
+        }
+        if (allowedChoices.size > 0) {
+          fieldSchema = fieldSchema.refine(
+            (value) =>
+              Array.isArray(value) && value.every((choice) => typeof choice === 'string' && allowedChoices.has(choice)),
+            `${label} contains an invalid option`,
+          );
+        }
         break;
 
       case 'radio':
+      case 'select':
         fieldSchema = z.string();
         break;
 
       case 'file':
         if (field.required) {
           fieldSchema = z.instanceof(File, {
-            message: `${field.label || field.name} is required`,
+            message: `${label} is required`,
           });
         } else {
           fieldSchema = z
             .instanceof(File, {
-              message: `${field.label || field.name} must be a valid file if provided`,
+              message: `${label} must be a valid file if provided`,
             })
             .or(z.undefined());
         }
@@ -99,6 +115,13 @@ export const buildZodSchema = (fields: FormField[]) => {
       }
     } else {
       fieldSchema = fieldSchema.or(z.literal('')).or(z.undefined());
+    }
+
+    if ((field.type === 'radio' || field.type === 'select') && allowedChoices.size > 0) {
+      fieldSchema = fieldSchema.refine(
+        (value) => value === undefined || value === '' || (typeof value === 'string' && allowedChoices.has(value)),
+        `${label} is invalid`,
+      );
     }
 
     if (field.name) {

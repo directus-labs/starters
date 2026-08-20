@@ -5,26 +5,52 @@ import type { Language } from '#shared/types/schema';
 
 export default defineSitemapEventHandler(async () => {
 	try {
+		const token = getDirectusServerToken();
+
 		// Fetch all languages to build sitemap with alternate language links
 		const languagesPromise = directusServer.request(
-			readItems('languages', {
-				fields: ['code', 'name'],
-				sort: ['code'],
-			}),
+			token
+				? withToken(
+						token,
+						readItems('languages', {
+							fields: ['code', 'name'],
+							sort: ['code'],
+						}),
+					)
+				: readItems('languages', {
+						fields: ['code', 'name'],
+						sort: ['code'],
+					}),
 		) as Promise<Language[]>;
 
 		const pagesPromise = directusServer.request(
-			readItems('pages', {
-				fields: ['permalink'],
-				filter: { status: { _eq: 'published' } },
-			}),
+			token
+				? withToken(
+						token,
+						readItems('pages', {
+							fields: ['permalink'],
+							filter: { status: { _eq: 'published' } },
+						}),
+					)
+				: readItems('pages', {
+						fields: ['permalink'],
+						filter: { status: { _eq: 'published' } },
+					}),
 		);
 
 		const postsPromise = directusServer.request(
-			readItems('posts', {
-				filter: { status: { _eq: 'published' } },
-				fields: ['slug'],
-			}),
+			token
+				? withToken(
+						token,
+						readItems('posts', {
+							filter: { status: { _eq: 'published' } },
+							fields: ['slug'],
+						}),
+					)
+				: readItems('posts', {
+						filter: { status: { _eq: 'published' } },
+						fields: ['slug'],
+					}),
 		);
 
 		const [languages, pages, posts] = await Promise.all([languagesPromise, pagesPromise, postsPromise]);
