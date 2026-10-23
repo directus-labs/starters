@@ -1,11 +1,11 @@
 import { BlockPost, Page, PageBlock, Post, Redirect, Schema } from '@/types/directus-schema';
 import { useDirectus } from './directus';
-import { readItems, aggregate, readItem, readSingleton, withToken, QueryFilter } from '@directus/sdk';
+import { readItems, aggregate, readItem, readSingleton, withToken, QueryFilter, type RestCommand } from '@directus/sdk';
 import { RedirectError } from '../redirects';
 import { formatDirectusRequestError } from './directus-utils';
 
 /** Apply auth only when a token is provided (preview/draft). Public reads stay unauthenticated. */
-function maybeWithToken<T extends object>(token: string | undefined, request: T) {
+function maybeWithToken<Schema, Output>(token: string | undefined, request: RestCommand<Output, Schema>) {
 	return token ? withToken(token, request) : request;
 }
 
