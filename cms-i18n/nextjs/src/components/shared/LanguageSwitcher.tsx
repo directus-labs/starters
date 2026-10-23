@@ -28,7 +28,8 @@ export default function LanguageSwitcher({ currentLocale, supportedLocales, loca
 		const pathWithoutLocale = removeLocaleFromPath(pathname);
 		const newPath = addLocaleToPath(pathWithoutLocale, newLocale);
 
-		window.location.href = newPath;
+		// Keep the query string so live preview params (preview, version) survive the locale switch
+		window.location.href = newPath + window.location.search;
 	};
 
 	const allLocales = [DEFAULT_LOCALE, ...supportedLocales.filter((locale) => locale !== DEFAULT_LOCALE)];
