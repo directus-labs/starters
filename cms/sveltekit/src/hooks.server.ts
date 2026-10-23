@@ -1,5 +1,6 @@
 import type { Handle } from '@sveltejs/kit';
 import { redirect as svelteRedirect } from '@sveltejs/kit';
+import { PUBLIC_DIRECTUS_URL } from '$env/static/public';
 import type { SvelteRedirect } from '$lib/directus/fetchRedirects';
 import { fetchRedirects } from '$lib/directus/fetchRedirects';
 
@@ -28,5 +29,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		throw svelteRedirect(match.permanent ? 301 : 302, match.destination);
 	}
 
-	return resolve(event);
+	const response = await resolve(event);
+	const frameAncestors = ["'self'", PUBLIC_DIRECTUS_URL].filter(Boolean).join(' ');
+	response.headers.set('Content-Security-Policy', `frame-ancestors ${frameAncestors}`);
+
+	return response;
 };

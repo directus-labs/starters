@@ -27,7 +27,7 @@ const version = rawVersion !== 'published' && rawVersion !== 'main' ? rawVersion
 const preview = query.get('preview') === 'true';
 const token = preview ? import.meta.env.DIRECTUS_SERVER_TOKEN || '' : '';
 
-const isDraft = preview || (!!version && version !== 'published');
+const isDraft = preview;
 
 let post: Post | null = null;
 try {

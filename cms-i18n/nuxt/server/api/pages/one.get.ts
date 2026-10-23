@@ -44,9 +44,8 @@ export default defineEventHandler(async (event) => {
 		throw createError({ statusCode: 404, statusMessage: 'Page version not found' });
 	}
 
-	// Use the server token explicitly so licensed translation deep queries work without
-	// making the shared Directus client privileged by default.
-	const token = getDirectusServerToken();
+	// Preview/draft reads use the server token; published public reads stay unauthenticated.
+	const token = isPreview ? getDirectusServerToken() : null;
 
 	// Build page fields with translation support
 	const pageFields = buildPageFields(includeTranslations);
