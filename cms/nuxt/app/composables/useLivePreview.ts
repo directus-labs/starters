@@ -1,9 +1,9 @@
 export function useLivePreview() {
 	return usePreviewMode({
-		// Enable preview mode when preview param exists in URL
+		// Match Directus live preview: only enable for preview=true
 		shouldEnable: () => {
 			const route = useRoute();
-			return !!route.query.preview;
+			return route.query.preview === 'true';
 		},
 	});
 }

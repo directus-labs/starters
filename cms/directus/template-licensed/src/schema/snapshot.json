@@ -886,7 +886,7 @@
           "blocks.background"
         ],
         "note": "Dynamic page builder",
-        "preview_url": "http://localhost:3000{{permalink}}?preview=true&version={{$version}}",
+        "preview_url": "{{$preview_base_url}}{{permalink}}?preview=true&version={{$version}}",
         "singleton": false,
         "sort": 1,
         "sort_field": "sort",
@@ -925,7 +925,7 @@
           "seo"
         ],
         "note": "Individual blog posts",
-        "preview_url": "http://localhost:3000/blog/{{slug}}?preview=true&version={{$version}}",
+        "preview_url": "{{$preview_base_url}}/blog/{{slug}}?preview=true&version={{$version}}",
         "singleton": false,
         "sort": 2,
         "sort_field": "sort",

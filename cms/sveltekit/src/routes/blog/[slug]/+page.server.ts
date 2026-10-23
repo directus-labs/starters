@@ -17,7 +17,7 @@ export const load = (async (event) => {
 	// Neither key requires an explicit version parameter — strip both to fetch the default published version.
 	version = version !== 'published' && version !== 'main' ? version : undefined;
 
-	const isDraft = preview || (!!version && version !== 'published');
+	const isDraft = preview;
 
 	try {
 		let postId = id;

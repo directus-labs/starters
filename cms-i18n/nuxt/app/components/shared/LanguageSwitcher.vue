@@ -21,7 +21,8 @@ async function handleLanguageChange(newLocale: Locale) {
 
 	// Use hard navigation to ensure all data (header/footer) is refreshed
 	// This is necessary because the layout data needs to be re-fetched for the new locale
-	await navigateTo(newPath, { external: true });
+	// Keep the query string so live preview params (preview, version) survive the locale switch
+	await navigateTo(newPath + window.location.search, { external: true });
 }
 
 // Build ordered list with default locale first

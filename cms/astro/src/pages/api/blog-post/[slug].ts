@@ -32,7 +32,7 @@ export const GET: APIRoute = async ({ request }) => {
 
   try {
     let postId = id;
-    const isDraft = preview || (!!version && version !== 'published');
+    const isDraft = preview;
 
     if (version && !postId) {
       const foundPostId = await getPostIdBySlug(slug, token);
