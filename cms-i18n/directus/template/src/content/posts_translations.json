@@ -9,7 +9,7 @@
     "date_updated": null,
     "posts": "f7845a69-edcb-4163-a2a9-fb82b64475c5",
     "languages_code": "fr-FR",
-    "content": "<p>Les lapins, c’est étonnant :</p><ol><li>Vision à 360°.</li><li>Jusqu’à 72 km/h.</li><li>Herbivores stricts.</li><li>Dents qui poussent sans cesse.</li><li>Pattes arrière puissantes.</li><li>Très sociaux.</li><li>Grande fécondité.</li><li>Bonne mémoire.</li></ol>",
+    "content": "<p>Les lapins, c’est étonnant :</p><ol><li><p>Vision à 360°.</p></li><li><p>Jusqu’à 72 km/h.</p></li><li><p>Herbivores stricts.</p></li><li><p>Dents qui poussent sans cesse.</p></li><li><p>Pattes arrière puissantes.</p></li><li><p>Très sociaux.</p></li><li><p>Grande fécondité.</p></li><li><p>Bonne mémoire.</p></li></ol>",
     "slug": "rabbit-facts-that-will-melt-your-mind",
     "title": "Des faits sur les lapins qui vont te surprendre",
     "description": "Des curiosités qui montrent pourquoi les lapins sont fascinants."
@@ -39,7 +39,7 @@
     "date_updated": null,
     "posts": "a5068543-fdd1-4773-b6c3-43b4c222d377",
     "languages_code": "fr-FR",
-    "content": "<p>Indispensables sur Mac :</p><ol><li><strong>VS Code</strong> – éditeur extensible.</li><li><strong>iTerm2</strong> – terminal avancé.</li><li><strong>Homebrew</strong> – <code>brew install</code>.</li><li><strong>Alfred</strong> – lancement/automatisation.</li><li><strong>Postman</strong> – tests d’API.</li><li><strong>Magnet</strong> – organisation des fenêtres.</li><li><strong>Slack</strong> – communication d’équipe.</li></ol>",
+    "content": "<p>Indispensables sur Mac :</p><ol><li><p><strong>VS Code</strong> – éditeur extensible.</p></li><li><p><strong>iTerm2</strong> – terminal avancé.</p></li><li><p><strong>Homebrew</strong> – <code>brew install</code>.</p></li><li><p><strong>Alfred</strong> – lancement/automatisation.</p></li><li><p><strong>Postman</strong> – tests d’API.</p></li><li><p><strong>Magnet</strong> – organisation des fenêtres.</p></li><li><p><strong>Slack</strong> – communication d’équipe.</p></li></ol>",
     "slug": "pirates-guide-to-productivity-web-developers-favorite-tools-on-macs",
     "title": "Guide pirate de productivité : outils Mac préférés des devs web",
     "description": "Un pirate liste les outils de productivité incontournables sur Mac."
@@ -69,7 +69,7 @@
     "date_updated": "2025-12-23T22:44:23.208Z",
     "posts": "ba559a1e-5b0c-4932-ab97-b1ab4ca69955",
     "languages_code": "es-ES",
-    "content": "<p>Los conejos steampunk son la encarnación de la eficiencia y la innovación. Desde los engranajes en sus sombreros de copa hasta el mecanismo en sus colas, están revolucionando la forma en que trabajamos y vivimos.</p><h2>¿Qué son los conejos steampunk?</h2><p>No solo son adorables: nunca duermen, trabajan sin parar y son multitarea. Con sus apéndices mecánicos pueden escribir, ensamblar y pintar, todo mientras toman té.</p><h2>Beneficios de los conejos steampunk</h2><ul><li>Siempre puntuales gracias a relojes integrados.</li><li>No se enferman ni toman vacaciones: productividad constante.</li><li>Aportan encanto y un toque victoriano a la oficina.</li></ul><p>En resumen: los conejos steampunk son el futuro del trabajo. ¡Abracemos a nuestros nuevos conejos jefes!</p>",
+    "content": "<p>Los conejos steampunk son la encarnación de la eficiencia y la innovación. Desde los engranajes en sus sombreros de copa hasta el mecanismo en sus colas, están revolucionando la forma en que trabajamos y vivimos.</p><h2>¿Qué son los conejos steampunk?</h2><p>No solo son adorables: nunca duermen, trabajan sin parar y son multitarea. Con sus apéndices mecánicos pueden escribir, ensamblar y pintar, todo mientras toman té.</p><h2>Beneficios de los conejos steampunk</h2><ul><li><p>Siempre puntuales gracias a relojes integrados.</p></li><li><p>No se enferman ni toman vacaciones: productividad constante.</p></li><li><p>Aportan encanto y un toque victoriano a la oficina.</p></li></ul><p>En resumen: los conejos steampunk son el futuro del trabajo. ¡Abracemos a nuestros nuevos conejos jefes!</p>",
     "slug": "por-que-los-conejos-steampunk-son-el-futuro-del-trabajo",
     "title": "Por qué los conejos steampunk son el futuro del trabajo",
     "description": "Descubre cómo los conejos steampunk, eficientes y encantadores, podrían ser el futuro del trabajo."
@@ -114,7 +114,7 @@
     "date_updated": null,
     "posts": "ba559a1e-5b0c-4932-ab97-b1ab4ca69955",
     "languages_code": "ar-SA",
-    "content": "<p>أرانب الستيمبانك تجسد الكفاءة والابتكار؛ من التروس في القبعة إلى الآلية في الذيل، تعيد تصور طريقة عملنا.</p><h2>ما هي أرانب الستيمبانك؟</h2><p>لا تنام، تعمل باستمرار، ومتعددة المهام؛ يمكنها الكتابة والتجميع والرسم وكأنها آلة دقيقة.</p><h2>الفوائد</h2><ul><li>دائمة الانضباط بفضل الساعات المدمجة.</li><li>لا إجازات ولا مرض، إنتاجية ثابتة.</li><li>تضيف طابعاً فيكتورياً ساحراً للمكتب.</li></ul><p>الخلاصة: أرانب الستيمبانك ترمز لمستقبل عمل أكثر إنتاجية وأناقة.</p>",
+    "content": "<p>أرانب الستيمبانك تجسد الكفاءة والابتكار؛ من التروس في القبعة إلى الآلية في الذيل، تعيد تصور طريقة عملنا.</p><h2>ما هي أرانب الستيمبانك؟</h2><p>لا تنام، تعمل باستمرار، ومتعددة المهام؛ يمكنها الكتابة والتجميع والرسم وكأنها آلة دقيقة.</p><h2>الفوائد</h2><ul><li><p>دائمة الانضباط بفضل الساعات المدمجة.</p></li><li><p>لا إجازات ولا مرض، إنتاجية ثابتة.</p></li><li><p>تضيف طابعاً فيكتورياً ساحراً للمكتب.</p></li></ul><p>الخلاصة: أرانب الستيمبانك ترمز لمستقبل عمل أكثر إنتاجية وأناقة.</p>",
     "slug": "why-steampunk-rabbits-are-the-future-of-work",
     "title": "لماذا أرانب الستيمبانك هي مستقبل العمل",
     "description": "أرانب الستيمبانك تجمع بين الكفاءة والجاذبية والعمل بلا توقف، ما يجعلها استعارة مستقبلية للإنتاجية."
@@ -144,7 +144,7 @@
     "date_updated": null,
     "posts": "f7845a69-edcb-4163-a2a9-fb82b64475c5",
     "languages_code": "ar-SA",
-    "content": "<p>الأرانب مذهلة:</p><ol><li>رؤية 360° لاكتشاف المفترسات.</li><li>سرعة تصل إلى 72 كم/س.</li><li>نباتية صارمة: تبن وخضار وأوراق.</li><li>أسنان تنمو باستمرار وتحتاج للاحتكاك.</li><li>أرجل خلفية قوية للقفز والهروب.</li><li>كائنات اجتماعية تحب الرفقة.</li><li>خصوبة عالية.</li><li>ذاكرة جيدة تتعرف على أصحابها.</li></ol>",
+    "content": "<p>الأرانب مذهلة:</p><ol><li><p>رؤية 360° لاكتشاف المفترسات.</p></li><li><p>سرعة تصل إلى 72 كم/س.</p></li><li><p>نباتية صارمة: تبن وخضار وأوراق.</p></li><li><p>أسنان تنمو باستمرار وتحتاج للاحتكاك.</p></li><li><p>أرجل خلفية قوية للقفز والهروب.</p></li><li><p>كائنات اجتماعية تحب الرفقة.</p></li><li><p>خصوبة عالية.</p></li><li><p>ذاكرة جيدة تتعرف على أصحابها.</p></li></ol>",
     "slug": "rabbit-facts-that-will-melt-your-mind",
     "title": "حقائق عن الأرانب ستدهشك",
     "description": "لمحة عن قدرات الأرانب المدهشة وسلوكها الفريد."
@@ -174,7 +174,7 @@
     "date_updated": null,
     "posts": "a5068543-fdd1-4773-b6c3-43b4c222d377",
     "languages_code": "ar-SA",
-    "content": "<p>أدوات ضرورية على ماك:</p><ol><li><strong>VS Code:</strong> محرر مرن بامتدادات.</li><li><strong>iTerm2:</strong> طرفية متقدمة مع نوافذ.</li><li><strong>Homebrew:</strong> تثبيت سريع بـ <code>brew install</code>.</li><li><strong>Alfred:</strong> مشغل وأتمتة.</li><li><strong>Postman:</strong> اختبار وتوثيق API.</li><li><strong>Magnet:</strong> تنظيم النوافذ بالسحب.</li><li><strong>Slack:</strong> تواصل الفريق بتكاملات.</li></ol><p>مع هذه الكنوز تبحر أسرع في بحار الكود.</p>",
+    "content": "<p>أدوات ضرورية على ماك:</p><ol><li><p><strong>VS Code:</strong> محرر مرن بامتدادات.</p></li><li><p><strong>iTerm2:</strong> طرفية متقدمة مع نوافذ.</p></li><li><p><strong>Homebrew:</strong> تثبيت سريع بـ <code>brew install</code>.</p></li><li><p><strong>Alfred:</strong> مشغل وأتمتة.</p></li><li><p><strong>Postman:</strong> اختبار وتوثيق API.</p></li><li><p><strong>Magnet:</strong> تنظيم النوافذ بالسحب.</p></li><li><p><strong>Slack:</strong> تواصل الفريق بتكاملات.</p></li></ol><p>مع هذه الكنوز تبحر أسرع في بحار الكود.</p>",
     "slug": "pirates-guide-to-productivity-web-developers-favorite-tools-on-macs",
     "title": "دليل قرصان للإنتاجية: أدوات المطورين المفضلة على ماك",
     "description": "أبرز أدوات الإنتاجية للمطورين على ماك بلمسة بحرية."
@@ -204,7 +204,7 @@
     "date_updated": null,
     "posts": "ba559a1e-5b0c-4932-ab97-b1ab4ca69955",
     "languages_code": "de-DE",
-    "content": "<p>Steampunk-Kaninchen verkörpern Effizienz und Innovation; mit Zahnrädern im Zylinder und Uhrwerk im Schwanz stellen sie Arbeit neu dar.</p><h2>Was sind Steampunk-Kaninchen?</h2><p>Sie schlafen nicht, arbeiten pausenlos und sind multitaskingfähig – tippen, montieren, malen.</p><h2>Vorteile</h2><ul><li>Pünktlich dank integrierter Uhren.</li><li>Keine Krankheitstage, konstante Produktivität.</li><li>Bringen viktorianischen Charme ins Büro.</li></ul><p>Fazit: Steampunk-Kaninchen stehen für eine produktivere Zukunft.</p>",
+    "content": "<p>Steampunk-Kaninchen verkörpern Effizienz und Innovation; mit Zahnrädern im Zylinder und Uhrwerk im Schwanz stellen sie Arbeit neu dar.</p><h2>Was sind Steampunk-Kaninchen?</h2><p>Sie schlafen nicht, arbeiten pausenlos und sind multitaskingfähig – tippen, montieren, malen.</p><h2>Vorteile</h2><ul><li><p>Pünktlich dank integrierter Uhren.</p></li><li><p>Keine Krankheitstage, konstante Produktivität.</p></li><li><p>Bringen viktorianischen Charme ins Büro.</p></li></ul><p>Fazit: Steampunk-Kaninchen stehen für eine produktivere Zukunft.</p>",
     "slug": "why-steampunk-rabbits-are-the-future-of-work",
     "title": "Warum Steampunk-Kaninchen die Zukunft der Arbeit sind",
     "description": "Steampunk-Kaninchen vereinen Effizienz, Charme und Ausdauer – eine Metapher für produktive Arbeit."
@@ -234,7 +234,7 @@
     "date_updated": null,
     "posts": "f7845a69-edcb-4163-a2a9-fb82b64475c5",
     "languages_code": "de-DE",
-    "content": "<p>Kaninchen überraschen:</p><ol><li>360°-Sicht für Sicherheit.</li><li>Bis 72 km/h schnell.</li><li>Strikte Pflanzenfresser.</li><li>Zähne wachsen ständig.</li><li>Starke Hinterläufe.</li><li>Sozial und kontaktfreudig.</li><li>Hohe Fruchtbarkeit.</li><li>Gutes Gedächtnis.</li></ol>",
+    "content": "<p>Kaninchen überraschen:</p><ol><li><p>360°-Sicht für Sicherheit.</p></li><li><p>Bis 72 km/h schnell.</p></li><li><p>Strikte Pflanzenfresser.</p></li><li><p>Zähne wachsen ständig.</p></li><li><p>Starke Hinterläufe.</p></li><li><p>Sozial und kontaktfreudig.</p></li><li><p>Hohe Fruchtbarkeit.</p></li><li><p>Gutes Gedächtnis.</p></li></ol>",
     "slug": "rabbit-facts-that-will-melt-your-mind",
     "title": "Kaninchen-Fakten, die dich verblüffen werden",
     "description": "Kuriose Fakten, die zeigen, wie faszinierend Kaninchen sind."
@@ -249,7 +249,7 @@
     "date_updated": null,
     "posts": "a5068543-fdd1-4773-b6c3-43b4c222d377",
     "languages_code": "de-DE",
-    "content": "<p>Must-haves auf dem Mac:</p><ol><li><strong>VS Code</strong> – flexibler Editor.</li><li><strong>iTerm2</strong> – Terminal mit Panels.</li><li><strong>Homebrew</strong> – <code>brew install</code>.</li><li><strong>Alfred</strong> – Launcher/Automatisierung.</li><li><strong>Postman</strong> – APIs testen.</li><li><strong>Magnet</strong> – Fenster anordnen.</li><li><strong>Slack</strong> – Teamkommunikation.</li></ol>",
+    "content": "<p>Must-haves auf dem Mac:</p><ol><li><p><strong>VS Code</strong> – flexibler Editor.</p></li><li><p><strong>iTerm2</strong> – Terminal mit Panels.</p></li><li><p><strong>Homebrew</strong> – <code>brew install</code>.</p></li><li><p><strong>Alfred</strong> – Launcher/Automatisierung.</p></li><li><p><strong>Postman</strong> – APIs testen.</p></li><li><p><strong>Magnet</strong> – Fenster anordnen.</p></li><li><p><strong>Slack</strong> – Teamkommunikation.</p></li></ol>",
     "slug": "pirates-guide-to-productivity-web-developers-favorite-tools-on-macs",
     "title": "Piraten-Produktivitätsguide: Lieblings-Tools auf dem Mac",
     "description": "Ein Pirat listet die wichtigsten Produktivitätstools für Entwickler auf dem Mac."
@@ -279,7 +279,7 @@
     "date_updated": null,
     "posts": "ba559a1e-5b0c-4932-ab97-b1ab4ca69955",
     "languages_code": "fr-FR",
-    "content": "<p>Les lapins steampunk incarnent l’efficacité et l’innovation, avec engrenages et mécanique qui réinventent notre façon de travailler.</p><h2>Qu’est-ce qu’un lapin steampunk ?</h2><p>Ils ne dorment pas, travaillent sans relâche et sont multitâches : taper, assembler, peindre.</p><h2>Atouts</h2><ul><li>Toujours ponctuels grâce aux horloges intégrées.</li><li>Pas de congés ni de maladie : productivité continue.</li><li>Apportent un charme victorien au bureau.</li></ul><p>En bref, ils symbolisent un futur de travail plus productif.</p>",
+    "content": "<p>Les lapins steampunk incarnent l’efficacité et l’innovation, avec engrenages et mécanique qui réinventent notre façon de travailler.</p><h2>Qu’est-ce qu’un lapin steampunk ?</h2><p>Ils ne dorment pas, travaillent sans relâche et sont multitâches : taper, assembler, peindre.</p><h2>Atouts</h2><ul><li><p>Toujours ponctuels grâce aux horloges intégrées.</p></li><li><p>Pas de congés ni de maladie : productivité continue.</p></li><li><p>Apportent un charme victorien au bureau.</p></li></ul><p>En bref, ils symbolisent un futur de travail plus productif.</p>",
     "slug": "why-steampunk-rabbits-are-the-future-of-work",
     "title": "Pourquoi les lapins steampunk sont l’avenir du travail",
     "description": "Efficacité, charme et endurance : les lapins steampunk comme métaphore d’une productivité accrue."
@@ -309,7 +309,7 @@
     "date_updated": "2025-12-23T22:44:23.219Z",
     "posts": "f7845a69-edcb-4163-a2a9-fb82b64475c5",
     "languages_code": "es-ES",
-    "content": "<p>Los conejos son más sorprendentes de lo que parecen:</p><ol><li>Visión de 360° para detectar depredadores.</li><li>Corren hasta 72 km/h.</li><li>Herbívoros estrictos: heno, verduras y hojas.</li><li>Dientes que crecen sin parar y necesitan desgastarse.</li><li>Patas traseras poderosas para saltar y escapar.</li><li>Animales sociales que disfrutan la compañía.</li><li>Reproducción muy prolífica.</li><li>Buena memoria: recuerdan a sus cuidadores.</li></ol><p>En definitiva, los conejos son criaturas asombrosas llenas de curiosidades.</p>",
+    "content": "<p>Los conejos son más sorprendentes de lo que parecen:</p><ol><li><p>Visión de 360° para detectar depredadores.</p></li><li><p>Corren hasta 72 km/h.</p></li><li><p>Herbívoros estrictos: heno, verduras y hojas.</p></li><li><p>Dientes que crecen sin parar y necesitan desgastarse.</p></li><li><p>Patas traseras poderosas para saltar y escapar.</p></li><li><p>Animales sociales que disfrutan la compañía.</p></li><li><p>Reproducción muy prolífica.</p></li><li><p>Buena memoria: recuerdan a sus cuidadores.</p></li></ol><p>En definitiva, los conejos son criaturas asombrosas llenas de curiosidades.</p>",
     "slug": "datos-sobre-conejos-que-te-sorprenderan",
     "title": "Datos sobre conejos que te sorprenderán",
     "description": "Datos curiosos que muestran por qué los conejos son animales fascinantes."
@@ -339,7 +339,7 @@
     "date_updated": "2025-12-23T22:44:23.226Z",
     "posts": "a5068543-fdd1-4773-b6c3-43b4c222d377",
     "languages_code": "es-ES",
-    "content": "<p>Ahoy, grumete. Estas son las herramientas favoritas de productividad en Mac:</p><ol><li><strong>Visual Studio Code:</strong> editor flexible con extensiones.</li><li><strong>iTerm2:</strong> terminal avanzada con paneles y atajos.</li><li><strong>Homebrew:</strong> instala software con <code>brew install</code>.</li><li><strong>Alfred:</strong> lanzador y automatizador de flujos.</li><li><strong>Postman:</strong> prueba y documenta APIs.</li><li><strong>Magnet:</strong> organiza ventanas arrastrando y ajustando.</li><li><strong>Slack:</strong> comunicación del equipo con integraciones.</li></ol><p>Equípate con estos tesoros y navega más rápido los mares del código.</p>",
+    "content": "<p>Ahoy, grumete. Estas son las herramientas favoritas de productividad en Mac:</p><ol><li><p><strong>Visual Studio Code:</strong> editor flexible con extensiones.</p></li><li><p><strong>iTerm2:</strong> terminal avanzada con paneles y atajos.</p></li><li><p><strong>Homebrew:</strong> instala software con <code>brew install</code>.</p></li><li><p><strong>Alfred:</strong> lanzador y automatizador de flujos.</p></li><li><p><strong>Postman:</strong> prueba y documenta APIs.</p></li><li><p><strong>Magnet:</strong> organiza ventanas arrastrando y ajustando.</p></li><li><p><strong>Slack:</strong> comunicación del equipo con integraciones.</p></li></ol><p>Equípate con estos tesoros y navega más rápido los mares del código.</p>",
     "slug": "pirates-guide-to-productivity-web-developers-favorite-tools-on-macs",
     "title": "Guía de productividad de un pirata: herramientas favoritas de desarrolladores web en Macs",
     "description": "Un pirata repasa las mejores herramientas de productividad para desarrolladores web en Mac."
