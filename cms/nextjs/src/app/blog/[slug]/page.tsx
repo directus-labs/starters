@@ -14,8 +14,9 @@ export default async function BlogPostPage({
 	const token = preview === 'true' ? process.env.DIRECTUS_SERVER_TOKEN : undefined;
 	// version=published is the live key in Directus v12+; version=main was used by older Directus versions.
 	// Both represent published content and don't require an explicit version parameter.
-	const isDraft = preview === 'true' || (!!version && version !== 'published' && version !== 'main');
-	const fixedVersion = version !== 'published' && version !== 'main' ? version : undefined;
+	const isDraft = preview === 'true';
+	// Versions are only read in preview mode; without preview=true, fall back to published content.
+	const fixedVersion = isDraft && version !== 'published' && version !== 'main' ? version : undefined;
 	try {
 		let postId = id;
 		let post: Post | null;

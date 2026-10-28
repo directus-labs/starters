@@ -50,7 +50,11 @@ export default defineEventHandler(async (event) => {
 	const { preview, id } = query;
 	// Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
 	// Neither key requires an explicit version parameter — strip both to fetch the default published version.
-	const version = String(query.version) !== 'published' && String(query.version) !== 'main' ? query.version : undefined;
+	// Versions are only read in preview mode; without preview=true, fall back to published content.
+	const version =
+		preview === 'true' && String(query.version) !== 'published' && String(query.version) !== 'main'
+			? query.version
+			: undefined;
 
 	// Use the server token from runtimeConfig when preview mode is enabled
 	const config = useRuntimeConfig();

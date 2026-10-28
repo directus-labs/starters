@@ -12,8 +12,11 @@ const permalink = withoutTrailingSlash(withLeadingSlash(route.path));
 
 // Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
 // Neither key requires an explicit version parameter — strip both to fetch the default published version.
+// Versions are only read in preview mode; without preview=true, fall back to published content.
 const contentVersion = computed(() =>
-	route.query.version !== 'published' && route.query.version !== 'main' ? (route.query.version as string) : undefined,
+	enabled.value && route.query.version !== 'published' && route.query.version !== 'main'
+		? (route.query.version as string)
+		: undefined,
 );
 
 const {

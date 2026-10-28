@@ -203,5 +203,35 @@
       "translations"
     ],
     "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+  },
+  {
+    "collection": "forms",
+    "action": "read",
+    "permissions": {
+      "_and": [
+        {
+          "is_active": {
+            "_eq": true
+          }
+        }
+      ]
+    },
+    "validation": {},
+    "presets": null,
+    "fields": [
+      "id",
+      "sort",
+      "title",
+      "is_active",
+      "meta_tabs",
+      "meta_fields",
+      "fields",
+      "submit_label",
+      "on_success",
+      "success_message",
+      "success_redirect_url",
+      "translations"
+    ],
+    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
   }
 ]

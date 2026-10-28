@@ -39,15 +39,15 @@ API.
 
 ### **Live Preview Setup**
 
-[Implementing Live Preview in Astro](https://directus.io/docs/tutorials/getting-started/implementing-live-preview-in-astro)
+[Directus Live Preview](https://docs.directus.io/guides/content/live-preview)
 
-- The live preview feature works seamlessly on deployed environments.
-- **For Local Development**: If using local Docker, the CSP configuration is provided in `.env.example`. See
-  [`../../directus/README.md`](../../directus/README.md#content-security-policy-csp-and-preview-issues) for details.
-- **For Directus Cloud**: Directus Cloud requires HTTPS for previews. You'll need to use HTTPS tunneling (ngrok,
-  localtunnel, etc.) or configure CSP in your Directus Cloud settings. See the
-  [main README troubleshooting section](../../README.md#preview-not-working---content-security-policy-csp-issues) for
-  details.
+- Preview URLs use `{{$preview_base_url}}`. Set **Settings → Project → Live Preview → Preview Base URL** per environment (defaults to `http://localhost:3000`). See [`../../directus/README.md`](../../directus/README.md#live-preview-host-preview-base-url).
+- If you customize a collection's Preview URL, keep `preview=true` alongside `version={{$version}}`. The site only loads content versions in preview mode; a `version` param on its own shows the published content.
+- Keep Directus `CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC` matched to that site origin.
+- This app sets `frame-ancestors` to include your Directus URL (`PUBLIC_DIRECTUS_URL`).
+- **For Local Development**: CSP for embedding is in Directus `.env.example`.
+- **For Directus Cloud**: Use HTTPS for the site and set Preview Base URL + `FRAME_SRC` accordingly. See the
+  [main README troubleshooting section](../../README.md#preview-not-working---content-security-policy-csp-issues).
 
 ---
 

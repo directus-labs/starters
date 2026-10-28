@@ -8,9 +8,10 @@ export const GET: APIRoute = async ({ request }) => {
   const id = url.searchParams.get('id');
   // Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
   // Neither key requires an explicit version parameter — strip both to fetch the default published version.
-  const rawVersion = url.searchParams.get('version') || '';
-  const version = rawVersion !== 'main' && rawVersion !== 'published' ? rawVersion : null;
+  // Versions are only read in preview mode; without preview=true, fall back to published content.
   const preview = url.searchParams.get('preview') === 'true';
+  const rawVersion = url.searchParams.get('version') || '';
+  const version = preview && rawVersion !== 'main' && rawVersion !== 'published' ? rawVersion : null;
   const token = preview ? import.meta.env.DIRECTUS_SERVER_TOKEN : undefined;
 
   try {

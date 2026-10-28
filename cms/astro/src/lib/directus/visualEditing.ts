@@ -46,9 +46,11 @@ function resolvePageContext(): PagePreviewContext {
 	}
 
 	const params = new URLSearchParams(window.location.search);
+	// Versions are only read in preview mode, matching the page and API routes.
+	const preview = params.get('preview') === 'true';
 	const rawVersion = params.get('version') || '';
 	const contentVersion =
-		rawVersion !== 'published' && rawVersion !== 'main' ? rawVersion : undefined;
+		preview && rawVersion !== 'published' && rawVersion !== 'main' ? rawVersion : undefined;
 
 	return {
 		pageId: params.get('id') || pageId,

@@ -27,10 +27,12 @@ export default defineEventHandler(async (event) => {
 
 	const { preview, permalink: rawPermalink, id, version: rawVersion } = query;
 
+	const isPreview = preview === 'true';
 	// Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
 	// Neither key requires an explicit version parameter — strip both to fetch the default published version.
-	const version = String(rawVersion) !== 'published' && String(rawVersion) !== 'main' ? rawVersion : undefined;
-	const isPreview = preview === 'true';
+	// Versions are only read in preview mode; without preview=true, fall back to published content.
+	const version =
+		isPreview && String(rawVersion) !== 'published' && String(rawVersion) !== 'main' ? rawVersion : undefined;
 
 	// Get locale from event (set by middleware or query param)
 	const locale = getLocaleFromEvent(event);
@@ -40,13 +42,8 @@ export default defineEventHandler(async (event) => {
 	// This handles various URL formats consistently
 	const permalink = withoutTrailingSlash(withLeadingSlash(String(rawPermalink)));
 
-	if (version && !isPreview) {
-		throw createError({ statusCode: 404, statusMessage: 'Page version not found' });
-	}
-
-	// Use the server token explicitly so licensed translation deep queries work without
-	// making the shared Directus client privileged by default.
-	const token = getDirectusServerToken();
+	// Preview/draft reads use the server token; published public reads stay unauthenticated.
+	const token = isPreview ? getDirectusServerToken() : null;
 
 	// Build page fields with translation support
 	const pageFields = buildPageFields(includeTranslations);

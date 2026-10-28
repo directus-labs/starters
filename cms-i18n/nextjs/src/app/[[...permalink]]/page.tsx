@@ -20,10 +20,9 @@ export async function generateMetadata({
 	const resolvedPermalink = resolvePermalink(permalink);
 
 	const preview = searchParamsResolved.preview === 'true';
-	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
 
-	// Skip metadata generation for preview/versioned content
-	if (preview || version) {
+	// Skip metadata generation for preview content
+	if (preview) {
 		return {
 			title: 'Preview Mode',
 			description: 'Content preview',
@@ -82,9 +81,11 @@ export default async function Page({
 	const id = typeof searchParamsResolved.id === 'string' ? searchParamsResolved.id : '';
 	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
 	const preview = searchParamsResolved.preview === 'true';
+	const token = preview ? process.env.DIRECTUS_SERVER_TOKEN : undefined;
 	// version=published is the live key in Directus v12+; version=main was used by older Directus versions.
 	// Both represent published content and don't require an explicit version parameter.
-	const fixedVersion = version === 'published' || version === 'main' ? undefined : version;
+	// Versions are only read in preview mode; without preview=true, fall back to published content.
+	const fixedVersion = !preview || version === 'published' || version === 'main' ? undefined : version;
 
 	const locale = await getLocaleFromHeaders();
 
@@ -98,16 +99,16 @@ export default async function Page({
 		// 3. Fail gracefully if the page doesn't exist for that version
 		if (fixedVersion && id) {
 			// We have both ID and version - fetch the specific version
-			page = await fetchPageDataById(id, fixedVersion, undefined, locale);
+			page = await fetchPageDataById(id, fixedVersion, token, locale);
 		} else if (fixedVersion && !id) {
 			// We have version but no ID - look up the page ID first
-			const pageId = await getPageIdByPermalink(resolvedPermalink);
+			const pageId = await getPageIdByPermalink(resolvedPermalink, token);
 			if (!pageId) {
 				notFound();
 			}
-			page = await fetchPageDataById(pageId, fixedVersion, undefined, locale);
+			page = await fetchPageDataById(pageId, fixedVersion, token, locale);
 		} else {
-			page = await fetchPageData(resolvedPermalink, 1, locale, undefined, preview);
+			page = await fetchPageData(resolvedPermalink, 1, locale, token, preview);
 		}
 
 		if (!page || !page.blocks) {

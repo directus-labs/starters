@@ -1,8 +1,13 @@
 import { BlockPost, Page, PageBlock, Post, Redirect, Schema } from '@/types/directus-schema';
 import { useDirectus } from './directus';
-import { readItems, aggregate, readItem, readSingleton, withToken, QueryFilter } from '@directus/sdk';
+import { readItems, aggregate, readItem, readSingleton, withToken, QueryFilter, type RestCommand } from '@directus/sdk';
 import { RedirectError } from '../redirects';
 import { formatDirectusRequestError } from './directus-utils';
+
+/** Apply auth only when a token is provided (preview/draft). Public reads stay unauthenticated. */
+function maybeWithToken<Schema, Output>(token: string | undefined, request: RestCommand<Output, Schema>) {
+	return token ? withToken(token, request) : request;
+}
 
 /**
  * Page fields configuration for Directus queries
@@ -107,12 +112,10 @@ const pageFields = [
  */
 export const fetchPageData = async (permalink: string, postPage = 1, token?: string, preview?: boolean) => {
 	const { directus } = useDirectus();
-	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
-
 	try {
 		const pageData = (await directus.request(
-			withToken(
-				effectiveToken as string,
+			maybeWithToken(
+				token,
 				readItems('pages', {
 					filter: preview
 						? { permalink: { _eq: permalink } }
@@ -186,12 +189,10 @@ export const fetchPageDataById = async (id: string, version?: string, token?: st
 	}
 
 	const { directus } = useDirectus();
-	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
-
 	try {
 		return (await directus.request(
-			withToken(
-				effectiveToken as string,
+			maybeWithToken(
+				token,
 				readItem('pages', id, {
 					version,
 					fields: pageFields as any,
@@ -216,12 +217,10 @@ export const getPageIdByPermalink = async (permalink: string, token?: string) =>
 	}
 
 	const { directus } = useDirectus();
-	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
-
 	try {
 		const pageData = (await directus.request(
-			withToken(
-				effectiveToken as string,
+			maybeWithToken(
+				token,
 				readItems('pages', {
 					filter: { permalink: { _eq: permalink } },
 					limit: 1,
@@ -247,12 +246,10 @@ export const getPostIdBySlug = async (slug: string, token?: string) => {
 	}
 
 	const { directus } = useDirectus();
-	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
-
 	try {
 		const postData = (await directus.request(
-			withToken(
-				effectiveToken as string,
+			maybeWithToken(
+				token,
 				readItems('posts', {
 					filter: { slug: { _eq: slug } },
 					limit: 1,
@@ -289,13 +286,11 @@ export const fetchPostByIdAndVersion = async (
 	}
 
 	const { directus } = useDirectus();
-	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
-
 	try {
 		const [postData, relatedPosts] = await Promise.all([
 			directus.request(
-				withToken(
-					effectiveToken as string,
+				maybeWithToken(
+					token,
 					readItem('posts', id, {
 						version,
 						fields: [
@@ -399,8 +394,6 @@ export const fetchPostBySlug = async (
 ): Promise<{ post: Post | null; relatedPosts: Post[] }> => {
 	const { directus } = useDirectus();
 	const { draft, token } = options || {};
-	const effectiveToken = token || process.env.DIRECTUS_SERVER_TOKEN;
-
 	try {
 		const filter: QueryFilter<Schema, Post> = draft
 			? { slug: { _eq: slug } }
@@ -408,8 +401,8 @@ export const fetchPostBySlug = async (
 
 		const [posts, relatedPosts] = await Promise.all([
 			directus.request<Post[]>(
-				withToken(
-					effectiveToken as string,
+				maybeWithToken(
+					token,
 					readItems<Schema, 'posts', any>('posts', {
 						filter,
 						limit: 1,
@@ -431,8 +424,8 @@ export const fetchPostBySlug = async (
 				),
 			),
 			directus.request<Post[]>(
-				withToken(
-					effectiveToken as string,
+				maybeWithToken(
+					token,
 					readItems<Schema, 'posts', any>('posts', {
 						filter: { slug: { _neq: slug }, status: { _eq: 'published' } },
 						limit: 2,

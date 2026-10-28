@@ -50,13 +50,14 @@ while `version=draft` (or any custom version key) fetches that version from the 
 
 ### **Live Preview Setup**
 
-[Directus Live Preview](https://docs.directus.io/guides/headless-cms/live-preview/nextjs.html)
+[Directus Live Preview](https://docs.directus.io/guides/content/live-preview)
 
-- The live preview feature works seamlessly on deployed environments.
-- To preview content on **localhost**, deploy your application to a staging environment.
-- **Important Note**: Directus employs Content Security Policies (CSPs) that block live previews on `localhost` for
-  security reasons. For a smooth preview experience, deploy the application to a cloud environment and use the
-  deployment URL for Directus previews.
+- Preview URLs use `{{$preview_base_url}}`. Set **Settings → Project → Live Preview → Preview Base URL** per environment (defaults to `http://localhost:3000`).
+- If you customize a collection's Preview URL, keep `preview=true` alongside `version={{$version}}`. The site only loads content versions in preview mode; a `version` param on its own shows the published content.
+- Keep Directus `CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC` matched to that site origin.
+- Studio opens the default-locale path. Use the **language switcher** in the preview iframe to view other locales.
+- **For Local Development**: CSP for embedding is in Directus `.env.example`. This app’s `frame-ancestors` must include your Directus URL (`NEXT_PUBLIC_DIRECTUS_URL`).
+- **For Directus Cloud**: Use HTTPS for the site and set Preview Base URL + `FRAME_SRC` accordingly.
 
 ---
 

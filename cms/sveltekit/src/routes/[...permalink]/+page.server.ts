@@ -10,7 +10,8 @@ export const load = (async (event) => {
 
 	// Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
 	// Neither key requires an explicit version parameter — strip both to fetch the default published version.
-	version = version !== 'published' && version !== 'main' ? version : undefined;
+	// Versions are only read in preview mode; without preview=true, fall back to published content.
+	version = preview && version !== 'published' && version !== 'main' ? version : undefined;
 
 	try {
 		let pageId = id;

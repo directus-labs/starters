@@ -13,19 +13,21 @@ export default async function BlogPostPage({
 }) {
 	const { slug } = await params;
 	const { id, version, preview } = await searchParams;
+	const token = preview === 'true' ? process.env.DIRECTUS_SERVER_TOKEN : undefined;
 	// version=published is the live key in Directus v12+; version=main was used by older Directus versions.
 	// Both represent published content and don't require an explicit version parameter.
-	const isDraft = preview === 'true' || (!!version && version !== 'published' && version !== 'main');
+	const isDraft = preview === 'true';
 	const locale = await getLocaleFromHeaders();
 
-	const fixedVersion = version === 'published' || version === 'main' ? undefined : version;
+	// Versions are only read in preview mode; without preview=true, fall back to published content.
+	const fixedVersion = !isDraft || version === 'published' || version === 'main' ? undefined : version;
 	try {
 		let postId = id;
 		let post: Post | null;
 		let relatedPosts: Post[] = [];
 		// Content Version Fetching
 		if (fixedVersion && !postId) {
-			const foundPostId = await getPostIdBySlug(slug);
+			const foundPostId = await getPostIdBySlug(slug, token);
 			if (!foundPostId) {
 				return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
 			}
@@ -33,12 +35,13 @@ export default async function BlogPostPage({
 		}
 
 		if (postId && fixedVersion) {
-			const result = await fetchPostByIdAndVersion(postId, fixedVersion, slug, undefined, locale);
+			const result = await fetchPostByIdAndVersion(postId, fixedVersion, slug, token, locale);
 			post = result.post;
 			relatedPosts = result.relatedPosts;
 		} else {
 			const result = await fetchPostBySlug(slug, {
 				draft: isDraft,
+				token,
 				locale,
 			});
 			post = result.post;

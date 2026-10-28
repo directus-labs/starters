@@ -26,7 +26,8 @@ const isLivePreview = () => {
 
   const params = new URLSearchParams(window.location.search);
 
-  return params.get('preview') === 'true' || !!params.get('version') || !!params.get('id');
+  // version/id are only honored in preview mode, so preview=true alone decides
+  return params.get('preview') === 'true';
 };
 
 const fetchBlocks = async (permalink: string, params: URLSearchParams): Promise<PageBlock[]> => {
