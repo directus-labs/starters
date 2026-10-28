@@ -19,7 +19,8 @@ export default async function BlogPostPage({
 	const isDraft = preview === 'true';
 	const locale = await getLocaleFromHeaders();
 
-	const fixedVersion = version === 'published' || version === 'main' ? undefined : version;
+	// Versions are only read in preview mode; without preview=true, fall back to published content.
+	const fixedVersion = !isDraft || version === 'published' || version === 'main' ? undefined : version;
 	try {
 		let postId = id;
 		let post: Post | null;

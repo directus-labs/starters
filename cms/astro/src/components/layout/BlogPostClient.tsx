@@ -32,15 +32,13 @@ export default function BlogPostClient({
   const { isVisualEditingEnabled, apply } = useVisualEditing();
 
   const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
-  const [hasVersioningParams, setHasVersioningParams] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setIsPreviewEnabled(params.get('preview') === 'true');
-    setHasVersioningParams(!!params.get('version') || !!params.get('id'));
   }, []);
 
-  const shouldFetchLive = (isVisualEditingEnabled || isPreviewEnabled || hasVersioningParams) && slug;
+  const shouldFetchLive = (isVisualEditingEnabled || isPreviewEnabled) && slug;
 
   const swrKey = shouldFetchLive
     ? `/api/blog-post/${encodeURIComponent(slug!)}?${new URLSearchParams(window.location.search).toString()}&visual-editing=${isVisualEditingEnabled}`

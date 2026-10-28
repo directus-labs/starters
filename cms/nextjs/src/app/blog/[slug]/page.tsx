@@ -15,7 +15,8 @@ export default async function BlogPostPage({
 	// version=published is the live key in Directus v12+; version=main was used by older Directus versions.
 	// Both represent published content and don't require an explicit version parameter.
 	const isDraft = preview === 'true';
-	const fixedVersion = version !== 'published' && version !== 'main' ? version : undefined;
+	// Versions are only read in preview mode; without preview=true, fall back to published content.
+	const fixedVersion = isDraft && version !== 'published' && version !== 'main' ? version : undefined;
 	try {
 		let postId = id;
 		let post: Post | null;

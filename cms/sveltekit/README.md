@@ -43,6 +43,7 @@ API.
 [Directus Live Preview](https://docs.directus.io/guides/content/live-preview)
 
 - Preview URLs use `{{$preview_base_url}}`. Set **Settings → Project → Live Preview → Preview Base URL** per environment (defaults to `http://localhost:3000`). See [`../../directus/README.md`](../../directus/README.md#live-preview-host-preview-base-url).
+- If you customize a collection's Preview URL, keep `preview=true` alongside `version={{$version}}`. The site only loads content versions in preview mode; a `version` param on its own shows the published content.
 - Keep Directus `CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC` matched to that site origin.
 - This app sets `frame-ancestors` to include your Directus URL (`PUBLIC_DIRECTUS_URL`).
 - **For Local Development**: CSP for embedding is in Directus `.env.example`.

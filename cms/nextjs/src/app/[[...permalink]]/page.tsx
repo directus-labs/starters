@@ -16,10 +16,9 @@ export async function generateMetadata({
 	const resolvedPermalink = `/${permalinkSegments.join('/')}`.replace(/\/$/, '') || '/';
 
 	const preview = searchParamsResolved.preview === 'true';
-	const version = typeof searchParamsResolved.version === 'string' ? searchParamsResolved.version : '';
 
-	// Skip metadata generation for preview/versioned content
-	if (preview || version) {
+	// Skip metadata generation for preview content
+	if (preview) {
 		return {
 			title: 'Preview Mode',
 			description: 'Content preview',
@@ -66,7 +65,8 @@ export default async function Page({
 	const token = preview ? process.env.DIRECTUS_SERVER_TOKEN : undefined;
 	// version=published is the live key in Directus v12+; version=main was used by older Directus versions.
 	// Both represent published content and don't require an explicit version parameter.
-	const fixedVersion = version !== 'published' && version !== 'main' ? version : undefined;
+	// Versions are only read in preview mode; without preview=true, fall back to published content.
+	const fixedVersion = preview && version !== 'published' && version !== 'main' ? version : undefined;
 
 	try {
 		let page: Page;

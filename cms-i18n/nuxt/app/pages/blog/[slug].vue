@@ -26,7 +26,11 @@ const {
 
 // Live preview sends version=published (Directus v12+) or version=main (older Directus versions) for live content.
 // Neither key requires an explicit version parameter — strip both to fetch the default published version.
-const version = route.query.version !== 'published' && route.query.version !== 'main' ? (route.query.version as string) : undefined;
+// Versions are only read in preview mode; without preview=true, fall back to published content.
+const version =
+	enabled.value && route.query.version !== 'published' && route.query.version !== 'main'
+		? (route.query.version as string)
+		: undefined;
 
 const { data, error, refresh } = await useFetch<{
 	post: Post;

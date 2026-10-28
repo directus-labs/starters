@@ -124,7 +124,7 @@ Pages and posts use Directus content versioning. Live content is `version=publis
 
 Pages and posts use `{{$preview_base_url}}` in their Preview URLs (Directus 12.5+). The template sets **Settings → Project → Live Preview → Preview Base URL** to `http://localhost:3000` by default.
 
-For staging or production, change Preview Base URL to that environment’s site origin — you do not need to edit collection Preview URLs. Keep `CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC` in `.env` in sync with the same origin.
+For staging or production, change Preview Base URL to that environment’s site origin — you do not need to edit collection Preview URLs. If you do customize a Preview URL, keep `preview=true` alongside `version={{$version}}` — the frontends only load content versions in preview mode and show published content for a `version` param on its own. Keep `CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC` in `.env` in sync with the same origin.
 
 Visual Editor URLs (**Settings → Visual Editor**) are separate and still default to localhost in the template; update those per environment in Studio if needed.
 
