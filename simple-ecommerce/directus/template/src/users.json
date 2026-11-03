@@ -4,7 +4,7 @@
     "first_name": "Villy",
     "last_name": "Vonka",
     "email": "ecommerce@example.com",
-    "password": "**********",
+    "password": null,
     "location": null,
     "title": null,
     "description": null,
@@ -14,9 +14,9 @@
     "tfa_secret": null,
     "status": "active",
     "role": "c537905b-a75c-4a35-be45-74cd696d789e",
-    "token": "**********",
+    "token": null,
     "last_access": "2024-12-27T13:33:16.486Z",
-    "last_page": "/content/products/ce31bbeb-3f60-4853-98f0-ac87c37175bc",
+    "last_page": null,
     "provider": "default",
     "external_identifier": null,
     "auth_data": null,
@@ -26,6 +26,7 @@
     "theme_light": null,
     "theme_light_overrides": null,
     "theme_dark_overrides": null,
+    "text_direction": "auto",
     "policies": null
   }
 ]

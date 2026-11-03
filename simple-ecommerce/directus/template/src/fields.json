@@ -43,7 +43,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -88,7 +89,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -133,7 +135,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -182,7 +185,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -231,7 +235,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -278,7 +283,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -323,7 +329,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -368,7 +375,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -413,7 +421,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -458,7 +467,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -503,7 +513,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -548,7 +559,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -593,7 +605,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -638,7 +651,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -687,7 +701,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -736,7 +751,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -785,7 +801,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -832,7 +849,8 @@
       "required": false,
       "group": "meta_profile",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -881,7 +899,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -932,7 +951,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -981,7 +1001,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1030,7 +1051,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1075,7 +1097,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1120,7 +1143,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1167,7 +1191,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1214,7 +1239,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1261,7 +1287,8 @@
       "required": false,
       "group": "meta_profile",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1310,7 +1337,8 @@
       "required": false,
       "group": "meta_profile",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1357,7 +1385,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1404,7 +1433,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1449,7 +1479,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1494,7 +1525,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1545,7 +1577,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1595,7 +1628,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1645,7 +1679,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1690,7 +1725,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1740,7 +1776,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1797,7 +1834,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1844,7 +1882,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1935,7 +1974,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1984,7 +2024,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2033,7 +2074,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2082,7 +2124,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2131,7 +2174,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2178,7 +2222,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2277,7 +2322,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2376,7 +2422,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2433,7 +2480,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2490,7 +2538,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2537,7 +2586,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2584,7 +2634,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2629,7 +2680,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2679,7 +2731,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2729,7 +2782,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2779,7 +2833,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2829,7 +2884,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2876,7 +2932,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2921,7 +2978,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2966,7 +3024,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3011,7 +3070,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3058,7 +3118,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3109,7 +3170,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3159,7 +3221,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3204,7 +3267,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3253,7 +3317,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3298,7 +3363,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3343,7 +3409,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3388,7 +3455,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3452,7 +3520,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3499,7 +3568,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3597,7 +3667,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3642,7 +3713,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3691,7 +3763,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3740,7 +3813,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3789,7 +3863,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3838,7 +3913,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3883,7 +3959,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3932,7 +4009,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3977,7 +4055,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4026,7 +4105,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4084,7 +4164,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4150,7 +4231,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4201,7 +4283,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4248,7 +4331,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4293,7 +4377,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4343,7 +4428,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4388,69 +4474,35 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
-    "collection": "products",
-    "field": "divider_images",
+    "collection": "categories",
+    "field": "sub_categories",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "products",
-      "field": "divider_images",
-      "special": [
-        "alias",
-        "no-data"
-      ],
-      "interface": "presentation-divider",
-      "options": {
-        "inlineTitle": true,
-        "color": "#A2B5CD",
-        "icon": "image",
-        "title": "Images"
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 12,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "products",
-    "field": "variants",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "products",
-      "field": "variants",
+      "collection": "categories",
+      "field": "sub_categories",
       "special": [
         "o2m"
       ],
       "interface": "list-o2m",
       "options": {
-        "sort": null,
+        "sort": "sort",
         "enableLink": true,
-        "template": "{{color}} • {{size}} • {{price}} • {{sku}}",
-        "enableCreate": false,
-        "enableSelect": false
+        "displayTemplate": "{{title}}",
+        "template": "{{title}}"
       },
       "display": "related-values",
       "display_options": {
-        "template": "{{color}} • {{size}} • {{price}} • {{sku}}"
+        "template": "{{title}}"
       },
       "readonly": false,
       "hidden": false,
-      "sort": 18,
+      "sort": 5,
       "width": "full",
       "translations": null,
       "note": null,
@@ -4458,7 +4510,41 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "customers",
+    "field": "meta_tabs",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "customers",
+      "field": "meta_tabs",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-tabs",
+      "options": {
+        "fillWidth": true
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 9,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4493,7 +4579,8 @@
       "required": false,
       "group": "meta_tabs",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4536,7 +4623,39 @@
       "required": false,
       "group": "meta_tabs",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "customers",
+    "field": "addresses",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "customers",
+      "field": "addresses",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "enableLink": true
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 2,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "meta_tabs",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4570,7 +4689,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4604,198 +4724,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "customers",
-    "field": "addresses",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "customers",
-      "field": "addresses",
-      "special": [
-        "o2m"
-      ],
-      "interface": "list-o2m",
-      "options": {
-        "enableLink": true
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 2,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": "meta_tabs",
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "categories",
-    "field": "sub_categories",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "categories",
-      "field": "sub_categories",
-      "special": [
-        "o2m"
-      ],
-      "interface": "list-o2m",
-      "options": {
-        "sort": "sort",
-        "enableLink": true,
-        "displayTemplate": "{{title}}",
-        "template": "{{title}}"
-      },
-      "display": "related-values",
-      "display_options": {
-        "template": "{{title}}"
-      },
-      "readonly": false,
-      "hidden": false,
-      "sort": 5,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "customers",
-    "field": "meta_tabs",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "customers",
-      "field": "meta_tabs",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-tabs",
-      "options": {
-        "fillWidth": true
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 9,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "products",
-    "field": "images",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "products",
-      "field": "images",
-      "special": [
-        "files"
-      ],
-      "interface": "files",
-      "options": null,
-      "display": "related-values",
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 14,
-      "width": "half",
-      "translations": null,
-      "note": "Gallery of images featured on the product page",
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "products",
-    "field": "divider_variants",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "products",
-      "field": "divider_variants",
-      "special": [
-        "alias",
-        "no-data"
-      ],
-      "interface": "presentation-divider",
-      "options": {
-        "inlineTitle": true,
-        "color": "#A2B5CD",
-        "icon": "variables",
-        "title": "Variants"
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 15,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "products",
-    "field": "notice_variants",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "products",
-      "field": "notice_variants",
-      "special": [
-        "alias",
-        "no-data"
-      ],
-      "interface": "presentation-notice",
-      "options": {
-        "icon": "info",
-        "text": "Creating and updating variants is handled for you automatically on save. Update the colors and sizes and hit Ctrl + S or Cmd + S (Mac) to save and stay on the page."
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 19,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4836,7 +4766,177 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "products",
+    "field": "divider_images",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "products",
+      "field": "divider_images",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "presentation-divider",
+      "options": {
+        "inlineTitle": true,
+        "color": "#A2B5CD",
+        "icon": "image",
+        "title": "Images"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 12,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "products",
+    "field": "variants",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "products",
+      "field": "variants",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "sort": null,
+        "enableLink": true,
+        "template": "{{color}} • {{size}} • {{price}} • {{sku}}",
+        "enableCreate": false,
+        "enableSelect": false
+      },
+      "display": "related-values",
+      "display_options": {
+        "template": "{{color}} • {{size}} • {{price}} • {{sku}}"
+      },
+      "readonly": false,
+      "hidden": false,
+      "sort": 18,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "products",
+    "field": "images",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "products",
+      "field": "images",
+      "special": [
+        "files"
+      ],
+      "interface": "files",
+      "options": null,
+      "display": "related-values",
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 14,
+      "width": "half",
+      "translations": null,
+      "note": "Gallery of images featured on the product page",
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "products",
+    "field": "divider_variants",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "products",
+      "field": "divider_variants",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "presentation-divider",
+      "options": {
+        "inlineTitle": true,
+        "color": "#A2B5CD",
+        "icon": "variables",
+        "title": "Variants"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 15,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "products",
+    "field": "notice_variants",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "products",
+      "field": "notice_variants",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "presentation-notice",
+      "options": {
+        "icon": "info",
+        "text": "Creating and updating variants is handled for you automatically on save. Update the colors and sizes and hit Ctrl + S or Cmd + S (Mac) to save and stay on the page."
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 19,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
     }
   }
 ]

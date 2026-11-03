@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "directus": "11.1.2",
+  "directus": "12.6.0",
   "vendor": "postgres",
   "collections": [
     {
@@ -10,6 +10,7 @@
         "archive_app_filter": true,
         "archive_field": "is_active",
         "archive_value": "false",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "categories",
         "color": null,
@@ -23,6 +24,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "true",
         "versioning": false
@@ -38,6 +40,7 @@
         "archive_app_filter": true,
         "archive_field": "is_active",
         "archive_value": "false",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "customer_addresses",
         "color": null,
@@ -51,6 +54,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "true",
         "versioning": false
@@ -66,6 +70,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "customers",
         "color": null,
@@ -79,6 +84,7 @@
         "singleton": false,
         "sort": 2,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -94,6 +100,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "ecommerce",
         "color": null,
@@ -107,6 +114,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "en-US",
@@ -124,6 +132,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "closed",
         "collection": "ecommerce_settings",
         "color": null,
@@ -137,6 +146,7 @@
         "singleton": false,
         "sort": 4,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "en-US",
@@ -154,6 +164,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "order_items",
         "color": null,
@@ -167,6 +178,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -182,6 +194,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "closed",
         "collection": "orders",
         "color": null,
@@ -195,6 +208,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": "pending",
         "versioning": false
@@ -210,6 +224,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "product_images",
         "color": null,
@@ -223,6 +238,7 @@
         "singleton": false,
         "sort": 3,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -238,6 +254,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "product_variants",
         "color": null,
@@ -251,6 +268,7 @@
         "singleton": false,
         "sort": 2,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -266,6 +284,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "inactive",
+        "autosave_revision_interval": null,
         "collapse": "closed",
         "collection": "products",
         "color": null,
@@ -279,6 +298,7 @@
         "singleton": false,
         "sort": 3,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "active",
         "versioning": false
@@ -294,6 +314,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "tax_rates",
         "color": null,
@@ -307,6 +328,7 @@
         "singleton": false,
         "sort": 2,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -334,6 +356,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -379,6 +402,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": null,
         "translations": null,
@@ -422,6 +446,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": null,
         "translations": null,
@@ -450,40 +475,6 @@
     },
     {
       "collection": "categories",
-      "field": "sub_categories",
-      "type": "alias",
-      "meta": {
-        "collection": "categories",
-        "conditions": null,
-        "display": "related-values",
-        "display_options": {
-          "template": "{{title}}"
-        },
-        "field": "sub_categories",
-        "group": null,
-        "hidden": false,
-        "interface": "list-o2m",
-        "note": null,
-        "options": {
-          "displayTemplate": "{{title}}",
-          "enableLink": true,
-          "sort": "sort",
-          "template": "{{title}}"
-        },
-        "readonly": false,
-        "required": false,
-        "sort": 5,
-        "special": [
-          "o2m"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "categories",
       "field": "parent_category",
       "type": "uuid",
       "meta": {
@@ -503,6 +494,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 6,
         "special": null,
         "translations": null,
@@ -548,6 +540,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": [
           "cast-boolean"
@@ -577,6 +570,41 @@
       }
     },
     {
+      "collection": "categories",
+      "field": "sub_categories",
+      "type": "alias",
+      "meta": {
+        "collection": "categories",
+        "conditions": null,
+        "display": "related-values",
+        "display_options": {
+          "template": "{{title}}"
+        },
+        "field": "sub_categories",
+        "group": null,
+        "hidden": false,
+        "interface": "list-o2m",
+        "note": null,
+        "options": {
+          "displayTemplate": "{{title}}",
+          "enableLink": true,
+          "sort": "sort",
+          "template": "{{title}}"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 5,
+        "special": [
+          "o2m"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
       "collection": "customer_addresses",
       "field": "id",
       "type": "uuid",
@@ -593,6 +621,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -638,6 +667,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": null,
         "translations": null,
@@ -681,6 +711,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": null,
         "translations": null,
@@ -724,6 +755,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 7,
         "special": null,
         "translations": null,
@@ -767,6 +799,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 8,
         "special": null,
         "translations": null,
@@ -810,6 +843,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 9,
         "special": null,
         "translations": null,
@@ -853,6 +887,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 10,
         "special": null,
         "translations": null,
@@ -896,6 +931,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 11,
         "special": null,
         "translations": null,
@@ -939,6 +975,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 12,
         "special": null,
         "translations": null,
@@ -984,6 +1021,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 5,
         "special": [
           "cast-boolean"
@@ -1031,6 +1069,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 6,
         "special": [
           "cast-boolean"
@@ -1078,6 +1117,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": [
           "cast-boolean"
@@ -1108,51 +1148,6 @@
     },
     {
       "collection": "customers",
-      "field": "id",
-      "type": "uuid",
-      "meta": {
-        "collection": "customers",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "id",
-        "group": "meta_profile",
-        "hidden": false,
-        "interface": "input",
-        "note": "Unique identifier for customer",
-        "options": null,
-        "readonly": true,
-        "required": false,
-        "sort": 2,
-        "special": [
-          "uuid"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      },
-      "schema": {
-        "name": "id",
-        "table": "customers",
-        "data_type": "uuid",
-        "default_value": null,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": false,
-        "is_unique": true,
-        "is_indexed": false,
-        "is_primary_key": true,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "customers",
       "field": "user_created",
       "type": "uuid",
       "meta": {
@@ -1170,6 +1165,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "user-created"
@@ -1219,6 +1215,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": [
           "date-created"
@@ -1266,6 +1263,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": [
           "user-updated"
@@ -1313,6 +1311,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": [
           "date-updated"
@@ -1358,6 +1357,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 5,
         "special": null,
         "translations": null,
@@ -1401,6 +1401,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 6,
         "special": null,
         "translations": null,
@@ -1446,6 +1447,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 7,
         "special": null,
         "translations": null,
@@ -1491,6 +1493,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 8,
         "special": null,
         "translations": null,
@@ -1519,6 +1522,84 @@
     },
     {
       "collection": "customers",
+      "field": "meta_tabs",
+      "type": "alias",
+      "meta": {
+        "collection": "customers",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "meta_tabs",
+        "group": null,
+        "hidden": false,
+        "interface": "group-tabs",
+        "note": null,
+        "options": {
+          "fillWidth": true
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 9,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "customers",
+      "field": "id",
+      "type": "uuid",
+      "meta": {
+        "collection": "customers",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "id",
+        "group": "meta_profile",
+        "hidden": false,
+        "interface": "input",
+        "note": "Unique identifier for customer",
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
+        "special": [
+          "uuid"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "id",
+        "table": "customers",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": true,
+        "is_indexed": false,
+        "is_primary_key": true,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "customers",
       "field": "password",
       "type": "hash",
       "meta": {
@@ -1534,6 +1615,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": [
           "hash"
@@ -1560,6 +1642,89 @@
         "has_auto_increment": false,
         "foreign_key_table": null,
         "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "customers",
+      "field": "is_subscribed",
+      "type": "boolean",
+      "meta": {
+        "collection": "customers",
+        "conditions": null,
+        "display": "boolean",
+        "display_options": null,
+        "field": "is_subscribed",
+        "group": "meta_profile",
+        "hidden": false,
+        "interface": "boolean",
+        "note": "Is customer subscribed to marketing emails?",
+        "options": {
+          "label": "Marketing Emails"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 1,
+        "special": [
+          "cast-boolean"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "is_subscribed",
+        "table": "customers",
+        "data_type": "boolean",
+        "default_value": false,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "customers",
+      "field": "meta_profile",
+      "type": "alias",
+      "meta": {
+        "collection": "customers",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "meta_profile",
+        "group": "meta_tabs",
+        "hidden": false,
+        "interface": "group-raw",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
+        "special": [
+          "alias",
+          "no-data",
+          "group"
+        ],
+        "translations": [
+          {
+            "language": "en-US",
+            "translation": "Profile"
+          }
+        ],
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
       }
     },
     {
@@ -1594,6 +1759,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "o2m"
@@ -1623,6 +1789,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": [
           "o2m"
@@ -1631,118 +1798,6 @@
         "validation": null,
         "validation_message": null,
         "width": "full"
-      }
-    },
-    {
-      "collection": "customers",
-      "field": "meta_tabs",
-      "type": "alias",
-      "meta": {
-        "collection": "customers",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "meta_tabs",
-        "group": null,
-        "hidden": false,
-        "interface": "group-tabs",
-        "note": null,
-        "options": {
-          "fillWidth": true
-        },
-        "readonly": false,
-        "required": false,
-        "sort": 9,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "customers",
-      "field": "meta_profile",
-      "type": "alias",
-      "meta": {
-        "collection": "customers",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "meta_profile",
-        "group": "meta_tabs",
-        "hidden": false,
-        "interface": "group-raw",
-        "note": null,
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "sort": 3,
-        "special": [
-          "alias",
-          "no-data",
-          "group"
-        ],
-        "translations": [
-          {
-            "language": "en-US",
-            "translation": "Profile"
-          }
-        ],
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "customers",
-      "field": "is_subscribed",
-      "type": "boolean",
-      "meta": {
-        "collection": "customers",
-        "conditions": null,
-        "display": "boolean",
-        "display_options": null,
-        "field": "is_subscribed",
-        "group": "meta_profile",
-        "hidden": false,
-        "interface": "boolean",
-        "note": "Is customer subscribed to marketing emails?",
-        "options": {
-          "label": "Marketing Emails"
-        },
-        "readonly": false,
-        "required": false,
-        "sort": 1,
-        "special": [
-          "cast-boolean"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "is_subscribed",
-        "table": "customers",
-        "data_type": "boolean",
-        "default_value": false,
-        "max_length": null,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_indexed": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": null,
-        "foreign_key_column": null
       }
     },
     {
@@ -1762,6 +1817,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "cast-json"
@@ -1807,6 +1863,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -1852,6 +1909,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": null,
         "translations": null,
@@ -1895,6 +1953,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 6,
         "special": null,
         "translations": null,
@@ -1942,6 +2001,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": [
           "m2o"
@@ -1992,6 +2052,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 8,
         "special": null,
         "translations": null,
@@ -2040,6 +2101,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 9,
         "special": null,
         "translations": null,
@@ -2083,6 +2145,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": null,
         "translations": null,
@@ -2131,6 +2194,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 7,
         "special": null,
         "translations": null,
@@ -2184,6 +2248,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 5,
         "special": [
           "m2o"
@@ -2229,6 +2294,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -2320,6 +2386,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 9,
         "special": null,
         "translations": null,
@@ -2365,6 +2432,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": [
           "user-created"
@@ -2412,6 +2480,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": [
           "date-created"
@@ -2459,6 +2528,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": [
           "user-updated"
@@ -2506,6 +2576,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 5,
         "special": [
           "date-updated"
@@ -2551,6 +2622,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 13,
         "special": [
           "m2o"
@@ -2650,6 +2722,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 10,
         "special": null,
         "translations": null,
@@ -2747,6 +2820,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 11,
         "special": null,
         "translations": null,
@@ -2800,6 +2874,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 14,
         "special": [
           "m2o"
@@ -2855,6 +2930,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 15,
         "special": [
           "m2o"
@@ -2902,6 +2978,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 7,
         "special": null,
         "translations": null,
@@ -2947,6 +3024,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 6,
         "special": null,
         "translations": null,
@@ -2975,46 +3053,6 @@
     },
     {
       "collection": "orders",
-      "field": "line_items",
-      "type": "alias",
-      "meta": {
-        "collection": "orders",
-        "conditions": null,
-        "display": "related-values",
-        "display_options": {
-          "template": "{{product}} • {{quantity}} • {{total}}"
-        },
-        "field": "line_items",
-        "group": null,
-        "hidden": false,
-        "interface": "list-o2m",
-        "note": null,
-        "options": {
-          "enableLink": true,
-          "enableSearchFilter": true,
-          "fields": [
-            "product",
-            "quantity",
-            "total",
-            "product_variant.color",
-            "product_variant.size"
-          ],
-          "layout": "table"
-        },
-        "readonly": false,
-        "required": false,
-        "sort": 17,
-        "special": [
-          "o2m"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "fill"
-      }
-    },
-    {
-      "collection": "orders",
       "field": "order_number",
       "type": "string",
       "meta": {
@@ -3030,6 +3068,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 8,
         "special": null,
         "translations": null,
@@ -3058,72 +3097,6 @@
     },
     {
       "collection": "orders",
-      "field": "divider_status",
-      "type": "alias",
-      "meta": {
-        "collection": "orders",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "divider_status",
-        "group": null,
-        "hidden": false,
-        "interface": "presentation-divider",
-        "note": null,
-        "options": {
-          "color": "#A2B5CD",
-          "icon": "info",
-          "inlineTitle": true,
-          "title": "Customer"
-        },
-        "readonly": false,
-        "required": false,
-        "sort": 12,
-        "special": [
-          "alias",
-          "no-data"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "orders",
-      "field": "divider_items",
-      "type": "alias",
-      "meta": {
-        "collection": "orders",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "divider_items",
-        "group": null,
-        "hidden": false,
-        "interface": "presentation-divider",
-        "note": null,
-        "options": {
-          "color": "#A2B5CD",
-          "icon": "local_shipping",
-          "inlineTitle": true,
-          "title": "Items"
-        },
-        "readonly": false,
-        "required": false,
-        "sort": 16,
-        "special": [
-          "alias",
-          "no-data"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "orders",
       "field": "subtotal",
       "type": "decimal",
       "meta": {
@@ -3144,6 +3117,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 18,
         "special": null,
         "translations": null,
@@ -3192,6 +3166,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 21,
         "special": null,
         "translations": null,
@@ -3240,6 +3215,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 19,
         "special": null,
         "translations": null,
@@ -3288,6 +3264,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 20,
         "special": null,
         "translations": null,
@@ -3315,6 +3292,115 @@
       }
     },
     {
+      "collection": "orders",
+      "field": "divider_status",
+      "type": "alias",
+      "meta": {
+        "collection": "orders",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "divider_status",
+        "group": null,
+        "hidden": false,
+        "interface": "presentation-divider",
+        "note": null,
+        "options": {
+          "color": "#A2B5CD",
+          "icon": "info",
+          "inlineTitle": true,
+          "title": "Customer"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 12,
+        "special": [
+          "alias",
+          "no-data"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "orders",
+      "field": "divider_items",
+      "type": "alias",
+      "meta": {
+        "collection": "orders",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "divider_items",
+        "group": null,
+        "hidden": false,
+        "interface": "presentation-divider",
+        "note": null,
+        "options": {
+          "color": "#A2B5CD",
+          "icon": "local_shipping",
+          "inlineTitle": true,
+          "title": "Items"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 16,
+        "special": [
+          "alias",
+          "no-data"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "orders",
+      "field": "line_items",
+      "type": "alias",
+      "meta": {
+        "collection": "orders",
+        "conditions": null,
+        "display": "related-values",
+        "display_options": {
+          "template": "{{product}} • {{quantity}} • {{total}}"
+        },
+        "field": "line_items",
+        "group": null,
+        "hidden": false,
+        "interface": "list-o2m",
+        "note": null,
+        "options": {
+          "enableLink": true,
+          "enableSearchFilter": true,
+          "fields": [
+            "product",
+            "quantity",
+            "total",
+            "product_variant.color",
+            "product_variant.size"
+          ],
+          "layout": "table"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 17,
+        "special": [
+          "o2m"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "fill"
+      }
+    },
+    {
       "collection": "product_images",
       "field": "id",
       "type": "uuid",
@@ -3331,6 +3417,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -3376,6 +3463,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": null,
         "translations": null,
@@ -3419,6 +3507,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": null,
         "translations": null,
@@ -3462,6 +3551,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": null,
         "translations": null,
@@ -3505,6 +3595,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -3554,6 +3645,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": [
           "m2o"
@@ -3604,6 +3696,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": null,
         "translations": null,
@@ -3647,6 +3740,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": null,
         "translations": null,
@@ -3692,6 +3786,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 9,
         "special": [
           "file"
@@ -3737,6 +3832,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 5,
         "special": null,
         "translations": null,
@@ -3780,6 +3876,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 6,
         "special": null,
         "translations": null,
@@ -3823,6 +3920,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 7,
         "special": null,
         "translations": null,
@@ -3885,6 +3983,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 8,
         "special": null,
         "translations": null,
@@ -3928,6 +4027,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -4026,6 +4126,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 8,
         "special": null,
         "translations": null,
@@ -4069,6 +4170,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": null,
         "translations": null,
@@ -4114,6 +4216,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": [
           "user-created"
@@ -4161,6 +4264,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": [
           "date-created"
@@ -4208,6 +4312,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 5,
         "special": [
           "user-updated"
@@ -4255,6 +4360,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 6,
         "special": [
           "date-updated"
@@ -4300,6 +4406,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 7,
         "special": null,
         "translations": null,
@@ -4347,6 +4454,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 9,
         "special": null,
         "translations": null,
@@ -4390,6 +4498,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 11,
         "special": null,
         "translations": null,
@@ -4435,6 +4544,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 13,
         "special": [
           "file"
@@ -4465,41 +4575,6 @@
     },
     {
       "collection": "products",
-      "field": "variants",
-      "type": "alias",
-      "meta": {
-        "collection": "products",
-        "conditions": null,
-        "display": "related-values",
-        "display_options": {
-          "template": "{{color}} • {{size}} • {{price}} • {{sku}}"
-        },
-        "field": "variants",
-        "group": null,
-        "hidden": false,
-        "interface": "list-o2m",
-        "note": null,
-        "options": {
-          "enableCreate": false,
-          "enableLink": true,
-          "enableSelect": false,
-          "sort": null,
-          "template": "{{color}} • {{size}} • {{price}} • {{sku}}"
-        },
-        "readonly": false,
-        "required": false,
-        "sort": 18,
-        "special": [
-          "o2m"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "products",
       "field": "color",
       "type": "csv",
       "meta": {
@@ -4526,6 +4601,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 16,
         "special": [
           "cast-csv"
@@ -4590,6 +4666,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 17,
         "special": [
           "cast-csv"
@@ -4620,39 +4697,6 @@
     },
     {
       "collection": "products",
-      "field": "divider_variants",
-      "type": "alias",
-      "meta": {
-        "collection": "products",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "divider_variants",
-        "group": null,
-        "hidden": false,
-        "interface": "presentation-divider",
-        "note": null,
-        "options": {
-          "color": "#A2B5CD",
-          "icon": "variables",
-          "inlineTitle": true,
-          "title": "Variants"
-        },
-        "readonly": false,
-        "required": false,
-        "sort": 15,
-        "special": [
-          "alias",
-          "no-data"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "products",
       "field": "category",
       "type": "uuid",
       "meta": {
@@ -4672,6 +4716,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 10,
         "special": [
           "m2o"
@@ -4702,33 +4747,6 @@
     },
     {
       "collection": "products",
-      "field": "images",
-      "type": "alias",
-      "meta": {
-        "collection": "products",
-        "conditions": null,
-        "display": "related-values",
-        "display_options": null,
-        "field": "images",
-        "group": null,
-        "hidden": false,
-        "interface": "files",
-        "note": "Gallery of images featured on the product page",
-        "options": null,
-        "readonly": false,
-        "required": false,
-        "sort": 14,
-        "special": [
-          "files"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "half"
-      }
-    },
-    {
-      "collection": "products",
       "field": "divider_images",
       "type": "alias",
       "meta": {
@@ -4749,7 +4767,106 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 12,
+        "special": [
+          "alias",
+          "no-data"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "products",
+      "field": "variants",
+      "type": "alias",
+      "meta": {
+        "collection": "products",
+        "conditions": null,
+        "display": "related-values",
+        "display_options": {
+          "template": "{{color}} • {{size}} • {{price}} • {{sku}}"
+        },
+        "field": "variants",
+        "group": null,
+        "hidden": false,
+        "interface": "list-o2m",
+        "note": null,
+        "options": {
+          "enableCreate": false,
+          "enableLink": true,
+          "enableSelect": false,
+          "sort": null,
+          "template": "{{color}} • {{size}} • {{price}} • {{sku}}"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 18,
+        "special": [
+          "o2m"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "products",
+      "field": "images",
+      "type": "alias",
+      "meta": {
+        "collection": "products",
+        "conditions": null,
+        "display": "related-values",
+        "display_options": null,
+        "field": "images",
+        "group": null,
+        "hidden": false,
+        "interface": "files",
+        "note": "Gallery of images featured on the product page",
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 14,
+        "special": [
+          "files"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      }
+    },
+    {
+      "collection": "products",
+      "field": "divider_variants",
+      "type": "alias",
+      "meta": {
+        "collection": "products",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "divider_variants",
+        "group": null,
+        "hidden": false,
+        "interface": "presentation-divider",
+        "note": null,
+        "options": {
+          "color": "#A2B5CD",
+          "icon": "variables",
+          "inlineTitle": true,
+          "title": "Variants"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 15,
         "special": [
           "alias",
           "no-data"
@@ -4780,6 +4897,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 19,
         "special": [
           "alias",
@@ -4808,6 +4926,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -4853,6 +4972,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": null,
         "translations": null,
@@ -4901,6 +5021,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": null,
         "translations": null,
@@ -4944,6 +5065,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": null,
         "translations": null,
@@ -4968,6 +5090,92 @@
         "has_auto_increment": false,
         "foreign_key_table": null,
         "foreign_key_column": null
+      }
+    }
+  ],
+  "systemFields": [
+    {
+      "collection": "directus_activity",
+      "field": "timestamp",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_clients",
+      "field": "date_created",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_codes",
+      "field": "expires_at",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_codes",
+      "field": "used_at",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_consents",
+      "field": "client",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_tokens",
+      "field": "code_hash",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_tokens",
+      "field": "expires_at",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_tokens",
+      "field": "previous_session",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_tokens",
+      "field": "session",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_revisions",
+      "field": "activity",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_revisions",
+      "field": "parent",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_sessions",
+      "field": "oauth_client",
+      "schema": {
+        "is_indexed": true
       }
     }
   ],
@@ -5199,31 +5407,6 @@
     },
     {
       "collection": "orders",
-      "field": "customer",
-      "related_collection": "customers",
-      "meta": {
-        "junction_field": null,
-        "many_collection": "orders",
-        "many_field": "customer",
-        "one_allowed_collections": null,
-        "one_collection": "customers",
-        "one_collection_field": null,
-        "one_deselect_action": "nullify",
-        "one_field": "orders",
-        "sort_field": null
-      },
-      "schema": {
-        "table": "orders",
-        "column": "customer",
-        "foreign_key_table": "customers",
-        "foreign_key_column": "id",
-        "constraint_name": "orders_customer_foreign",
-        "on_update": "NO ACTION",
-        "on_delete": "SET NULL"
-      }
-    },
-    {
-      "collection": "orders",
       "field": "billing_address",
       "related_collection": "customer_addresses",
       "meta": {
@@ -5268,6 +5451,31 @@
         "foreign_key_table": "customer_addresses",
         "foreign_key_column": "id",
         "constraint_name": "orders_shipping_address_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "orders",
+      "field": "customer",
+      "related_collection": "customers",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "orders",
+        "many_field": "customer",
+        "one_allowed_collections": null,
+        "one_collection": "customers",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": "orders",
+        "sort_field": null
+      },
+      "schema": {
+        "table": "orders",
+        "column": "customer",
+        "foreign_key_table": "customers",
+        "foreign_key_column": "id",
+        "constraint_name": "orders_customer_foreign",
         "on_update": "NO ACTION",
         "on_delete": "SET NULL"
       }
@@ -5324,6 +5532,31 @@
     },
     {
       "collection": "product_variants",
+      "field": "image",
+      "related_collection": "directus_files",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "product_variants",
+        "many_field": "image",
+        "one_allowed_collections": null,
+        "one_collection": "directus_files",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "product_variants",
+        "column": "image",
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id",
+        "constraint_name": "product_variants_image_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "product_variants",
       "field": "product",
       "related_collection": "products",
       "meta": {
@@ -5348,13 +5581,13 @@
       }
     },
     {
-      "collection": "product_variants",
-      "field": "image",
+      "collection": "products",
+      "field": "thumbnail",
       "related_collection": "directus_files",
       "meta": {
         "junction_field": null,
-        "many_collection": "product_variants",
-        "many_field": "image",
+        "many_collection": "products",
+        "many_field": "thumbnail",
         "one_allowed_collections": null,
         "one_collection": "directus_files",
         "one_collection_field": null,
@@ -5363,11 +5596,11 @@
         "sort_field": null
       },
       "schema": {
-        "table": "product_variants",
-        "column": "image",
+        "table": "products",
+        "column": "thumbnail",
         "foreign_key_table": "directus_files",
         "foreign_key_column": "id",
-        "constraint_name": "product_variants_image_foreign",
+        "constraint_name": "products_thumbnail_foreign",
         "on_update": "NO ACTION",
         "on_delete": "SET NULL"
       }
@@ -5420,31 +5653,6 @@
         "constraint_name": "products_user_created_foreign",
         "on_update": "NO ACTION",
         "on_delete": "NO ACTION"
-      }
-    },
-    {
-      "collection": "products",
-      "field": "thumbnail",
-      "related_collection": "directus_files",
-      "meta": {
-        "junction_field": null,
-        "many_collection": "products",
-        "many_field": "thumbnail",
-        "one_allowed_collections": null,
-        "one_collection": "directus_files",
-        "one_collection_field": null,
-        "one_deselect_action": "nullify",
-        "one_field": null,
-        "sort_field": null
-      },
-      "schema": {
-        "table": "products",
-        "column": "thumbnail",
-        "foreign_key_table": "directus_files",
-        "foreign_key_column": "id",
-        "constraint_name": "products_thumbnail_foreign",
-        "on_update": "NO ACTION",
-        "on_delete": "SET NULL"
       }
     },
     {

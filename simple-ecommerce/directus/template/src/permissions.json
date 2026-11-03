@@ -178,18 +178,8 @@
   {
     "collection": "product_images",
     "action": "read",
-    "permissions": {
-      "_and": [
-        {
-          "product": {
-            "status": {
-              "_neq": "inactive"
-            }
-          }
-        }
-      ]
-    },
-    "validation": null,
+    "permissions": {},
+    "validation": {},
     "presets": null,
     "fields": [
       "*"
@@ -199,18 +189,8 @@
   {
     "collection": "product_variants",
     "action": "read",
-    "permissions": {
-      "_and": [
-        {
-          "product": {
-            "status": {
-              "_neq": "inactive"
-            }
-          }
-        }
-      ]
-    },
-    "validation": null,
+    "permissions": {},
+    "validation": {},
     "presets": null,
     "fields": [
       "*"
@@ -220,16 +200,8 @@
   {
     "collection": "products",
     "action": "read",
-    "permissions": {
-      "_and": [
-        {
-          "status": {
-            "_neq": "inactive"
-          }
-        }
-      ]
-    },
-    "validation": null,
+    "permissions": {},
+    "validation": {},
     "presets": null,
     "fields": [
       "*"
@@ -250,16 +222,8 @@
   {
     "collection": "categories",
     "action": "read",
-    "permissions": {
-      "_and": [
-        {
-          "is_active": {
-            "_eq": true
-          }
-        }
-      ]
-    },
-    "validation": null,
+    "permissions": {},
+    "validation": {},
     "presets": null,
     "fields": [
       "*"
@@ -269,18 +233,8 @@
   {
     "collection": "directus_files",
     "action": "read",
-    "permissions": {
-      "_and": [
-        {
-          "folder": {
-            "name": {
-              "_ncontains": "Private"
-            }
-          }
-        }
-      ]
-    },
-    "validation": null,
+    "permissions": {},
+    "validation": {},
     "presets": null,
     "fields": [
       "*"

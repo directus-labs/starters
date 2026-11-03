@@ -21,7 +21,9 @@
       "group": "ecommerce_settings",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -51,7 +53,9 @@
       "group": "customers",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -81,7 +85,9 @@
       "group": "ecommerce",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -116,7 +122,9 @@
       "group": null,
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": null
   },
@@ -147,7 +155,9 @@
       "group": "ecommerce",
       "collapse": "closed",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": null
   },
@@ -173,7 +183,9 @@
       "group": "orders",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -203,7 +215,9 @@
       "group": "ecommerce",
       "collapse": "closed",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -233,7 +247,9 @@
       "group": "products",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -263,7 +279,9 @@
       "group": "ecommerce",
       "collapse": "closed",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -293,7 +311,9 @@
       "group": "products",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -323,7 +343,9 @@
       "group": "ecommerce_settings",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",

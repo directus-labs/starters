@@ -1,0 +1,145 @@
+{
+  "id": 1,
+  "project_name": "Simple eCommerce",
+  "project_url": null,
+  "project_color": "#6644FF",
+  "project_logo": null,
+  "public_foreground": null,
+  "public_background": null,
+  "public_note": null,
+  "auth_login_attempts": 25,
+  "auth_password_policy": null,
+  "storage_asset_transform": "all",
+  "storage_asset_presets": null,
+  "storage_default_folder": null,
+  "basemaps": null,
+  "mapbox_key": null,
+  "module_bar": [
+    {
+      "type": "module",
+      "id": "global-search",
+      "enabled": true
+    },
+    {
+      "type": "module",
+      "id": "content",
+      "enabled": true
+    },
+    {
+      "type": "module",
+      "id": "users",
+      "enabled": true
+    },
+    {
+      "type": "module",
+      "id": "files",
+      "enabled": true
+    },
+    {
+      "type": "module",
+      "id": "insights",
+      "enabled": true
+    },
+    {
+      "type": "link",
+      "id": "docs",
+      "name": "Documentation",
+      "url": "https://docs.directus.io",
+      "icon": "help",
+      "enabled": true
+    },
+    {
+      "type": "module",
+      "id": "settings",
+      "enabled": true,
+      "locked": true
+    }
+  ],
+  "project_descriptor": null,
+  "default_language": "en-US",
+  "custom_aspect_ratios": null,
+  "public_favicon": null,
+  "default_appearance": "auto",
+  "default_theme_light": null,
+  "theme_light_overrides": {
+    "form": {
+      "rowGap": "24px",
+      "field": {
+        "input": {
+          "height": "52px",
+          "background": "#ffffff"
+        }
+      }
+    },
+    "borderWidth": "1px",
+    "navigation": {
+      "modules": {
+        "background": "color-mix(in srgb, #000000, var(--theme--primary) 80%)",
+        "button": {
+          "foreground": "color-mix(in srgb, #FFFFFF, var(--theme--primary) 20%)",
+          "foregroundActive": "var(--theme--primary)",
+          "backgroundActive": "#FFFFFF"
+        }
+      },
+      "background": "#fff",
+      "project": {
+        "background": "transparent"
+      },
+      "borderColor": "color-mix(in srgb, #000000, var(--theme--background) 95%)",
+      "borderWidth": "1px",
+      "list": {
+        "divider": {
+          "borderColor": "var(--theme--border-color-subdued)"
+        },
+        "backgroundHover": "color-mix(in srgb, #FFFFFF, var(--theme--primary) 10%)",
+        "backgroundActive": "color-mix(in srgb, #FFFFFF, var(--theme--primary) 15%)"
+      }
+    },
+    "fonts": {
+      "display": {
+        "fontFamily": "\"Space Grotesk\", system-ui",
+        "fontWeight": "600"
+      },
+      "sans": {
+        "fontFamily": "\"DM Sans\", system-ui"
+      }
+    },
+    "borderRadius": "6px",
+    "sidebar": {
+      "background": "#FFFFFF",
+      "borderWidth": "1px",
+      "borderColor": "var(--theme--border-color-subdued)",
+      "section": {
+        "toggle": {
+          "borderColor": "var(--theme--border-color-subdued)",
+          "borderWidth": "1px",
+          "background": "#FFFFFF",
+          "foreground": "var(--theme--foreground)",
+          "foregroundHover": "var(--theme--foreground)",
+          "icon": {
+            "foreground": "var(--theme--foreground)",
+            "foregroundHover": "var(--theme--foreground)",
+            "foregroundActive": "var(--theme--foreground-accent)"
+          }
+        }
+      }
+    },
+    "backgroundAccent": "color-mix(in srgb, #FFFFFF, var(--theme--primary) 10%)"
+  },
+  "default_theme_dark": null,
+  "theme_dark_overrides": null,
+  "report_error_url": null,
+  "report_bug_url": null,
+  "report_feature_url": null,
+  "public_registration": false,
+  "public_registration_verify_email": true,
+  "public_registration_role": null,
+  "public_registration_email_filter": null,
+  "preview_base_url": null,
+  "visual_editor_urls": null,
+  "mcp_enabled": false,
+  "mcp_allow_deletes": false,
+  "mcp_prompts_collection": null,
+  "mcp_system_prompt_enabled": true,
+  "mcp_system_prompt": null
+}

@@ -29,8 +29,8 @@
         ]
       }
     },
-    "date_created": "2024-09-26T13:43:32.907Z",
-    "user_created": "71639435-1dc5-4f21-8c11-603deee67b23"
+    "date_created": "2026-11-03T20:41:31.998Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
   },
   {
     "id": "07cfb335-ef0a-407d-92d8-64d42fd94273",
@@ -48,8 +48,8 @@
     "options": {
       "text": "Sales"
     },
-    "date_created": "2024-09-26T13:43:32.861Z",
-    "user_created": "71639435-1dc5-4f21-8c11-603deee67b23"
+    "date_created": "2026-11-03T20:41:32.096Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
   },
   {
     "id": "2aa251a1-c98c-4ac3-8677-10636889b5a1",
@@ -68,8 +68,8 @@
       "text": "Needs Attention",
       "color": "#E35169"
     },
-    "date_created": "2024-09-26T13:46:00.365Z",
-    "user_created": "71639435-1dc5-4f21-8c11-603deee67b23"
+    "date_created": "2026-11-03T20:41:32.197Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
   },
   {
     "id": "4b610f1d-0717-40d5-8290-825d35dc7423",
@@ -93,8 +93,8 @@
       },
       "defaultValue": "2025-12-31T12:00:00-05:00"
     },
-    "date_created": "2024-09-26T13:43:32.898Z",
-    "user_created": "71639435-1dc5-4f21-8c11-603deee67b23"
+    "date_created": "2026-11-03T20:41:32.297Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
   },
   {
     "id": "9858e58f-2d74-4c6a-bb65-47e6c50c227c",
@@ -139,8 +139,8 @@
       ],
       "limit": 100
     },
-    "date_created": "2024-09-26T13:48:01.647Z",
-    "user_created": "71639435-1dc5-4f21-8c11-603deee67b23"
+    "date_created": "2026-11-03T20:41:32.396Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
   },
   {
     "id": "9c87ede9-b891-4fd5-996a-12531ca8f505",
@@ -175,8 +175,8 @@
         ]
       }
     },
-    "date_created": "2024-09-26T13:43:32.891Z",
-    "user_created": "71639435-1dc5-4f21-8c11-603deee67b23"
+    "date_created": "2026-11-03T20:41:32.498Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
   },
   {
     "id": "afe41ce8-ec12-439e-8ae1-1b14a804b0c4",
@@ -198,8 +198,8 @@
       "color": "#A2B5CD",
       "textAlign": "left"
     },
-    "date_created": "2024-09-26T13:50:46.781Z",
-    "user_created": "71639435-1dc5-4f21-8c11-603deee67b23"
+    "date_created": "2026-11-03T20:41:32.597Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
   },
   {
     "id": "b2ec7d9b-7037-4a6f-ad5d-0049c6dae979",
@@ -234,8 +234,8 @@
         ]
       }
     },
-    "date_created": "2024-09-26T13:43:32.885Z",
-    "user_created": "71639435-1dc5-4f21-8c11-603deee67b23"
+    "date_created": "2026-11-03T20:41:32.697Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
   },
   {
     "id": "dfcb5159-7413-4302-90e1-c3742f5ccac1",
@@ -269,8 +269,8 @@
       "prefix": "$",
       "maximumFractionDigits": 2
     },
-    "date_created": "2024-09-26T13:43:32.909Z",
-    "user_created": "71639435-1dc5-4f21-8c11-603deee67b23"
+    "date_created": "2026-11-03T20:41:32.797Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
   },
   {
     "id": "e0348409-5b03-4fe6-a301-38bca12a1d47",
@@ -304,8 +304,8 @@
       "prefix": "$",
       "maximumFractionDigits": 2
     },
-    "date_created": "2024-09-26T13:43:32.904Z",
-    "user_created": "71639435-1dc5-4f21-8c11-603deee67b23"
+    "date_created": "2026-11-03T20:41:32.897Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
   },
   {
     "id": "f464520a-a223-48cb-b350-2e461727d39a",
@@ -329,7 +329,7 @@
       },
       "defaultValue": "2024-01-01T12:00:00-05:00"
     },
-    "date_created": "2024-09-26T13:43:32.895Z",
-    "user_created": "71639435-1dc5-4f21-8c11-603deee67b23"
+    "date_created": "2026-11-03T20:41:32.997Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
   }
 ]

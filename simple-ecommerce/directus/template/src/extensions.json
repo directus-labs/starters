@@ -10,7 +10,7 @@
       "bundle": null
     },
     "schema": {
-      "path": "/directus/node_modules/.directus/extensions/.registry/a4cd622d-0861-4ae5-8b39-7fc67bfa48c1",
+      "path": "/directus/extensions/.registry/a4cd622d-0861-4ae5-8b39-7fc67bfa48c1",
       "name": "@directus-labs/table-view-panel",
       "version": "1.0.0",
       "type": "panel",
@@ -30,7 +30,7 @@
       "bundle": null
     },
     "schema": {
-      "path": "/directus/node_modules/.directus/extensions/.registry/1334d624-b000-4b82-a783-1926450d1feb",
+      "path": "/directus/extensions/.registry/1334d624-b000-4b82-a783-1926450d1feb",
       "name": "directus-extension-classified-group",
       "version": "1.0.5",
       "type": "interface",
@@ -50,7 +50,7 @@
       "bundle": null
     },
     "schema": {
-      "path": "/directus/node_modules/.directus/extensions/.registry/64489dc4-ae84-472d-a9f8-fad653d43ba5",
+      "path": "/directus/extensions/.registry/64489dc4-ae84-472d-a9f8-fad653d43ba5",
       "name": "@directus-labs/liquidjs-operation",
       "version": "1.0.1",
       "type": "operation",
@@ -88,7 +88,7 @@
       "bundle": null
     },
     "schema": {
-      "path": "/directus/node_modules/.directus/extensions/.registry/e77fd62a-c9f5-4937-b153-cf10d8d13264",
+      "path": "/directus/extensions/.registry/e77fd62a-c9f5-4937-b153-cf10d8d13264",
       "name": "@directus-labs/command-palette-module",
       "version": "1.0.1",
       "type": "module",
@@ -108,7 +108,7 @@
       "bundle": null
     },
     "schema": {
-      "path": "/directus/node_modules/.directus/extensions/.registry/9621987d-012d-475a-bd7f-e293cac7b077",
+      "path": "/directus/extensions/.registry/9621987d-012d-475a-bd7f-e293cac7b077",
       "name": "directus-extension-group-tabs-interface",
       "version": "2.1.0",
       "type": "interface",

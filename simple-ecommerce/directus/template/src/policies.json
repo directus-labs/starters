@@ -21,9 +21,9 @@
   },
   {
     "id": "abf8a154-5b1c-4a46-ac9c-7300570f4f17",
-    "name": "Read Products and Content",
+    "name": "$t:public_label",
     "icon": "public",
-    "description": "Grants access to read published products, content, and assets",
+    "description": "$t:public_description",
     "ip_access": null,
     "enforce_tfa": false,
     "admin_access": false,
