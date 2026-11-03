@@ -43,7 +43,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -92,7 +93,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -141,7 +143,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -190,7 +193,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -239,7 +243,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -284,7 +289,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -333,7 +339,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -384,7 +391,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -435,7 +443,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -522,7 +531,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -569,7 +579,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -618,7 +629,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -667,7 +679,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -714,7 +727,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -763,7 +777,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -810,7 +825,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -857,7 +873,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -902,7 +919,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -947,7 +965,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -992,7 +1011,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1039,7 +1059,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1084,7 +1105,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1129,7 +1151,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1174,7 +1197,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1221,7 +1245,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1270,7 +1295,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1319,7 +1345,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1368,7 +1395,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1416,7 +1444,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1461,7 +1490,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1506,7 +1536,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1553,7 +1584,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1600,7 +1632,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1649,7 +1682,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1694,7 +1728,8 @@
       "required": false,
       "group": "meta_profile",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1741,7 +1776,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1786,7 +1822,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1831,7 +1868,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1876,7 +1914,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1923,7 +1962,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1968,7 +2008,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2013,7 +2054,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2058,7 +2100,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2103,7 +2146,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2152,7 +2196,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2201,7 +2246,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2248,7 +2294,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2297,7 +2344,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2346,7 +2394,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2395,7 +2444,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2444,7 +2494,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2489,7 +2540,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2538,7 +2590,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2589,7 +2642,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2639,7 +2693,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2690,7 +2745,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2735,7 +2791,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2784,7 +2841,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2834,7 +2892,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2881,7 +2940,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2928,7 +2988,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2973,7 +3034,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3022,7 +3084,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3071,7 +3134,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3120,7 +3184,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3169,7 +3234,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3214,7 +3280,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3297,7 +3364,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3342,7 +3410,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3387,7 +3456,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3432,7 +3502,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3477,7 +3548,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3522,7 +3594,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3567,7 +3640,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3612,7 +3686,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3670,7 +3745,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3717,7 +3793,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3762,7 +3839,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3807,7 +3885,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3852,7 +3931,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3899,7 +3979,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3944,7 +4025,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -3989,7 +4071,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4034,7 +4117,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4081,7 +4165,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4130,7 +4215,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4179,7 +4265,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4228,7 +4315,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4277,7 +4365,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4322,7 +4411,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4371,7 +4461,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4420,7 +4511,8 @@
       "required": false,
       "group": "meta_profile",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4467,7 +4559,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4512,7 +4605,8 @@
       "required": false,
       "group": "meta_profile",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4561,7 +4655,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4693,7 +4788,8 @@
       "required": false,
       "group": "meta_profile",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4824,7 +4920,8 @@
       "required": false,
       "group": "meta_profile",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4869,7 +4966,8 @@
       "required": false,
       "group": "meta_profile",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4916,7 +5014,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -4961,7 +5060,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -5030,7 +5130,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -5075,16 +5176,17 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
-    "collection": "organizations",
+    "collection": "activities",
     "field": "contacts",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "organizations",
+      "collection": "activities",
       "field": "contacts",
       "special": [
         "m2m"
@@ -5100,7 +5202,7 @@
       },
       "readonly": false,
       "hidden": false,
-      "sort": 9,
+      "sort": 11,
       "width": "half",
       "translations": null,
       "note": null,
@@ -5108,7 +5210,43 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "activities",
+    "field": "divider_activity",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "activities",
+      "field": "divider_activity",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "presentation-divider",
+      "options": {
+        "title": null,
+        "color": "#A2B5CD",
+        "icon": "info",
+        "inlineTitle": true
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 12,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -5141,7 +5279,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -5173,34 +5312,111 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
-    "collection": "organizations",
-    "field": "activities",
+    "collection": "contacts",
+    "field": "tags",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "organizations",
-      "field": "activities",
+      "collection": "contacts",
+      "field": "tags",
       "special": [
-        "o2m"
+        "m2m"
       ],
-      "interface": "list-o2m",
+      "interface": "list-m2m",
       "options": {
         "enableLink": true,
+        "filter": {
+          "_and": [
+            {
+              "tag_collections": {
+                "_eq": "contacts"
+              }
+            }
+          ]
+        }
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "meta_profile",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "contacts",
+    "field": "meta_profile",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "contacts",
+      "field": "meta_profile",
+      "special": [
+        "alias",
+        "no-data",
+        "group"
+      ],
+      "interface": "group-raw",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 3,
+      "width": "full",
+      "translations": [
+        {
+          "language": "en-US",
+          "translation": "Profile"
+        }
+      ],
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "meta_tabs",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "contacts",
+    "field": "deals",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "contacts",
+      "field": "deals",
+      "special": [
+        "m2m"
+      ],
+      "interface": "list-m2m",
+      "options": {
         "layout": "table",
-        "enableSearchFilter": true,
-        "sort": "start_date",
         "fields": [
-          "name",
-          "activity_type",
-          "start_date"
+          "deal.name",
+          "deal.owner",
+          "deal.deal_value",
+          "deal.deal_stage"
         ]
       },
       "display": "related-values",
-      "display_options": null,
+      "display_options": {
+        "template": "{{deal.name}} • {{deal.deal_stage}}"
+      },
       "readonly": false,
       "hidden": false,
       "sort": 2,
@@ -5211,7 +5427,48 @@
       "required": false,
       "group": "meta_tabs",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "contacts",
+    "field": "activities",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "contacts",
+      "field": "activities",
+      "special": [
+        "m2m"
+      ],
+      "interface": "list-m2m",
+      "options": {
+        "layout": "table",
+        "enableSearchFilter": true,
+        "enableLink": true,
+        "fields": [
+          "activity.name",
+          "activity.activity_type",
+          "activity.start_date"
+        ]
+      },
+      "display": "related-values",
+      "display_options": {
+        "template": "{{activity.name}} • {{activity.activity_type}} • {{activity.start_date}}"
+      },
+      "readonly": false,
+      "hidden": false,
+      "sort": 1,
+      "width": "fill",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "meta_tabs",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -5252,42 +5509,268 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
-    "collection": "contacts",
-    "field": "meta_profile",
+    "collection": "deals",
+    "field": "activities",
     "type": "alias",
     "schema": null,
     "meta": {
-      "collection": "contacts",
-      "field": "meta_profile",
+      "collection": "deals",
+      "field": "activities",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "enableLink": true,
+        "fields": [
+          "name",
+          "activity_type",
+          "start_date"
+        ],
+        "sort": "start_date",
+        "filter": null,
+        "layout": "table",
+        "enableSearchFilter": true
+      },
+      "display": "related-values",
+      "display_options": {
+        "template": "{{name}} • {{activity_type}} • {{start_date}}"
+      },
+      "readonly": false,
+      "hidden": false,
+      "sort": 16,
+      "width": "fill",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "deals",
+    "field": "divider_deal",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "deals",
+      "field": "divider_deal",
+      "special": [
+        "alias",
+        "no-data"
+      ],
+      "interface": "presentation-divider",
+      "options": {
+        "inlineTitle": true,
+        "color": "#A2B5CD",
+        "icon": "calendar_today"
+      },
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 12,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "organizations",
+    "field": "contacts",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "organizations",
+      "field": "contacts",
+      "special": [
+        "m2m"
+      ],
+      "interface": "list-m2m",
+      "options": {
+        "enableLink": true,
+        "template": "{{contact.first_name}} {{contact.last_name}} <{{contact.email}}>"
+      },
+      "display": "related-values",
+      "display_options": {
+        "template": "{{contact.first_name}} {{contact.last_name}} <{{contact.email}}>"
+      },
+      "readonly": false,
+      "hidden": false,
+      "sort": 9,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "organizations",
+    "field": "meta_tabs",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "organizations",
+      "field": "meta_tabs",
       "special": [
         "alias",
         "no-data",
         "group"
       ],
-      "interface": "group-raw",
-      "options": null,
+      "interface": "group-tabs",
+      "options": {
+        "fillWidth": true
+      },
       "display": null,
       "display_options": null,
       "readonly": false,
       "hidden": false,
-      "sort": 3,
+      "sort": 12,
       "width": "full",
-      "translations": [
-        {
-          "language": "en-US",
-          "translation": "Profile"
-        }
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "organizations",
+    "field": "addresses",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "organizations",
+      "field": "addresses",
+      "special": [
+        "o2m"
       ],
+      "interface": "list-o2m",
+      "options": {
+        "sort": "sort",
+        "template": "{{name}} • {{address_line_1}}",
+        "enableLink": true
+      },
+      "display": "related-values",
+      "display_options": {
+        "template": "{{name}} • {{address_line_1}}"
+      },
+      "readonly": false,
+      "hidden": false,
+      "sort": 10,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "organizations",
+    "field": "tags",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "organizations",
+      "field": "tags",
+      "special": [
+        "m2m"
+      ],
+      "interface": "list-m2m",
+      "options": {
+        "enableLink": true,
+        "filter": {
+          "_and": [
+            {
+              "tag_collections": {
+                "_contains": "organizations"
+              }
+            }
+          ]
+        },
+        "template": "{{tag.color}} {{tag.name}}"
+      },
+      "display": "related-values",
+      "display_options": {
+        "template": "{{tag.color}} {{tag.name}}"
+      },
+      "readonly": false,
+      "hidden": false,
+      "sort": 2,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": "meta_profile",
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "organizations",
+    "field": "activities",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "organizations",
+      "field": "activities",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "enableLink": true,
+        "layout": "table",
+        "enableSearchFilter": true,
+        "sort": "start_date",
+        "fields": [
+          "name",
+          "activity_type",
+          "start_date"
+        ]
+      },
+      "display": "related-values",
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 2,
+      "width": "fill",
+      "translations": null,
       "note": null,
       "conditions": null,
       "required": false,
       "group": "meta_tabs",
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -5339,117 +5822,8 @@
       "required": false,
       "group": "meta_tabs",
       "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "contacts",
-    "field": "deals",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "contacts",
-      "field": "deals",
-      "special": [
-        "m2m"
-      ],
-      "interface": "list-m2m",
-      "options": {
-        "layout": "table",
-        "fields": [
-          "deal.name",
-          "deal.owner",
-          "deal.deal_value",
-          "deal.deal_stage"
-        ]
-      },
-      "display": "related-values",
-      "display_options": {
-        "template": "{{deal.name}} • {{deal.deal_stage}}"
-      },
-      "readonly": false,
-      "hidden": false,
-      "sort": 2,
-      "width": "fill",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": "meta_tabs",
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "activities",
-    "field": "contacts",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "activities",
-      "field": "contacts",
-      "special": [
-        "m2m"
-      ],
-      "interface": "list-m2m",
-      "options": {
-        "enableLink": true,
-        "template": "{{contact.first_name}} {{contact.last_name}} <{{contact.email}}>"
-      },
-      "display": "related-values",
-      "display_options": {
-        "template": "{{contact.first_name}} {{contact.last_name}} <{{contact.email}}>"
-      },
-      "readonly": false,
-      "hidden": false,
-      "sort": 11,
-      "width": "half",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "contacts",
-    "field": "activities",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "contacts",
-      "field": "activities",
-      "special": [
-        "m2m"
-      ],
-      "interface": "list-m2m",
-      "options": {
-        "layout": "table",
-        "enableSearchFilter": true,
-        "enableLink": true,
-        "fields": [
-          "activity.name",
-          "activity.activity_type",
-          "activity.start_date"
-        ]
-      },
-      "display": "related-values",
-      "display_options": {
-        "template": "{{activity.name}} • {{activity.activity_type}} • {{activity.start_date}}"
-      },
-      "readonly": false,
-      "hidden": false,
-      "sort": 1,
-      "width": "fill",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": "meta_tabs",
-      "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -5484,262 +5858,8 @@
       "required": false,
       "group": "meta_tabs",
       "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "deals",
-    "field": "activities",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "deals",
-      "field": "activities",
-      "special": [
-        "o2m"
-      ],
-      "interface": "list-o2m",
-      "options": {
-        "enableLink": true,
-        "fields": [
-          "name",
-          "activity_type",
-          "start_date"
-        ],
-        "sort": "start_date",
-        "filter": null,
-        "layout": "table",
-        "enableSearchFilter": true
-      },
-      "display": "related-values",
-      "display_options": {
-        "template": "{{name}} • {{activity_type}} • {{start_date}}"
-      },
-      "readonly": false,
-      "hidden": false,
-      "sort": 16,
-      "width": "fill",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "organizations",
-    "field": "meta_tabs",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "organizations",
-      "field": "meta_tabs",
-      "special": [
-        "alias",
-        "no-data",
-        "group"
-      ],
-      "interface": "group-tabs",
-      "options": {
-        "fillWidth": true
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 12,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "organizations",
-    "field": "addresses",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "organizations",
-      "field": "addresses",
-      "special": [
-        "o2m"
-      ],
-      "interface": "list-o2m",
-      "options": {
-        "sort": "sort",
-        "template": "{{name}} • {{address_line_1}}",
-        "enableLink": true
-      },
-      "display": "related-values",
-      "display_options": {
-        "template": "{{name}} • {{address_line_1}}"
-      },
-      "readonly": false,
-      "hidden": false,
-      "sort": 10,
-      "width": "half",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "contacts",
-    "field": "tags",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "contacts",
-      "field": "tags",
-      "special": [
-        "m2m"
-      ],
-      "interface": "list-m2m",
-      "options": {
-        "enableLink": true,
-        "filter": {
-          "_and": [
-            {
-              "tag_collections": {
-                "_eq": "contacts"
-              }
-            }
-          ]
-        }
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 1,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": "meta_profile",
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "deals",
-    "field": "divider_deal",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "deals",
-      "field": "divider_deal",
-      "special": [
-        "alias",
-        "no-data"
-      ],
-      "interface": "presentation-divider",
-      "options": {
-        "inlineTitle": true,
-        "color": "#A2B5CD",
-        "icon": "calendar_today"
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 12,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "activities",
-    "field": "divider_activity",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "activities",
-      "field": "divider_activity",
-      "special": [
-        "alias",
-        "no-data"
-      ],
-      "interface": "presentation-divider",
-      "options": {
-        "title": null,
-        "color": "#A2B5CD",
-        "icon": "info",
-        "inlineTitle": true
-      },
-      "display": null,
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 12,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "organizations",
-    "field": "tags",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "organizations",
-      "field": "tags",
-      "special": [
-        "m2m"
-      ],
-      "interface": "list-m2m",
-      "options": {
-        "enableLink": true,
-        "filter": {
-          "_and": [
-            {
-              "tag_collections": {
-                "_contains": "organizations"
-              }
-            }
-          ]
-        },
-        "template": "{{tag.color}} {{tag.name}}"
-      },
-      "display": "related-values",
-      "display_options": {
-        "template": "{{tag.color}} {{tag.name}}"
-      },
-      "readonly": false,
-      "hidden": false,
-      "sort": 2,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": "meta_profile",
-      "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   }
 ]

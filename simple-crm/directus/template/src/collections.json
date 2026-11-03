@@ -21,7 +21,9 @@
       "group": "crm",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -51,7 +53,9 @@
       "group": "activities",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -81,7 +85,9 @@
       "group": "crm",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -111,7 +117,9 @@
       "group": "contacts",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -146,7 +154,9 @@
       "group": null,
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": null
   },
@@ -177,7 +187,9 @@
       "group": "crm",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": null
   },
@@ -203,7 +215,9 @@
       "group": "deals",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -233,7 +247,9 @@
       "group": "crm",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -263,7 +279,9 @@
       "group": "crm_settings",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -293,7 +311,9 @@
       "group": "organizations",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -323,7 +343,9 @@
       "group": "organizations",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -353,7 +375,9 @@
       "group": "crm",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -383,7 +407,9 @@
       "group": "organizations",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -413,7 +439,9 @@
       "group": "crm_settings",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",

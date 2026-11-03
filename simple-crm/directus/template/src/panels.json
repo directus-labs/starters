@@ -15,8 +15,8 @@
     "options": {
       "text": "Open Deals"
     },
-    "date_created": "2024-09-25T12:25:29.989Z",
-    "user_created": "b9c003ce-e839-463a-99da-b98fc33ef4f3"
+    "date_created": "2026-11-03T20:18:13.168Z",
+    "user_created": "caa3de92-204b-415b-96ea-fe07a3bb13a4"
   },
   {
     "id": "53273f43-c5f1-4430-a17f-57afc9691915",
@@ -48,8 +48,8 @@
         ]
       }
     },
-    "date_created": "2024-09-25T12:19:02.979Z",
-    "user_created": "b9c003ce-e839-463a-99da-b98fc33ef4f3"
+    "date_created": "2026-11-03T20:18:13.269Z",
+    "user_created": "caa3de92-204b-415b-96ea-fe07a3bb13a4"
   },
   {
     "id": "78f4323c-3721-4ec4-9e7c-11f3f260e991",
@@ -67,8 +67,8 @@
     "options": {
       "text": "Sales Performance"
     },
-    "date_created": "2024-09-25T12:19:02.973Z",
-    "user_created": "b9c003ce-e839-463a-99da-b98fc33ef4f3"
+    "date_created": "2026-11-03T20:18:13.368Z",
+    "user_created": "caa3de92-204b-415b-96ea-fe07a3bb13a4"
   },
   {
     "id": "8ecb0b8f-808a-412c-b685-98c01d3246dc",
@@ -102,8 +102,8 @@
       "prefix": "$ ",
       "unit": ","
     },
-    "date_created": "2024-09-25T12:19:38.423Z",
-    "user_created": "b9c003ce-e839-463a-99da-b98fc33ef4f3"
+    "date_created": "2026-11-03T20:18:13.469Z",
+    "user_created": "caa3de92-204b-415b-96ea-fe07a3bb13a4"
   },
   {
     "id": "b4fa60f6-059e-4b77-811b-f700b6a82ed1",
@@ -144,8 +144,8 @@
       },
       "prefix": "$ "
     },
-    "date_created": "2024-09-25T12:29:05.441Z",
-    "user_created": "b9c003ce-e839-463a-99da-b98fc33ef4f3"
+    "date_created": "2026-11-03T20:18:13.567Z",
+    "user_created": "caa3de92-204b-415b-96ea-fe07a3bb13a4"
   },
   {
     "id": "d8a77e05-eee5-453c-a979-e65eb63ef4d3",
@@ -186,7 +186,7 @@
         ]
       }
     },
-    "date_created": "2024-09-25T12:25:29.980Z",
-    "user_created": "b9c003ce-e839-463a-99da-b98fc33ef4f3"
+    "date_created": "2026-11-03T20:18:13.668Z",
+    "user_created": "caa3de92-204b-415b-96ea-fe07a3bb13a4"
   }
 ]

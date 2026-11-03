@@ -11,7 +11,6 @@
   "auth_password_policy": null,
   "storage_asset_transform": "all",
   "storage_asset_presets": null,
-  "custom_css": ".v-divider.inlineTitle.large.add-margin-top {\n    margin-top: 0 !important;\n}\n\n.actions.list .v-button .button {\n    background-color: var(--theme--background);\n    color: var(--theme--primary);\n    border-color: var(--theme--primary);\n    \n    &:hover {\n         border-color: color-mix(in srgb, var(--theme--primary), #000 20%);\n         color: color-mix(in srgb, var(--theme--primary), #000 20%) !important;\n    }\n}\n\n.drawer-item-content {\n   --theme--form--row-gap: 24px;\n   --theme--form--column-gap: 32px;\n}\n",
   "storage_default_folder": null,
   "basemaps": null,
   "mapbox_key": null,
@@ -136,52 +135,11 @@
   "public_registration_verify_email": true,
   "public_registration_role": null,
   "public_registration_email_filter": null,
-  "command_palette_settings": {
-    "searchMode": "as_you_type",
-    "collections": [
-      {
-        "collection": "deals",
-        "displayTemplate": "{{name}}",
-        "descriptionField": "deal_value",
-        "fields": [
-          "name",
-          "contacts.contact.first_name",
-          "contacts.contact.last_name",
-          "contacts.contact.email",
-          "contacts.contact.phone"
-        ],
-        "limit": 10,
-        "availableGlobally": false
-      },
-      {
-        "collection": "organizations",
-        "displayTemplate": "{{name}}",
-        "descriptionField": null,
-        "fields": [
-          "name",
-          "contacts.contact.first_name",
-          "contacts.contact.last_name",
-          "contacts.contact.email",
-          "contacts.contact.phone"
-        ],
-        "limit": 10,
-        "availableGlobally": false
-      },
-      {
-        "collection": "contacts",
-        "displayTemplate": "{{first_name}} {{last_name}} <{{email}}>",
-        "fields": [
-          "first_name",
-          "last_name",
-          "email",
-          "phone",
-          "organizations.organization.name"
-        ],
-        "limit": 10,
-        "availableGlobally": false
-      }
-    ],
-    "triggerRate": 100,
-    "commandPaletteEnabled": true
-  }
+  "preview_base_url": null,
+  "visual_editor_urls": null,
+  "mcp_enabled": false,
+  "mcp_allow_deletes": false,
+  "mcp_prompts_collection": null,
+  "mcp_system_prompt_enabled": true,
+  "mcp_system_prompt": null
 }

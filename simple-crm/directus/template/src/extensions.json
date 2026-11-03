@@ -10,7 +10,7 @@
       "bundle": null
     },
     "schema": {
-      "path": "/directus/node_modules/.directus/extensions/.registry/e77fd62a-c9f5-4937-b153-cf10d8d13264",
+      "path": "/directus/extensions/.registry/e77fd62a-c9f5-4937-b153-cf10d8d13264",
       "name": "@directus-labs/command-palette-module",
       "version": "1.0.1",
       "type": "module",
@@ -30,7 +30,7 @@
       "bundle": null
     },
     "schema": {
-      "path": "/directus/node_modules/.directus/extensions/.registry/9621987d-012d-475a-bd7f-e293cac7b077",
+      "path": "/directus/extensions/.registry/9621987d-012d-475a-bd7f-e293cac7b077",
       "name": "directus-extension-group-tabs-interface",
       "version": "2.1.0",
       "type": "interface",

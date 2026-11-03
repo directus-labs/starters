@@ -1,0 +1,7 @@
+directus/data/
+directus/uploads/
+directus/extensions/.registry
+!directus/**/.gitkeep
+.env
+.env.*
+!.env.example
