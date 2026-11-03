@@ -26,7 +26,9 @@
       "group": null,
       "collapse": "closed",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": null
   },
@@ -52,7 +54,9 @@
       "group": "help",
       "collapse": "open",
       "preview_url": null,
-      "versioning": true
+      "versioning": true,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -82,7 +86,9 @@
       "group": "help_articles",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -112,7 +118,9 @@
       "group": "help",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -142,7 +150,9 @@
       "group": "help_collections",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -172,7 +182,9 @@
       "group": "help",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -202,7 +214,9 @@
       "group": "help",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -232,7 +246,9 @@
       "group": "help_settings",
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",
@@ -262,7 +278,9 @@
       "group": null,
       "collapse": "open",
       "preview_url": null,
-      "versioning": false
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
     },
     "schema": {
       "schema": "public",

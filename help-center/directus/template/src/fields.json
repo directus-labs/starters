@@ -46,7 +46,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -96,7 +97,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -145,7 +147,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -192,7 +195,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -241,7 +245,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -286,7 +291,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -389,7 +395,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -434,7 +441,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -483,7 +491,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -532,7 +541,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -579,7 +589,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -628,7 +639,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -677,7 +689,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -726,7 +739,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -775,7 +789,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -820,7 +835,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -865,7 +881,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -910,7 +927,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -955,7 +973,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1000,7 +1019,8 @@
       "required": true,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1045,7 +1065,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1090,7 +1111,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1137,7 +1159,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1182,7 +1205,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1227,7 +1251,8 @@
       "required": true,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1274,7 +1299,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1319,7 +1345,8 @@
       "required": true,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1366,7 +1393,8 @@
       "required": true,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1411,7 +1439,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1456,7 +1485,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1501,7 +1531,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1546,7 +1577,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1595,7 +1627,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1645,7 +1678,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1692,7 +1726,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1744,7 +1779,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1789,7 +1825,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1834,7 +1871,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1883,7 +1921,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1932,7 +1971,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -1977,7 +2017,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2024,7 +2065,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2073,7 +2115,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2120,7 +2163,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2165,7 +2209,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2210,7 +2255,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2255,7 +2301,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2300,7 +2347,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2345,7 +2393,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2390,7 +2439,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2435,7 +2485,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2491,7 +2542,108 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "help_articles",
+    "field": "translations",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "help_articles",
+      "field": "translations",
+      "special": [
+        "translations"
+      ],
+      "interface": "translations",
+      "options": {
+        "languageField": "name",
+        "userLanguage": true
+      },
+      "display": "translations",
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 14,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "help_collections",
+    "field": "translations",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "help_collections",
+      "field": "translations",
+      "special": [
+        "translations"
+      ],
+      "interface": "translations",
+      "options": {
+        "languageField": "name",
+        "userLanguage": true
+      },
+      "display": "translations",
+      "display_options": {
+        "languageField": "name"
+      },
+      "readonly": false,
+      "hidden": false,
+      "sort": 5,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "help_collections",
+    "field": "articles",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "help_collections",
+      "field": "articles",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "enableLink": true,
+        "template": "{{title}}"
+      },
+      "display": "related-values",
+      "display_options": {
+        "template": "{{title}}"
+      },
+      "readonly": false,
+      "hidden": false,
+      "sort": 6,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
     }
   },
   {
@@ -2526,104 +2678,8 @@
       "required": false,
       "group": null,
       "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "help_collections",
-    "field": "translations",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "help_collections",
-      "field": "translations",
-      "special": [
-        "translations"
-      ],
-      "interface": "translations",
-      "options": {
-        "languageField": "name",
-        "userLanguage": true
-      },
-      "display": "translations",
-      "display_options": {
-        "languageField": "name"
-      },
-      "readonly": false,
-      "hidden": false,
-      "sort": 5,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "help_collections",
-    "field": "articles",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "help_collections",
-      "field": "articles",
-      "special": [
-        "o2m"
-      ],
-      "interface": "list-o2m",
-      "options": {
-        "enableLink": true,
-        "template": "{{title}}"
-      },
-      "display": "related-values",
-      "display_options": {
-        "template": "{{title}}"
-      },
-      "readonly": false,
-      "hidden": false,
-      "sort": 6,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
-    }
-  },
-  {
-    "collection": "help_articles",
-    "field": "translations",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "help_articles",
-      "field": "translations",
-      "special": [
-        "translations"
-      ],
-      "interface": "translations",
-      "options": {
-        "languageField": "name",
-        "userLanguage": true
-      },
-      "display": "translations",
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 14,
-      "width": "full",
-      "translations": null,
-      "note": null,
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null
+      "validation_message": null,
+      "searchable": true
     }
   }
 ]

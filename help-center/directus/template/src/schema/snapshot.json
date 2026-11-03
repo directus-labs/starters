@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "directus": "11.1.0",
+  "directus": "12.6.0",
   "vendor": "postgres",
   "collections": [
     {
@@ -10,6 +10,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "closed",
         "collection": "help",
         "color": "#8196B0",
@@ -23,6 +24,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": [
           {
             "language": "en-US",
@@ -40,6 +42,7 @@
         "archive_app_filter": true,
         "archive_field": "status",
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "help_articles",
         "color": "#8196B0",
@@ -53,6 +56,7 @@
         "singleton": false,
         "sort": 2,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": true
@@ -68,6 +72,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "help_articles_translations",
         "color": null,
@@ -81,6 +86,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -96,6 +102,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": "archived",
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "help_collections",
         "color": "#8196B0",
@@ -109,6 +116,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": "sort",
+        "status": "active",
         "translations": null,
         "unarchive_value": "draft",
         "versioning": false
@@ -124,6 +132,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "help_collections_translations",
         "color": null,
@@ -137,6 +146,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -152,6 +162,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "help_feedback",
         "color": "#8196B0",
@@ -165,6 +176,7 @@
         "singleton": false,
         "sort": 3,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -180,6 +192,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "help_settings",
         "color": "#A2B5CD",
@@ -193,6 +206,7 @@
         "singleton": true,
         "sort": 4,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -208,6 +222,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "help_settings_translations",
         "color": null,
@@ -221,6 +236,7 @@
         "singleton": false,
         "sort": 1,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -236,6 +252,7 @@
         "archive_app_filter": true,
         "archive_field": null,
         "archive_value": null,
+        "autosave_revision_interval": null,
         "collapse": "open",
         "collection": "languages",
         "color": null,
@@ -249,6 +266,7 @@
         "singleton": false,
         "sort": 2,
         "sort_field": null,
+        "status": "active",
         "translations": null,
         "unarchive_value": null,
         "versioning": false
@@ -278,6 +296,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": [
           "cast-timestamp",
@@ -298,6 +317,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -325,6 +345,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 10,
         "special": [
           "cast-timestamp",
@@ -345,6 +366,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -374,6 +396,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 8,
         "special": null,
         "translations": null,
@@ -391,6 +414,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -416,6 +440,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -435,6 +460,7 @@
         "numeric_scale": null,
         "is_nullable": false,
         "is_unique": true,
+        "is_indexed": false,
         "is_primary_key": true,
         "is_generated": false,
         "generation_expression": null,
@@ -462,6 +488,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 11,
         "special": [
           "m2o"
@@ -481,6 +508,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -506,6 +534,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": null,
         "translations": null,
@@ -523,6 +552,7 @@
         "numeric_scale": 0,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -542,32 +572,32 @@
         "display_options": {
           "choices": [
             {
-              "text": "$t:published",
-              "value": "published",
-              "foreground": "#FFFFFF",
               "background": "#2ECDA7",
-              "icon": "published_with_changes"
+              "foreground": "#FFFFFF",
+              "icon": "published_with_changes",
+              "text": "$t:published",
+              "value": "published"
             },
             {
-              "text": "$t:review",
-              "value": "review",
+              "background": "#FFA439",
+              "foreground": "#FFFFFF",
               "icon": "rate_review",
-              "foreground": "#FFFFFF",
-              "background": "#FFA439"
+              "text": "$t:review",
+              "value": "review"
             },
             {
-              "text": "$t:draft",
-              "value": "draft",
-              "foreground": "#18222F",
               "background": "#D3DAE4",
-              "icon": "draft_orders"
+              "foreground": "#18222F",
+              "icon": "draft_orders",
+              "text": "$t:draft",
+              "value": "draft"
             },
             {
-              "text": "$t:archived",
-              "value": "archived",
-              "foreground": "#FFFFFF",
               "background": "#18222F",
-              "icon": "history_toggle_off"
+              "foreground": "#FFFFFF",
+              "icon": "history_toggle_off",
+              "text": "$t:archived",
+              "value": "archived"
             }
           ]
         },
@@ -579,33 +609,34 @@
         "options": {
           "choices": [
             {
-              "text": "$t:draft",
-              "value": "draft",
               "color": "#A2B5CD",
-              "icon": "draft_orders"
+              "icon": "draft_orders",
+              "text": "$t:draft",
+              "value": "draft"
             },
             {
-              "text": "$t:review",
-              "value": "review",
+              "color": "#FFC23B",
               "icon": "rate_review",
-              "color": "#FFC23B"
+              "text": "$t:review",
+              "value": "review"
             },
             {
-              "text": "$t:published",
-              "value": "published",
+              "color": "#2ECDA7",
               "icon": "published_with_changes",
-              "color": "#2ECDA7"
+              "text": "$t:published",
+              "value": "published"
             },
             {
-              "text": "$t:archived",
-              "value": "archived",
+              "color": "#18222F",
               "icon": "history_toggle_off",
-              "color": "#18222F"
+              "text": "$t:archived",
+              "value": "archived"
             }
           ]
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 9,
         "special": null,
         "translations": null,
@@ -623,6 +654,7 @@
         "numeric_scale": null,
         "is_nullable": false,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -648,6 +680,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 6,
         "special": null,
         "translations": null,
@@ -665,6 +698,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -692,6 +726,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": [
           "user-created"
@@ -711,6 +746,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -738,6 +774,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 5,
         "special": [
           "user-updated"
@@ -757,6 +794,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -785,6 +823,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 14,
         "special": [
           "translations"
@@ -812,6 +851,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -831,6 +871,7 @@
         "numeric_scale": null,
         "is_nullable": false,
         "is_unique": true,
+        "is_indexed": false,
         "is_primary_key": true,
         "is_generated": false,
         "generation_expression": null,
@@ -858,6 +899,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": [
           "user-created"
@@ -877,6 +919,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -904,6 +947,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": [
           "date-created"
@@ -923,6 +967,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -950,6 +995,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": [
           "user-updated"
@@ -969,6 +1015,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -996,6 +1043,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 5,
         "special": [
           "date-updated"
@@ -1015,6 +1063,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1040,6 +1089,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 6,
         "special": null,
         "translations": null,
@@ -1057,6 +1107,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1082,6 +1133,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 7,
         "special": null,
         "translations": null,
@@ -1099,6 +1151,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1124,6 +1177,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 10,
         "special": null,
         "translations": null,
@@ -1141,6 +1195,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1166,6 +1221,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 11,
         "special": null,
         "translations": null,
@@ -1183,6 +1239,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1208,6 +1265,7 @@
         "options": null,
         "readonly": false,
         "required": true,
+        "searchable": true,
         "sort": 8,
         "special": null,
         "translations": null,
@@ -1225,6 +1283,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1250,6 +1309,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 9,
         "special": null,
         "translations": null,
@@ -1267,6 +1327,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": true,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1292,6 +1353,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": null,
         "translations": null,
@@ -1309,6 +1371,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1334,6 +1397,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -1353,6 +1417,7 @@
         "numeric_scale": null,
         "is_nullable": false,
         "is_unique": true,
+        "is_indexed": false,
         "is_primary_key": true,
         "is_generated": false,
         "generation_expression": null,
@@ -1378,6 +1443,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": null,
         "translations": null,
@@ -1395,6 +1461,7 @@
         "numeric_scale": 0,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1420,6 +1487,7 @@
         "options": null,
         "readonly": false,
         "required": true,
+        "searchable": true,
         "sort": 3,
         "special": null,
         "translations": null,
@@ -1437,44 +1505,13 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
         "has_auto_increment": false,
         "foreign_key_table": null,
         "foreign_key_column": null
-      }
-    },
-    {
-      "collection": "help_collections",
-      "field": "articles",
-      "type": "alias",
-      "meta": {
-        "collection": "help_collections",
-        "conditions": null,
-        "display": "related-values",
-        "display_options": {
-          "template": "{{title}}"
-        },
-        "field": "articles",
-        "group": null,
-        "hidden": false,
-        "interface": "list-o2m",
-        "note": null,
-        "options": {
-          "enableLink": true,
-          "template": "{{title}}"
-        },
-        "readonly": false,
-        "required": false,
-        "sort": 6,
-        "special": [
-          "o2m"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
       }
     },
     {
@@ -1499,9 +1536,43 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 5,
         "special": [
           "translations"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "help_collections",
+      "field": "articles",
+      "type": "alias",
+      "meta": {
+        "collection": "help_collections",
+        "conditions": null,
+        "display": "related-values",
+        "display_options": {
+          "template": "{{title}}"
+        },
+        "field": "articles",
+        "group": null,
+        "hidden": false,
+        "interface": "list-o2m",
+        "note": null,
+        "options": {
+          "enableLink": true,
+          "template": "{{title}}"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 6,
+        "special": [
+          "o2m"
         ],
         "translations": null,
         "validation": null,
@@ -1526,6 +1597,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -1545,6 +1617,7 @@
         "numeric_scale": null,
         "is_nullable": false,
         "is_unique": true,
+        "is_indexed": false,
         "is_primary_key": true,
         "is_generated": false,
         "generation_expression": null,
@@ -1570,6 +1643,7 @@
         "options": null,
         "readonly": false,
         "required": true,
+        "searchable": true,
         "sort": 4,
         "special": null,
         "translations": null,
@@ -1587,6 +1661,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1614,6 +1689,7 @@
         },
         "readonly": false,
         "required": true,
+        "searchable": true,
         "sort": 5,
         "special": null,
         "translations": null,
@@ -1631,6 +1707,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": true,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1656,6 +1733,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": null,
         "translations": null,
@@ -1673,6 +1751,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1698,6 +1777,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": null,
         "translations": null,
@@ -1715,6 +1795,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1740,6 +1821,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 6,
         "special": null,
         "translations": null,
@@ -1757,6 +1839,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1782,6 +1865,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 10,
         "special": null,
         "translations": null,
@@ -1799,6 +1883,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1826,6 +1911,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": [
           "cast-timestamp"
@@ -1845,6 +1931,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1872,6 +1959,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 5,
         "special": [
           "cast-timestamp",
@@ -1892,6 +1980,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -1917,6 +2006,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -1936,6 +2026,7 @@
         "numeric_scale": null,
         "is_nullable": false,
         "is_unique": true,
+        "is_indexed": false,
         "is_primary_key": true,
         "is_generated": false,
         "generation_expression": null,
@@ -1968,6 +2059,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 8,
         "special": null,
         "translations": null,
@@ -1985,6 +2077,7 @@
         "numeric_scale": 0,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2010,6 +2103,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 6,
         "special": null,
         "translations": null,
@@ -2027,6 +2121,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2052,6 +2147,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 7,
         "special": null,
         "translations": null,
@@ -2069,6 +2165,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2096,6 +2193,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": [
           "user-created"
@@ -2115,6 +2213,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2142,6 +2241,7 @@
         },
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": [
           "user-updated"
@@ -2161,6 +2261,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2186,6 +2287,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 9,
         "special": null,
         "translations": null,
@@ -2203,6 +2305,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2228,6 +2331,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -2247,12 +2351,61 @@
         "numeric_scale": null,
         "is_nullable": false,
         "is_unique": true,
+        "is_indexed": false,
         "is_primary_key": true,
         "is_generated": false,
         "generation_expression": null,
         "has_auto_increment": false,
         "foreign_key_table": null,
         "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "help_settings",
+      "field": "default_language",
+      "type": "string",
+      "meta": {
+        "collection": "help_settings",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "default_language",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": {
+          "template": "{{name}}"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 2,
+        "special": [
+          "m2o"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "default_language",
+        "table": "help_settings",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "languages",
+        "foreign_key_column": "code"
       }
     },
     {
@@ -2279,6 +2432,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": [
           "translations"
@@ -2287,52 +2441,6 @@
         "validation": null,
         "validation_message": null,
         "width": "full"
-      }
-    },
-    {
-      "collection": "help_settings",
-      "field": "default_language",
-      "type": "string",
-      "meta": {
-        "collection": "help_settings",
-        "conditions": null,
-        "display": null,
-        "display_options": null,
-        "field": "default_language",
-        "group": null,
-        "hidden": false,
-        "interface": "select-dropdown-m2o",
-        "note": null,
-        "options": {
-          "template": "{{name}}"
-        },
-        "readonly": false,
-        "required": false,
-        "sort": 2,
-        "special": [
-          "m2o"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      },
-      "schema": {
-        "name": "default_language",
-        "table": "help_settings",
-        "data_type": "character varying",
-        "default_value": null,
-        "max_length": 255,
-        "numeric_precision": null,
-        "numeric_scale": null,
-        "is_nullable": true,
-        "is_unique": false,
-        "is_primary_key": false,
-        "is_generated": false,
-        "generation_expression": null,
-        "has_auto_increment": false,
-        "foreign_key_table": "languages",
-        "foreign_key_column": "code"
       }
     },
     {
@@ -2352,6 +2460,7 @@
         "options": null,
         "readonly": true,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": [
           "uuid"
@@ -2371,6 +2480,7 @@
         "numeric_scale": null,
         "is_nullable": false,
         "is_unique": true,
+        "is_indexed": false,
         "is_primary_key": true,
         "is_generated": false,
         "generation_expression": null,
@@ -2396,6 +2506,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": null,
         "translations": null,
@@ -2413,6 +2524,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2438,6 +2550,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": null,
         "translations": null,
@@ -2455,6 +2568,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2480,6 +2594,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 5,
         "special": null,
         "translations": null,
@@ -2497,6 +2612,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2522,6 +2638,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 4,
         "special": null,
         "translations": null,
@@ -2539,6 +2656,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2564,6 +2682,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 6,
         "special": null,
         "translations": null,
@@ -2581,6 +2700,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2606,6 +2726,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 1,
         "special": null,
         "translations": null,
@@ -2623,6 +2744,7 @@
         "numeric_scale": null,
         "is_nullable": false,
         "is_unique": true,
+        "is_indexed": false,
         "is_primary_key": true,
         "is_generated": false,
         "generation_expression": null,
@@ -2648,6 +2770,7 @@
         "options": null,
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 2,
         "special": null,
         "translations": null,
@@ -2665,6 +2788,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2701,6 +2825,7 @@
         },
         "readonly": false,
         "required": false,
+        "searchable": true,
         "sort": 3,
         "special": null,
         "translations": null,
@@ -2718,6 +2843,7 @@
         "numeric_scale": null,
         "is_nullable": true,
         "is_unique": false,
+        "is_indexed": false,
         "is_primary_key": false,
         "is_generated": false,
         "generation_expression": null,
@@ -2727,32 +2853,93 @@
       }
     }
   ],
-  "relations": [
+  "systemFields": [
     {
-      "collection": "help_articles",
-      "field": "help_collection",
-      "related_collection": "help_collections",
-      "meta": {
-        "junction_field": null,
-        "many_collection": "help_articles",
-        "many_field": "help_collection",
-        "one_allowed_collections": null,
-        "one_collection": "help_collections",
-        "one_collection_field": null,
-        "one_deselect_action": "nullify",
-        "one_field": "articles",
-        "sort_field": "sort"
-      },
+      "collection": "directus_activity",
+      "field": "timestamp",
       "schema": {
-        "table": "help_articles",
-        "column": "help_collection",
-        "foreign_key_table": "help_collections",
-        "foreign_key_column": "id",
-        "constraint_name": "help_articles_help_collection_foreign",
-        "on_update": "NO ACTION",
-        "on_delete": "SET NULL"
+        "is_indexed": true
       }
     },
+    {
+      "collection": "directus_oauth_clients",
+      "field": "date_created",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_codes",
+      "field": "expires_at",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_codes",
+      "field": "used_at",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_consents",
+      "field": "client",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_tokens",
+      "field": "code_hash",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_tokens",
+      "field": "expires_at",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_tokens",
+      "field": "previous_session",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_oauth_tokens",
+      "field": "session",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_revisions",
+      "field": "activity",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_revisions",
+      "field": "parent",
+      "schema": {
+        "is_indexed": true
+      }
+    },
+    {
+      "collection": "directus_sessions",
+      "field": "oauth_client",
+      "schema": {
+        "is_indexed": true
+      }
+    }
+  ],
+  "relations": [
     {
       "collection": "help_articles",
       "field": "owner",
@@ -2826,6 +3013,31 @@
         "constraint_name": "help_articles_user_updated_foreign",
         "on_update": "NO ACTION",
         "on_delete": "NO ACTION"
+      }
+    },
+    {
+      "collection": "help_articles",
+      "field": "help_collection",
+      "related_collection": "help_collections",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "help_articles",
+        "many_field": "help_collection",
+        "one_allowed_collections": null,
+        "one_collection": "help_collections",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": "articles",
+        "sort_field": "sort"
+      },
+      "schema": {
+        "table": "help_articles",
+        "column": "help_collection",
+        "foreign_key_table": "help_collections",
+        "foreign_key_column": "id",
+        "constraint_name": "help_articles_help_collection_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
       }
     },
     {
@@ -3055,31 +3267,6 @@
     },
     {
       "collection": "help_settings_translations",
-      "field": "languages_code",
-      "related_collection": "languages",
-      "meta": {
-        "junction_field": "help_settings_id",
-        "many_collection": "help_settings_translations",
-        "many_field": "languages_code",
-        "one_allowed_collections": null,
-        "one_collection": "languages",
-        "one_collection_field": null,
-        "one_deselect_action": "nullify",
-        "one_field": null,
-        "sort_field": null
-      },
-      "schema": {
-        "table": "help_settings_translations",
-        "column": "languages_code",
-        "foreign_key_table": "languages",
-        "foreign_key_column": "code",
-        "constraint_name": "help_settings_translations_languages_code_foreign",
-        "on_update": "NO ACTION",
-        "on_delete": "CASCADE"
-      }
-    },
-    {
-      "collection": "help_settings_translations",
       "field": "help_settings_id",
       "related_collection": "help_settings",
       "meta": {
@@ -3099,6 +3286,31 @@
         "foreign_key_table": "help_settings",
         "foreign_key_column": "id",
         "constraint_name": "help_settings_translations_help_settings_id_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "CASCADE"
+      }
+    },
+    {
+      "collection": "help_settings_translations",
+      "field": "languages_code",
+      "related_collection": "languages",
+      "meta": {
+        "junction_field": "help_settings_id",
+        "many_collection": "help_settings_translations",
+        "many_field": "languages_code",
+        "one_allowed_collections": null,
+        "one_collection": "languages",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "help_settings_translations",
+        "column": "languages_code",
+        "foreign_key_table": "languages",
+        "foreign_key_column": "code",
+        "constraint_name": "help_settings_translations_languages_code_foreign",
         "on_update": "NO ACTION",
         "on_delete": "CASCADE"
       }

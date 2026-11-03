@@ -24,15 +24,7 @@
   {
     "collection": "help_articles",
     "action": "read",
-    "permissions": {
-      "_and": [
-        {
-          "status": {
-            "_eq": "published"
-          }
-        }
-      ]
-    },
+    "permissions": {},
     "validation": {},
     "presets": null,
     "fields": [
@@ -208,48 +200,7 @@
   {
     "collection": "directus_files",
     "action": "read",
-    "permissions": {
-      "_and": [
-        {
-          "_or": [
-            {
-              "folder": {
-                "name": {
-                  "_contains": "1. Public"
-                }
-              }
-            },
-            {
-              "folder": {
-                "parent": {
-                  "name": {
-                    "_contains": "1. Public"
-                  }
-                }
-              }
-            },
-            {
-              "folder": {
-                "parent": {
-                  "parent": {
-                    "name": {
-                      "_contains": "1. Public"
-                    }
-                  }
-                }
-              }
-            },
-            {
-              "folder": {
-                "name": {
-                  "_contains": "4. Uploads"
-                }
-              }
-            }
-          ]
-        }
-      ]
-    },
+    "permissions": {},
     "validation": {},
     "presets": null,
     "fields": [
@@ -456,29 +407,11 @@
   {
     "collection": "directus_users",
     "action": "update",
-    "permissions": {
-      "id": {
-        "_eq": "$CURRENT_USER"
-      }
-    },
-    "validation": null,
+    "permissions": {},
+    "validation": {},
     "presets": null,
     "fields": [
-      "first_name",
-      "last_name",
-      "email",
-      "password",
-      "location",
-      "title",
-      "description",
-      "avatar",
-      "language",
-      "appearance",
-      "theme_light",
-      "theme_dark",
-      "theme_light_overrides",
-      "theme_dark_overrides",
-      "tfa_secret"
+      "*"
     ],
     "policy": "bd5a4ddf-05fa-4349-85c1-12a5afcce010"
   },
@@ -496,21 +429,8 @@
   {
     "collection": "directus_shares",
     "action": "read",
-    "permissions": {
-      "_or": [
-        {
-          "role": {
-            "_eq": "$CURRENT_ROLE"
-          }
-        },
-        {
-          "role": {
-            "_null": true
-          }
-        }
-      ]
-    },
-    "validation": null,
+    "permissions": {},
+    "validation": {},
     "presets": null,
     "fields": [
       "*"
@@ -531,12 +451,8 @@
   {
     "collection": "directus_shares",
     "action": "update",
-    "permissions": {
-      "user_created": {
-        "_eq": "$CURRENT_USER"
-      }
-    },
-    "validation": null,
+    "permissions": {},
+    "validation": {},
     "presets": null,
     "fields": [
       "*"
@@ -546,12 +462,8 @@
   {
     "collection": "directus_shares",
     "action": "delete",
-    "permissions": {
-      "user_created": {
-        "_eq": "$CURRENT_USER"
-      }
-    },
-    "validation": null,
+    "permissions": {},
+    "validation": {},
     "presets": null,
     "fields": [
       "*"
@@ -561,21 +473,11 @@
   {
     "collection": "directus_flows",
     "action": "read",
-    "permissions": {
-      "trigger": {
-        "_eq": "manual"
-      }
-    },
-    "validation": null,
+    "permissions": {},
+    "validation": {},
     "presets": null,
     "fields": [
-      "id",
-      "status",
-      "name",
-      "icon",
-      "color",
-      "options",
-      "trigger"
+      "*"
     ],
     "policy": "bd5a4ddf-05fa-4349-85c1-12a5afcce010"
   }

@@ -47,8 +47,8 @@
         ]
       }
     },
-    "date_created": "2024-02-26T13:02:50.049Z",
-    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+    "date_created": "2026-11-03T20:50:01.933Z",
+    "user_created": "88d34943-157f-409a-acf0-25ff902acfea"
   },
   {
     "id": "39c82b64-df2a-4d83-a2b8-a41575e87af3",
@@ -72,8 +72,8 @@
         "use24": false
       }
     },
-    "date_created": "2024-02-26T13:02:50.168Z",
-    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+    "date_created": "2026-11-03T20:50:02.024Z",
+    "user_created": "88d34943-157f-409a-acf0-25ff902acfea"
   },
   {
     "id": "3ca99f50-b186-4213-be9c-8773904cfd5e",
@@ -92,8 +92,8 @@
       "text": "Help Center Feedback",
       "color": "#8196B0"
     },
-    "date_created": "2024-02-26T13:02:50.265Z",
-    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+    "date_created": "2026-11-03T20:50:02.127Z",
+    "user_created": "88d34943-157f-409a-acf0-25ff902acfea"
   },
   {
     "id": "775d0469-a878-4814-b5c3-2558dbab1b1a",
@@ -117,8 +117,8 @@
         "use24": false
       }
     },
-    "date_created": "2024-02-26T13:02:50.760Z",
-    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+    "date_created": "2026-11-03T20:50:02.224Z",
+    "user_created": "88d34943-157f-409a-acf0-25ff902acfea"
   },
   {
     "id": "77a5d341-747b-4210-baf8-10a61bf6a10a",
@@ -143,8 +143,8 @@
       },
       "defaultValue": " "
     },
-    "date_created": "2024-02-26T13:02:50.862Z",
-    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+    "date_created": "2026-11-03T20:50:02.325Z",
+    "user_created": "88d34943-157f-409a-acf0-25ff902acfea"
   },
   {
     "id": "8194088d-4321-4cce-94e3-ac77d8f02ef6",
@@ -186,8 +186,8 @@
         ]
       }
     },
-    "date_created": "2024-02-26T13:02:50.970Z",
-    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+    "date_created": "2026-11-03T20:50:02.426Z",
+    "user_created": "88d34943-157f-409a-acf0-25ff902acfea"
   },
   {
     "id": "9bf6a9fe-3dc2-460c-863b-3533876c569d",
@@ -226,8 +226,8 @@
         ]
       }
     },
-    "date_created": "2024-02-26T13:02:51.258Z",
-    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+    "date_created": "2026-11-03T20:50:02.525Z",
+    "user_created": "88d34943-157f-409a-acf0-25ff902acfea"
   },
   {
     "id": "b45fdb03-f5c4-414f-aeec-9f33f3e0340b",
@@ -270,8 +270,8 @@
         ]
       }
     },
-    "date_created": "2024-02-26T13:02:51.483Z",
-    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+    "date_created": "2026-11-03T20:50:02.629Z",
+    "user_created": "88d34943-157f-409a-acf0-25ff902acfea"
   },
   {
     "id": "be40aae0-728b-4171-8c1e-34ca955f89eb",
@@ -312,7 +312,7 @@
       "minimumFractionDigits": 2,
       "maximumFractionDigits": 2
     },
-    "date_created": "2024-02-26T13:02:51.757Z",
-    "user_created": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0"
+    "date_created": "2026-11-03T20:50:02.727Z",
+    "user_created": "88d34943-157f-409a-acf0-25ff902acfea"
   }
 ]
