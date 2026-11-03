@@ -24,3 +24,7 @@ Select **Simple CRM** from the template list and follow the prompts.
 - Activities and activity tracking
 - Tags for contacts and organizations
 - Dashboards
+
+## Licensing
+
+This template targets **Directus 12** and fits the free core tier (12 collections, 2 flows, 2 seats). It has no public permissions, so there's no separate licensed variant. A `LICENSE_KEY` only raises the tier limits.
