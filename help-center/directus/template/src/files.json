@@ -1,0 +1,30 @@
+[
+  {
+    "id": "f70845e5-3172-4bd7-9405-29241fe91cbc",
+    "storage": "local",
+    "filename_disk": "f70845e5-3172-4bd7-9405-29241fe91cbc.webp",
+    "filename_download": "help-bunny.webp",
+    "title": "Help Bunny",
+    "type": "image/webp",
+    "folder": null,
+    "uploaded_by": "d56956bf-6ed0-465e-bb4a-ec9bde65c5f0",
+    "created_on": "2024-09-12T17:26:11.803Z",
+    "modified_by": null,
+    "modified_on": "2024-09-12T17:26:11.832Z",
+    "charset": null,
+    "filesize": "78776",
+    "width": 1024,
+    "height": 1024,
+    "duration": null,
+    "embed": null,
+    "description": null,
+    "location": null,
+    "tags": null,
+    "metadata": {},
+    "focal_point_x": null,
+    "focal_point_y": null,
+    "tus_id": null,
+    "tus_data": null,
+    "uploaded_on": "2024-09-12T17:26:11.831Z"
+  }
+]
