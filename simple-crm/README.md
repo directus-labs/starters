@@ -34,4 +34,4 @@ It sends through your Directus email settings (`EMAIL_TRANSPORT`, `EMAIL_FROM`, 
 
 ## Licensing
 
-This template targets **Directus 12** and fits the free core tier (12 collections, 2 flows, 2 seats). It has no public permissions, so there's no separate licensed variant. A `LICENSE_KEY` only raises the tier limits.
+This template targets **Directus 12** and fits the free core tier (12 collections, 3 flows, 2 seats). It has no public permissions, so there's no separate licensed variant. A `LICENSE_KEY` only raises the tier limits.
