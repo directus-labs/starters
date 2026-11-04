@@ -112,6 +112,21 @@ This PATCHes licensed permission rules only, removes any circular redirects, and
 
 > **Maintainers:** Permission JSON in `template/` and `template-licensed/` is **generated** from [`_shared/rbac/`](../../_shared/rbac/README.md). Edit source there and run `pnpm rbac:codegen` — not the same as `rbac:sync-licensed`, which is for users upgrading a live instance.
 
+## Upgrading to the authors collection
+
+Projects created before the `authors` collection credit posts to Studio users (`posts.author` → `directus_users`), and their Public policy can read every user. To move an existing instance over, from the repo root:
+
+```bash
+DIRECTUS_ADMIN_TOKEN=your-admin-token pnpm cms:migrate-authors --dry-run   # see the plan
+DIRECTUS_ADMIN_TOKEN=your-admin-token pnpm cms:migrate-authors             # core
+DIRECTUS_ADMIN_TOKEN=your-admin-token pnpm cms:migrate-authors --licensed  # template-licensed applied
+DIRECTUS_ADMIN_TOKEN=your-admin-token pnpm cms:migrate-authors --i18n      # cms-i18n
+```
+
+It creates `authors` with one author per credited user (same id, so posts keep their values), repoints the relation, removes Public's `directus_users` read, adds the authors permissions, updates licensed writer ownership to `user_created`, and adds the default view. Then it checks that anonymous requests can't read users. It's safe to run again. Update your frontend to read `author.name` afterwards.
+
+Licensed writers own the posts they created. Posts an editor created and credited to a writer aren't in that writer's scope anymore.
+
 ## Content versioning
 
 Pages and posts use Directus content versioning. Live content is `version=published` (formerly `main`); every item also has a `draft` version. Frontends in this repo handle both keys.
