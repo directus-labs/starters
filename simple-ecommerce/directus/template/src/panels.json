@@ -104,14 +104,13 @@
     "color": null,
     "show_header": true,
     "note": null,
-    "type": "directus-panel-table",
+    "type": "list",
     "position_x": 1,
     "position_y": 41,
     "width": 36,
     "height": 13,
     "options": {
       "collection": "orders",
-      "sort_field": "date_created",
       "filter": {
         "_and": [
           {
@@ -130,14 +129,11 @@
           }
         ]
       },
-      "fields": [
-        "order_number",
-        "status",
-        "fulfillment_status",
-        "payment_status",
-        "customer"
-      ],
-      "limit": 100
+      "sortField": "date_created",
+      "sortDirection": "desc",
+      "limit": 100,
+      "displayTemplate": "{{order_number}} · {{customer.first_name}} {{customer.last_name}} · {{fulfillment_status}} · {{payment_status}}",
+      "linkToItem": true
     },
     "date_created": "2026-11-03T20:41:32.396Z",
     "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
