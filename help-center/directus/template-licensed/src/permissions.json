@@ -132,44 +132,27 @@
     "collection": "directus_files",
     "action": "read",
     "permissions": {
-      "_and": [
+      "_or": [
         {
-          "_or": [
-            {
-              "folder": {
-                "name": {
-                  "_contains": "1. Public"
-                }
-              }
-            },
-            {
-              "folder": {
-                "parent": {
-                  "name": {
-                    "_contains": "1. Public"
-                  }
-                }
-              }
-            },
-            {
-              "folder": {
-                "parent": {
-                  "parent": {
-                    "name": {
-                      "_contains": "1. Public"
-                    }
-                  }
-                }
-              }
-            },
-            {
-              "folder": {
-                "name": {
-                  "_contains": "4. Uploads"
-                }
+          "folder": {
+            "_eq": "ece7bab9-5433-4a63-b9f7-bde8b517d6d9"
+          }
+        },
+        {
+          "folder": {
+            "parent": {
+              "_eq": "ece7bab9-5433-4a63-b9f7-bde8b517d6d9"
+            }
+          }
+        },
+        {
+          "folder": {
+            "parent": {
+              "parent": {
+                "_eq": "ece7bab9-5433-4a63-b9f7-bde8b517d6d9"
               }
             }
-          ]
+          }
         }
       ]
     },

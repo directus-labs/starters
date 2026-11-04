@@ -170,8 +170,7 @@
         "limit": 25,
         "fields": [
           "icon",
-          "title",
-          "description"
+          "title"
         ]
       }
     },
