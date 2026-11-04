@@ -75,9 +75,10 @@ Editor and Content Admin are role definitions without seed users — assign them
 
 | | Core | Licensed |
 |--|------|----------|
-| Writer in Studio | Can edit all content (flat rules) | Own posts only |
+| Writer in Studio | Can edit all content (flat rules) | Only posts they created |
 | Public API | Frontends filter published content | + API-level published/active filters |
 | Frontend Bot | Forms policy | + upload folder preset, size validation |
+| Post authors | `authors` collection, public on both tiers. Studio users are never readable without a login | Same |
 
 Definitions: `template/src/{roles,policies,access,permissions}.json`.
 
