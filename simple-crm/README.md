@@ -28,9 +28,9 @@ Select **Simple CRM** from the template list and follow the prompts.
 
 ### Send Email
 
-Run it from a contact or deal. Leave **To** blank to email the contact, or everyone on the deal. Each email is logged as a completed "email" activity on the record. If there's nobody to send to, you get a Directus notification instead.
+Run it from a contact or deal. Leave **To** blank to email the contact, or everyone on the deal. Each email is logged as a completed "email" activity on the record. If there's nobody to send to, or it's run on more than one deal at once, you get a Directus notification instead.
 
-It sends through your Directus email settings (`EMAIL_TRANSPORT`, `EMAIL_FROM`, `EMAIL_SMTP_*` in `directus/.env`). Delivery errors show up in the Directus logs, not in Studio.
+It sends through your Directus email settings (`EMAIL_TRANSPORT`, `EMAIL_FROM`, `EMAIL_SMTP_*` in `directus/.env`). The default `sendmail` transport doesn't deliver from the Docker image, so switch to SMTP to send real email. Delivery errors show up in the Directus logs, not in Studio.
 
 ## Licensing
 
