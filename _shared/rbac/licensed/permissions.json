@@ -1753,7 +1753,22 @@
     "validation": null,
     "presets": null,
     "fields": [
-      "*"
+      "id",
+      "first_name",
+      "last_name",
+      "email",
+      "avatar",
+      "title",
+      "description",
+      "location",
+      "language",
+      "appearance",
+      "theme_light",
+      "theme_dark",
+      "role",
+      "status",
+      "last_access",
+      "last_page"
     ],
     "policy": "52598a64-071d-4071-96fa-4b620d6189b5"
   },
