@@ -69,7 +69,13 @@ function syncLicensedTemplate() {
   const licensedPerms = loadLicensedPermissions();
   const skeleton = (name) => readJson(join(RBAC, 'core-skeleton', name));
 
+  // The tree copy would overwrite the licensed package.json with core's name and templateName
+  const licensedPackagePath = join(CMS_LICENSED, 'package.json');
+  const licensedPackage = existsSync(licensedPackagePath) ? readFileSync(licensedPackagePath, 'utf8') : null;
+
   copyTemplateTree(CMS_TEMPLATE, CMS_LICENSED);
+
+  if (licensedPackage) writeFileSync(licensedPackagePath, licensedPackage, 'utf8');
 
   const licensedSrc = join(CMS_LICENSED, 'src');
   writeJson(join(licensedSrc, 'roles.json'), skeleton('roles.json'));
