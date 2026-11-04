@@ -8,8 +8,8 @@
  *   node _scripts/rbac-codegen.js --check
  */
 
-import { readFileSync, writeFileSync, existsSync, cpSync, rmSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { readFileSync, writeFileSync, existsSync, cpSync, rmSync, readdirSync } from 'node:fs';
+import { join, relative, resolve } from 'node:path';
 
 const ROOT = resolve(import.meta.dirname, '..');
 const RBAC = join(ROOT, '_shared/rbac');
@@ -65,17 +65,20 @@ function copyTemplateTree(src, dest) {
   cpSync(src, dest, { recursive: true });
 }
 
+/** Licensed package.json, derived from core so the variant always has its own name. */
+function licensedPackageJson() {
+  const core = readJson(join(CMS_TEMPLATE, 'package.json'));
+  return { ...core, name: `${core.name}-licensed`, templateName: `${core.templateName} — Licensed` };
+}
+
 function syncLicensedTemplate() {
   const licensedPerms = loadLicensedPermissions();
   const skeleton = (name) => readJson(join(RBAC, 'core-skeleton', name));
 
-  // The tree copy would overwrite the licensed package.json with core's name and templateName
-  const licensedPackagePath = join(CMS_LICENSED, 'package.json');
-  const licensedPackage = existsSync(licensedPackagePath) ? readFileSync(licensedPackagePath, 'utf8') : null;
-
   copyTemplateTree(CMS_TEMPLATE, CMS_LICENSED);
 
-  if (licensedPackage) writeFileSync(licensedPackagePath, licensedPackage, 'utf8');
+  // The tree copy brings core's package.json; give the licensed variant its own name
+  writeJson(join(CMS_LICENSED, 'package.json'), licensedPackageJson());
 
   const licensedSrc = join(CMS_LICENSED, 'src');
   writeJson(join(licensedSrc, 'roles.json'), skeleton('roles.json'));
@@ -186,6 +189,11 @@ function checkLicensedTemplate(licensedPerms) {
     process.exit(1);
   }
 
+  if (JSON.stringify(readJson(join(CMS_LICENSED, 'package.json'))) !== JSON.stringify(licensedPackageJson())) {
+    console.error('template-licensed/package.json drift — run: pnpm rbac:codegen');
+    process.exit(1);
+  }
+
   for (const file of RBAC_FILES) {
     const expected = file === 'permissions.json' ? licensedPerms : readJson(join(RBAC, 'core-skeleton', file));
     const actual = readJson(join(CMS_LICENSED, 'src', file));
@@ -194,6 +202,31 @@ function checkLicensedTemplate(licensedPerms) {
       process.exit(1);
     }
   }
+
+  if (JSON.stringify(readJson(join(RBAC, 'licensed/permissions.json'))) !== JSON.stringify(licensedPerms)) {
+    console.error('_shared/rbac/licensed/permissions.json drift from modules — run: pnpm rbac:codegen');
+    process.exit(1);
+  }
+
+  // Everything else in template-licensed is a copy of the core template
+  const ownFiles = new Set(['README.md', 'package.json', ...RBAC_FILES.map((file) => join('src', file))]);
+  const coreFiles = listFiles(CMS_TEMPLATE).filter((file) => !ownFiles.has(file));
+  const licensedFiles = listFiles(CMS_LICENSED).filter((file) => !ownFiles.has(file));
+
+  for (const file of new Set([...coreFiles, ...licensedFiles])) {
+    const core = join(CMS_TEMPLATE, file);
+    const licensed = join(CMS_LICENSED, file);
+    if (!existsSync(core) || !existsSync(licensed) || !readFileSync(core).equals(readFileSync(licensed))) {
+      console.error(`template-licensed/${file} differs from the core template — run: pnpm rbac:codegen`);
+      process.exit(1);
+    }
+  }
+}
+
+function listFiles(dir) {
+  return readdirSync(dir, { recursive: true, withFileTypes: true })
+    .filter((entry) => entry.isFile())
+    .map((entry) => relative(dir, join(entry.parentPath, entry.name)));
 }
 
 console.log('RBAC codegen...\n');
