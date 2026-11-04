@@ -459,7 +459,26 @@
     },
     "presets": null,
     "fields": [
-      "*"
+      "content",
+      "id",
+      "image",
+      "slug",
+      "sort",
+      "status",
+      "title",
+      "description",
+      "author",
+      "published_at",
+      "seo",
+      "date_created",
+      "date_updated",
+      "meta_divider_info",
+      "meta_header_image",
+      "meta_header_posts",
+      "meta_content",
+      "meta_seo",
+      "meta_header_content",
+      "meta_tabs"
     ],
     "policy": "a15b697e-29d5-4164-8d24-eb228ba901e3"
   },

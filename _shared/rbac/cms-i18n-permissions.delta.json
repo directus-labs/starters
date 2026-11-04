@@ -233,5 +233,52 @@
       "translations"
     ],
     "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+  },
+  {
+    "collection": "posts",
+    "action": "update",
+    "permissions": {
+      "_and": [
+        {
+          "user_created": {
+            "_eq": "$CURRENT_USER"
+          }
+        }
+      ]
+    },
+    "validation": {
+      "_and": [
+        {
+          "status": {
+            "_neq": "published"
+          }
+        }
+      ]
+    },
+    "presets": null,
+    "fields": [
+      "content",
+      "id",
+      "image",
+      "slug",
+      "sort",
+      "status",
+      "title",
+      "description",
+      "author",
+      "published_at",
+      "seo",
+      "date_created",
+      "date_updated",
+      "meta_divider_info",
+      "meta_header_image",
+      "meta_header_posts",
+      "meta_content",
+      "meta_seo",
+      "meta_header_content",
+      "meta_tabs",
+      "translations"
+    ],
+    "policy": "a15b697e-29d5-4164-8d24-eb228ba901e3"
   }
 ]
