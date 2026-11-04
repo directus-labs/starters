@@ -14,7 +14,7 @@
 
 	let post = $derived(data.post);
 	const author = $derived(data.author);
-	const authorName = $derived([author?.first_name, author?.last_name].filter(Boolean).join(' '));
+	const authorName = $derived(author?.name ?? '');
 	const postUrl = `${PUBLIC_SITE_URL}/blog/${page.params.slug}`;
 </script>
 
