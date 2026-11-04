@@ -132,7 +132,7 @@
           "name": "To",
           "meta": {
             "interface": "tags",
-            "note": "Add an address and press enter. Leave blank to send to the contact, or to everyone on the deal.",
+            "note": "Add an address and press enter. Leave blank to send to the contact, or to everyone on the deal. Each address gets its own email, so recipients don't see each other.",
             "width": "full",
             "required": false
           }
@@ -178,6 +178,24 @@
     "operation": "7062cb98-75e1-4591-b4cb-18c48227c904",
     "date_created": "2026-11-03T20:18:13.963Z",
     "user_created": "caa3de92-204b-415b-96ea-fe07a3bb13a4",
+    "folder": null,
+    "operations": null
+  },
+  {
+    "id": "2d42abfe-94c2-40dc-886b-b072c8b8b331",
+    "name": "Util -> Send One Email",
+    "icon": "mail",
+    "color": null,
+    "description": "Sends a single email. Called once per recipient by Send Email.",
+    "status": "active",
+    "trigger": "operation",
+    "accountability": "all",
+    "options": {
+      "return": "$last"
+    },
+    "operation": "b9fadc43-1f38-46d8-ad65-7833fedc99a7",
+    "date_created": "2026-11-04T17:51:41.764Z",
+    "user_created": null,
     "folder": null,
     "operations": null
   }
