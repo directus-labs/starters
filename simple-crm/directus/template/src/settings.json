@@ -141,5 +141,53 @@
   "mcp_allow_deletes": false,
   "mcp_prompts_collection": null,
   "mcp_system_prompt_enabled": true,
-  "mcp_system_prompt": null
+  "mcp_system_prompt": null,
+  "command_palette_settings": {
+    "searchMode": "as_you_type",
+    "collections": [
+      {
+        "collection": "deals",
+        "displayTemplate": "{{name}}",
+        "descriptionField": "deal_value",
+        "fields": [
+          "name",
+          "contacts.contact.first_name",
+          "contacts.contact.last_name",
+          "contacts.contact.email",
+          "contacts.contact.phone"
+        ],
+        "limit": 10,
+        "availableGlobally": false
+      },
+      {
+        "collection": "organizations",
+        "displayTemplate": "{{name}}",
+        "descriptionField": null,
+        "fields": [
+          "name",
+          "contacts.contact.first_name",
+          "contacts.contact.last_name",
+          "contacts.contact.email",
+          "contacts.contact.phone"
+        ],
+        "limit": 10,
+        "availableGlobally": false
+      },
+      {
+        "collection": "contacts",
+        "displayTemplate": "{{first_name}} {{last_name}} <{{email}}>",
+        "fields": [
+          "first_name",
+          "last_name",
+          "email",
+          "phone",
+          "organizations.organization.name"
+        ],
+        "limit": 10,
+        "availableGlobally": false
+      }
+    ],
+    "triggerRate": 100,
+    "commandPaletteEnabled": true
+  }
 }

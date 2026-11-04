@@ -5,37 +5,17 @@
     "meta": {
       "enabled": true,
       "id": "c53d1496-ab3b-4a23-9b0c-9fb8ce85800f",
-      "folder": "e77fd62a-c9f5-4937-b153-cf10d8d13264",
+      "folder": "4b82f435-b8d1-419a-9d40-fabb0f911b2f",
       "source": "registry",
       "bundle": null
     },
     "schema": {
-      "path": "/directus/extensions/.registry/e77fd62a-c9f5-4937-b153-cf10d8d13264",
+      "path": "/directus/extensions/.registry/4b82f435-b8d1-419a-9d40-fabb0f911b2f",
       "name": "@directus-labs/command-palette-module",
-      "version": "1.0.1",
+      "version": "2.0.0",
       "type": "module",
       "entrypoint": "dist/index.js",
-      "host": "^11.0.0",
-      "local": true
-    }
-  },
-  {
-    "id": "dab2c341-5ce5-42da-872f-40e596c4db16",
-    "bundle": null,
-    "meta": {
-      "enabled": true,
-      "id": "dab2c341-5ce5-42da-872f-40e596c4db16",
-      "folder": "9621987d-012d-475a-bd7f-e293cac7b077",
-      "source": "registry",
-      "bundle": null
-    },
-    "schema": {
-      "path": "/directus/extensions/.registry/9621987d-012d-475a-bd7f-e293cac7b077",
-      "name": "directus-extension-group-tabs-interface",
-      "version": "2.1.0",
-      "type": "interface",
-      "entrypoint": "dist/index.js",
-      "host": "^10.1.0",
+      "host": ">=11.6.0 <13",
       "local": true
     }
   }
