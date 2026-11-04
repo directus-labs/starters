@@ -270,11 +270,25 @@
     "collection": "directus_files",
     "action": "read",
     "permissions": {
-      "_and": [
+      "_or": [
         {
           "folder": {
-            "name": {
-              "_ncontains": "Private"
+            "_eq": "495b5868-481a-428e-a7eb-648b6b9c3c7d"
+          }
+        },
+        {
+          "folder": {
+            "parent": {
+              "_eq": "495b5868-481a-428e-a7eb-648b6b9c3c7d"
+            }
+          }
+        },
+        {
+          "folder": {
+            "parent": {
+              "parent": {
+                "_eq": "495b5868-481a-428e-a7eb-648b6b9c3c7d"
+              }
             }
           }
         }

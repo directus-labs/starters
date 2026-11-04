@@ -33,7 +33,7 @@ This template targets **Directus 12** and fits the free core tier (9 collections
 | Variant | Folder | License | Public read rules |
 |---------|--------|---------|-------------------|
 | **Core** (default) | `directus/template/` | Not required | Flat. Public can read all products, categories, and files, including inactive ones and the Private folder. |
-| **Licensed** | `directus/template-licensed/` | `LICENSE_KEY` active | Hides inactive products, variants, images, and categories, plus files in the Private folder. |
+| **Licensed** | `directus/template-licensed/` | `LICENSE_KEY` active | Hides inactive products, variants, images, and categories. Public only reads files in the "1. Products" folder and its subfolders. |
 
 Core tier rejects custom permission rules, so on core keep anything you don't want public out of these collections, or filter it in your frontend.
 

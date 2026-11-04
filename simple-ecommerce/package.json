@@ -12,7 +12,7 @@
         "name": "Simple eCommerce — Licensed",
         "template": "./directus/template-licensed",
         "requiresLicense": true,
-        "description": "Same template with Public read filters for inactive products, inactive categories, and private files"
+        "description": "Same template with Public read filters for inactive products and categories, and files limited to the Products folder"
       }
     },
     "frontends": {}
