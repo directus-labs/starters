@@ -1302,13 +1302,13 @@
   {
     "collection": "posts",
     "field": "author",
-    "related_collection": "directus_users",
+    "related_collection": "authors",
     "schema": {
       "constraint_name": "posts_author_foreign",
       "table": "posts",
       "column": "author",
       "foreign_key_schema": "public",
-      "foreign_key_table": "directus_users",
+      "foreign_key_table": "authors",
       "foreign_key_column": "id",
       "on_update": "NO ACTION",
       "on_delete": "SET NULL"
@@ -1316,12 +1316,12 @@
     "meta": {
       "many_collection": "posts",
       "many_field": "author",
-      "one_collection": "directus_users",
+      "one_collection": "authors",
       "one_field": "posts",
       "one_collection_field": null,
       "one_allowed_collections": null,
       "junction_field": null,
-      "sort_field": "sort",
+      "sort_field": null,
       "one_deselect_action": "nullify"
     }
   },
@@ -3165,6 +3165,32 @@
         "block_pricing"
       ],
       "junction_field": "page",
+      "sort_field": null,
+      "one_deselect_action": "nullify"
+    }
+  },
+  {
+    "collection": "authors",
+    "field": "avatar",
+    "related_collection": "directus_files",
+    "schema": {
+      "constraint_name": "authors_avatar_foreign",
+      "table": "authors",
+      "column": "avatar",
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_files",
+      "foreign_key_column": "id",
+      "on_update": "NO ACTION",
+      "on_delete": "SET NULL"
+    },
+    "meta": {
+      "many_collection": "authors",
+      "many_field": "avatar",
+      "one_collection": "directus_files",
+      "one_field": null,
+      "one_collection_field": null,
+      "one_allowed_collections": null,
+      "junction_field": null,
       "sort_field": null,
       "one_deselect_action": "nullify"
     }

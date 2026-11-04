@@ -12,9 +12,7 @@
         }
       ]
     },
-    "presets": {
-      "author": "$CURRENT_USER"
-    },
+    "presets": null,
     "fields": [
       "*"
     ],
@@ -26,7 +24,7 @@
     "permissions": {
       "_and": [
         {
-          "author": {
+          "user_created": {
             "_eq": "$CURRENT_USER"
           }
         }
@@ -45,7 +43,7 @@
     "permissions": {
       "_and": [
         {
-          "author": {
+          "user_created": {
             "_eq": "$CURRENT_USER"
           }
         }

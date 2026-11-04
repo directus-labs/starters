@@ -31,5 +31,16 @@
       "*"
     ],
     "policy": "3ba01681-3a5f-4fe3-8e95-4706b39f7dc5"
+  },
+  {
+    "collection": "authors",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "3ba01681-3a5f-4fe3-8e95-4706b39f7dc5"
   }
 ]

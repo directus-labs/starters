@@ -48,6 +48,17 @@
     "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
   },
   {
+    "collection": "authors",
+    "action": "read",
+    "permissions": {},
+    "validation": {},
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+  },
+  {
     "collection": "block_hero",
     "action": "read",
     "permissions": {},
@@ -377,29 +388,6 @@
     "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
   },
   {
-    "collection": "directus_users",
-    "action": "read",
-    "permissions": {
-      "_and": [
-        {
-          "posts": {
-            "_nnull": true
-          }
-        }
-      ]
-    },
-    "validation": null,
-    "presets": null,
-    "fields": [
-      "first_name",
-      "last_name",
-      "avatar",
-      "title",
-      "id"
-    ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
-  },
-  {
     "collection": "redirects",
     "action": "read",
     "permissions": null,
@@ -423,9 +411,7 @@
         }
       ]
     },
-    "presets": {
-      "author": "$CURRENT_USER"
-    },
+    "presets": null,
     "fields": [
       "*"
     ],
@@ -437,7 +423,7 @@
     "permissions": {
       "_and": [
         {
-          "author": {
+          "user_created": {
             "_eq": "$CURRENT_USER"
           }
         }
@@ -456,7 +442,7 @@
     "permissions": {
       "_and": [
         {
-          "author": {
+          "user_created": {
             "_eq": "$CURRENT_USER"
           }
         }
@@ -1135,6 +1121,50 @@
     "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
   },
   {
+    "collection": "authors",
+    "action": "create",
+    "permissions": {},
+    "validation": {},
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
+  },
+  {
+    "collection": "authors",
+    "action": "read",
+    "permissions": {},
+    "validation": {},
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
+  },
+  {
+    "collection": "authors",
+    "action": "update",
+    "permissions": {},
+    "validation": {},
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
+  },
+  {
+    "collection": "authors",
+    "action": "delete",
+    "permissions": {},
+    "validation": {},
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
+  },
+  {
     "collection": "projects_settings",
     "action": "read",
     "permissions": {},
@@ -1565,6 +1595,17 @@
   },
   {
     "collection": "posts",
+    "action": "read",
+    "permissions": null,
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "3ba01681-3a5f-4fe3-8e95-4706b39f7dc5"
+  },
+  {
+    "collection": "authors",
     "action": "read",
     "permissions": null,
     "validation": null,
