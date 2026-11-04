@@ -370,7 +370,11 @@
       "role",
       "status",
       "last_access",
-      "last_page"
+      "last_page",
+      "theme_light_overrides",
+      "theme_dark_overrides",
+      "text_direction",
+      "email_notifications"
     ],
     "policy": "bd5a4ddf-05fa-4349-85c1-12a5afcce010"
   },
