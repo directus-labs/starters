@@ -132,9 +132,9 @@
           "name": "To",
           "meta": {
             "interface": "tags",
-            "note": "Add an address and press enter to save. Note:Will default to the contact email if left blank.",
+            "note": "Add an address and press enter. Leave blank to send to the contact, or to everyone on the deal.",
             "width": "full",
-            "required": true
+            "required": false
           }
         },
         {
@@ -172,9 +172,10 @@
           }
         }
       ],
-      "confirmationDescription": "Send An Email"
+      "confirmationDescription": "Send An Email",
+      "location": "item"
     },
-    "operation": null,
+    "operation": "7062cb98-75e1-4591-b4cb-18c48227c904",
     "date_created": "2026-11-03T20:18:13.963Z",
     "user_created": "caa3de92-204b-415b-96ea-fe07a3bb13a4",
     "folder": null,

@@ -31,5 +31,121 @@
     "flow": "395d7d3e-7b59-4e27-b074-879c69b65736",
     "date_created": "2026-11-03T20:18:14.065Z",
     "user_created": "caa3de92-204b-415b-96ea-fe07a3bb13a4"
+  },
+  {
+    "id": "7062cb98-75e1-4591-b4cb-18c48227c904",
+    "name": "Read Contacts",
+    "key": "read_contacts",
+    "type": "item-read",
+    "position_x": 19,
+    "position_y": 1,
+    "options": {
+      "collection": "contacts",
+      "permissions": "$trigger",
+      "emitEvents": false,
+      "query": {
+        "fields": [
+          "id",
+          "email",
+          "first_name",
+          "last_name"
+        ],
+        "filter": {
+          "_or": [
+            {
+              "id": {
+                "_in": "{{$trigger.body.keys}}"
+              }
+            },
+            {
+              "deals": {
+                "deal": {
+                  "_in": "{{$trigger.body.keys}}"
+                }
+              }
+            }
+          ]
+        },
+        "limit": -1
+      }
+    },
+    "resolve": "63fc7874-6829-4035-aa1a-7172a6c614e8",
+    "reject": null,
+    "flow": "e18e75d2-06b3-4252-b5f6-d0aad2d960e8",
+    "date_created": "2026-11-04T14:39:42.315Z",
+    "user_created": null
+  },
+  {
+    "id": "63fc7874-6829-4035-aa1a-7172a6c614e8",
+    "name": "Prepare Email",
+    "key": "prepare_email",
+    "type": "exec",
+    "position_x": 37,
+    "position_y": 1,
+    "options": {
+      "code": "/*\n  Builds the email and the activity log entry for the Send Email flow.\n  Recipients come from the \"To\" field, or default to the contact (or the deal's contacts) when it's left blank.\n*/\nmodule.exports = function (data) {\n  const { collection, keys, to, subject, body } = data.$trigger.body;\n  const contacts = Array.isArray(data.read_contacts) ? data.read_contacts : [data.read_contacts].filter(Boolean);\n\n  const typed = (Array.isArray(to) ? to : String(to || '').split(','))\n    .map((email) => email.trim())\n    .filter(Boolean);\n\n  const recipients = typed.length ? typed : contacts.map((contact) => contact.email).filter(Boolean);\n  const uniqueRecipients = [...new Set(recipients.map((email) => email.toLowerCase()))];\n\n  if (!uniqueRecipients.length) {\n    throw new Error('No recipients. Add an address in \"To\" or give the contact an email address.');\n  }\n\n  // From a contact, always link that contact. From a deal, link the deal's contacts who got the email.\n  const linkedContacts =\n    collection === 'contacts'\n      ? contacts.filter((contact) => keys.includes(contact.id))\n      : contacts.filter((contact) => contact.email && uniqueRecipients.includes(contact.email.toLowerCase()));\n  const now = new Date().toISOString();\n\n  const activity = {\n    name: `Email: ${subject}`,\n    activity_type: 'email',\n    activity_notes: body,\n    start_date: now,\n    is_completed: true,\n    date_completed: now,\n    owner: data.$accountability.user,\n    contacts: linkedContacts.map((contact) => ({ contact: contact.id })),\n  };\n\n  if (collection === 'deals') activity.deal = keys[0];\n\n  return { to: uniqueRecipients, subject, body, activity };\n};\n"
+    },
+    "resolve": "58551ba3-734d-45a1-b30f-e5d0a881e78f",
+    "reject": "ca102c59-43e2-473a-bb71-7fef1dc053fd",
+    "flow": "e18e75d2-06b3-4252-b5f6-d0aad2d960e8",
+    "date_created": "2026-11-04T14:39:42.282Z",
+    "user_created": null
+  },
+  {
+    "id": "ca102c59-43e2-473a-bb71-7fef1dc053fd",
+    "name": "Notify: Not Sent",
+    "key": "notify_not_sent",
+    "type": "notification",
+    "position_x": 37,
+    "position_y": 19,
+    "options": {
+      "recipient": [
+        "{{$accountability.user}}"
+      ],
+      "subject": "Email not sent",
+      "message": "{{$last.message}}",
+      "permissions": "$full"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "e18e75d2-06b3-4252-b5f6-d0aad2d960e8",
+    "date_created": "2026-11-04T14:40:33.265Z",
+    "user_created": null
+  },
+  {
+    "id": "58551ba3-734d-45a1-b30f-e5d0a881e78f",
+    "name": "Send Email",
+    "key": "send_email",
+    "type": "mail",
+    "position_x": 55,
+    "position_y": 1,
+    "options": {
+      "to": "{{prepare_email.to}}",
+      "subject": "{{prepare_email.subject}}",
+      "body": "{{prepare_email.body}}",
+      "type": "wysiwyg"
+    },
+    "resolve": "a1a5f639-5e8a-4835-a547-83823f9c7d12",
+    "reject": null,
+    "flow": "e18e75d2-06b3-4252-b5f6-d0aad2d960e8",
+    "date_created": "2026-11-04T14:39:42.251Z",
+    "user_created": null
+  },
+  {
+    "id": "a1a5f639-5e8a-4835-a547-83823f9c7d12",
+    "name": "Log Activity",
+    "key": "log_activity",
+    "type": "item-create",
+    "position_x": 73,
+    "position_y": 1,
+    "options": {
+      "collection": "activities",
+      "payload": "{{prepare_email.activity}}"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "e18e75d2-06b3-4252-b5f6-d0aad2d960e8",
+    "date_created": "2026-11-04T14:39:42.216Z",
+    "user_created": null
   }
 ]
