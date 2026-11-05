@@ -1,4 +1,4 @@
-import type { BlockPost, DirectusUser, Page, PageBlock, Post, Schema } from '@/types/directus-schema';
+import type { BlockPost, Page, PageBlock, Post, Schema } from '@/types/directus-schema';
 import type { QueryFilter } from '@directus/sdk';
 import { useDirectus } from './directus';
 
@@ -280,7 +280,7 @@ export const fetchPostBySlug = async (slug: string, draft = false, token?: strin
             'slug',
             'seo',
             {
-              author: ['id', 'first_name', 'last_name', 'avatar'],
+              author: ['id', 'name', 'avatar'],
             },
           ],
         }),
@@ -315,25 +315,6 @@ export const fetchRelatedPosts = async (excludeId: string) => {
     return relatedPosts;
   } catch {
     throw new Error('Failed to fetch related posts');
-  }
-};
-
-/**
- * Fetches author details by ID.
- */
-export const fetchAuthorById = async (authorId: string) => {
-  const { directus, readUser } = useDirectus();
-
-  try {
-    const author = (await directus.request(
-      readUser(authorId, {
-        fields: ['id', 'first_name', 'last_name', 'avatar'],
-      }),
-    )) as DirectusUser;
-
-    return author;
-  } catch {
-    throw new Error(`Failed to fetch author with ID "${authorId}"`);
   }
 };
 
@@ -562,7 +543,7 @@ export const fetchPostByIdAndVersion = async (
     'slug',
     'seo',
     {
-      author: ['id', 'first_name', 'last_name', 'avatar'],
+      author: ['id', 'name', 'avatar'],
     },
   ] as const;
 

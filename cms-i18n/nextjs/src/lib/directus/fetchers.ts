@@ -465,7 +465,7 @@ export async function fetchPostBySlug(
 		'description',
 		'slug',
 		'seo',
-		{ author: ['id', 'first_name', 'last_name', 'avatar'] },
+		{ author: ['id', 'name', 'avatar'] },
 		...(includeTranslations
 			? [{ translations: ['title', 'content', 'description', 'slug', 'languages_code', 'status'] as const }]
 			: []),
@@ -587,7 +587,7 @@ export async function fetchPostByIdAndVersion(
 		'description',
 		'slug',
 		'seo',
-		{ author: ['id', 'first_name', 'last_name', 'avatar'] },
+		{ author: ['id', 'name', 'avatar'] },
 		...(includeTranslations
 			? [{ translations: ['title', 'content', 'description', 'slug', 'languages_code', 'status'] as const }]
 			: []),

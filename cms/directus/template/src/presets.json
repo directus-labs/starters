@@ -110,6 +110,40 @@
     "bookmark": null,
     "user": null,
     "role": null,
+    "collection": "authors",
+    "search": null,
+    "layout": "tabular",
+    "layout_query": {
+      "tabular": {
+        "page": 1,
+        "fields": [
+          "avatar",
+          "name",
+          "posts"
+        ],
+        "sort": [
+          "name"
+        ],
+        "limit": 25
+      }
+    },
+    "layout_options": {
+      "tabular": {
+        "widths": {
+          "avatar": 72,
+          "name": 320
+        },
+        "spacing": "comfortable"
+      }
+    },
+    "refresh_interval": null,
+    "icon": "bookmark_border",
+    "color": null
+  },
+  {
+    "bookmark": null,
+    "user": null,
+    "role": null,
     "collection": "directus_presets",
     "search": null,
     "layout": "tabular",

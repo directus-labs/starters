@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Post, DirectusUser } from '#shared/types/schema';
+import type { Post, Author } from '#shared/types/schema';
 
 const route = useRoute();
 const { enabled } = useLivePreview();
@@ -40,7 +40,7 @@ if (!data.value || error.value) {
 
 const post = computed(() => data.value?.post);
 const relatedPosts = computed(() => data.value?.relatedPosts);
-const author = computed(() => post.value?.author as Partial<DirectusUser>);
+const author = computed(() => post.value?.author as Partial<Author>);
 
 onMounted(() => {
 	if (!isVisualEditingEnabled.value) return;
@@ -110,13 +110,13 @@ useSeoMeta({
 						<DirectusImage
 							v-if="author?.avatar"
 							:uuid="author?.avatar"
-							:alt="userName(author)"
+							:alt="author?.name"
 							class="rounded-full object-cover size-[48px]"
 							:width="48"
 							:height="48"
 						/>
 
-						<p v-if="author" class="font-bold">{{ userName(author) }}</p>
+						<p v-if="author" class="font-bold">{{ author?.name }}</p>
 					</div>
 
 					<p

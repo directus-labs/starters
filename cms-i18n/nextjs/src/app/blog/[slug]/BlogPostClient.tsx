@@ -11,13 +11,13 @@ import ShareDialog from '@/components/ui/ShareDialog';
 import Link from 'next/link';
 import Headline from '@/components/ui/Headline';
 import Container from '@/components/ui/container';
-import { Post, DirectusUser } from '@/types/directus-schema';
+import { Post, Author } from '@/types/directus-schema';
 import { getLocaleFromPath, addLocaleToPath } from '@/lib/i18n/utils';
 
 interface BlogPostClientProps {
 	post: Post;
 	relatedPosts: Post[];
-	author?: DirectusUser | null;
+	author?: Author | null;
 	authorName: string;
 	postUrl: string;
 }

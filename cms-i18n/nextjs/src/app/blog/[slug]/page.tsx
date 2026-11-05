@@ -1,6 +1,6 @@
 import { fetchPostBySlug, fetchPostByIdAndVersion, getPostIdBySlug } from '@/lib/directus/fetchers';
 import BlogPostClient from './BlogPostClient';
-import type { DirectusUser, Post } from '@/types/directus-schema';
+import type { Author, Post } from '@/types/directus-schema';
 import { getLocaleFromHeaders } from '@/lib/i18n/server';
 import { addLocaleToPath } from '@/lib/i18n/utils';
 
@@ -52,8 +52,8 @@ export default async function BlogPostPage({
 			return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
 		}
 
-		const author = post.author as DirectusUser | null;
-		const authorName = author ? [author.first_name, author.last_name].filter(Boolean).join(' ') : '';
+		const author = post.author as Author | null;
+		const authorName = author?.name ?? '';
 		const localizedBlogPath = addLocaleToPath(`/blog/${slug}`, locale);
 		const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL}${localizedBlogPath}`;
 

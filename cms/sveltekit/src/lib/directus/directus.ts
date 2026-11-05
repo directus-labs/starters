@@ -4,7 +4,6 @@ import {
 	readItem,
 	readSingleton,
 	rest,
-	readUser,
 	createItem,
 	uploadFiles,
 	withToken
@@ -60,7 +59,6 @@ export const useDirectus = () => ({
 	readItems,
 	readItem,
 	readSingleton,
-	readUser,
 	createItem,
 	uploadFiles,
 	withToken

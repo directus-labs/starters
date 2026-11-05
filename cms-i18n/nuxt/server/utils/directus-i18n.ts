@@ -266,7 +266,7 @@ export function buildPostFields(includeTranslations: boolean) {
 		'seo',
 		...withTrans,
 		{
-			author: ['id', 'first_name', 'last_name', 'avatar'],
+			author: ['id', 'name', 'avatar'],
 		},
 	];
 }

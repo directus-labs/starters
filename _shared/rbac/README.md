@@ -49,7 +49,7 @@ CI runs `pnpm rbac:codegen:check` — it fails if generated files drift from sou
 ## Licensed modules
 
 - **public-api-filters** — Public policy: published status, active nav/forms
-- **writer-self-access** — Content - Self: author-scoped posts
+- **writer-self-access** — Content - Self: posts the writer created (`user_created`)
 - **content-manage-rules** — Content - Manage: globals field list
 - **form-submission-hardening** — Forms - Submission: upload folder, size limit
 - **live-preview-access** — Content - Live Preview read rules

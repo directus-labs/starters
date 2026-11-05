@@ -22,7 +22,7 @@
         "note": "Store and manage all your prompts for LLMs",
         "preview_url": null,
         "singleton": false,
-        "sort": 8,
+        "sort": 9,
         "sort_field": "sort",
         "status": "active",
         "translations": null,
@@ -572,7 +572,7 @@
         "note": "Data for all form responses",
         "preview_url": null,
         "singleton": false,
-        "sort": 4,
+        "sort": 5,
         "sort_field": null,
         "status": "active",
         "translations": null,
@@ -611,7 +611,7 @@
         "note": "Dynamic forms",
         "preview_url": null,
         "singleton": false,
-        "sort": 3,
+        "sort": 4,
         "sort_field": "sort",
         "status": "active",
         "translations": null,
@@ -641,7 +641,7 @@
         "note": "Site-wide settings",
         "preview_url": null,
         "singleton": true,
-        "sort": 6,
+        "sort": 7,
         "sort_field": null,
         "status": "active",
         "translations": null,
@@ -681,7 +681,7 @@
         "note": "Dynamic menus for your site",
         "preview_url": null,
         "singleton": false,
-        "sort": 5,
+        "sort": 6,
         "sort_field": null,
         "status": "active",
         "translations": null,
@@ -957,7 +957,7 @@
         "note": "Manage URL redirects for your website",
         "preview_url": null,
         "singleton": false,
-        "sort": 7,
+        "sort": 8,
         "sort_field": null,
         "status": "active",
         "translations": null,
@@ -993,6 +993,36 @@
         "translations": null,
         "unarchive_value": null,
         "versioning": false
+      }
+    },
+    {
+      "collection": "authors",
+      "meta": {
+        "accountability": "all",
+        "archive_app_filter": true,
+        "archive_field": null,
+        "archive_value": null,
+        "autosave_revision_interval": null,
+        "collapse": "open",
+        "collection": "authors",
+        "color": null,
+        "display_template": "{{avatar.$thumbnail}} {{name}}",
+        "group": "website",
+        "hidden": false,
+        "icon": "badge",
+        "item_duplication_fields": null,
+        "note": "People credited on blog posts. Separate from Studio users, so author details can be public.",
+        "preview_url": null,
+        "singleton": false,
+        "sort": 3,
+        "sort_field": null,
+        "status": "active",
+        "translations": null,
+        "unarchive_value": null,
+        "versioning": false
+      },
+      "schema": {
+        "name": "authors"
       }
     }
   ],
@@ -6495,36 +6525,6 @@
         "special": [
           "alias",
           "no-data"
-        ],
-        "translations": null,
-        "validation": null,
-        "validation_message": null,
-        "width": "full"
-      }
-    },
-    {
-      "collection": "directus_users",
-      "field": "posts",
-      "type": "alias",
-      "meta": {
-        "collection": "directus_users",
-        "conditions": null,
-        "display": "related-values",
-        "display_options": null,
-        "field": "posts",
-        "group": null,
-        "hidden": false,
-        "interface": "list-o2m",
-        "note": "Blog posts this user has authored.",
-        "options": {
-          "template": "{{title}}"
-        },
-        "readonly": false,
-        "required": false,
-        "searchable": true,
-        "sort": 1,
-        "special": [
-          "o2m"
         ],
         "translations": null,
         "validation": null,
@@ -13629,17 +13629,18 @@
       "meta": {
         "collection": "posts",
         "conditions": null,
-        "display": "user",
+        "display": "related-values",
         "display_options": {
-          "circle": true
+          "template": "{{avatar.$thumbnail}} {{name}}"
         },
         "field": "author",
         "group": "meta_content",
         "hidden": false,
         "interface": "select-dropdown-m2o",
-        "note": "Select the team member who wrote this post",
+        "note": "Select the author of this post",
         "options": {
-          "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+          "enableCreate": true,
+          "template": "{{avatar.$thumbnail}} {{name}}"
         },
         "readonly": false,
         "required": false,
@@ -13668,7 +13669,7 @@
         "is_generated": false,
         "generation_expression": null,
         "has_auto_increment": false,
-        "foreign_key_table": "directus_users",
+        "foreign_key_table": "authors",
         "foreign_key_column": "id"
       }
     },
@@ -14461,6 +14462,221 @@
         "special": [
           "alias",
           "no-data"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "authors",
+      "field": "avatar",
+      "type": "uuid",
+      "meta": {
+        "collection": "authors",
+        "conditions": null,
+        "display": "image",
+        "display_options": {
+          "circle": true
+        },
+        "field": "avatar",
+        "group": null,
+        "hidden": false,
+        "interface": "file-image",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 3,
+        "special": [
+          "file"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "avatar",
+        "table": "authors",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "authors",
+      "field": "bio",
+      "type": "text",
+      "meta": {
+        "collection": "authors",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "bio",
+        "group": null,
+        "hidden": false,
+        "interface": "input-multiline",
+        "note": "Optional short bio.",
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 4,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "bio",
+        "table": "authors",
+        "data_type": "text",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "authors",
+      "field": "id",
+      "type": "uuid",
+      "meta": {
+        "collection": "authors",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "id",
+        "group": null,
+        "hidden": true,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "searchable": true,
+        "sort": 1,
+        "special": [
+          "uuid"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "id",
+        "table": "authors",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": true,
+        "is_indexed": false,
+        "is_primary_key": true,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "authors",
+      "field": "name",
+      "type": "string",
+      "meta": {
+        "collection": "authors",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "name",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": "Shown on posts as the byline.",
+        "options": null,
+        "readonly": false,
+        "required": true,
+        "searchable": true,
+        "sort": 2,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "name",
+        "table": "authors",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": false,
+        "is_indexed": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "authors",
+      "field": "posts",
+      "type": "alias",
+      "meta": {
+        "collection": "authors",
+        "conditions": null,
+        "display": "related-values",
+        "display_options": {
+          "template": "{{title}}"
+        },
+        "field": "posts",
+        "group": null,
+        "hidden": false,
+        "interface": "list-o2m",
+        "note": "Posts credited to this author.",
+        "options": {
+          "enableCreate": false,
+          "template": "{{title}}"
+        },
+        "readonly": false,
+        "required": false,
+        "searchable": true,
+        "sort": 5,
+        "special": [
+          "o2m"
         ],
         "translations": null,
         "validation": null,
@@ -16132,22 +16348,22 @@
     {
       "collection": "posts",
       "field": "author",
-      "related_collection": "directus_users",
+      "related_collection": "authors",
       "meta": {
         "junction_field": null,
         "many_collection": "posts",
         "many_field": "author",
         "one_allowed_collections": null,
-        "one_collection": "directus_users",
+        "one_collection": "authors",
         "one_collection_field": null,
         "one_deselect_action": "nullify",
         "one_field": "posts",
-        "sort_field": "sort"
+        "sort_field": null
       },
       "schema": {
         "table": "posts",
         "column": "author",
-        "foreign_key_table": "directus_users",
+        "foreign_key_table": "authors",
         "foreign_key_column": "id",
         "constraint_name": "posts_author_foreign",
         "on_update": "NO ACTION",
@@ -16200,6 +16416,31 @@
         "foreign_key_table": "directus_users",
         "foreign_key_column": "id",
         "constraint_name": "redirects_user_created_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "authors",
+      "field": "avatar",
+      "related_collection": "directus_files",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "authors",
+        "many_field": "avatar",
+        "one_allowed_collections": null,
+        "one_collection": "directus_files",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "authors",
+        "column": "avatar",
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id",
+        "constraint_name": "authors_avatar_foreign",
         "on_update": "NO ACTION",
         "on_delete": "SET NULL"
       }

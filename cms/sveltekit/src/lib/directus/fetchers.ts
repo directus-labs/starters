@@ -3,8 +3,7 @@ import {
 	type PageBlock,
 	type Post,
 	type Schema,
-	type Page,
-	type DirectusUser
+	type Page
 } from '../types/directus-schema';
 import { useDirectus } from './directus';
 import {
@@ -154,7 +153,7 @@ const postFields = [
 	'slug',
 	'seo',
 	{
-		author: ['id', 'first_name', 'last_name', 'avatar']
+		author: ['id', 'name', 'avatar']
 	}
 ] as const;
 
@@ -522,27 +521,6 @@ export const fetchRelatedPosts = async (excludeId: string) => {
 	} catch (error) {
 		console.error('Error fetching related posts:', error);
 		throw new Error('Failed to fetch related posts');
-	}
-};
-
-/**
- * Fetches author details by ID.
- */
-export const fetchAuthorById = async (authorId: string) => {
-	const { getDirectus, readUser } = useDirectus();
-	const directus = getDirectus();
-
-	try {
-		const author = (await directus.request(
-			readUser(authorId, {
-				fields: ['first_name', 'last_name', 'avatar']
-			})
-		)) as DirectusUser;
-
-		return author;
-	} catch (error) {
-		console.error(`Error fetching author with ID "${authorId}":`, error);
-		throw new Error(`Failed to fetch author with ID "${authorId}"`);
 	}
 };
 

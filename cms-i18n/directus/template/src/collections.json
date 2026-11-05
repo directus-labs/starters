@@ -17,7 +17,7 @@
       "accountability": "all",
       "color": null,
       "item_duplication_fields": null,
-      "sort": 8,
+      "sort": 9,
       "group": "website",
       "collapse": "open",
       "preview_url": null,
@@ -1159,7 +1159,7 @@
         "fields",
         "emails"
       ],
-      "sort": 3,
+      "sort": 4,
       "group": "website",
       "collapse": "open",
       "preview_url": null,
@@ -1219,7 +1219,7 @@
       "accountability": "all",
       "color": null,
       "item_duplication_fields": null,
-      "sort": 4,
+      "sort": 5,
       "group": "website",
       "collapse": "open",
       "preview_url": null,
@@ -1333,7 +1333,7 @@
       "accountability": "all",
       "color": null,
       "item_duplication_fields": null,
-      "sort": 6,
+      "sort": 7,
       "group": "website",
       "collapse": "open",
       "preview_url": null,
@@ -1482,7 +1482,7 @@
         "items.page",
         "items.post"
       ],
-      "sort": 5,
+      "sort": 6,
       "group": "website",
       "collapse": "open",
       "preview_url": null,
@@ -1946,7 +1946,7 @@
       "accountability": "all",
       "color": null,
       "item_duplication_fields": null,
-      "sort": 7,
+      "sort": 8,
       "group": "website",
       "collapse": "open",
       "preview_url": null,
@@ -1983,5 +1983,37 @@
       "versioning": false
     },
     "schema": null
+  },
+  {
+    "collection": "authors",
+    "meta": {
+      "collection": "authors",
+      "icon": "badge",
+      "note": "People credited on blog posts. Separate from Studio users, so author details can be public.",
+      "display_template": "{{avatar.$thumbnail}} {{name}}",
+      "hidden": false,
+      "singleton": false,
+      "translations": null,
+      "archive_field": null,
+      "archive_app_filter": true,
+      "archive_value": null,
+      "unarchive_value": null,
+      "sort_field": null,
+      "accountability": "all",
+      "color": null,
+      "item_duplication_fields": null,
+      "sort": 3,
+      "group": "website",
+      "collapse": "open",
+      "preview_url": null,
+      "versioning": false,
+      "status": "active",
+      "autosave_revision_interval": null
+    },
+    "schema": {
+      "schema": "public",
+      "name": "authors",
+      "comment": null
+    }
   }
 ]

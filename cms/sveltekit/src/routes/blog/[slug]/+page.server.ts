@@ -2,7 +2,7 @@ import { fetchPostBySlug, fetchPostByIdAndVersion, getPostIdBySlug } from '$lib/
 import { PUBLIC_SITE_URL } from '$env/static/public';
 import { getDirectusAssetURL } from '$lib/directus/directus-utils';
 import type { PageServerLoad } from './$types';
-import type { DirectusUser } from '$lib/types/directus-schema';
+import type { Author } from '$lib/types/directus-schema';
 import { error } from '@sveltejs/kit';
 import { DIRECTUS_SERVER_TOKEN } from '$env/static/private';
 
@@ -49,7 +49,7 @@ export const load = (async (event) => {
 
 		const ogImage = post.image ? getDirectusAssetURL(post.image) : null;
 		const author =
-			post.author && typeof post.author === 'object' ? (post.author as DirectusUser) : null;
+			post.author && typeof post.author === 'object' ? (post.author as Author) : null;
 
 		return {
 			post,
