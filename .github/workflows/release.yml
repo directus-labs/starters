@@ -1,0 +1,103 @@
+# 1. PRs that change a starter add a changeset (`npx changeset`).
+# 2. On main, pending changesets open or update a "Version Packages" PR that bumps each starter and writes its CHANGELOG.md.
+# 3. Merging that PR tags each bumped starter (cms-v1.2.0) and creates its GitHub release. Nothing is published to npm.
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  select-mode:
+    runs-on: ubuntu-latest
+    outputs:
+      pending: ${{ steps.pending.outputs.pending }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - id: pending
+        run: |
+          if find .changeset -name '*.md' ! -name README.md | grep -q .; then
+            echo "pending=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "pending=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  version:
+    if: needs.select-mode.outputs.pending == 'true'
+    needs: select-mode
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22.23.4
+          package-manager-cache: false
+
+      - run: npm ci
+
+      # The lockfile records each starter's version, so refresh it after the bump
+      - uses: changesets/action/version@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
+        with:
+          script: npm run version
+
+  release:
+    if: needs.select-mode.outputs.pending == 'false'
+    needs: select-mode
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Tag and release starters whose version has a changelog entry but no release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          failed=0
+
+          for manifest in */package.json; do
+            dir=$(dirname "$manifest")
+            [ -f "$dir/CHANGELOG.md" ] || continue
+            version=$(node -p "require('./$manifest').version")
+            tag="$dir-v$version"
+
+            if gh release view "$tag" >/dev/null 2>&1; then continue; fi
+
+            # Only versions Changesets wrote ("## 1.2.0"). Older release-please entries ("## [1.1.0](...)") don't match.
+            notes=$(awk -v v="## $version" '$0 == v {found=1; next} found && /^## / {exit} found {print}' "$dir/CHANGELOG.md")
+            [ -n "$notes" ] || continue
+
+            # The main commit that set this version (the Version Packages merge)
+            target=$(git log --first-parent -1 --format=%H -S"\"version\": \"$version\"" -- "$manifest")
+            if [ -z "$target" ] || [ "$(git show "$target:$manifest" | node -p "JSON.parse(require('fs').readFileSync(0)).version")" != "$version" ]; then
+              echo "::error::Couldn't find the commit on main that set $dir to $version"
+              failed=1
+              continue
+            fi
+
+            prerelease=()
+            if [[ "$version" == *-* ]]; then prerelease=(--prerelease); fi
+
+            gh release create "$tag" --target "$target" --title "$dir: v$version" --notes "$notes" "${prerelease[@]}" || failed=1
+          done
+
+          exit "$failed"

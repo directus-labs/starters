@@ -75,3 +75,30 @@ jobs:
         if: steps.changes.outputs.frontend == 'true'
         working-directory: ${{ matrix.template }}/${{ matrix.frontend }}
         run: pnpm build
+
+  changeset:
+    name: Check for a changeset
+    # Exempt: the Version Packages PR (it removes changesets; a fork can reuse the branch name, so check
+    # the repo too) and dependabot
+    if: >-
+      github.event_name == 'pull_request'
+      && !(github.head_ref == 'changeset-release/main' && github.event.pull_request.head.repo.full_name == github.repository)
+      && github.event.pull_request.user.login != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22.23.4
+          package-manager-cache: false
+
+      - run: npm ci
+
+      # Fails when a starter changed without a changeset. Run `npx changeset` (or `npx changeset --empty` if it needs no release).
+      - run: npx changeset status --since origin/${{ github.base_ref }}
