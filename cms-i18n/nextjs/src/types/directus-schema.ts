@@ -666,6 +666,18 @@ export interface PagesTranslation {
 	permalink: string;
 }
 
+export interface Author {
+	/** @primaryKey */
+	id: string;
+	/** @description Shown on posts as the byline. */
+	name: string;
+	avatar?: DirectusFile | string | null;
+	/** @description Optional short bio. */
+	bio?: string | null;
+	/** @description Posts credited to this author. */
+	posts?: Post[] | string[];
+}
+
 export interface Post {
 	/** @description Rich text content of your blog post. */
 	content?: string | null;
@@ -682,8 +694,8 @@ export interface Post {
 	title: string;
 	/** @description Short summary of the blog post to entice readers. */
 	description?: string | null;
-	/** @description Select the team member who wrote this post */
-	author?: DirectusUser | string | null;
+	/** @description Select the author of this post */
+	author?: Author | string | null;
 	/** @description Publish now or schedule for later. */
 	published_at?: string | null;
 	seo?: ExtensionSeoMetadata | null;
@@ -1087,8 +1099,6 @@ export interface DirectusUser {
 	theme_light_overrides?: 'json' | null;
 	theme_dark_overrides?: 'json' | null;
 	text_direction?: 'auto' | 'ltr' | 'rtl';
-	/** @description Blog posts this user has authored. */
-	posts?: Post[] | string[];
 	policies?: DirectusAccess[] | string[];
 }
 
@@ -1298,6 +1308,7 @@ export interface Schema {
 	pages: Page[];
 	pages_translations: PagesTranslation[];
 	posts: Post[];
+	authors: Author[];
 	posts_translations: PostsTranslation[];
 	redirects: Redirect[];
 	directus_access: DirectusAccess[];
@@ -1367,6 +1378,7 @@ export enum CollectionNames {
 	pages = 'pages',
 	pages_translations = 'pages_translations',
 	posts = 'posts',
+	authors = 'authors',
 	posts_translations = 'posts_translations',
 	redirects = 'redirects',
 	directus_access = 'directus_access',

@@ -13,7 +13,6 @@ import {
 	readMe,
 	withToken,
 	type QueryFilter,
-	readUser,
 } from '@directus/sdk';
 
 const {
@@ -46,6 +45,5 @@ export {
 	withToken,
 	aggregate,
 	uploadFiles,
-	readUser,
 };
 export type { QueryFilter };

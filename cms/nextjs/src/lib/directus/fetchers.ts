@@ -304,7 +304,7 @@ export const fetchPostByIdAndVersion = async (
 							'slug',
 							'seo',
 							{
-								author: ['id', 'first_name', 'last_name', 'avatar'],
+								author: ['id', 'name', 'avatar'],
 							},
 						],
 					}),
@@ -417,7 +417,7 @@ export const fetchPostBySlug = async (
 							'slug',
 							'seo',
 							{
-								author: ['id', 'first_name', 'last_name', 'avatar'],
+								author: ['id', 'name', 'avatar'],
 							},
 						],
 					}),

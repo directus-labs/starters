@@ -20,7 +20,7 @@ const postFields = [
 	'slug',
 	'seo',
 	{
-		author: ['id', 'first_name', 'last_name', 'avatar'],
+		author: ['id', 'name', 'avatar'],
 	},
 ];
 

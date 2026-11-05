@@ -48,6 +48,17 @@
     "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
   },
   {
+    "collection": "authors",
+    "action": "read",
+    "permissions": {},
+    "validation": {},
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+  },
+  {
     "collection": "block_hero",
     "action": "read",
     "permissions": {},
@@ -373,29 +384,6 @@
     "presets": null,
     "fields": [
       "*"
-    ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
-  },
-  {
-    "collection": "directus_users",
-    "action": "read",
-    "permissions": {
-      "_and": [
-        {
-          "posts": {
-            "_nnull": true
-          }
-        }
-      ]
-    },
-    "validation": null,
-    "presets": null,
-    "fields": [
-      "first_name",
-      "last_name",
-      "avatar",
-      "title",
-      "id"
     ],
     "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
   },

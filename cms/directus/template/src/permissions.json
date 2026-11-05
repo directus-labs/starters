@@ -22,6 +22,17 @@
     "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
   },
   {
+    "collection": "authors",
+    "action": "read",
+    "permissions": {},
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
+  },
+  {
     "collection": "block_hero",
     "action": "read",
     "permissions": {},
@@ -221,17 +232,6 @@
   },
   {
     "collection": "block_pricing_cards",
-    "action": "read",
-    "permissions": {},
-    "validation": null,
-    "presets": null,
-    "fields": [
-      "*"
-    ],
-    "policy": "abf8a154-5b1c-4a46-ac9c-7300570f4f17"
-  },
-  {
-    "collection": "directus_users",
     "action": "read",
     "permissions": {},
     "validation": null,
@@ -891,6 +891,50 @@
     "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
   },
   {
+    "collection": "authors",
+    "action": "create",
+    "permissions": {},
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
+  },
+  {
+    "collection": "authors",
+    "action": "read",
+    "permissions": {},
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
+  },
+  {
+    "collection": "authors",
+    "action": "update",
+    "permissions": {},
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
+  },
+  {
+    "collection": "authors",
+    "action": "delete",
+    "permissions": {},
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
+  },
+  {
     "collection": "projects_settings",
     "action": "read",
     "permissions": {},
@@ -1321,6 +1365,17 @@
   },
   {
     "collection": "posts",
+    "action": "read",
+    "permissions": {},
+    "validation": null,
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "3ba01681-3a5f-4fe3-8e95-4706b39f7dc5"
+  },
+  {
+    "collection": "authors",
     "action": "read",
     "permissions": {},
     "validation": null,

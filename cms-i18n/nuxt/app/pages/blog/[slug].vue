@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Post, DirectusUser } from '#shared/types/schema';
+import type { Post, Author } from '#shared/types/schema';
 import type { SiteData } from '#shared/types/site-data';
 import { localizeLink, addLocaleToPath, getNotFoundMessage } from '~/lib/i18n/utils';
 import { DEFAULT_LOCALE } from '~/lib/i18n/config';
@@ -55,7 +55,7 @@ if (!data.value || error.value) {
 
 const post = computed(() => data.value?.post);
 const relatedPosts = computed(() => data.value?.relatedPosts);
-const author = computed(() => post.value?.author as Partial<DirectusUser>);
+const author = computed(() => post.value?.author as Partial<Author>);
 
 // Reuse site data (locales) from layout to avoid refetching
 const siteDataState = useState<SiteData | null>('site-data');
@@ -158,13 +158,13 @@ const notFoundMessage = computed(() => getNotFoundMessage(locale, 'post'));
 						<DirectusImage
 							v-if="author?.avatar"
 							:uuid="author?.avatar"
-							:alt="userName(author)"
+							:alt="author?.name"
 							class="rounded-full object-cover size-[48px]"
 							:width="48"
 							:height="48"
 						/>
 
-						<p v-if="author" class="font-bold">{{ userName(author) }}</p>
+						<p v-if="author" class="font-bold">{{ author?.name }}</p>
 					</div>
 
 					<p

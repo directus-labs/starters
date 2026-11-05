@@ -20116,7 +20116,7 @@
       "is_primary_key": false,
       "has_auto_increment": false,
       "foreign_key_schema": "public",
-      "foreign_key_table": "directus_users",
+      "foreign_key_table": "authors",
       "foreign_key_column": "id",
       "comment": null
     },
@@ -20128,18 +20128,19 @@
       ],
       "interface": "select-dropdown-m2o",
       "options": {
-        "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+        "template": "{{avatar.$thumbnail}} {{name}}",
+        "enableCreate": true
       },
-      "display": "user",
+      "display": "related-values",
       "display_options": {
-        "circle": true
+        "template": "{{avatar.$thumbnail}} {{name}}"
       },
       "readonly": false,
       "hidden": false,
       "sort": 7,
       "width": "half",
       "translations": null,
-      "note": "Select the team member who wrote this post",
+      "note": "Select the author of this post",
       "conditions": null,
       "required": false,
       "group": "meta_content",
@@ -24043,37 +24044,6 @@
     }
   },
   {
-    "collection": "directus_users",
-    "field": "posts",
-    "type": "alias",
-    "schema": null,
-    "meta": {
-      "collection": "directus_users",
-      "field": "posts",
-      "special": [
-        "o2m"
-      ],
-      "interface": "list-o2m",
-      "options": {
-        "template": "{{title}}"
-      },
-      "display": "related-values",
-      "display_options": null,
-      "readonly": false,
-      "hidden": false,
-      "sort": 1,
-      "width": "full",
-      "translations": null,
-      "note": "Blog posts this user has authored.",
-      "conditions": null,
-      "required": false,
-      "group": null,
-      "validation": null,
-      "validation_message": null,
-      "searchable": true
-    }
-  },
-  {
     "collection": "forms",
     "field": "translations",
     "type": "alias",
@@ -24100,6 +24070,230 @@
       "width": "full",
       "translations": null,
       "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "authors",
+    "field": "avatar",
+    "type": "uuid",
+    "schema": {
+      "name": "avatar",
+      "table": "authors",
+      "data_type": "uuid",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": "public",
+      "foreign_key_table": "directus_files",
+      "foreign_key_column": "id",
+      "comment": null
+    },
+    "meta": {
+      "collection": "authors",
+      "field": "avatar",
+      "special": [
+        "file"
+      ],
+      "interface": "file-image",
+      "options": null,
+      "display": "image",
+      "display_options": {
+        "circle": true
+      },
+      "readonly": false,
+      "hidden": false,
+      "sort": 3,
+      "width": "half",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "authors",
+    "field": "bio",
+    "type": "text",
+    "schema": {
+      "name": "bio",
+      "table": "authors",
+      "data_type": "text",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": true,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "authors",
+      "field": "bio",
+      "special": null,
+      "interface": "input-multiline",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 4,
+      "width": "full",
+      "translations": null,
+      "note": "Optional short bio.",
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "authors",
+    "field": "id",
+    "type": "uuid",
+    "schema": {
+      "name": "id",
+      "table": "authors",
+      "data_type": "uuid",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": false,
+      "is_unique": true,
+      "is_indexed": false,
+      "is_primary_key": true,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "authors",
+      "field": "id",
+      "special": [
+        "uuid"
+      ],
+      "interface": "input",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": true,
+      "hidden": true,
+      "sort": 1,
+      "width": "full",
+      "translations": null,
+      "note": null,
+      "conditions": null,
+      "required": false,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "authors",
+    "field": "name",
+    "type": "string",
+    "schema": {
+      "name": "name",
+      "table": "authors",
+      "data_type": "character varying",
+      "default_value": null,
+      "generation_expression": null,
+      "max_length": 255,
+      "numeric_precision": null,
+      "numeric_scale": null,
+      "is_generated": false,
+      "is_nullable": false,
+      "is_unique": false,
+      "is_indexed": false,
+      "is_primary_key": false,
+      "has_auto_increment": false,
+      "foreign_key_schema": null,
+      "foreign_key_table": null,
+      "foreign_key_column": null,
+      "comment": null
+    },
+    "meta": {
+      "collection": "authors",
+      "field": "name",
+      "special": null,
+      "interface": "input",
+      "options": null,
+      "display": null,
+      "display_options": null,
+      "readonly": false,
+      "hidden": false,
+      "sort": 2,
+      "width": "half",
+      "translations": null,
+      "note": "Shown on posts as the byline.",
+      "conditions": null,
+      "required": true,
+      "group": null,
+      "validation": null,
+      "validation_message": null,
+      "searchable": true
+    }
+  },
+  {
+    "collection": "authors",
+    "field": "posts",
+    "type": "alias",
+    "schema": null,
+    "meta": {
+      "collection": "authors",
+      "field": "posts",
+      "special": [
+        "o2m"
+      ],
+      "interface": "list-o2m",
+      "options": {
+        "template": "{{title}}",
+        "enableCreate": false
+      },
+      "display": "related-values",
+      "display_options": {
+        "template": "{{title}}"
+      },
+      "readonly": false,
+      "hidden": false,
+      "sort": 5,
+      "width": "full",
+      "translations": null,
+      "note": "Posts credited to this author.",
       "conditions": null,
       "required": false,
       "group": null,

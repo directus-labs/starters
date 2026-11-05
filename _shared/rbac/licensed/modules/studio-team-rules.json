@@ -94,7 +94,21 @@
     "validation": null,
     "presets": null,
     "fields": [
-      "*"
+      "id",
+      "first_name",
+      "last_name",
+      "email",
+      "avatar",
+      "title",
+      "description",
+      "location",
+      "role",
+      "status",
+      "last_access",
+      "theme_light_overrides",
+      "theme_dark_overrides",
+      "text_direction",
+      "email_notifications"
     ],
     "policy": "52598a64-071d-4071-96fa-4b620d6189b5"
   },
