@@ -999,5 +999,88 @@
       "*"
     ],
     "policy": "a15b697e-29d5-4164-8d24-eb228ba901e3"
+  },
+  {
+    "collection": "globals",
+    "action": "create",
+    "permissions": {},
+    "validation": {},
+    "presets": null,
+    "fields": [
+      "id",
+      "title",
+      "url",
+      "divider_logo",
+      "logo",
+      "favicon",
+      "tagline",
+      "description",
+      "divider_social",
+      "social_links",
+      "logo_dark_mode",
+      "accent_color",
+      "notice-7-fv9g",
+      "translations"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
+  },
+  {
+    "collection": "globals",
+    "action": "read",
+    "permissions": {},
+    "validation": {},
+    "presets": null,
+    "fields": [
+      "id",
+      "title",
+      "url",
+      "divider_logo",
+      "logo",
+      "favicon",
+      "tagline",
+      "description",
+      "divider_social",
+      "social_links",
+      "logo_dark_mode",
+      "accent_color",
+      "notice-7-fv9g",
+      "translations"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
+  },
+  {
+    "collection": "globals",
+    "action": "update",
+    "permissions": {},
+    "validation": {},
+    "presets": null,
+    "fields": [
+      "id",
+      "title",
+      "url",
+      "divider_logo",
+      "logo",
+      "favicon",
+      "tagline",
+      "description",
+      "divider_social",
+      "social_links",
+      "logo_dark_mode",
+      "notice-7-fv9g",
+      "accent_color",
+      "translations"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
+  },
+  {
+    "collection": "languages",
+    "action": "read",
+    "permissions": {},
+    "validation": {},
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
   }
 ]

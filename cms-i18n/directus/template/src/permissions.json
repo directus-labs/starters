@@ -872,7 +872,8 @@
       "social_links",
       "logo_dark_mode",
       "accent_color",
-      "notice-7-fv9g"
+      "notice-7-fv9g",
+      "translations"
     ],
     "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
   },
@@ -895,7 +896,8 @@
       "social_links",
       "logo_dark_mode",
       "accent_color",
-      "notice-7-fv9g"
+      "notice-7-fv9g",
+      "translations"
     ],
     "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
   },
@@ -918,7 +920,8 @@
       "social_links",
       "logo_dark_mode",
       "notice-7-fv9g",
-      "accent_color"
+      "accent_color",
+      "translations"
     ],
     "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
   },
@@ -2942,5 +2945,16 @@
       "*"
     ],
     "policy": "a15b697e-29d5-4164-8d24-eb228ba901e3"
+  },
+  {
+    "collection": "languages",
+    "action": "read",
+    "permissions": {},
+    "validation": {},
+    "presets": null,
+    "fields": [
+      "*"
+    ],
+    "policy": "8ba4ed6f-d330-4675-ae46-119c533a0928"
   }
 ]
