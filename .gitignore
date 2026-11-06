@@ -6,6 +6,7 @@ node_modules
 .vscode
 **/logs/
 .backups
+*.log*
 .pnpm-store
 **/*.tsbuildinfo
 

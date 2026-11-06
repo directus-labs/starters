@@ -1,0 +1,11 @@
+{
+  "author": "",
+  "description": "",
+  "directusTemplate": true,
+  "files": [
+    "src"
+  ],
+  "name": "directus-template-help-center-licensed",
+  "templateName": "Help Center — Licensed",
+  "version": "1.0.0"
+}
