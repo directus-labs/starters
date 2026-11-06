@@ -101,4 +101,6 @@ jobs:
       - run: npm ci
 
       # Fails when a starter changed without a changeset. Run `npx changeset` (or `npx changeset --empty` if it needs no release).
-      - run: npx changeset status --since origin/${{ github.base_ref }}
+      - run: npx changeset status --since "origin/$BASE_REF"
+        env:
+          BASE_REF: ${{ github.base_ref }}
