@@ -1,0 +1,21 @@
+{
+  "name": "directus-help-center-starter",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A multilingual help center with articles and collections.",
+  "directus:template": {
+    "name": "Help Center",
+    "description": "A multilingual help center with articles and collections.",
+    "tier": "core",
+    "template": "./directus/template",
+    "variants": {
+      "licensed": {
+        "name": "Help Center — Licensed",
+        "template": "./directus/template-licensed",
+        "requiresLicense": true,
+        "description": "Same template with Public filters for published articles and public files, plus Team self-access rules"
+      }
+    },
+    "frontends": {}
+  }
+}

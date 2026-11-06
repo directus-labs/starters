@@ -1,0 +1,89 @@
+[
+  {
+    "id": "5c01060f-51d2-4d83-9cc5-273b4db13321",
+    "name": "Product",
+    "key": "product",
+    "type": "item-read",
+    "position_x": 37,
+    "position_y": 1,
+    "options": {
+      "collection": "products",
+      "key": "{{$trigger.keys}}",
+      "query": {
+        "fields": [
+          "*",
+          "variants.*"
+        ]
+      }
+    },
+    "resolve": "a12502bb-2daa-4ca7-b4af-998d600a9f32",
+    "reject": null,
+    "flow": "fd406c19-b52c-4037-b14a-914234714c2c",
+    "date_created": "2026-11-03T20:41:33.398Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
+  },
+  {
+    "id": "86307250-be0e-43a1-bed1-d20b014d08f6",
+    "name": "Return",
+    "key": "return",
+    "type": "exec",
+    "position_x": 37,
+    "position_y": 17,
+    "options": {
+      "code": "module.exports = function(data) {\n\t// If color or size aren't updated, then just return payload\n\treturn data.$trigger.payload\n}"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "fd406c19-b52c-4037-b14a-914234714c2c",
+    "date_created": "2026-11-03T20:41:33.405Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
+  },
+  {
+    "id": "95d18982-fd6d-479b-9b40-82988e24a362",
+    "name": "Update",
+    "key": "update",
+    "type": "exec",
+    "position_x": 19,
+    "position_y": 1,
+    "options": {
+      "code": "module.exports = function (data) {\n  // Only rebuild variants when color or size is part of this update (including being cleared)\n  const payload = data.$trigger.payload;\n\n  if (!('color' in payload) && !('size' in payload)) {\n    throw new Error('No color or size in payload. Returning payload');\n  }\n};\n"
+    },
+    "resolve": "5c01060f-51d2-4d83-9cc5-273b4db13321",
+    "reject": "86307250-be0e-43a1-bed1-d20b014d08f6",
+    "flow": "fd406c19-b52c-4037-b14a-914234714c2c",
+    "date_created": "2026-11-03T20:41:33.409Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
+  },
+  {
+    "id": "a12502bb-2daa-4ca7-b4af-998d600a9f32",
+    "name": "Variants",
+    "key": "variants",
+    "type": "exec",
+    "position_x": 55,
+    "position_y": 1,
+    "options": {
+      "code": "// Every variant is a [color, size] pair. A product without colors or sizes uses null in that position,\n// so the pair lines up with stored variants (which have null in the unused column).\nconst toList = (value) => (Array.isArray(value) ? value.filter((v) => v !== null && v !== '') : []);\n\nconst combinations = (colors, sizes) =>\n  (colors.length ? colors : [null]).flatMap((color) => (sizes.length ? sizes : [null]).map((size) => [color, size]));\n\nconst sameVariant = (variant, [color, size]) => (variant.color ?? null) === color && (variant.size ?? null) === size;\n\nconst createVariant = (productId, [color, size]) => ({\n  product: productId,\n  color,\n  size,\n  sku: [color, size].filter(Boolean).map((v) => v.toUpperCase()).join('-') || String(productId).toUpperCase(),\n});\n\nconst handleProductUpdate = (payload, currentProduct) => {\n  if (!currentProduct?.id) {\n    throw new Error('Invalid or missing product data');\n  }\n\n  // A field in the payload wins, even when it's cleared to null. Otherwise keep the product's current value.\n  const colors = toList('color' in payload ? payload.color : currentProduct.color);\n  const sizes = toList('size' in payload ? payload.size : currentProduct.size);\n\n  const currentVariants = Array.isArray(currentProduct.variants) ? currentProduct.variants : [];\n  const wanted = combinations(colors, sizes);\n\n  // Existing variants that still match are left alone, so their price, weight, image, SKU and id are kept\n  const create = wanted\n    .filter((combo) => !currentVariants.some((variant) => sameVariant(variant, combo)))\n    .map((combo) => createVariant(currentProduct.id, combo));\n  const remove = currentVariants\n    .filter((variant) => !wanted.some((combo) => sameVariant(variant, combo)))\n    .map((variant) => variant.id);\n\n  return { create, remove };\n};\n\n// Keep variant edits sent in the same save (Studio sends { create, update, delete }), so changing a\n// variant's price while adding a color doesn't lose the price change\nconst mergeVariants = (sent, { create, remove }) => {\n  const sentCreate = sent?.create ?? [];\n  return {\n    create: [...sentCreate, ...create.filter((variant) => !sentCreate.some((v) => sameVariant(v, [variant.color, variant.size])))],\n    update: (sent?.update ?? []).filter((variant) => !remove.includes(variant.id)),\n    delete: [...new Set([...(sent?.delete ?? []), ...remove])],\n  };\n};\n\nmodule.exports = function (data) {\n  const payload = data.$trigger.payload;\n  const changes = handleProductUpdate(payload, data.product);\n\n  // A plain array replaces the whole variant list, so the caller has already decided what it wants\n  if ((!changes.create.length && !changes.remove.length) || Array.isArray(payload.variants)) return payload;\n\n  return { ...payload, variants: mergeVariants(payload.variants, changes) };\n};\n"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "fd406c19-b52c-4037-b14a-914234714c2c",
+    "date_created": "2026-11-03T20:41:33.412Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
+  },
+  {
+    "id": "bd0a0a62-44b8-4faf-9b46-33a881b95b19",
+    "name": "Variants",
+    "key": "variants",
+    "type": "exec",
+    "position_x": 19,
+    "position_y": 1,
+    "options": {
+      "code": "// Every variant is a [color, size] pair, with null in a position the product doesn't use.\nconst toList = (value) => (Array.isArray(value) ? value.filter((v) => v !== null && v !== '') : []);\n\nconst combinations = (colors, sizes) =>\n  (colors.length ? colors : [null]).flatMap((color) => (sizes.length ? sizes : [null]).map((size) => [color, size]));\n\nconst createVariant = (id, [color, size]) => {\n  const sku = [color, size].filter(Boolean).map((v) => v.toUpperCase()).join('-') || (id === undefined ? 'NEW-PRODUCT' : String(id).toUpperCase());\n  return { color, size, sku };\n};\n\nmodule.exports = function (data) {\n  const payload = data.$trigger.payload;\n  const variants = combinations(toList(payload.color), toList(payload.size)).map((combo) => createVariant(payload.id, combo));\n\n  return {\n    ...payload,\n    variants: {\n      create: variants,\n    },\n  };\n};\n"
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "49ed6f64-7494-41f7-8c04-cfc7f32c5824",
+    "date_created": "2026-11-03T20:41:33.414Z",
+    "user_created": "b988bb96-9c06-439a-91aa-cad62bfebf38"
+  }
+]

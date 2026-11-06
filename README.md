@@ -19,6 +19,9 @@ These starters run on **Directus 12**. Directus 12 introduces [licensing tiers](
 | **cms**      | Core (free)  | `template/` — full RBAC skeleton, flat permission rules (3 seed users)            | Apply `template-licensed/` for enforceable filters, validation, field lists   |
 | **cms-i18n** | Team         | Requires a `LICENSE_KEY` (schema exceeds core tier limits)                         | Licensed RBAC + i18n permission deltas                                      |
 | **blank**    | Core (free)  | Works out of the box                                                                | Same unlocks as cms                                                          |
+| **simple-crm**       | Core (free) | Works out of the box (no public permissions)                              | Higher limits only                                                          |
+| **simple-ecommerce** | Core (free) | `template/` with flat Public read rules                                   | Apply `template-licensed/` to hide inactive products and private files      |
+| **help-center**      | Core (free) | `template/` with flat Public and Team rules                               | Apply `template-licensed/` for published-only articles and Team self-access |
 
 RBAC and licensed setup: [`cms/directus/README.md`](cms/directus/README.md).
 
@@ -54,6 +57,16 @@ language switcher.
 | **Nuxt**    | [cms-i18n/nuxt](https://github.com/directus-labs/starters/tree/main/cms-i18n/nuxt)     | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/directus-labs/starters/tree/main/cms-i18n/nuxt&env=DIRECTUS_URL,NUXT_PUBLIC_SITE_URL,DIRECTUS_SERVER_TOKEN,NUXT_PUBLIC_ENABLE_VISUAL_EDITING) [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/directus-labs/starters&branch=main&create_from_path=cms-i18n/nuxt)                 |
 
 → [View CMS i18n templates](./cms-i18n/)
+
+### Backend-only templates
+
+Directus data models with sample content and no frontend. Apply them with `npx directus-template-cli@latest init` or from each template's `directus/` folder.
+
+| Template | What it is |
+| --- | --- |
+| [Simple CRM](./simple-crm/) | Contacts, organizations, deals pipeline, and activities |
+| [Simple eCommerce](./simple-ecommerce/) | Products with variants, categories, customers, orders, and tax rates |
+| [Help Center](./help-center/) | Multilingual help articles, collections, and article feedback |
 
 ---
 
