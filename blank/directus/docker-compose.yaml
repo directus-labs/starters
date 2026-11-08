@@ -1,4 +1,4 @@
-name: directus-cms-template
+name: directus-blank-template
 services:
   database:
     image: postgis/postgis:16-master
