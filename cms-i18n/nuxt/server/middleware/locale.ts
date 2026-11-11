@@ -29,6 +29,10 @@ export default defineEventHandler(async (event) => {
 	event.context.localeMap = localeMap;
 	const { locale, pathWithoutLocale } = getLocaleFromPath(pathname, localeMap);
 
+	// Tell the SEO modules (@nuxtjs/seo) this request's locale. They set <html lang>, og:locale and the
+	// canonical URL from site config, which otherwise always falls back to "en".
+	updateSiteConfig(event, { _context: 'locale middleware', currentLocale: locale });
+
 	// Set locale in context and headers
 	event.context.locale = locale;
 	event.node.req.headers['x-locale'] = locale;
