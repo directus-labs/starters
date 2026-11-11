@@ -1,0 +1,8 @@
+overrides:
+  "sharp@<0.35.5": "^0.35.5"
+  "postcss-selector-parser@<6.1.5": "^6.1.6"
+
+allowBuilds:
+  esbuild: true
+  sharp: true
+  vue-demi: true

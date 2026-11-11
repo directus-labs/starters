@@ -39,6 +39,10 @@ jobs:
             frontend: astro
           - template: cms
             frontend: sveltekit
+          - template: cms-i18n
+            frontend: nextjs
+          - template: cms-i18n
+            frontend: nuxt
     steps:
       - uses: actions/checkout@v4
 

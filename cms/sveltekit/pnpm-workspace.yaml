@@ -1,6 +1,7 @@
 overrides:
-  rollup: ^4.59.0
-  tar: ^7.5.11
+  "sharp@<0.35.5": "^0.35.5"
+  "postcss-selector-parser@<6.1.5": "^6.1.6"
+  "cookie@<0.7.0": "^0.7.2"
 
 allowBuilds:
   esbuild: true
