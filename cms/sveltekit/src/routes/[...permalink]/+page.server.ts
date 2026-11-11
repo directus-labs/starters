@@ -1,5 +1,6 @@
 import { fetchPageData, fetchPageDataById, getPageIdByPermalink } from '$lib/directus/fetchers';
 import type { PageServerLoad } from './$types';
+import { error } from '@sveltejs/kit';
 import { DIRECTUS_SERVER_TOKEN } from '$env/static/private';
 
 export const load = (async (event) => {
@@ -13,6 +14,7 @@ export const load = (async (event) => {
 	// Versions are only read in preview mode; without preview=true, fall back to published content.
 	version = preview && version !== 'published' && version !== 'main' ? version : undefined;
 
+	let data;
 	try {
 		let pageId = id;
 		if (version && !pageId) {
@@ -20,16 +22,20 @@ export const load = (async (event) => {
 			pageId = foundPageId || '';
 		}
 
-		let data;
 		if (pageId && version) {
 			data = await fetchPageDataById(pageId, version, token);
 		} else {
 			data = await fetchPageData(event.url.pathname, 1, token, preview);
 		}
-
-		return data;
-	} catch (error) {
-		console.error('Error loading page:', error);
-		throw error;
+	} catch (err) {
+		console.error('Error loading page:', err);
+		throw err;
 	}
+
+	// Unknown permalinks (including /robots.txt or /sitemap.xml when no route handles them) are 404s, not 500s.
+	if (!data) {
+		error(404, { message: 'Page not found' });
+	}
+
+	return data;
 }) satisfies PageServerLoad;
