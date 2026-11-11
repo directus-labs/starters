@@ -1,4 +1,5 @@
 import { fetchPostBySlug, fetchPostByIdAndVersion, getPostIdBySlug } from '@/lib/directus/fetchers';
+import { notFound } from 'next/navigation';
 import BlogPostClient from './BlogPostClient';
 import type { Author, Post } from '@/types/directus-schema';
 import { getLocaleFromHeaders } from '@/lib/i18n/server';
@@ -29,7 +30,7 @@ export default async function BlogPostPage({
 		if (fixedVersion && !postId) {
 			const foundPostId = await getPostIdBySlug(slug, token);
 			if (!foundPostId) {
-				return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
+				notFound();
 			}
 			postId = foundPostId;
 		}
@@ -49,7 +50,7 @@ export default async function BlogPostPage({
 		}
 
 		if (!post) {
-			return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
+			notFound();
 		}
 
 		const author = post.author as Author | null;
@@ -69,6 +70,6 @@ export default async function BlogPostPage({
 	} catch (error) {
 		console.error('Error loading blog post:', error);
 
-		return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
+		notFound();
 	}
 }
