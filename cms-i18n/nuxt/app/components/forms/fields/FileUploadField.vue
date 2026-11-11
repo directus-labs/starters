@@ -7,7 +7,7 @@ const emits = defineEmits(['update:modelValue']);
 
 const onFileChange = (e: Event) => {
 	const target = e.target as HTMLInputElement;
-	const file = target.files?.[0] || null;
+	const file = target.files?.[0] || undefined;
 	emits('update:modelValue', file);
 };
 </script>

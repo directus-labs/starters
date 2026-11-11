@@ -51,7 +51,7 @@ const initialValues = computed(() => {
 					defaults[name] = '';
 					break;
 				case 'file':
-					defaults[name] = null;
+					defaults[name] = undefined;
 					break;
 				case 'textarea':
 				case 'text':
