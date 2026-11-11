@@ -46,7 +46,7 @@ export const buildZodSchema = (fields: FormField[]) => {
             .instanceof(File, {
               message: `${label} must be a valid file if provided`,
             })
-            .or(z.undefined());
+            .optional();
         }
 
         break;
@@ -62,6 +62,14 @@ export const buildZodSchema = (fields: FormField[]) => {
       for (const rule of rules) {
         const [ruleName, ruleValue] = rule.split(':');
         const normalizedRule = ruleName.toLowerCase();
+
+        // Zod 4 fails every value against a NaN bound (Zod 3 ignored it), so skip a malformed rule
+        // like 'min:abc' instead of making the form impossible to submit.
+        if (['min', 'max', 'length'].includes(normalizedRule) && Number.isNaN(parseInt(ruleValue ?? '', 10))) {
+          console.warn(`Ignoring malformed validation rule: ${rule}`);
+
+          continue;
+        }
 
         if (fieldSchema instanceof z.ZodString) {
           switch (normalizedRule) {
@@ -114,7 +122,9 @@ export const buildZodSchema = (fields: FormField[]) => {
         fieldSchema = fieldSchema.min(1, `${field.label || field.name} is required`);
       }
     } else {
-      fieldSchema = fieldSchema.or(z.literal('')).or(z.undefined());
+      // .optional() also lets the key be absent, which Zod 4 requires for fields the server
+      // leaves out of the payload.
+      fieldSchema = fieldSchema.or(z.literal('')).optional();
     }
 
     if ((field.type === 'radio' || field.type === 'select') && allowedChoices.size > 0) {

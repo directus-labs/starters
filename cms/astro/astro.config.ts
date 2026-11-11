@@ -50,14 +50,10 @@ export default defineConfig({
     assetsInclude: ['**/*.svg'],
   },
 
-  experimental: {
-    queuedRendering: {
-      enabled: true,
-    },
-    cache: {
-      // memoryCache() is per-process only; in serverless/edge deployments each
-      // function instance has its own isolated cache with no cross-instance sharing.
-      provider: memoryCache(),
-    },
+  // Route caching is stable in Astro 7 (queued rendering is now the default, so it needs no flag).
+  cache: {
+    // memoryCache() is per-process only; in serverless/edge deployments each
+    // function instance has its own isolated cache with no cross-instance sharing.
+    provider: memoryCache(),
   },
 });

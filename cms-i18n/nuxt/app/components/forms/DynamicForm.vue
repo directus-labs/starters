@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
+import { toTypedSchema } from '~/lib/zodTypedSchema';
 import { buildZodSchema } from '~/lib/zodSchemaBuilder';
 import type { FormField } from '#shared/types/schema';
 import BaseFormField from './BaseFormField.vue';
@@ -51,7 +51,7 @@ const initialValues = computed(() => {
 					defaults[name] = '';
 					break;
 				case 'file':
-					defaults[name] = null;
+					defaults[name] = undefined;
 					break;
 				case 'textarea':
 				case 'text':

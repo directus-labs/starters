@@ -13,8 +13,8 @@
     "generate:types": "tsx ./src/lib/directus/generateDirectusTypes.ts"
   },
   "dependencies": {
-    "@astrojs/react": "5.0.1",
-    "@astrojs/vercel": "10.0.2",
+    "@astrojs/react": "7.1.5",
+    "@astrojs/vercel": "11.0.20",
     "@directus/sdk": "22.0.0",
     "@directus/visual-editing": "2.1.0",
     "@hookform/resolvers": "5.2.2",
@@ -30,7 +30,7 @@
     "@radix-ui/react-separator": "1.1.8",
     "@radix-ui/react-slot": "1.2.4",
     "@radix-ui/react-tooltip": "1.2.8",
-    "astro": "6.4.8",
+    "astro": "7.4.9",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "cmdk": "1.1.1",
@@ -74,7 +74,7 @@
     "tsx": "4.21.0",
     "typescript": "5.8.3",
     "typescript-eslint": "8.57.2",
-    "vite": "7.3.8"
+    "vite": "8.3.7"
   },
   "overrides": {
     "sharp@<0.35.5": "^0.35.5",
