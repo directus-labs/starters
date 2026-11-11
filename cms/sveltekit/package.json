@@ -47,7 +47,7 @@
 		"tsx": "4.20.4",
 		"typescript": "5.9.2",
 		"typescript-eslint": "8.40.0",
-		"vite": "8.3.8"
+		"vite": "8.3.7"
 	},
 	"dependencies": {
 		"@directus/sdk": "22.0.0",

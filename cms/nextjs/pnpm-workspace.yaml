@@ -10,3 +10,6 @@ allowBuilds:
   esbuild: true
   msw: true
   sharp: true
+
+# Skip versions published in the last 24h (matches pnpm 11+ defaults used in CI).
+minimumReleaseAge: 1440
