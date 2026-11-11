@@ -48,6 +48,8 @@ export default defineNuxtConfig({
 	},
 
 	security: {
+		// nuxt-security only knows esbuild's `drop`, which Vite 8 ignores. Console stripping lives in `vite.build` below.
+		removeLoggers: false,
 		headers: {
 			contentSecurityPolicy: {
 				'img-src': ["'self'", 'data:', '*'],
@@ -59,6 +61,22 @@ export default defineNuxtConfig({
 	},
 
 	devtools: { enabled: true },
+
+	vite: {
+		build: {
+			rolldownOptions: {
+				output: { minify: { compress: { dropConsole: true, dropDebugger: true } } },
+			},
+		},
+	},
+
+	postcss: {
+		plugins: {
+			// Tailwind 3 has no exports map, so Nuxt 4.6's ESM resolver can't load the `tailwindcss/nesting` that @nuxtjs/tailwindcss adds.
+			'tailwindcss/nesting/index.js': {},
+			'tailwindcss/nesting': false,
+		},
+	},
 
 	// Image Configuration - https://image.nuxt.com/providers/directus
 	image: {
