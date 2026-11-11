@@ -57,7 +57,9 @@ try {
 }
 
 if (!post) {
-  return Astro.redirect('/404');
+  // An empty 404 response makes Astro render src/pages/404.astro at this URL with a 404 status.
+  // (Redirecting to /404 would answer 302, which search engines treat as a soft 404.)
+  return new Response(null, { status: 404, statusText: 'Not found' });
 }
 
 const relatedPosts = await fetchRelatedPosts(post.id).catch(() => []);

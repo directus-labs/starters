@@ -187,8 +187,9 @@ export const fetchPageData = async (
 			)
 		)) as Page[];
 
+		// No match is a normal outcome (unknown URL), not an error: the route turns it into a 404.
 		if (!pageData.length) {
-			throw new Error('Page not found');
+			return null;
 		}
 
 		const page = pageData[0];

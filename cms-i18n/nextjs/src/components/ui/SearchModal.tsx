@@ -14,7 +14,9 @@ import { Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { debounce } from '@/lib/utils';
 import { DialogDescription, DialogTitle } from './dialog';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { getLocaleFromPath } from '@/lib/i18n/utils';
+import { useLocaleMap } from '@/components/providers/LocaleMapProvider';
 
 type SearchResult = {
 	id: string;
@@ -31,6 +33,8 @@ export default function SearchModal() {
 	const [searched, setSearched] = useState(false);
 
 	const router = useRouter();
+	const localeMap = useLocaleMap();
+	const { locale } = getLocaleFromPath(usePathname(), localeMap);
 
 	useEffect(() => {
 		const onKeyDown = (e: KeyboardEvent) => {
@@ -64,7 +68,10 @@ export default function SearchModal() {
 		setSearched(true);
 
 		try {
-			const res = await fetch(`/api/search?search=${encodeURIComponent(search)}`);
+			// The search route builds localized links from x-locale (middleware skips /api routes).
+			const res = await fetch(`/api/search?search=${encodeURIComponent(search)}`, {
+				headers: { 'x-locale': locale },
+			});
 			if (!res.ok) throw new Error('Failed to fetch results');
 			const data: SearchResult[] = await res.json();
 			setResults(data.filter((r) => r.link));
