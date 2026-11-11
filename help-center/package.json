@@ -1,6 +1,6 @@
 {
   "name": "directus-help-center-starter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "A multilingual help center with articles and collections.",
   "directus:template": {
