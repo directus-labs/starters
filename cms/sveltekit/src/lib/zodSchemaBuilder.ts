@@ -45,6 +45,17 @@ export const buildZodSchema = (fields: FormField[]) => {
 				const [ruleName, ruleValue] = rule.split(':');
 				const normalizedRule = ruleName.toLowerCase();
 
+				// Zod 4 fails every value against a NaN bound (Zod 3 ignored it), so skip a malformed rule
+				// like 'min:abc' instead of making the form impossible to submit.
+				if (
+					['min', 'max', 'length'].includes(normalizedRule) &&
+					Number.isNaN(parseInt(ruleValue ?? '', 10))
+				) {
+					console.warn(`Ignoring malformed validation rule: ${rule}`);
+
+					return;
+				}
+
 				if (fieldSchema instanceof z.ZodString) {
 					switch (normalizedRule) {
 						case 'email':
