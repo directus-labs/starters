@@ -1,6 +1,6 @@
 {
   "name": "directus-simple-ecommerce-starter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "A simple eCommerce template for products, orders, and customers.",
   "directus:template": {

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1
+
+### Patch Changes
+
+- 0a06977: Update Directus to 12.6.1 (#149).
+- 0a06977: Licensed Team users read only profile fields on `directus_users` (no `auth_data`), and `EMAIL_TRANSPORT` defaults to `sendmail` so notifications no longer fail with a 500 when it's unset (#144).
+
 ## [1.1.0](https://github.com/directus-labs/starters/compare/blank-v1.0.1...blank-v1.1.0) (2026-08-12)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "directus-simple-crm-starter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "A simple CRM for managing contacts, organizations, and deals.",
   "directus:template": {
