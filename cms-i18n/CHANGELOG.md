@@ -12,6 +12,30 @@
 
 * add frontend bot email ([#130](https://github.com/directus-labs/starters/issues/130)) ([6886590](https://github.com/directus-labs/starters/commit/688659039666515c2a477f1a96d8e4f648e18ce2))
 
+## 2.1.0
+
+### Minor Changes
+
+- 8cd455b: Upgrade the CMS frontends to Zod 4 and the Astro frontend to Astro 7, clearing the remaining high and critical advisories in those packages.
+  
+  - Zod 4 in every frontend. Nuxt validates forms through a small local `toTypedSchema` adapter because `@vee-validate/zod` only supports Zod 3. SvelteKit uses Superforms' `zod4Client` adapter. Next.js uses `@hookform/resolvers` 5.9.
+  - Optional form fields use `.optional()`, so a submission that leaves them out (like an empty file input) is accepted. Zod 4 rejected a missing key on `.or(z.undefined())`, which also affected Astro.
+  - Astro 7 with `@astrojs/react` 7 and `@astrojs/vercel` 11. Route caching moved from `experimental.cache` to the top-level `cache` option. Astro 7.4 needs Node 22.23.4 or later.
+
+### Patch Changes
+
+- 8cd455b: Frontends return real 404s for missing pages and posts, and every CMS frontend serves `robots.txt` and `sitemap.xml`.
+  
+  - Next.js renders page content on the server. `ThemeProvider` rendered nothing until it mounted in the browser, so server HTML was empty and `notFound()` never set the status. Missing blog posts call `notFound()` instead of rendering a "Post Not Found" message with a 200.
+  - SvelteKit answers unknown URLs with a 404 instead of a 500.
+  - Astro answers missing blog posts with a 404 at the same URL instead of redirecting to `/404`.
+  - Next.js, Astro and SvelteKit serve a `robots.txt` that allows all crawlers and points at the sitemap, matching Nuxt. SvelteKit gets a `sitemap.xml` of published pages and posts, like the other frontends.
+  - The cms-i18n Next.js middleware no longer treats `/api` as a locale code, so form submissions, search and the other API routes reach their handlers. Search sends the current locale so result links stay localized.
+  - The cms-i18n frontends only treat a leading path segment as a locale when it's a language in Directus, so pages with short slugs like `/faq` render instead of being read as a locale.
+  - The cms-i18n Nuxt frontend sets `<html lang>`, the canonical URL and `og:locale` for the current locale instead of always "en".
+  - The SvelteKit frontend rejects paths starting with `//`, mitigating GHSA-pfhg-q3qv-9q6r until it moves to SvelteKit 3.
+- 8cd455b: Update frontend dependencies to patch security advisories: Next.js 15.5, Nuxt 4.6, Astro 6.4, SvelteKit 2.70, Vite, sharp 0.35, and refreshed lockfiles. Replace stale pnpm overrides with a minimal scoped set, and move the Nuxt frontends to pnpm 10.28.
+
 ## 2.0.0
 
 ### Major Changes
