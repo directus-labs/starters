@@ -8,7 +8,11 @@ import { getLocaleFromPath } from './lib/i18n/utils';
 export function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 
+	// API routes aren't localized pages. Without this, "/api" looks like a 3-letter locale code and the
+	// request is rewritten to a page route, so /api/forms/submit and /api/search never reach their handlers.
+	// Routes that need the locale (search) get it from the x-locale header the client sends.
 	if (
+		pathname.startsWith('/api') ||
 		pathname.startsWith('/_next') ||
 		pathname.startsWith('/favicon.ico') ||
 		pathname.startsWith('/images') ||
