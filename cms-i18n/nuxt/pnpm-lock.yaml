@@ -28,8 +28,8 @@ importers:
         specifier: 0.14.0
         version: 0.14.0(@nuxt/schema@4.6.4)(confbox@0.3.2)(db0@0.3.4)(dotenv@16.6.1)(esbuild@0.28.2)(giget@3.3.1)(ioredis@5.11.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.151.0)(rolldown@1.2.19)(rollup@4.68.2)(vite@8.3.8)
       '@nuxt/icon':
-        specifier: 1.11.0
-        version: 1.11.0(magicast@0.5.5)(vite@8.3.8)(vue@3.5.45(typescript@5.8.3))
+        specifier: 2.6.2
+        version: 2.6.2(@nuxt/schema@4.6.4)(confbox@0.3.2)(dotenv@16.6.1)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(oxc-parser@0.151.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.2)(vite@8.3.8))(vite@8.3.8)(vue@3.5.45(typescript@5.8.3))
       '@nuxt/image':
         specifier: 2.0.0
         version: 2.0.0(@nuxt/schema@4.6.4)(@types/node@26.6.6)(confbox@0.3.2)(db0@0.3.4)(dotenv@16.6.1)(giget@3.3.1)(ioredis@5.11.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.151.0)(rolldown@1.2.19)(srvx@1.0.8)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.2)(vite@8.3.8))
@@ -164,14 +164,8 @@ packages:
     resolution: {integrity: sha512-U4+70Pc5ZS9osnCBCE5Jha/ciHM+Yp+CNMNC/7HvYbNRk1Ldd+f7qO65W5qfhu/TCv+/ozljlXXe9Nj8419DMA==}
     engines: {node: '>=10'}
 
-  '@antfu/install-pkg@1.1.0':
-    resolution: {integrity: sha512-MGQsmw10ZyI+EJo45CdSER4zEb+p31LpDAFp2Z3gkSd1yqVZGi0Ebx++YTEMonJy4oChEMLsxZ64j8FH6sSqtQ==}
-
   '@antfu/install-pkg@2.1.0':
     resolution: {integrity: sha512-sdg9NxU3zR4Mnawfbc/x6GB5Wf17WYud5qOuEuxXjaKpYpMkISSJEjItGebXJ2bQ4DIcly4NYH23mtkGJjvKUw==}
-
-  '@antfu/utils@8.1.1':
-    resolution: {integrity: sha512-Mex9nXf9vR6AhcXmMrlz/HVgYYZpVGJ6YlPgwl7UnaFpnshXs6EK/oa5Gpf3CzENMjkvEx2tQtntGnb7UtSTOQ==}
 
   '@apidevtools/json-schema-ref-parser@14.2.1':
     resolution: {integrity: sha512-HmdFw9CDYqM6B25pqGBpNeLCKvGPlIx1EbLrVL0zPvj50CJQUHyBNBw45Muk0kEIkogo1VZvOKHajdMuAzSxRg==}
@@ -1171,16 +1165,8 @@ packages:
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
-  '@iconify/utils@2.3.0':
-    resolution: {integrity: sha512-GmQ78prtwYW6EtzXRU1rY+KwOKfz32PD7iJh6Iyqw68GiKuoZ2A6pRtzWONz5VQJbp50mEjXh/7NkumtrAgRKA==}
-
   '@iconify/utils@3.1.7':
     resolution: {integrity: sha512-JZHlwdID+dy+lTgbYC8NEC4zeugqeYsc6jewvzb4c58kHauJn+X7rNwQjxz5p2qSjqaEeQoLkCIQ9v/H4PK0/w==}
-
-  '@iconify/vue@4.3.0':
-    resolution: {integrity: sha512-Xq0h6zMrHBbrW8jXJ9fISi+x8oDQllg5hTDkDuxnWiskJ63rpJu9CvJshj8VniHVTbsxCg9fVoPAaNp3RQI5OQ==}
-    peerDependencies:
-      vue: '>=3'
 
   '@iconify/vue@5.0.5':
     resolution: {integrity: sha512-O4SHjEKCQ2KTupa0tOd7MIuDdi8Pg6y9fCvsqccX8nYW8Wuy+ZbEgpzw7gZTN3ThyFjY9uo29ZLZ8MQjjMJRBw==}
@@ -1471,11 +1457,6 @@ packages:
   '@nuxt/devtools-assets@4.1.0':
     resolution: {integrity: sha512-uH08qsby7KctwVeRXgjGhYPQfNbM7zQpoKXftsJRCQIoBoxHUIz3uqhNkyVgeCf3uQVlpTA/2FPYkiGw58Dexw==}
 
-  '@nuxt/devtools-kit@2.7.0':
-    resolution: {integrity: sha512-MIJdah6CF6YOW2GhfKnb8Sivu6HpcQheqdjOlZqShBr+1DyjtKQbAKSCAyKPaoIzZP4QOo2SmTFV6aN8jBeEIQ==}
-    peerDependencies:
-      vite: '>=6.0'
-
   '@nuxt/devtools-kit@3.4.4':
     resolution: {integrity: sha512-q3aRKpnriK/kITYlYUXSE3O0R7WeJwSMLvtbo1HfcKXYg/q8688iIb5VURl0fbkSaFTk7ndU5HIbW+5f0JOJPQ==}
     peerDependencies:
@@ -1565,9 +1546,6 @@ packages:
 
   '@nuxt/fonts@0.14.0':
     resolution: {integrity: sha512-4uXQl9fa5F4ibdgU8zomoOcyMdnwgdem+Pi8JEqeDYI5yPR32Kam6HnuRr47dTb97CstaepAvXPWQUUHMtjsFQ==}
-
-  '@nuxt/icon@1.11.0':
-    resolution: {integrity: sha512-j82YbT7/Z02W/6jhiMoXHdtpSsCBfAoI3EkJ5Axi0C30ALiqvmrmfwd+CG7dftyncj51goBi1YMb6I4vNHK9nA==}
 
   '@nuxt/icon@2.6.2':
     resolution: {integrity: sha512-eNVXbKzj1fmrkzcakkix8Pn/7lpd0I1b7xG0shjrlefr2wWIG3o0DrU9EvvT1BCf9UD33MAzoLF1l2Z99CKoTg==}
@@ -4676,10 +4654,6 @@ packages:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
 
-  globals@15.15.0:
-    resolution: {integrity: sha512-7ACyT3wmyp3I61S4fG682L0VA2RGD9otkqGJIwNUMF1SWUombIIk+af1unuDYgMm082aHYwD+mzJvv9Iu8dsgg==}
-    engines: {node: '>=18'}
-
   globals@17.14.0:
     resolution: {integrity: sha512-UtdkTVyAJePQv0J2M9Xe4L0ruNSDV314XiIJsADI2Zf40bcdAonE/D/OhAU8AT99oij9mhLByb+NvA3QWZYgCg==}
     engines: {node: '>=18'}
@@ -5077,9 +5051,6 @@ packages:
   koa@2.16.4:
     resolution: {integrity: sha512-3An0GCLDSR34tsCO4H8Tef8Pp2ngtaZDAZnsWJYelqXUK5wyiHvGItgK/xcSkmHLSTn1Jcho1mRQs2ehRzvKKw==}
     engines: {node: ^4.8.4 || ^6.10.1 || ^7.10.1 || >= 8.1.4}
-
-  kolorist@1.8.0:
-    resolution: {integrity: sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==}
 
   launch-editor@2.14.2:
     resolution: {integrity: sha512-NHJEb30MGBCkmZXLZwz25t37QR4aY03ZzPYUJXOJaOa92uWwExI9SBQUuIznBYc1xkD7cJNGX7oc3Nl3sq2kQQ==}
@@ -7291,17 +7262,10 @@ snapshots:
 
   '@alloc/quick-lru@5.3.0': {}
 
-  '@antfu/install-pkg@1.1.0':
-    dependencies:
-      package-manager-detector: 1.9.0
-      tinyexec: 1.3.1
-
   '@antfu/install-pkg@2.1.0':
     dependencies:
       package-manager-detector: 1.9.0
       tinyexec: 1.3.1
-
-  '@antfu/utils@8.1.1': {}
 
   '@apidevtools/json-schema-ref-parser@14.2.1(@types/json-schema@7.0.15)':
     dependencies:
@@ -8209,29 +8173,11 @@ snapshots:
 
   '@iconify/types@2.0.0': {}
 
-  '@iconify/utils@2.3.0':
-    dependencies:
-      '@antfu/install-pkg': 1.1.0
-      '@antfu/utils': 8.1.1
-      '@iconify/types': 2.0.0
-      debug: 4.4.3
-      globals: 15.15.0
-      kolorist: 1.8.0
-      local-pkg: 1.2.1
-      mlly: 1.8.2
-    transitivePeerDependencies:
-      - supports-color
-
   '@iconify/utils@3.1.7':
     dependencies:
       '@antfu/install-pkg': 2.1.0
       '@iconify/types': 2.0.0
       import-meta-resolve: 4.2.0
-
-  '@iconify/vue@4.3.0(vue@3.5.45(typescript@5.8.3))':
-    dependencies:
-      '@iconify/types': 2.0.0
-      vue: 3.5.45(typescript@5.8.3)
 
   '@iconify/vue@5.0.5(vue@3.5.45(typescript@5.8.3))':
     dependencies:
@@ -8494,14 +8440,6 @@ snapshots:
   '@nuxt/devalue@2.0.2': {}
 
   '@nuxt/devtools-assets@4.1.0': {}
-
-  '@nuxt/devtools-kit@2.7.0(magicast@0.5.5)(vite@8.3.8)':
-    dependencies:
-      '@nuxt/kit': 3.21.11(magicast@0.5.5)
-      execa: 8.0.1
-      vite: 8.3.8(@types/node@26.6.6)(@vitejs/devtools@0.8.2(crossws@0.4.17(srvx@1.0.8))(srvx@1.0.8)(vite@8.3.8))(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)
-    transitivePeerDependencies:
-      - magicast
 
   '@nuxt/devtools-kit@3.4.4(@nuxt/schema@4.6.4)(confbox@0.3.2)(dotenv@16.6.1)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.151.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.2)(vite@8.3.8))(vite@8.3.8)':
     dependencies:
@@ -8850,28 +8788,6 @@ snapshots:
       - uploadthing
       - vite
       - webpack
-
-  '@nuxt/icon@1.11.0(magicast@0.5.5)(vite@8.3.8)(vue@3.5.45(typescript@5.8.3))':
-    dependencies:
-      '@iconify/collections': 1.0.763
-      '@iconify/types': 2.0.0
-      '@iconify/utils': 2.3.0
-      '@iconify/vue': 4.3.0(vue@3.5.45(typescript@5.8.3))
-      '@nuxt/devtools-kit': 2.7.0(magicast@0.5.5)(vite@8.3.8)
-      '@nuxt/kit': 3.21.11(magicast@0.5.5)
-      consola: 3.4.2
-      local-pkg: 1.2.1
-      mlly: 1.8.2
-      ohash: 2.0.12
-      pathe: 2.0.3
-      picomatch: 4.0.7
-      std-env: 3.10.0
-      tinyglobby: 0.2.17
-    transitivePeerDependencies:
-      - magicast
-      - supports-color
-      - vite
-      - vue
 
   '@nuxt/icon@2.6.2(@nuxt/schema@4.6.4)(confbox@0.3.2)(dotenv@16.6.1)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(oxc-parser@0.151.0)(rolldown@1.2.19)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.68.2)(vite@8.3.8))(vite@8.3.8)(vue@3.5.45(typescript@5.8.3))':
     dependencies:
@@ -12456,8 +12372,6 @@ snapshots:
 
   globals@14.0.0: {}
 
-  globals@15.15.0: {}
-
   globals@17.14.0: {}
 
   globby@16.2.4:
@@ -12905,8 +12819,6 @@ snapshots:
       vary: 1.1.2
     transitivePeerDependencies:
       - supports-color
-
-  kolorist@1.8.0: {}
 
   launch-editor@2.14.2:
     dependencies:

@@ -44,9 +44,8 @@
 		"@directus/visual-editing": "2.1.0",
 		"@formkit/auto-animate": "0.8.2",
 		"@hookform/resolvers": "5.0.1",
-		"@iconify/utils": "3.1.0",
 		"@nuxt/fonts": "0.14.0",
-		"@nuxt/icon": "1.11.0",
+		"@nuxt/icon": "2.6.2",
 		"@nuxt/image": "2.0.0",
 		"@nuxt/scripts": "0.13.2",
 		"@nuxtjs/color-mode": "3.5.2",
@@ -73,7 +72,6 @@
 		"zod": "3.24.2"
 	},
 	"overrides": {
-		"@iconify/utils": "3.1.0",
 		"sharp@<0.35.5": "^0.35.5",
 		"postcss-selector-parser@<6.1.5": "^6.1.6"
 	},
