@@ -46,7 +46,7 @@ export const buildZodSchema = (fields: FormField[]) => {
             .instanceof(File, {
               message: `${label} must be a valid file if provided`,
             })
-            .or(z.undefined());
+            .optional();
         }
 
         break;
@@ -114,7 +114,9 @@ export const buildZodSchema = (fields: FormField[]) => {
         fieldSchema = fieldSchema.min(1, `${field.label || field.name} is required`);
       }
     } else {
-      fieldSchema = fieldSchema.or(z.literal('')).or(z.undefined());
+      // .optional() also lets the key be absent, which Zod 4 requires for fields the server
+      // leaves out of the payload.
+      fieldSchema = fieldSchema.or(z.literal('')).optional();
     }
 
     if ((field.type === 'radio' || field.type === 'select') && allowedChoices.size > 0) {
