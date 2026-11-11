@@ -75,6 +75,13 @@
 	"engines": {
 		"node": ">=22.23.4"
 	},
+	"pnpm": {
+		"overrides": {
+			"postcss@<8.5.23": "^8.5.32",
+			"sharp@<0.35.5": "^0.35.5",
+			"postcss-selector-parser@<6.1.5": "^6.1.6"
+		}
+	},
 	"overrides": {
 		"postcss@<8.5.23": "^8.5.32",
 		"sharp@<0.35.5": "^0.35.5",
