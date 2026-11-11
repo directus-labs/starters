@@ -2888,7 +2888,15 @@
     "collection": "posts_translations",
     "action": "create",
     "permissions": null,
-    "validation": null,
+    "validation": {
+      "_and": [
+        {
+          "status": {
+            "_neq": "published"
+          }
+        }
+      ]
+    },
     "presets": null,
     "fields": [
       "*"
@@ -2922,7 +2930,15 @@
         }
       }
     },
-    "validation": null,
+    "validation": {
+      "_and": [
+        {
+          "status": {
+            "_neq": "published"
+          }
+        }
+      ]
+    },
     "presets": null,
     "fields": [
       "*"
