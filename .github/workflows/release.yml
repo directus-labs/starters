@@ -1,0 +1,121 @@
+# 1. PRs that change a starter add a changeset (`npx changeset`).
+# 2. On main, pending changesets open or update a "Version Packages" PR that bumps each starter and writes its CHANGELOG.md.
+# 3. Merging that PR tags each bumped starter (cms-v1.2.0) and creates its GitHub release. Nothing is published to npm.
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  select-mode:
+    runs-on: ubuntu-latest
+    outputs:
+      pending: ${{ steps.pending.outputs.pending }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22.23.4
+          package-manager-cache: false
+
+      - run: npm ci
+
+      # Empty changesets (`--empty`) bump nothing, so they wait for the next real one instead of opening a PR
+      - id: pending
+        run: |
+          npx changeset status --output="$RUNNER_TEMP/status.json"
+          releases=$(node -p "require(process.argv[1]).releases.length" "$RUNNER_TEMP/status.json")
+          if [ "$releases" -gt 0 ]; then
+            echo "pending=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "pending=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  version:
+    if: needs.select-mode.outputs.pending == 'true'
+    needs: select-mode
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22.23.4
+          package-manager-cache: false
+
+      - run: npm ci
+
+      # The lockfile records each starter's version, so refresh it after the bump
+      - uses: changesets/action/version@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
+        with:
+          script: npm run version
+
+  # Runs on every push, even with changesets pending, so a failed or skipped release is retried
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Tag and release every Changesets version that has no release yet
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          failed=0
+
+          for manifest in */package.json; do
+            dir=$(dirname "$manifest")
+            [ -f "$dir/CHANGELOG.md" ] || continue
+            current=$(node -p "require('./$manifest').version")
+
+            # Changesets writes "## 1.2.0". Older release-please entries ("## [1.1.0](...)") don't match.
+            while read -r version <&3; do
+              tag="$dir-v$version"
+              if gh release view "$tag" >/dev/null 2>&1; then continue; fi
+
+              notes=$(awk -v v="## $version" '$0 == v {found=1; next} found && /^## / {exit} found {print}' "$dir/CHANGELOG.md")
+
+              # The latest main commit whose manifest has this version (the Version Packages merge that set it)
+              target=""
+              for commit in $(git log --first-parent --format=%H -S"\"version\": \"$version\"" -- "$manifest"); do
+                if [ "$(git show "$commit:$manifest" | node -p "JSON.parse(require('fs').readFileSync(0)).version")" = "$version" ]; then
+                  target=$commit
+                  break
+                fi
+              done
+              if [ -z "$target" ]; then
+                echo "::error::Couldn't find the commit on main that set $dir to $version"
+                failed=1
+                continue
+              fi
+
+              flags=()
+              if [[ "$version" == *-* ]]; then flags+=(--prerelease); fi
+              # A catch-up release for an older version shouldn't take "Latest" from the current one
+              if [ "$version" != "$current" ]; then flags+=(--latest=false); fi
+
+              gh release create "$tag" --target "$target" --title "$dir: v$version" --notes "${notes:-Release $tag}" "${flags[@]}" || failed=1
+            done 3< <(grep -E '^## [0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$' "$dir/CHANGELOG.md" | cut -c4-)
+          done
+
+          exit "$failed"

@@ -261,3 +261,13 @@ Directories prefixed with `_` or `.` are internal and excluded from the template
 Run `node _scripts/validate-templates.js` to check template structure.
 
 **RBAC changes (maintainers):** Edit `_shared/rbac/`, run `pnpm rbac:codegen`, commit outputs. CI enforces with `pnpm rbac:codegen:check`. See [`_shared/rbac/README.md`](_shared/rbac/README.md) for why codegen exists and how it differs from `rbac:sync-licensed` (user upgrade tool).
+
+### Releasing
+
+Each starter is versioned with [Changesets](https://changesets.dev). Nothing is published to npm.
+
+1. In a PR that changes a starter, run `npx changeset`, pick the starters it touches, and describe the change. Breaking changes and upgrade steps go here, since this text becomes the changelog. CI fails if a starter changed without one (`npx changeset --empty` if it needs no release).
+2. On `main`, the Release workflow opens a "Version Packages" PR that bumps each starter and writes its `CHANGELOG.md`.
+3. Merging that PR tags each bumped starter (`cms-v1.2.0`) and creates its GitHub release.
+
+After adding or renaming a starter, run `npm install` at the root and commit `package-lock.json`. Each starter is an npm workspace, so CI's `npm ci` fails until the lockfile lists it.

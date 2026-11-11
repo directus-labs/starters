@@ -1,4 +1,4 @@
-name: directus-cms-template
+name: directus-blank-template
 services:
   database:
     image: postgis/postgis:16-master
@@ -79,7 +79,7 @@ services:
 
       EMAIL_TRANSPORT: ${EMAIL_TRANSPORT:-sendmail}
       EMAIL_FROM: ${EMAIL_FROM:-no-reply@example.com}
-      EMAIL_SMTP_HOST: ${EMAIL_SMTP_HOST}
-      EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT}
-      EMAIL_SMTP_USER: ${EMAIL_SMTP_USER}
-      EMAIL_SMTP_PASSWORD: ${EMAIL_SMTP_PASSWORD}
+      EMAIL_SMTP_HOST: ${EMAIL_SMTP_HOST:-}
+      EMAIL_SMTP_PORT: ${EMAIL_SMTP_PORT:-}
+      EMAIL_SMTP_USER: ${EMAIL_SMTP_USER:-}
+      EMAIL_SMTP_PASSWORD: ${EMAIL_SMTP_PASSWORD:-}
