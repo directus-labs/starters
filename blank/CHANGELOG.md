@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/directus-labs/starters/compare/blank-v1.1.0...blank-v1.1.1) (2026-11-11)
+
+
+### Bug Fixes
+
+* **cms:** tighten licensed user reads and default the email transport ([e3364ef](https://github.com/directus-labs/starters/commit/e3364ef3c30c0e3019871757195af1cd2afd577f))
+
 ## [1.1.0](https://github.com/directus-labs/starters/compare/blank-v1.0.1...blank-v1.1.0) (2026-08-12)
 
 
