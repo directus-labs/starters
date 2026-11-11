@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { apply as applyVisualEditing } from '@directus/visual-editing';
 import { setAttr, setVisualEditingAttrsEnabled } from '@/lib/directus/visualEditing';
 
@@ -13,7 +13,6 @@ interface ApplyOptions {
 
 export function useVisualEditing() {
 	const [isVisualEditingEnabled, setIsVisualEditingEnabled] = useState(false);
-	const searchParams = useSearchParams();
 	const pathname = usePathname();
 
 	// Enabled by default; set to 'false' to disable
@@ -43,6 +42,9 @@ export function useVisualEditing() {
 	useEffect(() => {
 		if (typeof window === 'undefined') return;
 
+		// Read the query string here instead of via useSearchParams(): this only runs in the browser,
+		// and useSearchParams() would need a Suspense boundary around the root layout.
+		const searchParams = new URLSearchParams(window.location.search);
 		const param = searchParams.get('visual-editing');
 		// Enable when Directus sends ?preview=true (live preview tab) even without
 		// ?visual-editing=true — both indicate an admin-controlled iframe.
@@ -83,7 +85,7 @@ export function useVisualEditing() {
 			const updatedUrl = pathname + (newParams.toString() ? `?${newParams}` : '');
 			window.history.replaceState({}, '', updatedUrl);
 		}
-	}, [searchParams, pathname, enableVisualEditingEnv]);
+	}, [pathname, enableVisualEditingEnv]);
 
 	const apply = (options: Pick<ApplyOptions, 'elements' | 'onSaved' | 'mode'>) => {
 		if (!isVisualEditingEnabled) return;

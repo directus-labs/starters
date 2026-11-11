@@ -3,7 +3,7 @@
  */
 import type { H3Event } from 'h3';
 import { getHeader, getQuery } from 'h3';
-import { type Locale, DEFAULT_LOCALE, buildLocaleMap } from '~/lib/i18n/config';
+import { type Locale, DEFAULT_LOCALE, buildLocaleMap, getLocaleCode } from '~/lib/i18n/config';
 import type { Language } from '#shared/types/schema';
 import { directusServer, readItems } from './directus-server';
 
@@ -69,6 +69,36 @@ export async function getLanguagesFromDirectus(): Promise<{
 			directionMap: { [DEFAULT_LOCALE]: 'ltr' },
 		};
 	}
+}
+
+const LOCALE_MAP_TTL_MS = 60_000;
+let cachedLocaleMap: { map: Record<string, Locale>; expiresAt: number } | null = null;
+
+/**
+ * Locale map (short URL code -> locale) for routing, cached in memory for a minute because the locale
+ * middleware needs it on every page request. If Directus is unreachable it keeps using the last map it
+ * loaded (or just the default locale on a cold start), so one failed request doesn't 404 every localized page.
+ */
+export async function getLocaleMap(): Promise<Record<string, Locale>> {
+	if (cachedLocaleMap && cachedLocaleMap.expiresAt > Date.now()) {
+		return cachedLocaleMap.map;
+	}
+
+	const defaultMap = { [getLocaleCode(DEFAULT_LOCALE)]: DEFAULT_LOCALE };
+
+	try {
+		// Not getLanguagesFromDirectus(): it hides failures behind a default map, which would then get cached.
+		const languages = (await directusServer.request(readItems('languages', { fields: ['code'] }))) as Language[];
+		cachedLocaleMap = {
+			map: { ...defaultMap, ...buildLocaleMap(languages) },
+			expiresAt: Date.now() + LOCALE_MAP_TTL_MS,
+		};
+	} catch (error) {
+		console.error('Could not load languages for locale routing:', error);
+		cachedLocaleMap = { map: cachedLocaleMap?.map ?? defaultMap, expiresAt: Date.now() + LOCALE_MAP_TTL_MS };
+	}
+
+	return cachedLocaleMap.map;
 }
 
 /**

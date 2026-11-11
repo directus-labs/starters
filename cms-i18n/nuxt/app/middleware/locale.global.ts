@@ -21,7 +21,7 @@ export default defineNuxtRouteMiddleware((to) => {
 	}
 
 	// Extract locale from path
-	const { locale, pathWithoutLocale } = getLocaleFromPath(path);
+	const { locale, pathWithoutLocale } = getLocaleFromPath(path, useLocaleMap().value);
 
 	// Store locale in route meta for access in components
 	to.meta.locale = locale;

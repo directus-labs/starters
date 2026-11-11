@@ -3,12 +3,13 @@
  * SSR: uses locale set by middleware (context/header)
  * Client: derives locale from current browser path
  */
-import { DEFAULT_LOCALE, getLocaleCode, codeToLocale, type Locale } from '~/lib/i18n/config';
-import { addLocaleToPath, removeLocaleFromPath } from '~/lib/i18n/utils';
+import { DEFAULT_LOCALE, getLocaleCode, type Locale } from '~/lib/i18n/config';
+import { addLocaleToPath, getLocaleFromPath, removeLocaleFromPath } from '~/lib/i18n/utils';
 
 export function useLocale() {
 	const nuxtApp = useNuxtApp();
 	const route = useRoute();
+	const localeMap = useLocaleMap();
 
 	/**
 	 * Gets the current locale.
@@ -25,24 +26,12 @@ export function useLocale() {
 		}
 
 		// Client: prefer route params (added via router alias)
-		if (route.params.locale && typeof route.params.locale === 'string') {
-			return codeToLocale(route.params.locale.toLowerCase());
-		}
+		const paramLocale =
+			typeof route.params.locale === 'string' ? localeMap.value[route.params.locale.toLowerCase()] : undefined;
+		if (paramLocale) return paramLocale;
 
-		// Fallback: derive from browser path
-		// Use fullPath to include locale prefix if present
-		const path = route.fullPath.split('?')[0] || route.path;
-		const first = path.split('/').filter(Boolean)[0];
-
-		if (first) {
-			const lowerFirst = first.toLowerCase();
-
-			if (/^[a-z]{2,3}$/.test(lowerFirst)) {
-				return codeToLocale(lowerFirst);
-			}
-		}
-
-		return DEFAULT_LOCALE;
+		// Fallback: derive from browser path (fullPath keeps the locale prefix)
+		return getLocaleFromPath(route.fullPath.split('?')[0] || route.path, localeMap.value).locale;
 	});
 
 	/**
@@ -58,7 +47,9 @@ export function useLocale() {
 	/**
 	 * Gets the path without locale prefix.
 	 */
-	const pathWithoutLocale = computed<string>(() => removeLocaleFromPath(route.fullPath.split('?')[0] || route.path));
+	const pathWithoutLocale = computed<string>(() =>
+		removeLocaleFromPath(route.fullPath.split('?')[0] || route.path, localeMap.value),
+	);
 
 	/**
 	 * Generates a path with the specified locale.
