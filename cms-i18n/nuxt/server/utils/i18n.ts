@@ -71,6 +71,24 @@ export async function getLanguagesFromDirectus(): Promise<{
 	}
 }
 
+const LOCALE_MAP_TTL_MS = 60_000;
+let cachedLocaleMap: { map: Record<string, Locale>; expiresAt: number } | null = null;
+
+/**
+ * Locale map (short URL code -> locale) for routing, cached in memory for a minute because the locale
+ * middleware needs it on every page request. Falls back to the default locale if Directus is unreachable.
+ */
+export async function getLocaleMap(): Promise<Record<string, Locale>> {
+	if (cachedLocaleMap && cachedLocaleMap.expiresAt > Date.now()) {
+		return cachedLocaleMap.map;
+	}
+
+	const { localeMap } = await getLanguagesFromDirectus();
+	cachedLocaleMap = { map: localeMap, expiresAt: Date.now() + LOCALE_MAP_TTL_MS };
+
+	return localeMap;
+}
+
 /**
  * Gets the text direction for a given locale.
  *

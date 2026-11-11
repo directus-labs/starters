@@ -13,6 +13,7 @@ import Headline from '@/components/ui/Headline';
 import Container from '@/components/ui/container';
 import { Post, Author } from '@/types/directus-schema';
 import { getLocaleFromPath, addLocaleToPath } from '@/lib/i18n/utils';
+import { useLocaleMap } from '@/components/providers/LocaleMapProvider';
 
 interface BlogPostClientProps {
 	post: Post;
@@ -26,7 +27,8 @@ export default function BlogPostClient({ post, relatedPosts, author, authorName,
 	const { isVisualEditingEnabled, apply } = useVisualEditing();
 	const router = useRouter();
 	const pathname = usePathname();
-	const { locale } = getLocaleFromPath(pathname);
+	const localeMap = useLocaleMap();
+	const { locale } = getLocaleFromPath(pathname, localeMap);
 
 	useEffect(() => {
 		if (isVisualEditingEnabled) {

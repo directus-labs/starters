@@ -5,6 +5,7 @@ import { Metadata } from 'next';
 
 import VisualEditingLayout from '@/components/layout/VisualEditingLayout';
 import { ThemeProvider } from '@/components/ui/ThemeProvider';
+import { LocaleMapProvider } from '@/components/providers/LocaleMapProvider';
 import { fetchSiteData } from '@/lib/directus/fetchers';
 import { getDirectusAssetURL } from '@/lib/directus/directus-utils';
 import { getLocaleFromHeaders, getLanguagesFromDirectus } from '@/lib/i18n/server';
@@ -33,7 +34,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 	const locale = await getLocaleFromHeaders();
 	const localeCode = getLocaleCode(locale);
 
-	const [siteData, { languages: languagesArray, directionMap }] = await Promise.all([
+	const [siteData, { languages: languagesArray, directionMap, localeMap }] = await Promise.all([
 		fetchSiteData(locale),
 		getLanguagesFromDirectus(),
 	]);
@@ -70,18 +71,20 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 			suppressHydrationWarning
 		>
 			<body className="antialiased font-sans flex flex-col min-h-screen">
-				<ThemeProvider>
-					<VisualEditingLayout
-						headerNavigation={headerNavigation}
-						footerNavigation={footerNavigation}
-						globals={globals}
-						currentLocale={locale}
-						supportedLocales={supportedLocales}
-						localeNames={localeNames}
-					>
-						<main className="flex-grow">{children}</main>
-					</VisualEditingLayout>
-				</ThemeProvider>
+				<LocaleMapProvider localeMap={localeMap}>
+					<ThemeProvider>
+						<VisualEditingLayout
+							headerNavigation={headerNavigation}
+							footerNavigation={footerNavigation}
+							globals={globals}
+							currentLocale={locale}
+							supportedLocales={supportedLocales}
+							localeNames={localeNames}
+						>
+							<main className="flex-grow">{children}</main>
+						</VisualEditingLayout>
+					</ThemeProvider>
+				</LocaleMapProvider>
 			</body>
 		</html>
 	);

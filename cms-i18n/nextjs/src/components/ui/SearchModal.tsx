@@ -16,6 +16,7 @@ import { debounce } from '@/lib/utils';
 import { DialogDescription, DialogTitle } from './dialog';
 import { usePathname, useRouter } from 'next/navigation';
 import { getLocaleFromPath } from '@/lib/i18n/utils';
+import { useLocaleMap } from '@/components/providers/LocaleMapProvider';
 
 type SearchResult = {
 	id: string;
@@ -32,7 +33,8 @@ export default function SearchModal() {
 	const [searched, setSearched] = useState(false);
 
 	const router = useRouter();
-	const { locale } = getLocaleFromPath(usePathname());
+	const localeMap = useLocaleMap();
+	const { locale } = getLocaleFromPath(usePathname(), localeMap);
 
 	useEffect(() => {
 		const onKeyDown = (e: KeyboardEvent) => {

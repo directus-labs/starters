@@ -4,8 +4,9 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getLocaleFromPath } from './lib/i18n/utils';
+import { getLocaleMap } from './lib/i18n/locale-map';
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 
 	// API routes aren't localized pages. Without this, "/api" looks like a 3-letter locale code and the
@@ -23,7 +24,7 @@ export function middleware(request: NextRequest) {
 		return NextResponse.next();
 	}
 
-	const { locale, pathWithoutLocale } = getLocaleFromPath(pathname);
+	const { locale, pathWithoutLocale } = getLocaleFromPath(pathname, await getLocaleMap());
 
 	const url = request.nextUrl.clone();
 	url.pathname = pathWithoutLocale;

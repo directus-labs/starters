@@ -5,7 +5,7 @@
 import { getLocaleFromPath } from '~/lib/i18n/utils';
 import { DEFAULT_LOCALE } from '~/lib/i18n/config';
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
 	const url = getRequestURL(event);
 	const pathname = url.pathname;
 
@@ -24,7 +24,10 @@ export default defineEventHandler((event) => {
 	}
 
 	// Extract locale and path without locale prefix
-	const { locale, pathWithoutLocale } = getLocaleFromPath(pathname);
+	// Only languages that exist in Directus count as locale prefixes (so /faq stays a page).
+	const localeMap = await getLocaleMap();
+	event.context.localeMap = localeMap;
+	const { locale, pathWithoutLocale } = getLocaleFromPath(pathname, localeMap);
 
 	// Set locale in context and headers
 	event.context.locale = locale;

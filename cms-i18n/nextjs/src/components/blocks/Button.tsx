@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { getLocaleFromPath, addLocaleToPath } from '@/lib/i18n/utils';
+import { useLocaleMap } from '@/components/providers/LocaleMapProvider';
 
 export interface ButtonProps {
 	id: string;
@@ -43,7 +44,8 @@ const Button = ({
 	block = false,
 }: ButtonProps) => {
 	const pathname = usePathname();
-	const { locale } = getLocaleFromPath(pathname);
+	const localeMap = useLocaleMap();
+	const { locale } = getLocaleFromPath(pathname, localeMap);
 	const icons: Record<string, LucideIcon> = {
 		arrow: ArrowRight,
 		plus: Plus,

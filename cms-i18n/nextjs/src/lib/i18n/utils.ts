@@ -1,25 +1,24 @@
-import { Locale, DEFAULT_LOCALE, getLocaleCode, codeToLocale } from './config';
+import { Locale, DEFAULT_LOCALE, getLocaleCode } from './config';
 
 /**
- * Extracts locale from URL path. Default locale has no prefix.
+ * Splits a leading locale code off a path, e.g. "/es/blog/post" -> es-ES + "/blog/post".
+ *
+ * Only codes in `localeMap` (short code -> locale, built from the Directus languages collection with
+ * buildLocaleMap) count as locales. Guessing from the segment's shape would misread pages with short
+ * slugs like "/faq" and routes like "/api" as locales.
  */
-export function getLocaleFromPath(pathname: string): { locale: Locale; pathWithoutLocale: string } {
+export function getLocaleFromPath(
+	pathname: string,
+	localeMap: Record<string, Locale>,
+): { locale: Locale; pathWithoutLocale: string } {
 	const segments = pathname.split('/').filter(Boolean);
+	const locale = segments[0] ? localeMap[segments[0].toLowerCase()] : undefined;
 
-	if (segments.length === 0) {
-		return { locale: DEFAULT_LOCALE, pathWithoutLocale: '/' };
+	if (!locale) {
+		return { locale: DEFAULT_LOCALE, pathWithoutLocale: pathname || '/' };
 	}
 
-	const firstSegment = segments[0].toLowerCase();
-
-	if (firstSegment.length >= 2 && firstSegment.length <= 3 && /^[a-z]{2,3}$/.test(firstSegment)) {
-		const locale = codeToLocale(firstSegment);
-		const pathWithoutLocale = '/' + segments.slice(1).join('/') || '/';
-
-		return { locale, pathWithoutLocale };
-	}
-
-	return { locale: DEFAULT_LOCALE, pathWithoutLocale: pathname };
+	return { locale, pathWithoutLocale: '/' + segments.slice(1).join('/') };
 }
 
 /**
@@ -41,22 +40,10 @@ export function addLocaleToPath(path: string, locale: Locale): string {
 }
 
 /**
- * Removes locale prefix from path.
+ * Removes a leading locale code from a path. See getLocaleFromPath for which codes count.
  */
-export function removeLocaleFromPath(path: string): string {
-	const segments = path.split('/').filter(Boolean);
-
-	if (segments.length === 0) {
-		return '/';
-	}
-
-	const firstSegment = segments[0].toLowerCase();
-
-	if (firstSegment.length >= 2 && firstSegment.length <= 3 && /^[a-z]{2,3}$/.test(firstSegment)) {
-		return '/' + segments.slice(1).join('/') || '/';
-	}
-
-	return path.startsWith('/') ? path : `/${path}`;
+export function removeLocaleFromPath(path: string, localeMap: Record<string, Locale>): string {
+	return getLocaleFromPath(path.startsWith('/') ? path : `/${path}`, localeMap).pathWithoutLocale;
 }
 
 /**
