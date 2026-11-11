@@ -1,4 +1,8 @@
 ---
+// Rendered on demand so routes that return an empty 404 (blog/[slug]) can render it in-process.
+// A prerendered 404 is fetched over HTTP instead, which fails inside the Vercel function and leaves a blank page.
+export const prerender = false;
+
 import BaseLayout from '@/layouts/BaseLayout.astro';
 
 import { buttonVariants } from '@/components/ui/button';
