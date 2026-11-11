@@ -1,0 +1,20 @@
+{
+  "name": "directus-simple-ecommerce-starter",
+  "version": "1.0.0",
+  "description": "A simple eCommerce template for products, orders, and customers.",
+  "directus:template": {
+    "name": "Simple eCommerce",
+    "description": "A simple eCommerce template for products, orders, and customers.",
+    "tier": "core",
+    "template": "./directus/template",
+    "variants": {
+      "licensed": {
+        "name": "Simple eCommerce — Licensed",
+        "template": "./directus/template-licensed",
+        "requiresLicense": true,
+        "description": "Same template with Public read filters for inactive products and categories, and files limited to the Products folder"
+      }
+    },
+    "frontends": {}
+  }
+}

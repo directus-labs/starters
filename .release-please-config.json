@@ -15,6 +15,21 @@
       "release-type": "node",
       "component": "cms-i18n",
       "changelog-path": "CHANGELOG.md"
+    },
+    "help-center": {
+      "release-type": "node",
+      "component": "help-center",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "simple-crm": {
+      "release-type": "node",
+      "component": "simple-crm",
+      "changelog-path": "CHANGELOG.md"
+    },
+    "simple-ecommerce": {
+      "release-type": "node",
+      "component": "simple-ecommerce",
+      "changelog-path": "CHANGELOG.md"
     }
   }
 }

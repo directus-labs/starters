@@ -1,0 +1,30 @@
+[
+  {
+    "id": "f70845e5-3172-4bd7-9405-29241fe91cbc",
+    "storage": "local",
+    "filename_disk": "f70845e5-3172-4bd7-9405-29241fe91cbc.webp",
+    "filename_download": "f70845e5-3172-4bd7-9405-29241fe91cbc.webp",
+    "title": "Help Bunny",
+    "type": "image/webp",
+    "folder": null,
+    "uploaded_by": "88d34943-157f-409a-acf0-25ff902acfea",
+    "created_on": "2026-11-03T20:49:54.439Z",
+    "modified_by": null,
+    "modified_on": "2026-11-03T20:49:54.453Z",
+    "charset": null,
+    "filesize": "78776",
+    "width": 1024,
+    "height": 1024,
+    "duration": null,
+    "embed": null,
+    "description": null,
+    "location": null,
+    "tags": null,
+    "metadata": {},
+    "focal_point_x": null,
+    "focal_point_y": null,
+    "tus_id": null,
+    "tus_data": null,
+    "uploaded_on": "2026-11-03T20:49:54.453Z"
+  }
+]
