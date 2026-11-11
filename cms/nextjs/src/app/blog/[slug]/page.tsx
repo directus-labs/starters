@@ -1,4 +1,5 @@
 import { fetchPostBySlug, fetchPostByIdAndVersion, getPostIdBySlug } from '@/lib/directus/fetchers';
+import { notFound } from 'next/navigation';
 import BlogPostClient from './BlogPostClient';
 import type { Author, Post } from '@/types/directus-schema';
 
@@ -17,52 +18,40 @@ export default async function BlogPostPage({
 	const isDraft = preview === 'true';
 	// Versions are only read in preview mode; without preview=true, fall back to published content.
 	const fixedVersion = isDraft && version !== 'published' && version !== 'main' ? version : undefined;
-	try {
-		let postId = id;
-		let post: Post | null;
-		let relatedPosts: Post[] = [];
-		// Content Version Fetching
-		if (fixedVersion && !postId) {
-			const foundPostId = await getPostIdBySlug(slug, token || undefined);
-			if (!foundPostId) {
-				return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
-			}
-			postId = foundPostId;
+	let postId = id;
+	let post: Post | null;
+	let relatedPosts: Post[] = [];
+	// Content Version Fetching
+	if (fixedVersion && !postId) {
+		const foundPostId = await getPostIdBySlug(slug, token || undefined);
+		if (!foundPostId) {
+			notFound();
 		}
-
-		if (postId && fixedVersion) {
-			const result = await fetchPostByIdAndVersion(postId, fixedVersion, slug, token || undefined);
-			post = result.post;
-			relatedPosts = result.relatedPosts;
-		} else {
-			const result = await fetchPostBySlug(slug, {
-				draft: isDraft,
-				token,
-			});
-			post = result.post;
-			relatedPosts = result.relatedPosts;
-		}
-
-		if (!post) {
-			return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
-		}
-
-		const author = post.author as Author | null;
-		const authorName = author?.name ?? '';
-		const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`;
-
-		return (
-			<BlogPostClient
-				post={post}
-				relatedPosts={relatedPosts}
-				author={author}
-				authorName={authorName}
-				postUrl={postUrl}
-			/>
-		);
-	} catch (error) {
-		console.error('Error loading blog post:', error);
-
-		return <div className="text-center text-xl mt-[20%]">404 - Post Not Found</div>;
+		postId = foundPostId;
 	}
+
+	if (postId && fixedVersion) {
+		const result = await fetchPostByIdAndVersion(postId, fixedVersion, slug, token || undefined);
+		post = result.post;
+		relatedPosts = result.relatedPosts;
+	} else {
+		const result = await fetchPostBySlug(slug, {
+			draft: isDraft,
+			token,
+		});
+		post = result.post;
+		relatedPosts = result.relatedPosts;
+	}
+
+	if (!post) {
+		notFound();
+	}
+
+	const author = post.author as Author | null;
+	const authorName = author?.name ?? '';
+	const postUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${slug}`;
+
+	return (
+		<BlogPostClient post={post} relatedPosts={relatedPosts} author={author} authorName={authorName} postUrl={postUrl} />
+	);
 }

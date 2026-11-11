@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import Container from '@/components/ui/container';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import { getLocaleFromPath, addLocaleToPath } from '@/lib/i18n/utils';
+import { useLocaleMap } from '@/components/providers/LocaleMapProvider';
 
 interface SocialLink {
 	service: string;
@@ -31,7 +32,8 @@ interface FooterProps {
 
 const Footer = forwardRef<HTMLElement, FooterProps>(({ navigation, globals }, ref) => {
 	const pathname = usePathname();
-	const { locale } = getLocaleFromPath(pathname);
+	const localeMap = useLocaleMap();
+	const { locale } = getLocaleFromPath(pathname, localeMap);
 	const directusURL = process.env.NEXT_PUBLIC_DIRECTUS_URL;
 	const lightLogoUrl = globals?.logo ? `${directusURL}/assets/${globals.logo}` : '/images/logo.svg';
 	const darkLogoUrl = globals?.logo_dark_mode ? `${directusURL}/assets/${globals.logo_dark_mode}` : '';

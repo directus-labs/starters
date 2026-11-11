@@ -20,6 +20,7 @@ import { Post } from '@/types/directus-schema';
 import { fetchPaginatedPosts, fetchTotalPostCount } from '@/lib/directus/fetchers';
 import { setBlockAttr } from '@/lib/directus/visualEditing';
 import { getLocaleFromPath, addLocaleToPath } from '@/lib/i18n/utils';
+import { useLocaleMap } from '@/components/providers/LocaleMapProvider';
 
 interface PostsProps {
 	data: {
@@ -36,7 +37,8 @@ const Posts = ({ data }: PostsProps) => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
-	const { locale } = getLocaleFromPath(pathname);
+	const localeMap = useLocaleMap();
+	const { locale } = getLocaleFromPath(pathname, localeMap);
 	const visiblePages = 5;
 	const initialPage = Number(searchParams.get('page')) || 1;
 	const perPage = limit || 6;

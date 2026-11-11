@@ -16,6 +16,13 @@ const redirectsLoaded: Promise<void> = (async () => {
 })();
 
 export const handle: Handle = async ({ event, resolve }) => {
+	// Mitigates GHSA-pfhg-q3qv-9q6r: SvelteKit 2 can redirect `use:enhance` form submissions to another site
+	// when the path starts with "//", and the catch-all route accepts those paths. Fixed in SvelteKit 3, so
+	// this can go when the starter upgrades.
+	if (event.url.pathname.startsWith('//')) {
+		return new Response('Not found', { status: 404 });
+	}
+
 	await redirectsLoaded;
 
 	const incomingPath = event.url.pathname.replace(/\/$/, '') || '/';

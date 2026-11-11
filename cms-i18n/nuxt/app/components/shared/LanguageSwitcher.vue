@@ -12,11 +12,12 @@ interface LanguageSwitcherProps {
 const props = defineProps<LanguageSwitcherProps>();
 
 const route = useRoute();
+const localeMap = useLocaleMap();
 
 async function handleLanguageChange(newLocale: Locale) {
 	if (newLocale === props.currentLocale) return;
 
-	const pathWithoutLocale = removeLocaleFromPath(route.path);
+	const pathWithoutLocale = removeLocaleFromPath(route.path, localeMap.value);
 	const newPath = addLocaleToPath(pathWithoutLocale, newLocale);
 
 	// Use hard navigation to ensure all data (header/footer) is refreshed

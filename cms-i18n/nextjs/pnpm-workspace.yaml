@@ -1,0 +1,15 @@
+packages:
+  - .
+
+overrides:
+  "postcss@<8.5.23": "^8.5.32"
+  "sharp@<0.35.5": "^0.35.5"
+  "postcss-selector-parser@<6.1.5": "^6.1.6"
+
+allowBuilds:
+  esbuild: true
+  msw: true
+  sharp: true
+
+# Skip versions published in the last 24h (matches pnpm 11+ defaults used in CI).
+minimumReleaseAge: 1440

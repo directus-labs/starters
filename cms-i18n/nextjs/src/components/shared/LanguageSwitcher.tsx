@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { Locale, DEFAULT_LOCALE } from '@/lib/i18n/config';
 import { addLocaleToPath, removeLocaleFromPath } from '@/lib/i18n/utils';
+import { useLocaleMap } from '@/components/providers/LocaleMapProvider';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -21,11 +22,12 @@ interface LanguageSwitcherProps {
 
 export default function LanguageSwitcher({ currentLocale, supportedLocales, localeNames }: LanguageSwitcherProps) {
 	const pathname = usePathname();
+	const localeMap = useLocaleMap();
 
 	const handleLanguageChange = (newLocale: Locale) => {
 		if (newLocale === currentLocale) return;
 
-		const pathWithoutLocale = removeLocaleFromPath(pathname);
+		const pathWithoutLocale = removeLocaleFromPath(pathname, localeMap);
 		const newPath = addLocaleToPath(pathWithoutLocale, newLocale);
 
 		// Keep the query string so live preview params (preview, version) survive the locale switch

@@ -32,7 +32,7 @@ export const buildZodSchema = (fields: FormField[]) => {
 						.instanceof(File, {
 							message: `${field.label || field.name} must be a valid file if provided`,
 						})
-						.or(z.undefined());
+						.optional();
 				}
 				break;
 
@@ -46,6 +46,14 @@ export const buildZodSchema = (fields: FormField[]) => {
 			rules.forEach((rule) => {
 				const [ruleName, ruleValue] = rule.split(':');
 				const normalizedRule = ruleName.toLowerCase();
+
+				// Zod 4 fails every value against a NaN bound (Zod 3 ignored it), so skip a malformed rule
+				// like 'min:abc' instead of making the form impossible to submit.
+				if (['min', 'max', 'length'].includes(normalizedRule) && Number.isNaN(parseInt(ruleValue ?? '', 10))) {
+					console.warn(`Ignoring malformed validation rule: ${rule}`);
+
+					return;
+				}
 
 				if (fieldSchema instanceof z.ZodString) {
 					switch (normalizedRule) {
@@ -88,24 +96,32 @@ export const buildZodSchema = (fields: FormField[]) => {
 			if (field.type === 'checkbox') {
 				fieldSchema = fieldSchema.refine((value) => value === true, `${fieldLabel} is required`);
 			} else if (field.type === 'checkbox_group') {
-				fieldSchema = fieldSchema.refine((value) => value.length > 0, `${fieldLabel} is required`);
+				fieldSchema = fieldSchema.refine(
+					(value) => Array.isArray(value) && value.length > 0,
+					`${fieldLabel} is required`,
+				);
 			} else if (fieldSchema instanceof z.ZodString) {
 				fieldSchema = fieldSchema.nonempty(`${fieldLabel} is required`);
 			}
 		} else {
-			// Allow empty strings or undefined for optional fields
-			fieldSchema = fieldSchema.or(z.literal('')).or(z.undefined());
+			// Allow empty strings or a missing value for optional fields. .optional() also lets the key
+			// be absent, which Zod 4 requires for fields the server leaves out of the payload.
+			fieldSchema = fieldSchema.or(z.literal('')).optional();
 		}
 
 		if (choiceValues.length > 0) {
 			if (field.type === 'checkbox_group') {
 				fieldSchema = fieldSchema.refine(
-					(value) => value === '' || value === undefined || value.every((choice: string) => choiceValues.includes(choice)),
+					(value) =>
+						value === '' ||
+						value === undefined ||
+						(Array.isArray(value) &&
+							value.every((choice) => typeof choice === 'string' && choiceValues.includes(choice))),
 					`${fieldLabel} contains an invalid option`,
 				);
 			} else if (field.type === 'radio' || field.type === 'select') {
 				fieldSchema = fieldSchema.refine(
-					(value) => value === '' || value === undefined || choiceValues.includes(value),
+					(value) => value === '' || value === undefined || (typeof value === 'string' && choiceValues.includes(value)),
 					`${fieldLabel} must be a configured option`,
 				);
 			}

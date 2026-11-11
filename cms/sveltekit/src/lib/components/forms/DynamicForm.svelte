@@ -6,7 +6,7 @@
 	import Button from '../blocks/Button.svelte';
 	import Field from './FormField.svelte';
 	import { superForm } from 'sveltekit-superforms';
-	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { zod4Client } from 'sveltekit-superforms/adapters';
 
 	interface DynamicFormProps {
 		fields: FormFieldType[];
@@ -44,7 +44,7 @@
 	}, {});
 
 	const form = superForm(defaultValues, {
-		validators: zodClient(formSchema),
+		validators: zod4Client(formSchema),
 		SPA: true
 	});
 
