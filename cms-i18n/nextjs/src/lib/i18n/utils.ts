@@ -12,7 +12,9 @@ export function getLocaleFromPath(
 	localeMap: Record<string, Locale>,
 ): { locale: Locale; pathWithoutLocale: string } {
 	const segments = pathname.split('/').filter(Boolean);
-	const locale = segments[0] ? localeMap[segments[0].toLowerCase()] : undefined;
+	const code = segments[0]?.toLowerCase();
+	// hasOwn so paths like "/constructor" don't match Object.prototype keys.
+	const locale = code && Object.hasOwn(localeMap, code) ? localeMap[code] : undefined;
 
 	if (!locale) {
 		return { locale: DEFAULT_LOCALE, pathWithoutLocale: pathname || '/' };
