@@ -42,7 +42,6 @@
 		"react": "19.2.3",
 		"react-dom": "19.2.3",
 		"react-hook-form": "7.55.0",
-		"shadcn": "2.4.0",
 		"tailwind-merge": "2.6.0",
 		"zod": "4.6.7"
 	},
