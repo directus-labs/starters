@@ -58,7 +58,8 @@ export default [
 			'vue/no-v-html': 'off',
 
 			// General
-			'no-console': 'error',
+			// Intentional warnings and errors are fine; stray console.log debugging is not
+			'no-console': ['error', { allow: ['warn', 'error'] }],
 			'no-debugger': 'error',
 
 			'padding-line-between-statements': [

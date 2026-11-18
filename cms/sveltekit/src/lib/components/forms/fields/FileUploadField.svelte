@@ -8,7 +8,7 @@
 
 	const { name, form }: FileUploadFieldProps = $props();
 
-	const { form: formData } = form;
+	const { form: formData } = $derived(form);
 
 	const onFileChange = (e: Event) => {
 		const file = (e.target as HTMLInputElement).files?.[0];

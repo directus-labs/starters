@@ -7,6 +7,7 @@
 	import Field from './FormField.svelte';
 	import { superForm } from 'sveltekit-superforms';
 	import { zod4Client } from 'sveltekit-superforms/adapters';
+	import { untrack } from 'svelte';
 
 	interface DynamicFormProps {
 		fields: FormFieldType[];
@@ -20,10 +21,14 @@
 	// Published: edit the forms item. Draft: route through block_form on the versioned page.
 	const isDraftPreview = $derived(!!page.data.contentVersion);
 
-	const sortedFields = [...fields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
-	const formSchema = buildZodSchema(fields);
+	// superForm is created once per component instance, so the schema, defaults and
+	// field order are built from the initial `fields` value.
+	const initialFields = untrack(() => fields);
 
-	const defaultValues = fields.reduce<Record<string, any>>((defaults, field) => {
+	const sortedFields = [...initialFields].sort((a, b) => (a.sort || 0) - (b.sort || 0));
+	const formSchema = buildZodSchema(initialFields);
+
+	const defaultValues = initialFields.reduce<Record<string, any>>((defaults, field) => {
 		if (!field.name) return defaults;
 		switch (field.type) {
 			case 'checkbox':
@@ -48,7 +53,7 @@
 		SPA: true
 	});
 
-	const { form: formData, errors, validateForm, enhance } = $derived(form);
+	const { validateForm, enhance } = $derived(form);
 
 	const onsubmit = async (e: Event) => {
 		e.preventDefault();
@@ -63,7 +68,7 @@
 	class="flex flex-wrap gap-4"
 	method="POST"
 	use:enhance
-	onsubmit={onsubmit}
+	{onsubmit}
 	data-directus={setBlockAttr(
 		isDraftPreview && blockFormId
 			? {

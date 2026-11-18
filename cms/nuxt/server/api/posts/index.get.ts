@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
 		);
 
 		const countPromise = directusServer.request(
-			readItems('posts', {
+			aggregate('posts', {
 				aggregate: { count: '*' },
 				filter: { status: { _eq: 'published' } },
 			}),

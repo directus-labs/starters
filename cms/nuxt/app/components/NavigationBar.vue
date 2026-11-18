@@ -1,31 +1,15 @@
 <script setup lang="ts">
 import { Menu, ChevronDown } from 'lucide-vue-next';
 import SearchModal from '~/components/base/SearchModel.vue';
-
-interface NavigationItem {
-	id: string;
-	title: string;
-	url?: string;
-	page?: { permalink: string };
-	children?: NavigationItem[];
-}
+import type { SiteGlobals, SiteNavigation } from '#shared/types/site-data';
 
 // Using template ref to expose the navigation bar to the layout for visual editing
 const navigationRef = useTemplateRef('navigationRef');
 defineExpose({ navigationRef });
 
-interface Navigation {
-	items: NavigationItem[];
-}
-
-interface Globals {
-	logo?: string;
-	logo_dark_mode?: string;
-}
-
 const props = defineProps<{
-	navigation: Navigation;
-	globals: Globals;
+	navigation: SiteNavigation;
+	globals: SiteGlobals;
 }>();
 
 const menuOpen = ref(false);

@@ -4,34 +4,17 @@ import SearchModal from '~/components/base/SearchModel.vue';
 import LanguageSwitcher from '~/components/shared/LanguageSwitcher.vue';
 import { DEFAULT_LOCALE, type Locale } from '~/lib/i18n/config';
 import { localizeLink } from '~/lib/i18n/utils';
+import type { SiteGlobals, SiteNavigation, SiteNavigationItem } from '#shared/types/site-data';
 
-interface NavigationItem {
-	id: string;
-	title?: string | null;
-	url?: string | null;
-	page?: {
-		permalink?: string | null;
-	} | null;
-	children?: NavigationItem[] | string[] | null;
-}
+type NavigationItem = SiteNavigationItem;
 
 // Using template ref to expose the navigation bar to the layout for visual editing
 const navigationRef = useTemplateRef('navigationRef');
 defineExpose({ navigationRef });
 
-interface Navigation {
-	id?: string | null;
-	items?: NavigationItem[] | string[] | null;
-}
-
-interface Globals {
-	logo?: string | { id: string } | null;
-	logo_dark_mode?: string | { id: string } | null;
-}
-
 const props = defineProps<{
-	navigation: Navigation;
-	globals: Globals;
+	navigation: SiteNavigation;
+	globals: SiteGlobals;
 	locale?: Locale;
 	supportedLocales?: Locale[];
 	localeNames?: Record<Locale, string>;
@@ -121,7 +104,7 @@ const getPagePermalink = (page: { permalink?: string | null } | null | undefined
 				<NavigationMenu
 					class="hidden md:flex"
 					:data-directus="
-						setAttr({ collection: 'navigation', item: props.navigation.id || null, fields: ['items'], mode: 'modal' })
+						setAttr({ collection: 'navigation', item: props.navigation.id, fields: ['items'], mode: 'modal' })
 					"
 				>
 					<NavigationMenuList class="flex gap-6">
