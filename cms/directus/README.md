@@ -119,6 +119,7 @@ Pages and posts use Directus content versioning. Live content is `version=publis
 ## AI and forms
 
 - **AI:** Built-in Directus AI Assistant (**Settings → AI**). Example prompts ship in `ai_prompts`.
+- **AI flows:** **AI Ghostwriter** drafts a post, and **AI Image Generator** creates a featured image. Both use the core AI Text and AI Image operations and the keys in **Settings → AI**. They ship **inactive**. To use one, add an OpenAI key (or change the model in the flow's AI step), then set the flow to **Active**. The core tier allows 5 active flows and the template already uses 3, so activating both uses up the core limit.
 - **Form emails:** Optional — configure `EMAIL_*` in `.env`. Submissions are stored in Directus either way.
 
 ## Live preview host (Preview Base URL)
