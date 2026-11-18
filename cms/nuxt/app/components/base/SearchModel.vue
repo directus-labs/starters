@@ -64,6 +64,12 @@ watch(open, (isOpen) => {
 		loading.value = false;
 	}
 });
+
+function handleInput(e: Event) {
+	if (e.target instanceof HTMLInputElement) {
+		debouncedFetchResults(e.target.value);
+	}
+}
 </script>
 
 <template>
@@ -80,7 +86,7 @@ watch(open, (isOpen) => {
 				<CommandInput
 					placeholder="Search for pages or posts"
 					class="m-2 p-4 focus:outline-none text-base leading-normal"
-					@input="(e) => debouncedFetchResults(e.target.value)"
+					@input="handleInput"
 				/>
 
 				<CommandList class="p-2 text-foreground max-h-[500px] overflow-auto">

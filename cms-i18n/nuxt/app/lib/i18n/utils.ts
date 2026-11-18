@@ -62,7 +62,6 @@ export function isExternalUrl(url: string | null | undefined): boolean {
 export function localizeLink(path: string | null | undefined, locale: Locale): string | undefined {
 	if (!path) {
 		if (import.meta.dev) {
-			// eslint-disable-next-line no-console
 			console.warn('[localizeLink] Received null or undefined path for locale:', locale);
 		}
 
@@ -77,8 +76,9 @@ export function localizeLink(path: string | null | undefined, locale: Locale): s
  * Returns a localized 404 error message based on the current locale.
  */
 export function getNotFoundMessage(locale: Locale, type: 'page' | 'post' = 'page'): string {
+	const fallback = { page: '404 - Page Not Found', post: '404 - Post Not Found' };
 	const messages: Record<string, { page: string; post: string }> = {
-		'en-US': { page: '404 - Page Not Found', post: '404 - Post Not Found' },
+		'en-US': fallback,
 		'es-ES': { page: '404 - Página No Encontrada', post: '404 - Publicación No Encontrada' },
 		'fr-FR': { page: '404 - Page Non Trouvée', post: '404 - Article Non Trouvé' },
 		'de-DE': { page: '404 - Seite Nicht Gefunden', post: '404 - Beitrag Nicht Gefunden' },
@@ -88,5 +88,5 @@ export function getNotFoundMessage(locale: Locale, type: 'page' | 'post' = 'page
 		'ar-SA': { page: '404 - الصفحة غير موجودة', post: '404 - المنشور غير موجود' },
 	};
 
-	return messages[locale]?.[type] || messages['en-US'][type];
+	return messages[locale]?.[type] || fallback[type];
 }
