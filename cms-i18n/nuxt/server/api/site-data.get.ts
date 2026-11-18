@@ -6,8 +6,9 @@ import {
 	mergeTranslations,
 } from '../utils/directus-i18n';
 import type { Globals, Language, Navigation } from '#shared/types/schema';
+import type { SiteData, SiteGlobals, SiteNavigation } from '#shared/types/site-data';
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event): Promise<SiteData> => {
 	const locale = getLocaleFromEvent(event);
 	const includeTranslations = locale !== DEFAULT_LOCALE;
 	const token = getDirectusServerToken();
@@ -154,10 +155,12 @@ export default defineEventHandler(async (event) => {
 		// Get direction for current locale
 		const direction = directionMap[locale] || 'ltr';
 
+		// The requests above are typed with the full schema types because their fields are built dynamically.
+		// The fields they ask for match the Site* shapes, so assert those here once for the components.
 		return {
-			globals,
-			headerNavigation,
-			footerNavigation,
+			globals: globals as SiteGlobals,
+			headerNavigation: headerNavigation as SiteNavigation,
+			footerNavigation: footerNavigation as SiteNavigation,
 			languages,
 			locale,
 			localeMap,

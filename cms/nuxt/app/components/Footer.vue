@@ -1,31 +1,10 @@
 <script setup lang="ts">
-export interface SocialLink {
-	service: string;
-	url: string;
-}
+import type { SiteGlobals, SiteNavigation } from '#shared/types/site-data';
 
-export interface NavigationItem {
-	id: string;
-	title: string;
-	url?: string | null;
-	page?: {
-		permalink?: string | null;
-	};
-}
-
-export interface FooterProps {
-	navigation: {
-		items: NavigationItem[];
-	};
-	globals: {
-		logo?: string | null;
-		logo_dark_mode?: string | null;
-		description?: string | null;
-		social_links?: SocialLink[];
-	};
-}
-
-const props = defineProps<FooterProps>();
+const props = defineProps<{
+	navigation: SiteNavigation;
+	globals: SiteGlobals;
+}>();
 const runtimeConfig = useRuntimeConfig();
 
 // Using template ref to expose the footer to the layout for visual editing

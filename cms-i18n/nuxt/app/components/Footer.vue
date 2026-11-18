@@ -1,35 +1,13 @@
 <script setup lang="ts">
 import { DEFAULT_LOCALE, type Locale } from '~/lib/i18n/config';
 import { localizeLink } from '~/lib/i18n/utils';
+import type { SiteGlobals, SiteNavigation } from '#shared/types/site-data';
 
-export interface SocialLink {
-	service: string;
-	url: string;
-}
-
-export interface NavigationItem {
-	id: string;
-	title: string;
-	url?: string | null;
-	page?: {
-		permalink?: string | null;
-	};
-}
-
-export interface FooterProps {
-	navigation: {
-		items: NavigationItem[];
-	};
-	globals: {
-		logo?: string | null;
-		logo_dark_mode?: string | null;
-		description?: string | null;
-		social_links?: SocialLink[];
-	};
+const props = defineProps<{
+	navigation: SiteNavigation;
+	globals: SiteGlobals;
 	locale?: Locale;
-}
-
-const props = defineProps<FooterProps>();
+}>();
 const runtimeConfig = useRuntimeConfig();
 
 // Using template ref to expose the footer to the layout for visual editing
