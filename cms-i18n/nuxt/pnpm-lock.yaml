@@ -13,8 +13,8 @@ importers:
   .:
     dependencies:
       '@directus/sdk':
-        specifier: 22.0.0
-        version: 22.0.0
+        specifier: 27.1.0
+        version: 27.1.0
       '@directus/visual-editing':
         specifier: 2.1.0
         version: 2.1.0
@@ -507,8 +507,8 @@ packages:
   '@directus/schema@14.0.2':
     resolution: {integrity: sha512-qHAtkAejvcPQCWaRpU9HqJs7Jm4gtxPujT2eB4L+RnTy8ESGjR0C4WvPbUWiXLjaWJbaWB0avFE0Dptzvz7Uzw==}
 
-  '@directus/sdk@22.0.0':
-    resolution: {integrity: sha512-1D3cgjg2jnA7S1LXwKoYSw7yyJCs/DyKUOUDMLbvLtljafWJ5KOef7O8bVDPuQkVw6Bvoo6GUCbAMYI6Ff8Igg==}
+  '@directus/sdk@27.1.0':
+    resolution: {integrity: sha512-dPuhb6DOJfTHlh9fbe0wQeUJLpjwVIA3rhVkRotcNL3IBFbnzgTxZhz5kt6CP+UK3TLfpC0erkKYszBXj7yolg==}
     engines: {node: '>=22'}
 
   '@directus/types@18.1.0':
@@ -7413,7 +7413,7 @@ snapshots:
       - supports-color
       - tedious
 
-  '@directus/sdk@22.0.0': {}
+  '@directus/sdk@27.1.0': {}
 
   '@directus/types@18.1.0(knex@3.1.0)(sharp@0.35.5(@types/node@26.6.6))(vue@3.5.45(typescript@5.8.3))':
     dependencies:

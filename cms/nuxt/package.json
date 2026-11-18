@@ -40,7 +40,7 @@
 		"vue-tsc": "3.2.2"
 	},
 	"dependencies": {
-		"@directus/sdk": "22.0.0",
+		"@directus/sdk": "27.1.0",
 		"@directus/visual-editing": "2.1.0",
 		"@formkit/auto-animate": "0.8.2",
 		"@hookform/resolvers": "5.0.1",

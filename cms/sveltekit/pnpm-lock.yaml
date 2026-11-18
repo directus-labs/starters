@@ -14,8 +14,8 @@ importers:
   .:
     dependencies:
       '@directus/sdk':
-        specifier: 22.0.0
-        version: 22.0.0
+        specifier: 27.1.0
+        version: 27.1.0
       '@directus/visual-editing':
         specifier: 2.1.0
         version: 2.1.0
@@ -169,8 +169,8 @@ packages:
     resolution: {integrity: sha512-v+oN26xP4YIlQsbQ/CbTH1WG5m/l/DjKKZNy/Kp3f/AFvbgt7Em/D0FeMM3O2hX0YzeN2M16W8lOpyhIkfCBcQ==}
     engines: {node: '>=6.9.0'}
 
-  '@directus/sdk@22.0.0':
-    resolution: {integrity: sha512-1D3cgjg2jnA7S1LXwKoYSw7yyJCs/DyKUOUDMLbvLtljafWJ5KOef7O8bVDPuQkVw6Bvoo6GUCbAMYI6Ff8Igg==}
+  '@directus/sdk@27.1.0':
+    resolution: {integrity: sha512-dPuhb6DOJfTHlh9fbe0wQeUJLpjwVIA3rhVkRotcNL3IBFbnzgTxZhz5kt6CP+UK3TLfpC0erkKYszBXj7yolg==}
     engines: {node: '>=22'}
 
   '@directus/visual-editing@2.1.0':
@@ -2459,7 +2459,7 @@ snapshots:
   '@babel/runtime@7.29.13':
     optional: true
 
-  '@directus/sdk@22.0.0': {}
+  '@directus/sdk@27.1.0': {}
 
   '@directus/visual-editing@2.1.0':
     dependencies:

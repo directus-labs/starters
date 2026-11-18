@@ -14,7 +14,7 @@
 		"format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\""
 	},
 	"dependencies": {
-		"@directus/sdk": "22.0.0",
+		"@directus/sdk": "27.1.0",
 		"@directus/visual-editing": "2.1.0",
 		"@hookform/resolvers": "^5.9.2",
 		"@radix-ui/react-checkbox": "^1.1.4",
