@@ -53,7 +53,7 @@
 		"@directus/sdk": "22.0.0",
 		"@directus/visual-editing": "2.1.0",
 		"@lucide/svelte": "0.525.0",
-		"@sveltejs/adapter-vercel": "6.3.3",
+		"@sveltejs/adapter-vercel": "6.3.5",
 		"@tailwindcss/container-queries": "0.1.1",
 		"@tailwindcss/forms": "0.5.10",
 		"@tailwindcss/typography": "0.5.16",
