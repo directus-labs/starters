@@ -48,8 +48,7 @@ export const load = (async (event) => {
 		}
 
 		const ogImage = post.image ? getDirectusAssetURL(post.image) : null;
-		const author =
-			post.author && typeof post.author === 'object' ? (post.author as Author) : null;
+		const author = post.author && typeof post.author === 'object' ? (post.author as Author) : null;
 
 		return {
 			post,

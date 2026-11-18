@@ -64,7 +64,8 @@
 			}
 		} catch (err) {
 			console.error('Error submitting form:', err);
-			error = err instanceof Error ? err.message : 'Failed to submit the form. Please try again later.';
+			error =
+				err instanceof Error ? err.message : 'Failed to submit the form. Please try again later.';
 		}
 	};
 </script>
