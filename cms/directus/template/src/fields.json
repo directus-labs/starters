@@ -3088,7 +3088,7 @@
       "collection": "block_hero",
       "field": "layout",
       "special": null,
-      "interface": "radio-cards-interface",
+      "interface": "select-card-radio",
       "options": {
         "choices": [
           {
@@ -3096,24 +3096,23 @@
             "value": "image_left",
             "icon": "format_image_left",
             "icon_type": "image",
-            "image": "d5a1290f-8819-4e7c-b292-bffe5b1c8274.jpg"
+            "image": "d5a1290f-8819-4e7c-b292-bffe5b1c8274"
           },
           {
             "text": "Image Center",
             "value": "image_center",
             "icon": "image",
             "icon_type": "image",
-            "image": "8a652e52-a275-4dde-9fc5-edf2188afe56.jpg"
+            "image": "8a652e52-a275-4dde-9fc5-edf2188afe56"
           },
           {
             "text": "Image Right",
             "value": "image_right",
             "icon": "format_image_right",
             "icon_type": "image",
-            "image": "fe7c7e04-5aac-4370-8bbd-6fd578d26ea1.jpg"
+            "image": "fe7c7e04-5aac-4370-8bbd-6fd578d26ea1"
           }
-        ],
-        "gridSize": 3
+        ]
       },
       "display": "labels",
       "display_options": {
@@ -5370,7 +5369,7 @@
       "collection": "form_fields",
       "field": "type",
       "special": null,
-      "interface": "radio-cards-interface",
+      "interface": "select-card-radio",
       "options": {
         "choices": [
           {
@@ -5422,7 +5421,7 @@
             "icon_type": "icon"
           }
         ],
-        "gridSize": 5
+        "size": "small"
       },
       "display": "labels",
       "display_options": {
@@ -11454,7 +11453,7 @@
       "collection": "redirects",
       "field": "response_code",
       "special": null,
-      "interface": "radio-cards-interface",
+      "interface": "select-card-radio",
       "options": {
         "choices": [
           {
@@ -11471,8 +11470,7 @@
             "description": "Temporarily redirect traffic to the page to the new URL.",
             "icon": "build_circle"
           }
-        ],
-        "gridSize": 2
+        ]
       },
       "display": "labels",
       "display_options": {
