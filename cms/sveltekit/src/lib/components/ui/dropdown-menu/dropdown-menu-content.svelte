@@ -1,27 +1,26 @@
 <script lang="ts">
 	import { DropdownMenu as DropdownMenuPrimitive } from 'bits-ui';
-	import { cn, flyAndScale } from '$lib/utils.js';
+	import { cn } from '$lib/utils.js';
 
-	type $$Props = DropdownMenuPrimitive.ContentProps;
-	type $$Events = DropdownMenuPrimitive.ContentEvents;
-
-	let className: $$Props['class'] = undefined;
-	export let sideOffset: $$Props['sideOffset'] = 4;
-	export let transition: $$Props['transition'] = flyAndScale;
-	export let transitionConfig: $$Props['transitionConfig'] = undefined;
-	export { className as class };
+	// Content renders inline (no Portal) so it stays inside the sticky header's
+	// stacking context and isn't hidden behind it.
+	let {
+		ref = $bindable(null),
+		class: className,
+		sideOffset = 4,
+		children,
+		...restProps
+	}: DropdownMenuPrimitive.ContentProps = $props();
 </script>
 
 <DropdownMenuPrimitive.Content
-	{transition}
-	{transitionConfig}
+	bind:ref
 	{sideOffset}
 	class={cn(
 		'bg-popover text-popover-foreground z-50 min-w-[8rem] rounded-md border border-input p-2 shadow-md focus:outline-none',
 		className
 	)}
-	{...$$restProps}
-	on:keydown
+	{...restProps}
 >
-	<slot />
+	{@render children?.()}
 </DropdownMenuPrimitive.Content>
