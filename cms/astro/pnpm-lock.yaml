@@ -19,8 +19,8 @@ importers:
         specifier: 11.0.20
         version: 11.0.20(astro@7.4.9(@types/node@22.19.15)(@vercel/functions@3.11.1)(esbuild@0.28.2)(jiti@1.21.7)(tsx@4.21.0)(yaml@2.9.1))(react@19.2.4)(rollup@4.68.2)
       '@directus/sdk':
-        specifier: 27.1.0
-        version: 27.1.0
+        specifier: 27.2.0
+        version: 27.2.0
       '@directus/visual-editing':
         specifier: 2.1.0
         version: 2.1.0
@@ -761,8 +761,8 @@ packages:
     peerDependencies:
       postcss: ^8.4
 
-  '@directus/sdk@27.1.0':
-    resolution: {integrity: sha512-dPuhb6DOJfTHlh9fbe0wQeUJLpjwVIA3rhVkRotcNL3IBFbnzgTxZhz5kt6CP+UK3TLfpC0erkKYszBXj7yolg==}
+  '@directus/sdk@27.2.0':
+    resolution: {integrity: sha512-/9Z7/VU4IPKhx54XCREW6VRUtTPz/KD64XPujXb2kF5pJvNKJytoUZBacuvWT6sz52/+/47t8bBMYHpeejPUww==}
     engines: {node: '>=22'}
 
   '@directus/visual-editing@2.1.0':
@@ -5437,7 +5437,7 @@ snapshots:
     dependencies:
       postcss: 8.5.32
 
-  '@directus/sdk@27.1.0': {}
+  '@directus/sdk@27.2.0': {}
 
   '@directus/visual-editing@2.1.0':
     dependencies:

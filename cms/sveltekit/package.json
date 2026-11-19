@@ -50,7 +50,7 @@
 		"vite": "8.3.7"
 	},
 	"dependencies": {
-		"@directus/sdk": "27.1.0",
+		"@directus/sdk": "27.2.0",
 		"@directus/visual-editing": "2.1.0",
 		"@lucide/svelte": "0.525.0",
 		"@sveltejs/adapter-vercel": "6.3.3",
