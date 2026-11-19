@@ -91,43 +91,6 @@
     }
   },
   {
-    "id": "af053cdb-242e-4142-a053-e3e23d7658e5",
-    "bundle": null,
-    "meta": {
-      "enabled": true,
-      "id": "af053cdb-242e-4142-a053-e3e23d7658e5",
-      "folder": "3f627cf9-4079-4880-b32a-3848829c93dc",
-      "source": "registry",
-      "bundle": null
-    },
-    "schema": {
-      "path": "/directus/extensions/.registry/3f627cf9-4079-4880-b32a-3848829c93dc",
-      "name": "@directus-labs/card-select-interfaces",
-      "version": "1.0.0",
-      "type": "bundle",
-      "entrypoint": {
-        "app": "dist/app.js",
-        "api": "dist/api.js"
-      },
-      "entries": [
-        {
-          "name": "radio-cards-interface",
-          "type": "interface"
-        },
-        {
-          "name": "checkbox-cards-interface",
-          "type": "interface"
-        },
-        {
-          "name": "image-uuid-interface",
-          "type": "interface"
-        }
-      ],
-      "host": "^10.0.0 || ^11.0.0",
-      "local": true
-    }
-  },
-  {
     "id": "bfa185ec-f15c-4d3e-8e0e-06925ba6cdfe",
     "bundle": null,
     "meta": {
@@ -165,21 +128,6 @@
       "entrypoint": "dist/index.js",
       "host": ">=11.6.0 <13",
       "local": true
-    }
-  },
-  {
-    "id": "ac4cf7e0-4e32-4071-a139-d63c0cbad5af",
-    "bundle": "af053cdb-242e-4142-a053-e3e23d7658e5",
-    "meta": {
-      "enabled": true,
-      "id": "ac4cf7e0-4e32-4071-a139-d63c0cbad5af",
-      "folder": "radio-cards-interface",
-      "source": "registry",
-      "bundle": "af053cdb-242e-4142-a053-e3e23d7658e5"
-    },
-    "schema": {
-      "name": "radio-cards-interface",
-      "type": "interface"
     }
   },
   {

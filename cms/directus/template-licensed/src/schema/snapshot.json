@@ -4225,33 +4225,32 @@
         "field": "layout",
         "group": null,
         "hidden": false,
-        "interface": "radio-cards-interface",
+        "interface": "select-card-radio",
         "note": "The layout for the component. You can set the image to display left, right, or in the center of page..",
         "options": {
           "choices": [
             {
               "icon": "format_image_left",
               "icon_type": "image",
-              "image": "d5a1290f-8819-4e7c-b292-bffe5b1c8274.jpg",
+              "image": "d5a1290f-8819-4e7c-b292-bffe5b1c8274",
               "text": "Image Left",
               "value": "image_left"
             },
             {
               "icon": "image",
               "icon_type": "image",
-              "image": "8a652e52-a275-4dde-9fc5-edf2188afe56.jpg",
+              "image": "8a652e52-a275-4dde-9fc5-edf2188afe56",
               "text": "Image Center",
               "value": "image_center"
             },
             {
               "icon": "format_image_right",
               "icon_type": "image",
-              "image": "fe7c7e04-5aac-4370-8bbd-6fd578d26ea1.jpg",
+              "image": "fe7c7e04-5aac-4370-8bbd-6fd578d26ea1",
               "text": "Image Right",
               "value": "image_right"
             }
-          ],
-          "gridSize": 3
+          ]
         },
         "readonly": false,
         "required": false,
@@ -6684,7 +6683,7 @@
         "field": "type",
         "group": null,
         "hidden": false,
-        "interface": "radio-cards-interface",
+        "interface": "select-card-radio",
         "note": "Input type for the field",
         "options": {
           "choices": [
@@ -6737,7 +6736,7 @@
               "value": "hidden"
             }
           ],
-          "gridSize": 5
+          "size": "small"
         },
         "readonly": false,
         "required": false,
@@ -14039,7 +14038,7 @@
         "field": "response_code",
         "group": null,
         "hidden": false,
-        "interface": "radio-cards-interface",
+        "interface": "select-card-radio",
         "note": null,
         "options": {
           "choices": [
@@ -14057,8 +14056,7 @@
               "text": "Temporary (302)",
               "value": "302"
             }
-          ],
-          "gridSize": 2
+          ]
         },
         "readonly": false,
         "required": false,

@@ -18,8 +18,8 @@ importers:
   .:
     dependencies:
       '@directus/sdk':
-        specifier: 22.0.0
-        version: 22.0.0
+        specifier: 27.2.0
+        version: 27.2.0
       '@directus/visual-editing':
         specifier: 2.1.0
         version: 2.1.0
@@ -46,7 +46,7 @@ importers:
         version: 3.5.2(magicast@0.5.5)
       '@nuxtjs/seo':
         specifier: 5.1.0
-        version: 5.1.0(59faa179b966f8515e453f1352ce09b2)
+        version: 5.1.0(2a2c22c3112a85ddd3eb7d1cf2f99e2a)
       '@nuxtjs/sitemap':
         specifier: 8.0.11
         version: 8.0.11(42a16a69bd71bc7617587727d14fbc61)
@@ -94,7 +94,7 @@ importers:
         version: 2.6.0
       tailwindcss-animate:
         specifier: 1.0.7
-        version: 1.0.7(tailwindcss@3.4.19)
+        version: 1.0.7(tailwindcss@4.3.5)
       vee-validate:
         specifier: 4.15.0
         version: 4.15.0(vue@3.5.45(typescript@5.8.3))
@@ -116,7 +116,7 @@ importers:
         version: 1.12.1(@nuxt/schema@4.6.4)(@typescript-eslint/utils@8.72.2(eslint@9.39.2(jiti@2.7.0))(typescript@5.8.3))(@vue/compiler-sfc@3.5.45)(confbox@0.3.2)(dotenv@16.4.7)(eslint@9.39.2(jiti@2.7.0))(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(oxc-parser@0.151.0)(rolldown@1.2.18)(typescript@5.8.3)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.18)(rollup@4.68.2)(vite@8.3.7))(vite@8.3.7)
       '@tailwindcss/typography':
         specifier: 0.5.16
-        version: 0.5.16(tailwindcss@3.4.19)
+        version: 0.5.16(tailwindcss@4.3.5)
       '@typescript-eslint/eslint-plugin':
         specifier: 8.29.1
         version: 8.29.1(@typescript-eslint/parser@8.29.1(eslint@9.39.2(jiti@2.7.0))(typescript@5.8.3))(eslint@9.39.2(jiti@2.7.0))(typescript@5.8.3)
@@ -524,8 +524,8 @@ packages:
   '@directus/schema@14.0.2':
     resolution: {integrity: sha512-qHAtkAejvcPQCWaRpU9HqJs7Jm4gtxPujT2eB4L+RnTy8ESGjR0C4WvPbUWiXLjaWJbaWB0avFE0Dptzvz7Uzw==}
 
-  '@directus/sdk@22.0.0':
-    resolution: {integrity: sha512-1D3cgjg2jnA7S1LXwKoYSw7yyJCs/DyKUOUDMLbvLtljafWJ5KOef7O8bVDPuQkVw6Bvoo6GUCbAMYI6Ff8Igg==}
+  '@directus/sdk@27.2.0':
+    resolution: {integrity: sha512-/9Z7/VU4IPKhx54XCREW6VRUtTPz/KD64XPujXb2kF5pJvNKJytoUZBacuvWT6sz52/+/47t8bBMYHpeejPUww==}
     engines: {node: '>=22'}
 
   '@directus/types@18.1.0':
@@ -7393,7 +7393,7 @@ snapshots:
       - supports-color
       - tedious
 
-  '@directus/sdk@22.0.0': {}
+  '@directus/sdk@27.2.0': {}
 
   '@directus/types@18.1.0(knex@3.1.0)(sharp@0.35.5(@types/node@26.6.6))(vue@3.5.45(typescript@5.8.3))':
     dependencies:
@@ -8984,14 +8984,14 @@ snapshots:
       - vite
       - vue
 
-  '@nuxtjs/seo@5.1.0(59faa179b966f8515e453f1352ce09b2)':
+  '@nuxtjs/seo@5.1.0(2a2c22c3112a85ddd3eb7d1cf2f99e2a)':
     dependencies:
       '@nuxt/kit': 4.6.4(@nuxt/schema@4.6.4)(confbox@0.3.2)(dotenv@16.4.7)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.151.0)(rolldown@1.2.18)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.18)(rollup@4.68.2)(vite@8.3.7))
       '@nuxtjs/robots': 6.2.4(@nuxt/schema@4.6.4)(confbox@0.3.2)(dotenv@16.4.7)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(nuxt@4.6.4(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.13))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.13))(@oxc-project/types@0.156.0)(@types/node@26.6.6)(@vitejs/devtools@0.8.2(crossws@0.4.17(srvx@1.0.8))(srvx@1.0.8)(vite@8.3.7))(@vue/compiler-sfc@3.5.45)(acorn@8.19.0)(bare-buffer@3.7.1)(confbox@0.3.2)(db0@0.3.4)(dotenv@16.4.7)(esbuild@0.28.2)(eslint@9.39.2(jiti@2.7.0))(giget@3.3.1)(ioredis@5.11.1)(lightningcss@1.33.0)(mlly@1.8.2)(optionator@0.9.4)(oxc-parser@0.151.0)(rolldown@1.2.18)(rollup-plugin-visualizer@7.1.3(rolldown@1.2.18)(rollup@4.68.2))(rollup@4.68.2)(srvx@1.0.8)(terser@5.51.2)(typescript@5.8.3)(vite@8.3.7)(vue-tsc@3.2.2(typescript@5.8.3)))(oxc-parser@0.151.0)(rolldown@1.2.18)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.18)(rollup@4.68.2)(vite@8.3.7))(vite@8.3.7)(vue@3.5.45(typescript@5.8.3))(zod@4.6.7)
       '@nuxtjs/sitemap': 8.0.11(42a16a69bd71bc7617587727d14fbc61)
       nuxt: 4.6.4(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.13))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.13))(@oxc-project/types@0.156.0)(@types/node@26.6.6)(@vitejs/devtools@0.8.2(crossws@0.4.17(srvx@1.0.8))(srvx@1.0.8)(vite@8.3.7))(@vue/compiler-sfc@3.5.45)(acorn@8.19.0)(bare-buffer@3.7.1)(confbox@0.3.2)(db0@0.3.4)(dotenv@16.4.7)(esbuild@0.28.2)(eslint@9.39.2(jiti@2.7.0))(giget@3.3.1)(ioredis@5.11.1)(lightningcss@1.33.0)(mlly@1.8.2)(optionator@0.9.4)(oxc-parser@0.151.0)(rolldown@1.2.18)(rollup-plugin-visualizer@7.1.3(rolldown@1.2.18)(rollup@4.68.2))(rollup@4.68.2)(srvx@1.0.8)(terser@5.51.2)(typescript@5.8.3)(vite@8.3.7)(vue-tsc@3.2.2(typescript@5.8.3))
       nuxt-link-checker: 5.3.0(@nuxt/schema@4.6.4)(confbox@0.3.2)(db0@0.3.4)(dotenv@16.4.7)(giget@3.3.1)(ioredis@5.11.1)(jiti@2.7.0)(mlly@1.8.2)(nuxt@4.6.4(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.13))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.13))(@oxc-project/types@0.156.0)(@types/node@26.6.6)(@vitejs/devtools@0.8.2(crossws@0.4.17(srvx@1.0.8))(srvx@1.0.8)(vite@8.3.7))(@vue/compiler-sfc@3.5.45)(acorn@8.19.0)(bare-buffer@3.7.1)(confbox@0.3.2)(db0@0.3.4)(dotenv@16.4.7)(esbuild@0.28.2)(eslint@9.39.2(jiti@2.7.0))(giget@3.3.1)(ioredis@5.11.1)(lightningcss@1.33.0)(mlly@1.8.2)(optionator@0.9.4)(oxc-parser@0.151.0)(rolldown@1.2.18)(rollup-plugin-visualizer@7.1.3(rolldown@1.2.18)(rollup@4.68.2))(rollup@4.68.2)(srvx@1.0.8)(terser@5.51.2)(typescript@5.8.3)(vite@8.3.7)(vue-tsc@3.2.2(typescript@5.8.3)))(oxc-parser@0.151.0)(rolldown@1.2.18)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.18)(rollup@4.68.2)(vite@8.3.7))(vite@8.3.7)(vue@3.5.45(typescript@5.8.3))(zod@4.6.7)
-      nuxt-og-image: 6.10.4(46ff76c8b27d43d48d2a294d5f63a5d4)
+      nuxt-og-image: 6.10.4(ef79d03d9acd5710a051dea391017ad2)
       nuxt-schema-org: 6.4.3(23fb53935bb52bd5e6e9a9197d40492b)
       nuxt-seo-utils: 8.6.1(c3aed0edb870eff148e3835052d32523)
       nuxt-site-config: 4.2.3(@nuxt/schema@4.6.4)(confbox@0.3.2)(dotenv@16.4.7)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(nuxt@4.6.4(@babel/plugin-syntax-jsx@7.29.7(@babel/core@7.29.13))(@babel/plugin-syntax-typescript@7.29.7(@babel/core@7.29.13))(@oxc-project/types@0.156.0)(@types/node@26.6.6)(@vitejs/devtools@0.8.2(crossws@0.4.17(srvx@1.0.8))(srvx@1.0.8)(vite@8.3.7))(@vue/compiler-sfc@3.5.45)(acorn@8.19.0)(bare-buffer@3.7.1)(confbox@0.3.2)(db0@0.3.4)(dotenv@16.4.7)(esbuild@0.28.2)(eslint@9.39.2(jiti@2.7.0))(giget@3.3.1)(ioredis@5.11.1)(lightningcss@1.33.0)(mlly@1.8.2)(optionator@0.9.4)(oxc-parser@0.151.0)(rolldown@1.2.18)(rollup-plugin-visualizer@7.1.3(rolldown@1.2.18)(rollup@4.68.2))(rollup@4.68.2)(srvx@1.0.8)(terser@5.51.2)(typescript@5.8.3)(vite@8.3.7)(vue-tsc@3.2.2(typescript@5.8.3)))(oxc-parser@0.151.0)(rolldown@1.2.18)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.18)(rollup@4.68.2)(vite@8.3.7))(vite@8.3.7)(vue@3.5.45(typescript@5.8.3))(zod@4.6.7)
@@ -9696,13 +9696,13 @@ snapshots:
       postcss: 8.5.32
       tailwindcss: 4.3.5
 
-  '@tailwindcss/typography@0.5.16(tailwindcss@3.4.19)':
+  '@tailwindcss/typography@0.5.16(tailwindcss@4.3.5)':
     dependencies:
       lodash.castarray: 4.4.0
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.1.6
-      tailwindcss: 3.4.19
+      tailwindcss: 4.3.5
 
   '@tailwindcss/vite@4.3.5(vite@8.3.7)':
     dependencies:
@@ -12916,7 +12916,7 @@ snapshots:
       - vue
       - zod
 
-  nuxt-og-image@6.10.4(46ff76c8b27d43d48d2a294d5f63a5d4):
+  nuxt-og-image@6.10.4(ef79d03d9acd5710a051dea391017ad2):
     dependencies:
       '@clack/prompts': 1.9.0
       '@nuxt/kit': 4.6.4(@nuxt/schema@4.6.4)(confbox@0.3.2)(dotenv@16.4.7)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.5)(mlly@1.8.2)(oxc-parser@0.151.0)(rolldown@1.2.18)(unplugin@3.7.0(esbuild@0.28.2)(rolldown@1.2.18)(rollup@4.68.2)(vite@8.3.7))
@@ -12954,7 +12954,7 @@ snapshots:
       fontless: 0.2.1(db0@0.3.4)(ioredis@5.11.1)(vite@8.3.7)
       nitropack: 2.13.6(patch_hash=ec44ee17f59f3dbea802cd560c64f33bcc253eb03a6daba2240b45e75607208c)(bare-buffer@3.7.1)(oxc-parser@0.151.0)(rolldown@1.2.18)(srvx@1.0.8)(vite@8.3.7)
       sharp: 0.35.5(@types/node@26.6.6)
-      tailwindcss: 3.4.19
+      tailwindcss: 4.3.5
       unifont: 0.7.5
       zod: 4.6.7
     transitivePeerDependencies:
@@ -14370,9 +14370,9 @@ snapshots:
       tailwind-merge: 3.7.0
       tailwindcss: 4.3.5
 
-  tailwindcss-animate@1.0.7(tailwindcss@3.4.19):
+  tailwindcss-animate@1.0.7(tailwindcss@4.3.5):
     dependencies:
-      tailwindcss: 3.4.19
+      tailwindcss: 4.3.5
 
   tailwindcss@3.4.19:
     dependencies:

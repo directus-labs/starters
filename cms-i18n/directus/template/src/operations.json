@@ -349,5 +349,141 @@
     "flow": "c62ceaa5-bd09-4158-8329-98792debc5d5",
     "date_created": "2025-12-22T19:48:36.146Z",
     "user_created": null
+  },
+  {
+    "id": "89125be2-8205-4ad0-a77f-bd3e984202b3",
+    "name": "Write",
+    "key": "write",
+    "type": "ai-text",
+    "position_x": 19,
+    "position_y": 1,
+    "options": {
+      "model": "openai:gpt-6-luna",
+      "system": "You are an expert in writing blog posts that are valuable for readers.\n\n## Rules\n- You are a human content writer. Avoid AI words like \"empower\". Avoid prolix. Sound human.\n- Write the content as HTML for a rich text editor: paragraphs, headings (h2, h3), lists and links. No <html>, <head> or <body> tags.",
+      "prompt": "Write an article based on this prompt.\n{{ $trigger.body.prompt }}\n\n## Voice\nMatch this style and tone of voice when writing.\n{{ $trigger.body.voice }}",
+      "output": "object",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Article title"
+          },
+          "slug": {
+            "type": "string",
+            "description": "URL slug: lowercase words separated by hyphens"
+          },
+          "description": {
+            "type": "string",
+            "description": "Short summary to entice readers"
+          },
+          "content": {
+            "type": "string",
+            "description": "Article body as HTML"
+          }
+        },
+        "required": [
+          "title",
+          "slug",
+          "description",
+          "content"
+        ]
+      },
+      "permissions": "$trigger"
+    },
+    "resolve": "e6c50f84-e229-4f15-8119-c7708256e825",
+    "reject": null,
+    "flow": "5915dd55-fff8-4d47-b48c-a0e42e5033c1",
+    "date_created": "2026-11-18T23:13:12.744Z",
+    "user_created": null
+  },
+  {
+    "id": "e6c50f84-e229-4f15-8119-c7708256e825",
+    "name": "Update Post",
+    "key": "update_post",
+    "type": "item-update",
+    "position_x": 37,
+    "position_y": 1,
+    "options": {
+      "collection": "posts",
+      "key": "{{ $trigger.body.keys }}",
+      "payload": "{{ write.output }}",
+      "permissions": "$trigger",
+      "emitEvents": true
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "5915dd55-fff8-4d47-b48c-a0e42e5033c1",
+    "date_created": "2026-11-18T23:13:12.735Z",
+    "user_created": null
+  },
+  {
+    "id": "7a3e9a8c-2b0e-4d8b-9a51-0c7f3c1e6a10",
+    "name": "Read Post",
+    "key": "post",
+    "type": "item-read",
+    "position_x": 19,
+    "position_y": 1,
+    "options": {
+      "collection": "posts",
+      "key": "{{ $trigger.body.keys }}",
+      "query": {
+        "fields": [
+          "title",
+          "description"
+        ]
+      },
+      "permissions": "$trigger"
+    },
+    "resolve": "d6f73e98-19ef-47d6-8d1f-99d77137d36b",
+    "reject": null,
+    "flow": "d4bbac48-a444-49e0-aedb-9af5273b88df",
+    "date_created": "2026-11-18T23:13:12.802Z",
+    "user_created": null
+  },
+  {
+    "id": "d6f73e98-19ef-47d6-8d1f-99d77137d36b",
+    "name": "Image",
+    "key": "image",
+    "type": "ai-image",
+    "position_x": 37,
+    "position_y": 1,
+    "options": {
+      "model": "openai:gpt-image-2.6-flare",
+      "prompt": "A featured image for a blog post. Do not include any text in the image.\n\nPost title: {{ post.title }}\nPost summary: {{ post.description }}\n\nImage style:\n{{ $trigger.body.prompt }}\n\nColor palette:\n{{ $trigger.body.colors }}",
+      "aspectRatio": "{{ $trigger.body.aspect_ratio }}",
+      "count": 1,
+      "quality": "high",
+      "title": "{{ post.title }}",
+      "permissions": "$trigger",
+      "emitEvents": true
+    },
+    "resolve": "2adf33da-7fd7-42f7-a6fe-48409463d51b",
+    "reject": null,
+    "flow": "d4bbac48-a444-49e0-aedb-9af5273b88df",
+    "date_created": "2026-11-18T23:13:12.793Z",
+    "user_created": null
+  },
+  {
+    "id": "2adf33da-7fd7-42f7-a6fe-48409463d51b",
+    "name": "Set Featured Image",
+    "key": "set_image",
+    "type": "item-update",
+    "position_x": 55,
+    "position_y": 1,
+    "options": {
+      "collection": "posts",
+      "key": "{{ $trigger.body.keys }}",
+      "payload": {
+        "image": "{{ image.files[0] }}"
+      },
+      "permissions": "$trigger",
+      "emitEvents": true
+    },
+    "resolve": null,
+    "reject": null,
+    "flow": "d4bbac48-a444-49e0-aedb-9af5273b88df",
+    "date_created": "2026-11-18T23:13:12.784Z",
+    "user_created": null
   }
 ]
